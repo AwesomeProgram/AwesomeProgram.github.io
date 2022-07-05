@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>构建与开发 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html" class="active"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><img src="https://awesomeprogram.gitee.io/imgdata/techs/202207061914193.png" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../blockchain/chapter_1_2_3_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../blockchain/chapter_1_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../blockchain/chapter_1_2_3_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../blockchain/chapter_1_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

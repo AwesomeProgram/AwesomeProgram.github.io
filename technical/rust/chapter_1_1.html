@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust 语法结构 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html" class="active"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="rust语法结构"><a class="header" href="#rust语法结构">Rust语法结构</a></h1>
+<h2 id="hello-rust"><a class="header" href="#hello-rust">Hello, Rust!</a></h2>
+<pre><pre class="playground"><code class="language-rust editable">fn main() {
+    println!(&quot;Hello, AwesomeProgram!&quot;);
+}
+</code></pre></pre>
+<h2 id="数据结构"><a class="header" href="#数据结构">数据结构</a></h2>
+<ul>
+<li>通过关键字定义的数据类型和内存位置</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>struct S {}</code></td><td>使用命名字段定义一个 <strong>结构体</strong></td></tr>
+<tr><td>  <code>struct S { x: T }</code></td><td><code>x</code> 使用类型 <code>T</code> 的命名字段定义结构体</td></tr>
+<tr><td>  <code>struct S (T);</code></td><td>定义带有编号字段类型的&quot;元组&quot;结构体</td></tr>
+<tr><td>  <code>struct S;</code></td><td>定义 <strong>零大小</strong> 的单元结构体，不占空间</td></tr>
+<tr><td><code>enum E {}</code></td><td>定义一个 <strong>枚举</strong></td></tr>
+<tr><td>  <code>enum E { A, B(), C {} }</code></td><td>定义枚举的变体，可以是 unit-<code>A</code>， tuple-<code>B()</code> 和struct-like <code>C{}</code></td></tr>
+<tr><td>  <code>enum E { A = 1 }</code></td><td>如果变体只是与单元类似，则允许赋值，例如 FFI</td></tr>
+<tr><td><code>union U {}</code></td><td>用于兼容 FFI 的，类似 C <strong>union</strong> 的 unsafe 代码</td></tr>
+<tr><td><code>static X: T = T();</code></td><td>具有生命周期，单独内存位置的 <strong>全局变量</strong></td></tr>
+<tr><td><code>const X: T = T();</code></td><td>定义 <strong>常量</strong>，使用时会复制到临时文件中</td></tr>
+<tr><td><code>let x: T;</code></td><td>在绑定为 <code>x</code> 的堆栈上分配 <code>T</code> 类型的字节，可赋值一次，不可变</td></tr>
+<tr><td><code>let mut x: T;</code></td><td>同上，但允许 <strong>可变</strong> 和可变借用</td></tr>
+<tr><td>  <code>x = y;</code></td><td>移动 <code>y</code> 到 <code>x</code>，如果 <code>T</code> 没有实现 <strong>Copy</strong>，则 <code>y</code> 的所有权会失效，否则会保留所有权并把 <code>y</code> 复制一份</td></tr>
+</tbody></table>
+<ul>
+<li>创建和访问数据结构，以及一些符号类型</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>S { x: y }</code></td><td>创建 <code>struct S {}</code> 或者 <code>use</code> 库 <code>enum E::S {}</code> ，将字段 <code>x</code> 设置为 <code>y</code></td></tr>
+<tr><td><code>S { x }</code></td><td>同上，但使用本地变量 <code>x</code> 设置字段 <code>x</code></td></tr>
+<tr><td><code>S { ..s }</code></td><td>填写剩余的字段 <code>s</code>，特别是与 <a href="https://doc.rust-lang.org/std/default/trait.Default.html">Default</a> 一起使用</td></tr>
+<tr><td><code>S { 0: x }</code></td><td>像下一行 <code>S(x)</code> 一样，但设置字段 <code>.0</code> 使用结构体语法</td></tr>
+<tr><td><code>S​ (x)</code></td><td>创建 <code>struct S (T)</code> 或者 <code>use</code> 库 <code>enum E::S ()</code> ，将字段 <code>.0</code> 设置为 <code>x</code></td></tr>
+<tr><td><code>S</code></td><td>如果 <code>S</code> 是单元结构体 <code>S</code>，或者 <code>use</code> 库 <code>enum E::S</code>， 去创建 <code>S</code> 的值</td></tr>
+<tr><td><code>E::C { x: y }</code></td><td>创建枚举变体 <code>C</code> ，上面其它的方法也可以</td></tr>
+<tr><td><code>()</code></td><td>空元组，包括字面值和类型，又名单元 <strong>unit</strong></td></tr>
+<tr><td><code>(x)</code></td><td>带括号的表达式</td></tr>
+<tr><td><code>(x,)</code></td><td>单元素 <strong>元组</strong> 表达式</td></tr>
+<tr><td><code>(S,)</code></td><td>单元素元组类型</td></tr>
+<tr><td><code>[S]</code></td><td>未指定长度的 <strong>数组类型</strong>，即 <strong>slice</strong>，不能存储于栈中</td></tr>
+<tr><td><code>[S; n]</code></td><td><strong>数组类型</strong>，固定长度是 <code>n</code> ，存储元素的类型是 <code>S</code></td></tr>
+<tr><td><code>[x; n]</code></td><td>具有 <code>x</code> 的 <code>n</code> 个副本的数组实例</td></tr>
+<tr><td><code>[x, y]</code></td><td>具有给定元素 <code>x</code> 和 <code>y</code> 的数组实例</td></tr>
+<tr><td><code>x[0]</code></td><td>集合索引, 使用 <code>usize</code> 类型， 可以用 <strong>Index, IndexMut</strong> 来实现</td></tr>
+<tr><td>  <code>x[..]</code></td><td>同上，全范围，还有 <code>x[a..b], x[a..=b], ...</code> 以及如下等等</td></tr>
+<tr><td><code>a..b</code></td><td>左闭右开范围，如 <code>1..3</code> 意味着 <code>1, 2</code></td></tr>
+<tr><td><code>..b</code></td><td>从起点开始的左闭右开范围</td></tr>
+<tr><td><code>..=b</code></td><td>从起点开始的，包含最右边元素的范围</td></tr>
+<tr><td><code>a..=b</code></td><td>包容最右边元素的范围，1..=3 意味着 1, 2, 3</td></tr>
+<tr><td><code>a..</code></td><td>从 <code>a</code> 开始到结尾的范围</td></tr>
+<tr><td><code>..</code></td><td>全范围，通常意味着整个集合</td></tr>
+<tr><td><code>s.x</code></td><td>命名字段的访问，如果 <code>x</code> 不是类型 <code>S</code> 的一部分，则可能会尝试去调用 <a href="https://doc.rust-lang.org/std/ops/trait.Deref.html">Deref</a>（取消引用）</td></tr>
+<tr><td><code>s.0</code></td><td>编号字段访问，用于元组类型 <code>S (T)</code></td></tr>
+</tbody></table>
+<h2 id="引用和指针"><a class="header" href="#引用和指针">引用和指针</a></h2>
+<ul>
+<li>授权未拥有内存的访问权限，另外可参阅泛型和约束部分</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>&amp;S</code></td><td>共享的引用（空间中可存放任何的 <code>&amp;s</code>）</td></tr>
+<tr><td>  <code>&amp;[S]</code></td><td>包含地址和长度的指定切片引用</td></tr>
+<tr><td>  <code>&amp;str</code></td><td>包含地址和长度的指定字符串切片引用</td></tr>
+<tr><td>  <code>&amp;mut S</code></td><td>可变的独占引用（也包括 <code>&amp;mut [S]</code>，<code>&amp;mut dyn S</code>， …）</td></tr>
+<tr><td>  <code>&amp;dyn T</code></td><td>包含地址和 vtable 的指定 <strong>trait object</strong> 引用</td></tr>
+<tr><td><code>&amp;s</code></td><td>共享的借用（如 地址，长度，vtable，...以及像 <code>0x1234</code>）</td></tr>
+<tr><td>  <code>&amp;mut s</code></td><td>可变的独占借用</td></tr>
+<tr><td><code>*const S</code></td><td>不可变 <strong>原生指针类型</strong>，无内存安全保证</td></tr>
+<tr><td>  <code>&amp;mut s</code></td><td>可变 <strong>原生指针类型</strong>，无内存安全保证</td></tr>
+<tr><td>  <code>&amp;raw const s</code></td><td>创建不经过引用的原生指针，<code>ptr:addr_of!()</code></td></tr>
+<tr><td>  <code>&amp;raw mut s</code></td><td>同上，是可变的，并且需要对未对齐的字段进行补齐</td></tr>
+<tr><td><code>ref s</code></td><td>通过引用绑定，成为绑定引用类型</td></tr>
+<tr><td>  <code>let ref r = s;</code></td><td>等价于 <code>let r = &amp;s</code></td></tr>
+<tr><td>  <code>let S { ref mut x } = s;</code></td><td>可变引用绑定，等价于 <code>let x = &amp;mut s.x</code>；简洁的解构写法见<a href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><strong>模式匹配</strong></a></td></tr>
+<tr><td><code>*r</code></td><td>解除一个引用 <code>r</code> 去访问它所指向的内容</td></tr>
+<tr><td>  <code>*r = s;</code></td><td>如果 <code>r</code> 是可变引用，则移动或复制 <code>s</code> 到目标内存</td></tr>
+<tr><td>  <code>s = *r;</code></td><td>如果 <code>*r</code> 是 <strong>Copy</strong> 的话，使 <code>s</code> 等于任何 <code>r</code> 引用的副本</td></tr>
+<tr><td>  <code>s = *r;</code></td><td>如果 <code>*r</code> 不是 <strong>Copy</strong> 的话，将不起作用，且会移动并留下空赋值</td></tr>
+<tr><td>  <code>s = *my_box;</code></td><td><code>Box</code> 的特殊例子，如果 <code>*my_box</code> 不是 <strong>Copy</strong> 的话，将会移出 Box 里的内容</td></tr>
+<tr><td><code>'a</code></td><td>生命周期的参数符号，表示在静态分析中的存活时间</td></tr>
+<tr><td>  <code>&amp;'a S</code></td><td>只接受存有 <code>S</code> 类型的地址，存在 <code>'a</code> 或更长</td></tr>
+<tr><td>  <code>&amp;'a mut S</code></td><td>同上，但是 <code>S</code> 类型地址的内容可变</td></tr>
+<tr><td>  <code>struct S&lt;'a&gt; {}</code></td><td>表示 <code>S</code> 包含生命周期 <code>'a</code> 的地址， <code>S</code> 的创建者决定生命周期 <code>'a</code> 的长短</td></tr>
+<tr><td>  <code>trait T&lt;'a&gt; {}</code></td><td>表示 <code>impl T for S</code> ， <code>S</code> 可能会包含地址</td></tr>
+<tr><td>  <code>fn f&lt;'a&gt;(t: &amp;'a T)</code></td><td>同上，对于一个函数，调用者决定生命周期 <code>'a</code> 的长短</td></tr>
+<tr><td><code>'static</code></td><td>持续整个程序执行期间的固定生命周期</td></tr>
+</tbody></table>
+<h2 id="函数与方法"><a class="header" href="#函数与方法">函数与方法</a></h2>
+<ul>
+<li>定义代码单元及其抽象表达</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>trait T {}</code></td><td>定义一个可以实现的通用行为，<strong>特征</strong></td></tr>
+<tr><td><code>trait T : R {}</code></td><td><code>T</code> 是 <strong>supertrait</strong> <code>R</code> 的 <strong>subtrait</strong>，任何 <code>S</code> 必须在它 <code>impl T</code> 之前 <code>impl R</code></td></tr>
+<tr><td><code>impl S {}</code></td><td>类型 <code>S</code> 的方法实现</td></tr>
+<tr><td><code>impl T for S {}</code></td><td>为类型 <code>S</code> 实现特征 <code>T</code> 中的方法</td></tr>
+<tr><td><code>impl !T for S {}</code></td><td>禁用自动派生 <strong>auto trait</strong></td></tr>
+<tr><td><code>fn f() {}</code></td><td>定义一个 <strong>函数</strong>，或者一个 <strong>关联函数</strong>（在 <code>impl</code> 内）</td></tr>
+<tr><td>  <code>fn f() -&gt; S {}</code></td><td>同上，返回类型 <code>S</code> 的值</td></tr>
+<tr><td>  <code>fn f(&amp;self) {}</code></td><td>定义一个 <strong>方法</strong>，如在 <code>impl S {}</code> 内</td></tr>
+<tr><td><code>struct S ​(T);</code></td><td>可以定义一个 <strong>构造函数</strong> <code>fn S(x: T) -&gt; S</code></td></tr>
+<tr><td><code>const fn f() {}</code></td><td>在编译时可用的常量 <code>fn</code> ，如 <code>const X: u32 = f(Y)</code></td></tr>
+<tr><td><code>async fn f() {}</code></td><td>异步函数转换，使 <code>f</code> 返回一个 <code>impl</code> <strong><code>Future</code></strong></td></tr>
+<tr><td>  <code>async fn f() -&gt; S {}</code></td><td>同上，但使 <code>f</code> 返回一个 <code>impl Future&lt;Output=S&gt;</code></td></tr>
+<tr><td>  <code>async { x }</code></td><td>在一个函数内使用，使 <code>{ x }</code> 为 <code>impl Future&lt;Output=X&gt;</code></td></tr>
+<tr><td><code>fn() -&gt; S</code></td><td><strong>函数指针</strong>，内存持有可调用的地址</td></tr>
+<tr><td><code>Fn() -&gt; S</code></td><td><strong>Callable Trait</strong> (也可以是 <code>FnMut</code>，<code>FnOnce</code>)，由闭包实现</td></tr>
+<tr><td><code>|| {} </code></td><td>可借用其 <strong>捕获</strong> 的 <strong>闭包</strong> (如，局部变量)</td></tr>
+<tr><td>  <code>|x| {}</code></td><td>闭包接受一个名为 <code>x</code> 的参数，主体是块表达式</td></tr>
+<tr><td>  <code>|x| x + x</code></td><td>同上，没有块表达式，只有一单个表达式</td></tr>
+<tr><td>  <code>move |x| x + y </code></td><td>闭包获取其捕获的所有权，即 <code>y</code> 转移到闭包中</td></tr>
+<tr><td>  <code> return || true </code></td><td>闭包看起来像是 <strong>logical ORs</strong> (返回一个闭包)</td></tr>
+<tr><td><code>unsafe</code></td><td>如果你喜欢放假前调试代码（代码的安全由你自己保证），<strong>unsafe code</strong></td></tr>
+<tr><td>  <code>unsafe fn f() {}</code></td><td>会调用导致不安全的代码块，你必须检查必要条件</td></tr>
+<tr><td>  <code>unsafe trait T {}</code></td><td>不仔细的 <code>T</code> 实现可能会造成不安全的代码块，实现者必须仔细检查</td></tr>
+<tr><td>  <code>unsafe { f(); }</code></td><td>向编译器保证已经检查了必要条件</td></tr>
+<tr><td>  <code>unsafe impl T for S {}</code></td><td>保证 <code>S</code> 是表现良好的，可以安全在 <code>S</code> 上使用 <code>T</code></td></tr>
+</tbody></table>
+<h2 id="控制流程"><a class="header" href="#控制流程">控制流程</a></h2>
+<ul>
+<li>在函数内执行控制</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>while x {}</code></td><td><strong>Loop</strong>，当表达式 <code>x</code> 是真时一直运行</td></tr>
+<tr><td><code>loop {}</code></td><td><strong>Loop indefinitely</strong> 直到 <code>break</code>，可以主动创建 <code>break x</code></td></tr>
+<tr><td><code>for x in iter {}</code></td><td>循环遍历 <strong>迭代器</strong> 的语法糖</td></tr>
+<tr><td><code>if x {} else {}</code></td><td>如果表达式为真，则执行 <strong>条件分支</strong></td></tr>
+<tr><td><code>'label: loop {}</code></td><td><strong>循环标签</strong>，用于嵌套循环中的流程控制</td></tr>
+<tr><td><code>break</code></td><td><strong>Break expression</strong> 可退出循环</td></tr>
+<tr><td>  <code>break x</code></td><td>同上，但使 <code>x</code> 为循环表达式的值（仅在实际的 <code>loop</code>）</td></tr>
+<tr><td>  <code>break 'label</code></td><td>不仅要退出这个循环，还要退出标有 <code>'label</code> 的封闭循环</td></tr>
+<tr><td>  <code>break 'label x</code></td><td>同上，但使 <code>x</code> 为标有 <code>'label</code> 的封闭循环的值</td></tr>
+<tr><td><code>continue</code></td><td><strong>Continue expression</strong> 跳转到此循环后的下一个循环迭代</td></tr>
+<tr><td><code>continue 'label</code></td><td>同上，但使标有 <code>'label</code> 的封闭循环替代本次循环</td></tr>
+<tr><td><code>x?</code></td><td>如果 <code>x</code> 是 <code>Err</code> 或 <code>None</code> ，<strong>return and propagate</strong></td></tr>
+<tr><td><code>x.await</code></td><td>只作用于 <code>async</code> 里，直到 <strong>Future</strong> 生成流或准备好 <code>x</code></td></tr>
+<tr><td><code>return x</code></td><td>从函数中提前返回，更惯用的做法是在结尾使用表达式</td></tr>
+<tr><td><code>f()</code></td><td>调用 <code>f</code>，(如一个函数，闭包，函数指针, <code>Fn</code> )</td></tr>
+<tr><td><code>x.f()</code></td><td>调用成员函数，需要 <code>f</code> 把 <code>self</code>， <code>&amp;self</code>，...作为第一个参数</td></tr>
+<tr><td>  <code>X::f(x)</code></td><td>同 <code>x.f()</code>，除非实现了 <code>impl Copy for X {}</code>，否则 <code>f</code> 仅可被调用一次</td></tr>
+<tr><td>  <code>X::f(&amp;x)</code></td><td>同 <code>x.f()</code></td></tr>
+<tr><td>  <code>X::f(&amp;mut x)</code></td><td>同 <code>x.f()</code></td></tr>
+<tr><td>  <code>S::f(&amp;x)</code></td><td>如果 <code>x</code> <strong>derefs</strong> 到 <code>S</code> 同 <code>x.f()</code> 一样， 即 <code>x.f()</code> 发现了 <code>S</code> 的方法</td></tr>
+<tr><td>  <code>T::f(&amp;x)</code></td><td>如果 <code>x</code> <strong>impl</strong> <code>T</code> 同 <code>x.f()</code> 一样， 即 <code>x.f()</code> 在范围内发现了 <code>T</code> 的方法</td></tr>
+<tr><td><code>X::f()</code></td><td>调用关联函数，如 <code>X::new()</code></td></tr>
+<tr><td>  <code>&lt;X as T&gt;::f()</code></td><td>为 <code>X</code> 调用特征方法 <code>T::f()</code> 的实现</td></tr>
+</tbody></table>
+<h2 id="代码组织"><a class="header" href="#代码组织">代码组织</a></h2>
+<ul>
+<li>拆分项目到更小的作用域内和最少的依赖</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>mod m {}</code></td><td>定义一个模块，从 <code>{}</code> 内部获取定义</td></tr>
+<tr><td><code>mod m;</code></td><td>定义一个模块，从 <code>m.rs</code> 或 <code>m/mod.rs</code> 中获取定义</td></tr>
+<tr><td><code>a::b</code></td><td>在 <code>a</code> (<code>mod</code>, <code>enum</code>, …) 的内部，名命空间的路径到元素 <code>b</code></td></tr>
+<tr><td>  <code>::b</code></td><td>在 <strong>crate root</strong>、<strong>external prelude</strong>、<strong>global path</strong> 搜索 <code>b</code></td></tr>
+<tr><td>  <code>crate::b</code></td><td>在 <strong>crate root</strong> 中搜索 <code>b</code></td></tr>
+<tr><td>  <code>self::b</code></td><td>在当前的模块中搜索 <code>b</code></td></tr>
+<tr><td>  <code>super::b</code></td><td>在上一级模块中搜索 <code>b</code></td></tr>
+<tr><td><code>use a::b;</code></td><td>在范围内直接使用 <code>b</code> 而不需要 <code>a</code> 其余部分</td></tr>
+<tr><td><code>use a::{b, c};</code></td><td>同上，但是会把 <code>b</code> 和 <code>c</code> 放到范围内</td></tr>
+<tr><td><code>use a::b as x;</code></td><td>把 <code>b</code> 放到范围，使用别名 <code>x</code>，也像这样 <code>use std::error::Error as E</code></td></tr>
+<tr><td><code>use a::b as _;</code></td><td>把 <code>b</code> 作为匿名放到范围中，通常适用于命名冲突的特征</td></tr>
+<tr><td><code>use a::*;</code></td><td>把 <code>a</code> 内的所有接口放到范围中，仅推荐如果 <code>a</code> 是一些 <strong>prelude</strong></td></tr>
+<tr><td><code>pub use a::b;</code></td><td>把 <code>a::b</code> 放到范围中，并且在这里重新导出</td></tr>
+<tr><td><code>pub T</code></td><td>如果上一级路径是可见的则公开 <strong>visibility</strong></td></tr>
+<tr><td>  <code>pub(crate) T</code></td><td>最多在当前 <strong>crate</strong> 中可见</td></tr>
+<tr><td>  <code>pub(super) T</code></td><td>最多在上一级中可见</td></tr>
+<tr><td>  <code>pub(self) T</code></td><td>最多在当前模块中可见(默认和没有 <code>pub</code> 一样).</td></tr>
+<tr><td>  <code>pub(in a::b) T</code></td><td>最多在 <code>a::b</code> 中可见</td></tr>
+<tr><td><code>extern crate a;</code></td><td>声明对外部的 <strong>crate</strong> 依赖，仅在 <code>use a::b</code> 内</td></tr>
+<tr><td><code>extern &quot;C&quot; {}</code></td><td>从 <strong>FFI</strong> 声明外部依赖项和 ABI（如 &quot;C&quot;）</td></tr>
+<tr><td><code>extern &quot;C&quot; fn f() {}</code></td><td>定义要使用 ABI（&quot;C&quot;）导出到 <strong>FFI</strong> 的函数</td></tr>
+</tbody></table>
+<ul>
+<li>子模块中的项目始终可以访问任何项目，无论是否为 <code>pub</code></li>
+</ul>
+<h2 id="类型别名和强制转换"><a class="header" href="#类型别名和强制转换">类型别名和强制转换</a></h2>
+<ul>
+<li>类型的简写名称，以及将一种类型转换为另一种类型的方法</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>type T = S;</code></td><td>创建一个类型别名，即 <code>S</code> 的另一个名称</td></tr>
+<tr><td><code>Self</code></td><td><strong>implementing type</strong>，如 <code>fn new() -&gt; Self</code></td></tr>
+<tr><td><code>self</code></td><td>在 <code>fn f(self) {}</code> 里的方法，与 <code>fn f(self: Self) {}</code> 一样</td></tr>
+<tr><td>  <code>&amp;self</code></td><td>同上，但将 self 改为借用，与 <code>f(self: &amp;Self)</code> 一样</td></tr>
+<tr><td>  <code>&amp;mut self</code></td><td>同上，但将 self 改为可变借用，与 <code>f(self: &amp;mut Self)</code> 一样</td></tr>
+<tr><td>  <code>self: Box&lt;Self&gt;</code></td><td><strong>任意self类型 Arbitrary self type</strong>，给智能指针添加方法（<code>my_box.f_of_self()</code>）</td></tr>
+<tr><td><code>S as T</code></td><td>消除类型 <code>S</code> 改为特征 <code>T</code>， 如 <code>&lt;S as T&gt;::f()</code></td></tr>
+<tr><td><code>S as R</code></td><td>在<strong>use</strong>符号中使用，导入 <code>S</code> 作为 <code>R</code>，如 <code>use a::S as R</code></td></tr>
+<tr><td><code>x as u32</code></td><td>简单映射，可能会遭到意外的截断</td></tr>
+</tbody></table>
+<h2 id="宏和属性"><a class="header" href="#宏和属性">宏和属性</a></h2>
+<ul>
+<li>代码在实际编译之前进行展开生成</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>m!()</code></td><td>宏调用, 也可以 <code>m!{}</code>， <code>m![]</code> (依赖宏的实现)</td></tr>
+<tr><td><code>#[attr]</code></td><td>外部属性，用于注释下面的条目</td></tr>
+<tr><td><code>#![attr]</code></td><td>内部属性，用于注释上一级和周围的条目</td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>内部宏</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>$x:ty</code></td><td>宏捕获，<code>:...</code> 片段为 <code>$x</code> 声明了允许的内容</td></tr>
+<tr><td><code>$x</code></td><td>宏替换，例如使用上面捕获的 <code>$x:ty</code></td></tr>
+<tr><td><code>$(x),*</code></td><td>宏重复，例如在宏中重复零次或多次</td></tr>
+<tr><td>  <code>$(x),?</code></td><td>同上，但重复零次或一次</td></tr>
+<tr><td>  <code>$(x),+</code></td><td>同上，但重复一次或多次</td></tr>
+<tr><td>  <code>$(x)&lt;&lt;+</code></td><td>实际上除了分隔符 <code>,</code> 也可以接受这样的 <code>&lt;&lt;</code></td></tr>
+</tbody></table>
+<h2 id="模式匹配"><a class="header" href="#模式匹配">模式匹配</a></h2>
+<ul>
+<li>在 match 或 let 表达式 以及函数参数中的模式构造</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>match m {}</code></td><td>初始化模式匹配，然后使用匹配分支</td></tr>
+<tr><td><code>let S(x) = get();</code></td><td>明显地，<code>let</code> 还可以解构成类似下面的形式</td></tr>
+<tr><td>  <code>let S { x } = s;</code></td><td>仅把 <code>x</code> 绑定到 <code>s.x</code> 的值</td></tr>
+<tr><td>  <code>let (_, b, _) = abc;</code></td><td>仅把 <code>b</code> 绑定到 <code>abc.1</code> 的值</td></tr>
+<tr><td>  <code>let (a, ..) = abc;</code></td><td>忽略 <strong>其余部分</strong> 也有作用</td></tr>
+<tr><td>  <code>let (.., a, b) = (1, 2);</code></td><td>指定绑定优先于 <strong>其余部分</strong>，这里 <code>a</code> 是 <code>1</code> ，<code>b</code> 是 <code>2</code></td></tr>
+<tr><td>  <code>let s @ S { x } = get();</code></td><td>当 <code>x</code> 绑定到 <code>s.x</code> 时，<code>s</code> 绑定到 <code>S</code>，<strong>pattern binding</strong></td></tr>
+<tr><td>  <code>let w @ t @ f = get();</code></td><td>给每个 <code>w t f</code> 存储 <code>get()</code> 的三个副本结果</td></tr>
+<tr><td>  <code>let Some(x) = get();</code></td><td>如果是可辩驳模式不会起到作用，应使 <code>if let</code> 来代替</td></tr>
+<tr><td><code>if let Some(x) = get() {}</code></td><td>如果模式可被分配成分支(如，枚举变体)，语法糖</td></tr>
+<tr><td><code>while let Some(x) = get() {}	</code></td><td>同上，<code>{}</code> 只要模式可被分配成分支，将继续调用 <code>get()</code></td></tr>
+<tr><td><code>fn f(S { x }: S)</code></td><td>函数参数也像 <code>let</code> 一样使用，这里把 <code>x</code> 绑定到 <code>f(s)</code> 的 <code>s.x</code></td></tr>
+</tbody></table>
+<p><sup>*</sup>脱糖后如 <code>match get() { Some(x) =&gt; {}, _ =&gt; () }</code></p>
+<ul>
+<li>匹配表达式中的模式匹配分支，左侧这些分支也可以在 let 表达式中找到</li>
+</ul>
+<table><thead><tr><th>在匹配分支内</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>E::A =&gt; {}</code></td><td>匹配枚举变体 <code>A</code>，<strong>模式匹配</strong></td></tr>
+<tr><td><code>E::B ( .. ) =&gt; {}</code></td><td>匹配枚举元组变体 <code>B</code>，任何索引的通配符</td></tr>
+<tr><td><code>E::C { .. } =&gt; {}</code></td><td>匹配枚举结构体变体，任何字段的通配符</td></tr>
+<tr><td><code>S { x: 0, y: 1 } =&gt; {}</code></td><td>匹配结构体与指定值（仅接受 <code>s</code> 与 <code>s.x 0</code> 和 <code>s.y 1</code>）</td></tr>
+<tr><td><code>S { x: a, y: b } =&gt; {}</code></td><td>匹配结构体与 <code>any(!)</code>，并且绑定 <code>s.x</code> 到 <code>a</code> 和 <code>s.y</code> 到 <code>b</code></td></tr>
+<tr><td>  <code>S { x, y } =&gt; {}</code></td><td>同上，但分别地把 <code>s.x</code> 和 <code>s.y</code> 的简写 <code>x</code> 和 <code>y</code> 作为绑定</td></tr>
+<tr><td><code>S { .. } =&gt; {}</code></td><td>将 struct 与任何值匹配</td></tr>
+<tr><td><code>D =&gt; {}</code></td><td>如果 <code>D</code> 在 <code>use</code> 中，匹配枚举变体到 <code>E::D</code></td></tr>
+<tr><td><code>D =&gt; {}</code></td><td>如果 <code>D</code> 不在 <code>use</code> 中，匹配任何东西绑定到 <code>D</code>，也可能是 <code>E::D</code> 的一种错误形式</td></tr>
+<tr><td><code>_ =&gt; {}</code></td><td>匹配任何内容（所有其余部分）的完全通配符。</td></tr>
+<tr><td><code>0 | 1 =&gt; {}</code></td><td>模式选择，<strong>or-patterns</strong></td></tr>
+<tr><td>  <code>E::A | E::Z =&gt; {}</code></td><td>同上，但是在枚举变体上</td></tr>
+<tr><td>  <code>E::C {x} | E::D {x} =&gt; {}</code></td><td>同上，但如果所有变体都有它，则绑定 <code>x</code></td></tr>
+<tr><td>  <code>Some(A | B) =&gt; {}</code></td><td>同上，可以匹配深度嵌套的 <strong>or-patterns</strong></td></tr>
+<tr><td><code>(a, 0) =&gt; {}</code></td><td>为 <code>a</code> 和 <code>0</code> 匹配任何值的元组</td></tr>
+<tr><td><code>[a, 0] =&gt; {}</code></td><td><strong>切片模式</strong>，为 <code>a</code> 和 <code>0</code> 匹配任何值的数组</td></tr>
+<tr><td>  <code>[1, ..] =&gt; {}</code></td><td><strong>子切片模式</strong>，匹配数组从 <code>1</code> 开始，任何其余的值</td></tr>
+<tr><td>  <code>[1, .., 5] =&gt; {}</code></td><td>匹配数组从 <code>1</code> 开始到 <code>5</code> 结束中的值</td></tr>
+<tr><td>  <code>[1, x @ .., 5] =&gt; {}</code></td><td>同上，但还会绑定 <code>x</code> 到代表中间的切片</td></tr>
+<tr><td>  <code>[a, x @ .., b] =&gt; {}</code></td><td>同上，但分别匹配任意的第一个和最后一个，绑定为 <code>a</code> 和 <code>b</code></td></tr>
+<tr><td><code>1 .. 3 =&gt; {}</code></td><td><strong>范围模式</strong>，这里会匹配 <code>1</code> 和 <code>2</code>，部分不稳定</td></tr>
+<tr><td>  <code>1 ..= 3 =&gt; {}</code></td><td>包含范围模式，匹配 <code>1</code>，<code>2</code> 和 <code>3</code></td></tr>
+<tr><td>  <code>1 .. =&gt; {}</code></td><td>开放的范围模式，匹配 <code>1</code> 和任何更大的数</td></tr>
+<tr><td><code>x @ 1..=5 =&gt; {}</code></td><td>绑定匹配到 <code>x</code>，<strong>模式绑定</strong>，此处的 <code>x</code> 将是 <code>1</code>，<code>2</code>，... 或 <code>5</code></td></tr>
+<tr><td>  <code>Err(x @ Error {..}) =&gt; {}</code></td><td>也可以用于嵌套，这里 <code>x</code> 绑定到 <code>Error</code>，特别是下面有用的 <code>if</code> 形式</td></tr>
+<tr><td><code>S { x } if x &gt; 10 =&gt; {}</code></td><td>模式 <strong>匹配保护</strong>，条件也必须为真才能匹配</td></tr>
+</tbody></table>
+<h2 id="泛型和约束"><a class="header" href="#泛型和约束">泛型和约束</a></h2>
+<ul>
+<li>泛型结合类型构造函数，特征和函数为你的代码提供更大的灵活性</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>S&lt;T&gt;</code></td><td>带有类型参数的 <strong>泛型</strong> 类型（<code>T</code> 表示占位符名称）</td></tr>
+<tr><td><code>S&lt;T: R&gt;</code></td><td>打印简写的 <strong>trait bound</strong> 范式（<code>R</code> 必须是实际的特征）</td></tr>
+<tr><td>  <code>T: R, P: S</code></td><td><strong>Independent trait bounds</strong>（这里一个给 <code>T</code>，一个给 <code>P</code>）</td></tr>
+<tr><td>  <code>T: R, S</code></td><td>编译报错，你可能希望像使用下面的用法 <code>R + S</code></td></tr>
+<tr><td>  <code>T: R + S</code></td><td><strong>Compound trait bound</strong>， <code>T</code> 必须满足 <code>R</code> 和 <code>S</code></td></tr>
+<tr><td>  <code>T: R + 'a</code></td><td>同上，但是 <code>T</code> 必须满足 <code>R</code>，如果 <code>T</code> 有生命周期，必须比 <code>'a</code> 更久</td></tr>
+<tr><td>  <code>T: ?Sized</code></td><td>选择离开预定义的 <strong>trait bound</strong>，这里是 <code>Sized</code></td></tr>
+<tr><td>  <code>T: 'a</code></td><td>类型的 <strong>lifetime bound</strong>，如果 <code>T</code> 存在引用，则必须比 <code>'a</code> 更久</td></tr>
+<tr><td>  <code>T: 'static</code></td><td>同上，特别是不意味着 <code>T</code> 将会 <code>'static</code>，仅可以会 <code>'static</code></td></tr>
+<tr><td>  <code>'b: 'a</code></td><td><code>'b</code> 的生命周期必须存活至少为 <code>'a</code></td></tr>
+<tr><td><code>S&lt;const N: usize&gt;</code></td><td><strong>Generic const bound</strong>，类型 <code>S</code> 的使用者可以提供常量值 <code>N</code></td></tr>
+<tr><td>  <code>S&lt;10&gt;</code></td><td>在使用时，常量边界可以作为原始值提供</td></tr>
+<tr><td>  <code>S&lt;{5+5}&gt;</code></td><td>表达式必须放在大括号中</td></tr>
+<tr><td><code>S&lt;T&gt; where T: R</code></td><td>几乎和 <code>S&lt;T: R&gt;</code> 一样，但语法越长越易于阅读</td></tr>
+<tr><td>  <code>S&lt;T&gt; where u8: R&lt;T&gt;</code></td><td>允许创建生成其它类型的条件语句</td></tr>
+<tr><td><code>S&lt;T = R&gt;</code></td><td><strong>Default parameters</strong>，更容易使用，但也很灵活</td></tr>
+<tr><td>  <code>S&lt;const N: u8 = 0&gt;</code></td><td>默认参数是常量，如 <code>f(x: S) {}</code> 中参数 <code>N</code> 是 <code>0</code></td></tr>
+<tr><td>  <code>S&lt;T = u8&gt;</code></td><td>默认参数是类型，如 <code>f(x: S) {}</code> 中参数 <code>T</code> 是 <code>u8</code></td></tr>
+<tr><td><code>S&lt;'_&gt;</code></td><td><strong>anonymous lifetime</strong>，如果可以明显的看出来，会要求编译器推断出来</td></tr>
+<tr><td><code>S&lt;_&gt;</code></td><td><strong>anonymous type</strong>，如 <code>let x: Vec&lt;_&gt; = iter.collect()</code> 一样</td></tr>
+<tr><td><code>S::&lt;T&gt;</code></td><td><strong>Turbofish</strong> 会调用类型消除歧义，如 <code>f::&lt;u32&gt;()</code> 一样</td></tr>
+<tr><td><code>trait T&lt;X&gt; {}</code></td><td>基于 <code>X</code> 之上的一个特征泛型，可以有多个 <code>impl T for S</code>（一对 <code>X</code>）</td></tr>
+<tr><td><code>trait T { type X; }</code></td><td>定义 <strong>关联类型</strong> <code>X</code>，仅 <code>impl T for S</code> 的一种可能</td></tr>
+<tr><td>  <code>type X = R;</code></td><td>在 <code>impl T for S { type X = R; }</code> 中设置关联类型</td></tr>
+<tr><td><code>impl&lt;T&gt; S&lt;T&gt; {}</code></td><td>为在 <code>S&lt;T&gt;</code> 中任意的 <code>T</code> 实现功能，<code>T</code> 是类型参数</td></tr>
+<tr><td><code>impl S&lt;T&gt; {}</code></td><td>完全为 <code>S&lt;T&gt;</code> 实现功能，<code>T</code> 是指定类型（如 <code>S&lt;u32&gt;</code>）</td></tr>
+<tr><td><code>fn f() -&gt; impl T</code></td><td><strong>Existential types</strong>，返回一个 <code>impl T</code> 的未知调用者 <code>S</code></td></tr>
+<tr><td><code>fn f(x: &amp;impl T)</code></td><td>Trait bound <strong>impl traits</strong>， 类似于 <code>fn f&lt;S:T&gt;(x: &amp;S)</code></td></tr>
+<tr><td><code>fn f(x: &amp;dyn T)</code></td><td><strong>dynamic dispatch</strong> 的标记，<code>f</code> 不会被单态化（<strong>monomorphized</strong>）</td></tr>
+<tr><td><code>fn f() where Self: R;</code></td><td>在 <code>trait T {}</code> 中，使 <code>f</code> 仅可访问 <code>impl R</code> 的已知类型</td></tr>
+<tr><td>  <code>fn f() where Self: Sized;</code></td><td>使用 <code>Sized</code> 可以从 <code>dyn T</code> trait object vtable 中选出 <code>f</code>，启用 trait object</td></tr>
+<tr><td>  <code>fn f() where Self: R {}</code></td><td>其它 <code>R</code> 有用的 <code>w. dflt</code>，方法（<code>non dflt</code> 无论怎样都需要被实现）</td></tr>
+</tbody></table>
+<h2 id="higher-ranked-例子"><a class="header" href="#higher-ranked-例子">Higher-Ranked 例子</a></h2>
+<ul>
+<li>实际的类型和特征，抽象于一些东西，通常是生命周期</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>for&lt;'a&gt;</code></td><td><strong>higher-ranked bounds</strong> 的标记</td></tr>
+<tr><td>  <code>trait T: for&lt;'a&gt; R&lt;'a&gt; {}</code></td><td>任何 <code>impl T</code> 的 <code>S</code> 都必须为了整个生命周期满足 <code>R</code></td></tr>
+<tr><td><code>fn(&amp;'a u8)</code></td><td>函数指针类型持有 <code>fn</code> 可调用的指定的生命周期</td></tr>
+<tr><td><code>for&lt;'a&gt; fn(&amp;'a u8)</code></td><td><strong>Higher-ranked type</strong> 持有 <code>fn</code> 可调用的任何上面的子类型</td></tr>
+<tr><td>  <code>fn(&amp;'_ u8)</code></td><td>同上，自动展开到类型 <code>for&lt;'a&gt; fn(&amp;'a u8)</code></td></tr>
+<tr><td>  <code>fn(&amp;u8)</code></td><td>同上，自动展开到类型 <code>for&lt;'a&gt; fn(&amp;'a u8)</code></td></tr>
+<tr><td><code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td><td><strong>Higher-ranked</strong>（trait-object）类型，像上面的 <code>fn</code> 一样</td></tr>
+<tr><td>  <code>dyn Fn(&amp;'_ u8)</code></td><td>同上，自动展开到类型 <code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td></tr>
+<tr><td>  <code>dyn Fn(&amp;u8)</code></td><td>同上，自动展开到类型 <code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td></tr>
+</tbody></table>
+<p><sup>*</sup> <code>for&lt;&gt;</code> 是类型的一种，下面展示了 <code>impl T for for&lt;'a&gt; fn(&amp;'a u8)</code> 这样的写法</p>
+<table><thead><tr><th>实现特征</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>impl&lt;'a&gt; T for fn(&amp;'a u8) {}</code></td><td>对于指针 <code>fn</code>，其中调用接受指定的 <code>'a</code>， imple trait <code>T</code></td></tr>
+<tr><td><code>impl T for for&lt;'a&gt; fn(&amp;'a u8) {}	</code></td><td>对于指针 <code>fn</code>，其中调用接受任何的 imple trait <code>T</code></td></tr>
+<tr><td>  <code>impl T for fn(&amp;u8) {}</code></td><td>同上，简写版</td></tr>
+</tbody></table>
+<h2 id="字符串和字符"><a class="header" href="#字符串和字符">字符串和字符</a></h2>
+<ul>
+<li>Rust 有几种创建文本值的方法</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>&quot;...&quot;</code></td><td>字符串文本，UTF-8 将解释 <code>\n</code> 为换行符</td></tr>
+<tr><td><code>r&quot;...&quot;</code></td><td>原始字符串文本，UTF-8 不会解释 <code>\n</code></td></tr>
+<tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文本，UTF-8 也可以包含 <code>&quot;</code>，<code>#</code> 数量是可变的</td></tr>
+<tr><td><code>b&quot;...&quot;</code></td><td>字节字符串文本，构造 ASCII <code>[u8]</code> ，不是字符串</td></tr>
+<tr><td><code>br&quot;...&quot;, br#&quot;...&quot;#</code></td><td>原始字节字符串文本，ASCII <code>[u8]</code>，以上的组合</td></tr>
+<tr><td><code>'🦀'</code></td><td>字符文本，固定 4 字节的 unicode <code>char</code></td></tr>
+<tr><td><code>b'x'</code></td><td>ASCII 字节文本</td></tr>
+</tbody></table>
+<h2 id="文档注释"><a class="header" href="#文档注释">文档注释</a></h2>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>///</code></td><td>外部文档注释，通常用于类型、特征、函数</td></tr>
+<tr><td><code>//!</code></td><td>内行文档注释，主要用于文件到文档模块的开头</td></tr>
+<tr><td><code>//</code></td><td>行注释，使用这些来记录代码流或内部结构</td></tr>
+<tr><td><code>/*...*/</code></td><td>块注释</td></tr>
+<tr><td><code>/**...*/</code></td><td>外部块文档注释</td></tr>
+<tr><td><code>/*!...*/</code></td><td>内部块文档注释</td></tr>
+</tbody></table>
+<h2 id="其它杂项"><a class="header" href="#其它杂项">其它杂项</a></h2>
+<ul>
+<li>这些符号不属于任何其他类别，但知道了还是很好</li>
+</ul>
+<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>!</code></td><td>始终为空</td></tr>
+<tr><td><code>_</code></td><td>未命名的通配符变量绑定，例如 <code>|x, _| {}</code></td></tr>
+<tr><td>  <code>let _ = x;</code></td><td>未命名的分配是不执行的，不会 <strong>move out x</strong> 或保留目标值</td></tr>
+<tr><td><code>_x</code></td><td>变量绑定明确标记为未使用</td></tr>
+<tr><td><code>1_234_567</code></td><td>用于可清晰分辨的数字分隔符</td></tr>
+<tr><td><code>1_u8</code></td><td><strong>数字文本</strong> 的类型说明符（还可以是 <code>i8</code>，<code>u16</code> …）</td></tr>
+<tr><td><code>0xBEEF, 0o777, 0b1001</code></td><td>十六进制（<code>0x</code>）、八进制（<code>0o</code>）和二进（<code>0b</code>）的整数文本</td></tr>
+<tr><td><code>r#foo</code></td><td>用于版本兼容的原始标识符</td></tr>
+<tr><td><code>x;</code></td><td>语句终止符或表达式</td></tr>
+</tbody></table>
+<h2 id="常用运算符"><a class="header" href="#常用运算符">常用运算符</a></h2>
+<p>Rust 支持大多数运算符（<code>+</code>，<code>*</code>，<code>%</code>，<code>=</code>，<code>==</code>，...），包括重载。因为它们在 Rust 中的行为没有什么不同，所以就不在此处列出它们。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../rust/chapter_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../rust/chapter_1_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../rust/chapter_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../rust/chapter_1_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

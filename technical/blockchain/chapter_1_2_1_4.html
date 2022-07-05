@@ -1,0 +1,621 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>自定义pallet - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html" class="active"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="自定义pallet"><a class="header" href="#自定义pallet">自定义pallet</a></h1>
+<p>本教程的重点是如何使用 pallets 自定义运行时，包括如何将简单和复杂的 pallets 添加到运行时，以及如何将 pallets 与智能合约结合使用。</p>
+<h2 id="添加一个pallet到运行时"><a class="header" href="#添加一个pallet到运行时">添加一个pallet到运行时</a></h2>
+<p>Nicks pallet 允许区块链用户支付押金，为他们控制的帐户保留昵称。它实现了以下功能：</p>
+<ul>
+<li><code>set_name</code> 函数用于收集押金，并为帐户设置名称，如果该名称尚未被使用。</li>
+<li><code>clear_name </code> 函数用于删除与帐户关联的名称并退还押金。</li>
+<li><code>kill_name</code> 函数用于强制删除帐户名称，但不会退还押金。</li>
+</ul>
+<h3 id="添加nicks-pallet的依赖"><a class="header" href="#添加nicks-pallet的依赖">添加Nicks pallet的依赖</a></h3>
+<p>将 Nicks pallet 的依赖项添加到运行时，打开 <code>runtime/Cargo.toml</code> 文件，复制一个存在的 pallet 依赖项描述，然后把名字替换为 <code>pallet-nicks</code>，使该 pallet 在 node template 运行时是可用的。例如，添加如下类似的一行：</p>
+<pre><code class="language-bash editable noplayground">pallet-nicks = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+</code></pre>
+<ul>
+<li>version 标识着你想导入的 crate 版本。</li>
+<li>使用标准 Rust 库编译运行时的时候，是否包括 pallet 特性的默认行为。</li>
+<li>用于检索 <code>pallet-nicks</code> crate 的存储库位置。</li>
+<li>用于检索 crate 的分支。</li>
+</ul>
+<p>这些细节对于任何给定版本的 node tempalte 中的每个 pallet 都应该是相同的。</p>
+<p>添加 <code>pallet-nicks/std</code> 特性到 <code>features</code> 列表中，以编译运行时的时候可以启用。</p>
+<pre><code class="language-rust editable noplayground">[features]
+default = [&quot;std&quot;]
+std = [
+  ...
+  &quot;pallet-aura/std&quot;,
+  &quot;pallet-balances/std&quot;,
+  &quot;pallet-nicks/std&quot;,
+  ...
+]
+</code></pre>
+<p>如果你忘记更新 <code>Cargo.toml</code> 的 <code>features</code> 部分，在编译运行时二进制文件时，你可能会看到 <code>cannot find function</code> 错误。</p>
+<p>通过以下命令检查依赖项是否被正确解析：</p>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<h3 id="审查余额的配置"><a class="header" href="#审查余额的配置">审查余额的配置</a></h3>
+<p>例如，查看你需要实现的 <code>nicks</code> pallet，你可以参考关于 <a href="https://paritytech.github.io/substrate/master/pallet_nicks/pallet/trait.Config.html"><code>pallet_nicks::Config</code></a> 的 Rust 文档或者 <a href="https://github.com/paritytech/substrate/blob/master/frame/nicks/src/lib.rs"><code>Nicks pallet 源码</code></a>中的 trait 定义。</p>
+<p>在本节教程中，你可以看到 <code>nicks</code> pallet 中的 <code>Config</code> trait 声明了以下类型：
+``rust,editable,noplayground
+pub trait Config: Config {
+type Event: From&lt;Event<Self>&gt; + IsType&lt;<Self as Config>::Event&gt;;
+type Currency: ReservableCurrency<a href="Self::AccountId">Self::AccountId</a>;
+type ReservationFee: Get&lt;&lt;<Self as Config>::Currency as Currency&lt;<Self as Config>::AccountId&gt;&gt;::Balance&gt;;
+type Slashed: OnUnbalanced&lt;&lt;<Self as Config>::Currency as Currency&lt;<Self as Config>::AccountId&gt;&gt;::NegativeImbalance&gt;;
+type ForceOrigin: EnsureOrigin<a href="Self::Origin">Self::Origin</a>;
+type MinLength: Get<u32>;
+type MaxLength: Get<u32>;
+}</p>
+<pre><code>确定 pallet 所需的类型后，需要向运行时添加代码以实现 `Config` 特性。查看为一个 pallet 怎样实现 `Config` trait，使用 **Balances** pallet 作为一个例子，打开 `runtime/src/lib.rs` 文件，找到 `Balances` pallet 的位置并注意它由以下实现（`impl`）代码块组成：
+```rust,editable,noplayground
+impl pallet_balances::Config for Runtime {
+  type MaxLocks = ConstU32&lt;50&gt;;
+  type MaxReserves = ();
+  type ReserveIdentifier = [u8; 8];
+  /// The type for recording an account's balance.
+  type Balance = Balance;
+  /// The ubiquitous event type.
+  type Event = Event;
+  /// The empty value, (), is used to specify a no-op callback function.
+  type DustRemoval = ();
+  /// Set the minimum balanced required for an account to exist on-chain
+  type ExistentialDeposit = ConstU128&lt;500&gt;;
+  /// The FRAME runtime system is used to track the accounts that hold balances.
+  type AccountStore = System;
+  /// Weight information is supplied to the Balances pallet by the node template runtime.
+  type WeightInfo = pallet_balances::weights::SubstrateWeight&lt;Runtime&gt;;
+}
+</code></pre>
+<p>正如你看到的这个例子，<code>impl pallet_balances::Config</code> 代码块允许你为指定的 Balances pallet <code>Config</code> trait 配置类型和参数。例如，此 <code>impl</code> 代码块配置 Balances pallet 使用 <code>u128</code> 类型来追述 balances。</p>
+<h3 id="为nicks实现配置"><a class="header" href="#为nicks实现配置">为Nicks实现配置</a></h3>
+<p>要实现 <code>nicks</code> pallet 在你的运行时，打开 <code>runtime/src/libs.rs</code> 文件，找到 Balances 代码块的最后一行，为 Nicks pallet 添加下面的代码块：</p>
+<pre><code class="language-rust editable noplayground">impl pallet_nicks::Config for Runtime {
+// The Balances pallet implements the ReservableCurrency trait.
+// `Balances` is defined in `construct_runtime!` macro.
+type Currency = Balances;
+
+// Set ReservationFee to a value.
+type ReservationFee = ConstU128&lt;100&gt;;
+
+// No action is taken when deposits are forfeited.
+type Slashed = ();
+
+// Configure the FRAME System Root origin as the Nick pallet admin.
+// https://paritytech.github.io/substrate/master/frame_system/enum.RawOrigin.html#variant.Root
+type ForceOrigin = frame_system::EnsureRoot&lt;AccountId&gt;;
+
+// Set MinLength of nick name to a desired value.
+type MinLength = ConstU32&lt;8&gt;;
+
+// Set MaxLength of nick name to a desired value.
+type MaxLength = ConstU32&lt;32&gt;;
+
+// The ubiquitous event type.
+type Event = Event;
+}
+</code></pre>
+<p>添加 Nicks 到 <code>construct_runtime!</code> 宏中，如下代码：</p>
+<pre><code class="language-rust editable noplayground">construct_runtime!(
+pub enum Runtime where
+   Block = Block,
+   NodeBlock = opaque::Block,
+   UncheckedExtrinsic = UncheckedExtrinsic
+ {
+   /* --snip-- */
+   Balances: pallet_balances,
+
+   /*** Add This Line ***/
+   Nicks: pallet_nicks,
+ }
+);
+</code></pre>
+<p>通过运行下面的命令检查新的依赖是否被正确解析：</p>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<p>通过运行下面的命令以 release 模式编译 node：</p>
+<pre><code class="language-bash editable noplayground">cargo build --release
+</code></pre>
+<h3 id="启动区块链节点"><a class="header" href="#启动区块链节点">启动区块链节点</a></h3>
+<p>通过运行下面的命令以开发模式启动节点</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template --dev
+</code></pre>
+<p>在上面这种例子中，<code>--dev</code> 选项使用预构建的 <code>development</code> chain specification 使节点运行在开发模式下。默认情况下，当你通过按下 Control-c 停止节点时，这个选项会删除所有活动数据，如 keys、区块链的数据库、网络信息。使用 <code>--dev</code> 选项确保在任何时候你停止或重启节点时都会有一个干净的网络状态。</p>
+<p>通过查看终端中显示的输出，验证节点是否已启动并成功运行。如果块的最终确认后控制台输出中的数字还在增加，则你的区块链正在生成新的区块，并就它们所描述的状态达成共识。</p>
+<h3 id="启动front-end-template"><a class="header" href="#启动front-end-template">启动front-end template</a></h3>
+<p>现在你已经添加一个新的 pallet 到你的运行时，你可以使用 Substrate front-end template 跟 node template 进行交互，并且访问 Nicks pallet。在你已安装的 front-end template 目录中，通过运行下面的命令为 front-end template 启动 web server：</p>
+<pre><code class="language-bash editable noplayground">yarn start
+</code></pre>
+<p>在浏览器中打开 <code>http://localhost:8000</code> 去查看 front-end template。</p>
+<h3 id="使用nicks-pallet设置昵称"><a class="header" href="#使用nicks-pallet设置昵称">使用Nicks pallet设置昵称</a></h3>
+<p>在账户列表选择 Alice 账户，在 Pallet Interactor 组件确认 <strong>Extrinsic</strong> 是已经被选择的，从可调用的 pallets 列表中选择 <code>nicks</code>，选择 <a href="https://paritytech.github.io/substrate/master/pallet_nicks/pallet/enum.Call.html#variant.set_name"><code>setname</code></a> 作为从 <code>nicks</code> pallet 中调用的函数，输入一个不少于 <code>MinNickLength</code>（8字符）且不超过 <code>MaxNickLength</code>（32字符）的昵称。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subsetname.jpg" alt="" /></p>
+<p>点击 <strong>Signed</strong> 执行函数。</p>
+<p>观察调用改变的状态，从 Ready 到 InBlock 到 Finalized，并且注意 Nicks pallet 发出的<a href="https://paritytech.github.io/substrate/master/pallet_nicks/pallet/enum.Event.html">事件</a>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subsetresult.jpg" alt="" /></p>
+<h3 id="使用nicks-pallet查询账户的信息"><a class="header" href="#使用nicks-pallet查询账户的信息">使用Nicks pallet查询账户的信息</a></h3>
+<p>在账户列表选择 Alice 账户，在 Pallet Interactor 组件中选择 <strong>Query</strong> 作为交互的类型，从可调用的 pallets 列表中选择 <code>nicks</code>，选择 <a href="https://paritytech.github.io/substrate/master/pallet_nicks/pallet/enum.Call.html#variant.set_name"><code>nameOf</code></a> 作为要调用的函数，在 AccountId 字段中复制并粘贴 <code>alice</code> 账户的地址，然后点击 <strong>Query</strong>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subqueryresult.jpg" alt="" /></p>
+<p>返回的类型是一个包含两个值的元组：</p>
+<ul>
+<li>Alice 账户的16进制编码的昵称 <code>53756273747261746520737570657273746172202d20416c696365</code>。</li>
+<li>从 Alice 的账户中预留的用于保存昵称的金额（<code>100</code>）。</li>
+</ul>
+<p>如果你要查询 Nicks pallet 中 Bob 账户的昵称，你将看到返回一个 <code>None</code> 值，因为 Bob 没有调用 <code>setname</code> 函数去预留一个昵称。</p>
+<h3 id="探索其他功能"><a class="header" href="#探索其他功能">探索其他功能</a></h3>
+<p>本节教程演示了如何向运行时添加一个简单的 pallet，并演示了如何使用前端模板与新 pallet 交互，你将 <code>nicks </code> pallet 添加到运行时，并使用前端模板调用 <code>set_name</code> 和 <code>nameOf</code> 函数。<code>nicks</code> pallet 还提供了两个附加函数：<code>clear_name</code> 函数和 <code>kill_name</code> 函数，使帐户所有者能够删除或保留名称，或者一个 root-level 用户能够强制删除帐户名称。通过探索这些功能的工作方式，你可以继续了解其他功能，如 Sudo pallet 和 origin accounts 的使用。</p>
+<h2 id="配置合约pallet"><a class="header" href="#配置合约pallet">配置合约pallet</a></h2>
+<h3 id="添加contracts-pallet依赖"><a class="header" href="#添加contracts-pallet依赖">添加contracts pallet依赖</a></h3>
+<p>将 contracts pallet 的依赖项添加到运行时，导入 <code>pallet-contracts</code> crate，打开 <code>runtime/Cargo.toml</code> 文件，复制一个存在的 pallet 依赖项描述，然后把名字替换为 <code>pallet-contracts</code>，使该 pallet 在 node template 运行时是可用的。例如，添加如下类似的一行：</p>
+<pre><code class="language-rust editable noplayground">pallet-contracts = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+</code></pre>
+<p>导入 <code>pallet-contracts-primitives</code> crate，通过将其添加到依赖项列表中，使其可用于 node template 运行时。在大多数情况下，你在任何给定版本的 node template 中为每个托盘指定相同的信息。然而，如果编译器指定的版本与你所指定的版本不同，你可能需要修改依赖项以匹配编译器识别的版本。例如，如果编译器发现 <code>pallet-contracts-primitives</code> crate 的版本是 6.0.0：</p>
+<pre><code class="language-rust editable noplayground">pallet-contracts-primitives = { version = &quot;6.0.0&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+</code></pre>
+<p>将 Contracts pallet 添加到 <code>std</code> 特性列表中，这样当运行时作为平台原生二进制（非 Wasm 二进制）文件构建时，它的特性就包括在内了。</p>
+<pre><code class="language-rust editable noplayground">[features]
+default = [&quot;std&quot;]
+std = [
+  &quot;codec/std&quot;,
+  &quot;scale-info/std&quot;,
+  &quot;frame-executive/std&quot;,
+  &quot;frame-support/std&quot;,
+  &quot;frame-system-rpc-runtime-api/std&quot;,
+  &quot;frame-system/std&quot;,
+  &quot;pallet-aura/std&quot;,
+  &quot;pallet-balances/std&quot;,
+  &quot;pallet-contracts/std&quot;,
+  &quot;pallet-contracts-primitives/std&quot;,
+]
+</code></pre>
+<p>保存代码并关闭 <code>runtime/Cargo.toml</code> 文件。</p>
+<p>通过运行下面的命令检查你的运行时编译是否正确：</p>
+<pre><code class="language-rust editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<h3 id="实现-contracts-configuration-trait"><a class="header" href="#实现-contracts-configuration-trait">实现 Contracts configuration trait</a></h3>
+<p>如果你查看 <code>pallet_contracts::Config</code> Rust API 文档，你将会注意到，该 pallet 不像 Nicks pallet 一样，有很多关联类型，因此本节教程的代码比之前的要更复杂。</p>
+<p>为了在运行时给 Contracts pallet 实现 <code>Config</code> trait，打开 <code>runtime/src/lib.rs</code>，找到 <code>pub use frame_support</code> 代码块并添加 <code>Nothing</code> 到 traits 列表之中，如下：</p>
+<pre><code class="language-rust editable noplayground">pub use frame_support::{
+construct_runtime, parameter_types,
+traits::{
+  ConstU128, ConstU32, ConstU64, ConstU8, KeyOwnerProofSystem, Randomness, StorageInfo,Nothing
+},
+weights::{
+ constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND},
+ IdentityFee, Weight,
+},
+StorageValue,
+};
+</code></pre>
+<p>添加一行从 Contracts pallet 导入默认的 contract 权重，如下：</p>
+<pre><code class="language-rust editable noplayground">pub use frame_system::Call as SystemCall;
+pub use pallet_balances::Call as BalancesCall;
+pub use pallet_timestamp::Call as TimestampCall;
+use pallet_transaction_payment::CurrencyAdapter;
+use pallet_contracts::DefaultContractAccessWeight; // Add this line
+</code></pre>
+<p>添加 Contracts pallet 所需的常量添加到运行时，如下：</p>
+<pre><code class="language-rust editable noplayground">/* After this block */
+// Time is measured by number of blocks.
+pub const MINUTES: BlockNumber = 60_000 / (MILLISECS_PER_BLOCK as BlockNumber);
+pub const HOURS: BlockNumber = MINUTES * 60;
+pub const DAYS: BlockNumber = HOURS * 24;
+
+/* Add this block */
+// Contracts price units.
+pub const MILLICENTS: Balance = 1_000_000_000;
+pub const CENTS: Balance = 1_000 * MILLICENTS;
+pub const DOLLARS: Balance = 100 * CENTS;
+
+const fn deposit(items: u32, bytes: u32) -&gt; Balance {
+items as Balance * 15 * CENTS + (bytes as Balance) * 6 * CENTS
+}
+const AVERAGE_ON_INITIALIZE_RATIO: Perbill = Perbill::from_percent(10);
+/*** End Added Block ***/
+</code></pre>
+<p>在运行时中为 <code>pallet_contracts</code> 添加参数类型和实现 <code>Config</code> trait，如下</p>
+<pre><code class="language-rust editable noplayground">/*** Add a block similar to the following ***/
+parameter_types! {
+  pub const DepositPerItem: Balance = deposit(1, 0);
+  pub const DepositPerByte: Balance = deposit(0, 1);
+  pub const DeletionQueueDepth: u32 = 128;
+  pub DeletionWeightLimit: Weight = AVERAGE_ON_INITIALIZE_RATIO * BlockWeights::get().max_block;
+  pub Schedule: pallet_contracts::Schedule&lt;Runtime&gt; = Default::default();
+}
+
+impl pallet_contracts::Config for Runtime {
+  type Time = Timestamp;
+  type Randomness = RandomnessCollectiveFlip;
+  type Currency = Balances;
+  type Event = Event;
+  type Call = Call;
+  type CallFilter = frame_support::traits::Nothing;
+  type WeightPrice = pallet_transaction_payment::Pallet&lt;Self&gt;;
+  type WeightInfo = pallet_contracts::weights::SubstrateWeight&lt;Self&gt;;
+  type ChainExtension = ();
+  type Schedule = Schedule;
+  type CallStack = [pallet_contracts::Frame&lt;Self&gt;; 31];
+  type DeletionQueueDepth = DeletionQueueDepth;
+  type DeletionWeightLimit = DeletionWeightLimit;
+  type DepositPerByte = DepositPerByte;
+  type DepositPerItem = DepositPerItem;
+  type AddressGenerator = pallet_contracts::DefaultAddressGenerator;
+  type ContractAccessWeight = DefaultContractAccessWeight&lt;BlockWeights&gt;;
+  type MaxCodeLen = ConstU32&lt;{ 256 * 1024 }&gt;;
+  type RelaxedMaxCodeLen = ConstU32&lt;{ 512 * 1024 }&gt;;
+  type MaxStorageKeyLen = ConstU32&lt;{ 512 * 1024 }&gt;;
+}
+/*** End added block ***/
+</code></pre>
+<p>关于 Contracts pallet 配置的更多信息以及类型和参数如何被使用的，可参考 <a href="https://github.com/paritytech/substrate/blob/master/frame/contracts/src/lib.rs">Contracts pallet source code</a></p>
+<p>添加 <code>pallet_contracts</code> 到 <code>construct_runtime!</code> 宏中，如下：</p>
+<pre><code class="language-rust editable noplayground">// Create the runtime by composing the FRAME pallets that were previously configured
+construct_runtime!(
+  pub enum Runtime where
+    Block = Block,
+    NodeBlock = opaque::Block,
+    UncheckedExtrinsic = UncheckedExtrinsic
+  {
+     System: frame_system,
+     RandomnessCollectiveFlip: pallet_randomness_collective_flip,
+     Timestamp: pallet_timestamp,
+     Aura: pallet_aura,
+     Grandpa: pallet_grandpa,
+     Balances: pallet_balances,
+     TransactionPayment: pallet_transaction_payment,
+     Sudo: pallet_sudo,
+     Contracts: pallet_contracts,
+  }
+);
+</code></pre>
+<p>保存代码并关闭 <code>runtime/src/lib.rs</code> 文件。</p>
+<p>通过运行下面的命令检查你的运行时编译是否正确：</p>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<h3 id="暴露合约的api"><a class="header" href="#暴露合约的api">暴露合约的API</a></h3>
+<p>一些 pallets，包括 Contracts pallet，暴露了自定义运行时 APIs 和 RPC 端点。你无需在 Contracts pallet 上启用 RPC 调用就可以在链上使用它。然而，暴露 Contracts pallet 的 API 和 endpoints 很有用，因为这样做可以使你执行以下任务：</p>
+<ul>
+<li>从链下读取合约状态。</li>
+<li>在不进行交易的情况下调用节点存储。</li>
+</ul>
+<p>要暴露合约 RPC API，打开 <code>runtime/Cargo.toml</code> 文件，使用与其他 pallets 相同的版本和分支信息，将 <code>pallet-contracts-rpc-runtime-api</code> pallet 的相关代码描述添加到 <code>[dependencies]</code> 部分，如下：</p>
+<pre><code class="language-rust editable noplayground">pallet-contracts-rpc-runtime-api = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+</code></pre>
+<p>将 <code>pallet-contracts-rpc-runtime-api</code> 添加到 <code>std</code> 特性列表中，以便在构建运行时为原生二进制时包含其特性。</p>
+<pre><code class="language-rust editable noplayground">[features]
+default = [&quot;std&quot;]
+std = [
+  &quot;codec/std&quot;,
+  ...
+  &quot;pallet-contracts/std&quot;,
+  &quot;pallet-contracts-primitives/std&quot;,
+  &quot;pallet-contracts-rpc-runtime-api/std&quot;,
+  ...
+]
+</code></pre>
+<p>保存代码并关闭 <code>runtime/Cargo.toml</code> 文件。</p>
+<p>打开 <code>runtime/src/lib.rs</code> 文件，并通过添加以下常量启用合约调试：</p>
+<pre><code class="language-rust editable noplayground">const CONTRACTS_DEBUG_OUTPUT: bool = true;
+</code></pre>
+<p>在 <code>impl_runtime_apis!</code> 宏中，接近运行时 <code>lib.rs</code> 文件末尾的地方，实现合约运行时 API，如在 <code>impl_runtime_apis! { }</code> 的部分：</p>
+<pre><code class="language-rust editable noplayground">/*** Add this block ***/
+impl pallet_contracts_rpc_runtime_api::ContractsApi&lt;Block, AccountId, Balance, BlockNumber, Hash&gt;
+ for Runtime
+ {
+  fn call(
+     origin: AccountId,
+     dest: AccountId,
+     value: Balance,
+     gas_limit: u64,
+     storage_deposit_limit: Option&lt;Balance&gt;,
+     input_data: Vec&lt;u8&gt;,
+  ) -&gt; pallet_contracts_primitives::ContractExecResult&lt;Balance&gt; {
+     Contracts::bare_call(origin, dest, value, gas_limit, storage_deposit_limit, input_data, CONTRACTS_DEBUG_OUTPUT)
+  }
+  
+  fn instantiate(
+     origin: AccountId,
+     value: Balance,
+     gas_limit: u64,
+     storage_deposit_limit: Option&lt;Balance&gt;,
+     code: pallet_contracts_primitives::Code&lt;Hash&gt;,
+     data: Vec&lt;u8&gt;,
+     salt: Vec&lt;u8&gt;,
+  ) -&gt; pallet_contracts_primitives::ContractInstantiateResult&lt;AccountId, Balance&gt; {
+     Contracts::bare_instantiate(origin, value, gas_limit, storage_deposit_limit, code, data, salt, CONTRACTS_DEBUG_OUTPUT)
+     }
+     
+  fn upload_code(
+     origin: AccountId,
+     code: Vec&lt;u8&gt;,
+     storage_deposit_limit: Option&lt;Balance&gt;,
+  ) -&gt; pallet_contracts_primitives::CodeUploadResult&lt;Hash, Balance&gt; {
+     Contracts::bare_upload_code(origin, code, storage_deposit_limit)
+  }
+  
+  fn get_storage(
+     address: AccountId,
+     key: Vec&lt;u8&gt;,
+     ) -&gt; pallet_contracts_primitives::GetStorageResult {
+     Contracts::get_storage(address, key)
+     }
+  }
+</code></pre>
+<p>保存代码并关闭 <code>runtime/src/lib.rs</code> 文件。</p>
+<p>通过运行下面的命令检查你的运行时编译是否正确：</p>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<h3 id="更新外部节点"><a class="header" href="#更新外部节点">更新外部节点</a></h3>
+<p>要与 Contracts pallet 交互，必须扩展现有的 RPC server 以包括 Contracts pallet 和 Contracts RPC API。为了使 Contracts pallet 能够利用RPC endpoint API，你需要将自定义 RPC endpoint 添加到外部节点配置中。</p>
+<p>将 RPC API 扩展添加到外部节点，打开 <code>node/Cargo.toml</code> 并且添加 <code>pallet-contracts</code> 和 <code>pallet-contracts-rpc</code> 到 <code>[dependencies]</code> 部分，如下：</p>
+<pre><code class="language-toml editable noplayground">pallet-contracts = { version = &quot;4.0.0-dev&quot;, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+pallet-contracts-rpc = { version = &quot;4.0.0-dev&quot;, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+</code></pre>
+<p>由于你已经暴露了运行时API，并且现在正在为外部节点编写代码，不需要使用 <code>no_std</code> 配置，所以你不必维护专用的 <code>std</code> 特性列表。</p>
+<p>保存代码并关闭 <code>node/Cargo.toml</code> 文件。</p>
+<p>打开 <code>node/src/rpc.rs</code> 文件，并找到下面这一行。</p>
+<pre><code class="language-rust editable noplayground">use node_template_runtime::{opaque::Block, AccountId, Balance, Index};
+</code></pre>
+<p>将 <code>use pallet_contracts_rpc</code> 添加到文件中，如下：</p>
+<pre><code class="language-rust editable noplayground">use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
+use substrate_frame_rpc_system::{System, SystemApiServer};
+use pallet_contracts_rpc::{Contracts, ContractsApiServer}; // Add this line
+</code></pre>
+<p>为 RPC 扩展添加 Contracts RPC pallet 到 <code>create_full</code> 函数中，如下：</p>
+<pre><code class="language-rust editable noplayground">/// Instantiate all full RPC extensions.
+pub fn create_full&lt;C, P&gt;(
+  deps: FullDeps&lt;C, P&gt;,
+) -&gt; Result&lt;RpcModule&lt;()&gt;, Box&lt;dyn std::error::Error + Send + Sync&gt;&gt;
+where
+  C: ProvideRuntimeApi&lt;Block&gt;,
+  C: HeaderBackend&lt;Block&gt; + HeaderMetadata&lt;Block, Error = BlockChainError&gt; + 'static,
+  C: Send + Sync + 'static,
+  C::Api: substrate_frame_rpc_system::AccountNonceApi&lt;Block, AccountId, Index&gt;,
+  C::Api: pallet_transaction_payment_rpc::TransactionPaymentRuntimeApi&lt;Block, Balance&gt;,
+  C::Api: pallet_contracts_rpc::ContractsRuntimeApi&lt;Block, AccountId, Balance, BlockNumber, Hash&gt;, // Add this line
+  C::Api: BlockBuilder&lt;Block&gt;,
+  P: TransactionPool + 'static,
+</code></pre>
+<p>添加 Contracts RPC API 的扩展。</p>
+<pre><code class="language-rust editable noplayground">module.merge(System::new(client.clone(), pool.clone(), deny_unsafe).into_rpc())?;
+module.merge(TransactionPayment::new(client.clone()).into_rpc())?;
+module.merge(Contracts::new(client.clone()).into_rpc())?; // Add this line
+</code></pre>
+<p>保存代码并关闭 <code>node/src/rpc.rs</code> 文件。</p>
+<p>通过运行下面的命令检查你的运行时编译是否正确：</p>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template
+</code></pre>
+<p>如果检查没有错误，你可以通过运行下面的命令在 release 模式下编译节点：</p>
+<pre><code class="language-bash editable noplayground">cargo build --release
+</code></pre>
+<h3 id="启动本地substrate节点"><a class="header" href="#启动本地substrate节点">启动本地Substrate节点</a></h3>
+<p>节点编译完成之后，你可以从 <a href="https://paritytech.github.io/substrate/master/pallet_contracts/index.html">Contracts pallet</a> 增强功能的智能合约启动 Substrate 节点，并且使用 front-end template 与之进行交互。</p>
+<p>在开发模式下启动本地节点，运行以下命令：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template --dev
+</code></pre>
+<p>通过查看终端中显示的输出，验证节点是否已启动并成功运行。如果在 <code>finalized</code> 后数字不断在增加，你的区块链正在生成新的块，并且就他们描述的状态达成新的共识，说明是成功运行了。</p>
+<p>通过运行下面的命令启动 front-end template 的 web 服务：</p>
+<pre><code class="language-bash editable noplayground">yarn start
+</code></pre>
+<p>在浏览器中打开 <code>http://localhost:8000/</code> 去访问 front-end template。</p>
+<p>在 Pallet Interactor 组件中验证 <code>Extrinsic</code> 是被选中的，然后从可供调用的 pallets 列表中选择 <code>contracts</code>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subcontpal.jpg" alt="" /></p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subaddwekno.jpg" alt="" /></p>
+<h2 id="在自定义pallet中使用宏"><a class="header" href="#在自定义pallet中使用宏">在自定义pallet中使用宏</a></h2>
+<h2 id="指定调用的来源"><a class="header" href="#指定调用的来源">指定调用的来源</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../blockchain/chapter_1_2_1_3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../blockchain/chapter_1_2_1_5.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../blockchain/chapter_1_2_1_3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../blockchain/chapter_1_2_1_5.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

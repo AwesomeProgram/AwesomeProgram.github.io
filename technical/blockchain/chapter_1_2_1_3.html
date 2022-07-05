@@ -1,0 +1,1044 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>启动区块链网络 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html" class="active"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="启动区块链网络"><a class="header" href="#启动区块链网络">启动区块链网络</a></h1>
+<p>本节教程演示了使用基于 Substrate 的区块链节点的基础知识，包括如何使节点在对等网络中相互通信，以及如何收集关于节点操作的指标。通常，你应该按照列出的顺序完成教程，因为它们为尝试后面的教程或执行更复杂的任务奠定了基础。后面的教程加强或扩展了在本教程中学习的基本主题。</p>
+<h2 id="构建本地区块链"><a class="header" href="#构建本地区块链">构建本地区块链</a></h2>
+<h3 id="编译substrate节点"><a class="header" href="#编译substrate节点">编译Substrate节点</a></h3>
+<pre><code class="language-bash editable noplayground">git clone https://github.com/substrate-developer-hub/substrate-node-template
+
+cd substrate-node-template &amp;&amp; git checkout polkadot-v0.9.26
+
+rustup update
+rustup update nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+
+cargo build --release
+</code></pre>
+<h3 id="启动节点"><a class="header" href="#启动节点">启动节点</a></h3>
+<pre><code class="language-bash editable noplayground">./target/release/node-template --dev   
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subnos.jpg" alt="" /></p>
+<h3 id="安装front-end-template"><a class="header" href="#安装front-end-template">安装front-end template</a></h3>
+<pre><code class="language-bash editable noplayground">node --version
+yarn --version
+npm install -g yarn
+git clone https://github.com/substrate-developer-hub/substrate-front-end-template
+cd substrate-front-end-template
+yarn install
+</code></pre>
+<h3 id="启动front-end-template"><a class="header" href="#启动front-end-template">启动front-end template</a></h3>
+<pre><code class="language-bash editable noplayground">yarn start
+</code></pre>
+<p>访问 http://localhost:8000/</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subfronts.jpg" alt="" /></p>
+<h3 id="停止本地节点"><a class="header" href="#停止本地节点">停止本地节点</a></h3>
+<ol>
+<li>返回显示节点输出的终端。</li>
+<li>按 Control-c 终止正在运行的进程。</li>
+<li>验证终端是否返回到 substrate-node-template 目录中的终端提示。</li>
+</ol>
+<h2 id="模拟区块链私有网络"><a class="header" href="#模拟区块链私有网络">模拟区块链私有网络</a></h2>
+<p>在本节教程中，你将看到权威共识模型在实践中是如何工作的，它使用两个预定义的权威帐户使节点能够生成块。在这个模拟网络中，两个节点使用不同的帐户和密钥启动，但在一台计算机上运行。</p>
+<h3 id="启动第一个区块链节点"><a class="header" href="#启动第一个区块链节点">启动第一个区块链节点</a></h3>
+<p>本教程通过使用名为 alice 和 bob 的预定义帐户在单个本地计算机上运行两个 Substrate 节点来模拟私有网络。</p>
+<h4 id="清除之前旧链的数据"><a class="header" href="#清除之前旧链的数据">清除之前旧链的数据</a></h4>
+<pre><code class="language-bash editable noplayground">./target/release/node-template purge-chain --base-path /tmp/alice --chain local
+
+# Are you sure to remove &quot;/tmp/alice/chains/local_testnet/db&quot;? [y/N]:
+y
+</code></pre>
+<h4 id="使用-alice-账户启动本地区块链节点"><a class="header" href="#使用-alice-账户启动本地区块链节点">使用 alice 账户启动本地区块链节点</a></h4>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+--base-path /tmp/alice \
+--chain local \
+--alice \
+--port 30333 \
+--ws-port 9945 \
+--rpc-port 9933 \
+--node-key 0000000000000000000000000000000000000000000000000000000000000001 \
+--telemetry-url &quot;wss://telemetry.polkadot.io/submit/ 0&quot; \
+--validator
+</code></pre>
+<h3 id="回顾命令行选项"><a class="header" href="#回顾命令行选项">回顾命令行选项</a></h3>
+<table><thead><tr><th style="text-align: left">选项</th><th style="text-align: left">描述</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>--base-path</code></td><td style="text-align: left">指定用于存储与此链相关的所有数据的目录。</td></tr>
+<tr><td style="text-align: left"><code>--chain local</code></td><td style="text-align: left">指定要使用的 chain specification，有效的预定义 chain specifications 包括 <code>local</code>、<code>development</code> 和 <code>staging</code>。</td></tr>
+<tr><td style="text-align: left"><code>--alice</code></td><td style="text-align: left">将 <code>alice</code> 帐户的预定义密钥添加到节点的密钥库中。通过此设置，alice 帐户用于区块生成和最终确认。</td></tr>
+<tr><td style="text-align: left"><code>--port 30333</code></td><td style="text-align: left">指定要监听 peer-to-peer（<code>p2p</code>）通信的端口。由于本教程使用在同一物理计算机上运行的两个节点来模拟网络，所以你必须为至少一个帐户显式指定不同的端口。</td></tr>
+<tr><td style="text-align: left"><code>--ws-port 9945</code></td><td style="text-align: left">指定要监听传入 WebSocket 流量的端口，默认端口为 <code>9944</code>，本教程使用自定义 web socket 端口号（9945）。</td></tr>
+<tr><td style="text-align: left"><code>--rpc-port 9933</code></td><td style="text-align: left">指定要监听传入 RPC 通信的端口，默认端口是 <code>9933</code>。</td></tr>
+<tr><td style="text-align: left"><code>--node-key &lt;key&gt;</code></td><td style="text-align: left">指定用于 <code>libp2p</code> 网络的 Ed25519 密钥，你应该在开发和测试时使用此选项。</td></tr>
+<tr><td style="text-align: left"><code>--telemetry-url</code></td><td style="text-align: left">指定发送遥测数据的位置。对于本教程，你可以将遥测数据发送到由 Parity 托管的服务器，该服务器可供任何人使用。</td></tr>
+<tr><td style="text-align: left"><code>--validator</code></td><td style="text-align: left">指定此节点参与网络的区块生成和最终确认。</td></tr>
+</tbody></table>
+<p>有关 node template 可用的命令行选项的详细信息，请通过运行以下命令查看用法帮助：
+<code>./target/release/node-template --help</code></p>
+<h3 id="查看显示的节点消息"><a class="header" href="#查看显示的节点消息">查看显示的节点消息</a></h3>
+<p>如果节点成功启动，终端将显示描述网络操作的消息。例如，你应该看到类似的输出：</p>
+<pre><code class="language-bash editable noplayground">2022-08-16 15:29:55 Substrate Node    
+2022-08-16 15:29:55 ✌️  version 4.0.0-dev-de262935ede    
+2022-08-16 15:29:55 ❤️  by Substrate DevHub &lt;https://github.com/substrate-developer-hub&gt;, 2017-2022    
+2022-08-16 15:29:55 📋 Chain specification: Local Testnet    
+2022-08-16 15:29:55 🏷  Node name: Alice    
+2022-08-16 15:29:55 👤 Role: AUTHORITY    
+2022-08-16 15:29:55 💾 Database: RocksDb at /tmp/alice/chains/local_testnet/db/full    
+2022-08-16 15:29:55 ⛓  Native runtime: node-template-100 (node-template-1.tx1.au1)    
+2022-08-16 15:29:55 🔨 Initializing Genesis block/state (state: 0x6894…033d, header-hash: 0x2cdc…a07f)    
+2022-08-16 15:29:55 👴 Loading GRANDPA authority set from genesis on what appears to be first startup.    
+2022-08-16 15:29:56 Using default protocol ID &quot;sup&quot; because none is configured in the chain specs    
+2022-08-16 15:29:56 🏷  Local node identity is: 12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp    
+2022-08-16 15:29:56 💻 Operating system: macos    
+2022-08-16 15:29:56 💻 CPU architecture: x86_64    
+2022-08-16 15:29:56 📦 Highest known block at #0    
+2022-08-16 15:29:56 〽️ Prometheus exporter started at 127.0.0.1:9615    
+2022-08-16 15:29:56 Running JSON-RPC HTTP server: addr=127.0.0.1:9933, allowed origins=Some([&quot;http://localhost:*&quot;, &quot;http://127.0.0.1:*&quot;, &quot;https://localhost:*&quot;, &quot;https://127.0.0.1:*&quot;, &quot;https://polkadot.js.org&quot;])    
+2022-08-16 15:29:56 Running JSON-RPC WS server: addr=127.0.0.1:9945, allowed origins=Some([&quot;http://localhost:*&quot;, &quot;http://127.0.0.1:*&quot;, &quot;https://localhost:*&quot;, &quot;https://127.0.0.1:*&quot;, &quot;https://polkadot.js.org&quot;])    
+2022-08-16 15:29:56 creating instance on iface 192.168.1.125    
+2022-08-16 15:30:01 💤 Idle (0 peers), best: #0 (0x2cdc…a07f), finalized #0 (0x2cdc…a07f), ⬇ 0 ⬆ 0
+...
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subpeersingle.jpg" alt="" /></p>
+<p>特别是，你应该注意输出中的以下消息：</p>
+<ul>
+<li><code>🔨 Initializing Genesis block/state (state: 0xea47…9ba8, header-hash: 0x9d07…7cce)</code> 标识节点正在开始初始化或生成创世块，当你启动下一个节点时，请验证这些值是否相同。</li>
+<li><code>🏷 Local node identity is: 12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp</code> 指定唯一标识此节点的字符串。该字符串由 <code>--node-key</code> 确定，该键使用 <code>alice</code> 帐户启动节点。你使用此字符串来识别启动第二个节点连接到该节点的网络。</li>
+<li><code>2021-03-10 17:34:37 💤 Idle (0 peers), best: #0 (0x9d07…7cce), finalized #0 (0x9d07…7cce), ⬇ 0 ⬆ 0</code> 表明网络中没有其他节点，也没有生成区块。在开始生成块之前，另一个节点必须加入网络。</li>
+</ul>
+<h3 id="添加第二个节点到区块链网络"><a class="header" href="#添加第二个节点到区块链网络">添加第二个节点到区块链网络</a></h3>
+<p>你使用 <code>alice</code> 帐户密钥启动的节点已经运行，现在你可以使用 <code>bob</code> 帐户将另一个节点添加到该网络中。因为你正在加入一个已经运行的网络，所以可以使用正在运行节点的标识将新节点加入的网络。这些命令与你之前使用的命令类似，但有一些重要区别。</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template purge-chain --base-path /tmp/bob --chain local -y
+# 通过在命令中添加-y，您可以删除链数据，而无需提示您确认操作。
+
+./target/release/node-template \
+--base-path /tmp/bob \
+--chain local \
+--bob \
+--port 30334 \
+--ws-port 9946 \
+--rpc-port 9934 \
+--telemetry-url &quot;wss://telemetry.polkadot.io/submit/ 0&quot; \
+--validator \
+--bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+</code></pre>
+<p>注意此命令与上一个命令之间的以下差异：</p>
+<ul>
+<li>因为两个节点运行在同一台物理计算机上，所以你必须指定不同的值给这些选项，<code>--base-path</code>、<code>--port</code>、<code>--ws-port</code>、<code>--rpc-port</code></li>
+<li>此命令包含 <code>--bootnodes</code> 选项，并且指定一个引导节点，该节点由 <code>alice</code> 启动。</li>
+</ul>
+<p><code>--bootnodes</code> 选项由以下信息组成：</p>
+<ul>
+<li><code>ip4</code> 表示节点的IP地址使用IPv4格式。</li>
+<li><code>127.0.0.1</code> 为运行的节点指定 IP 地址，在本案例中，表示 <code>localhost</code> 的地址。</li>
+<li><code>tcp</code> 表示将 <code>TCP</code> 指定为用于 peer-to-peer 通信的协议。</li>
+<li><code>30333</code> 表示指定用于 peer-to-peer 通信的端口号，在本案例中，表示 TCP 流量的端口号。</li>
+<li><code>12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp</code> 标识要与此网路通信的运行节点，在本案例中，表示为使用 <code>alice</code> 账户启动节点的标识符。</li>
+</ul>
+<h3 id="验证区块是否已生成和已最终确认"><a class="header" href="#验证区块是否已生成和已最终确认">验证区块是否已生成和已最终确认</a></h3>
+<p>启动第二个节点后，节点应作为对等节点相互连接，并开始生成块。</p>
+<ol>
+<li>确认你在启动第一个节点的终端中看到与以下类似的行：</li>
+</ol>
+<pre><code class="language-bash editable noplayground">2022-08-16 15:32:33 discovered: 12D3KooWBCbmQovz78Hq7MzPxdx9d1gZzXMsn6HtWj29bW51YUKB /ip4/127.0.0.1/tcp/30334
+2022-08-16 15:32:33 discovered: 12D3KooWBCbmQovz78Hq7MzPxdx9d1gZzXMsn6HtWj29bW51YUKB /ip6/::1/tcp/30334
+2022-08-16 15:32:36 🙌 Starting consensus session on top of parent 0x2cdce15d31548063e89e10bd201faa63c623023bbc320346b9580ed3c40fa07f
+2022-08-16 15:32:36 🎁 Prepared block for proposing at 1 (5 ms) [hash: 0x9ab34110e4617454da33a3616efc394eb1ce95ee4bf0daab69aa4cb392d4104b; parent_hash: 0x2cdc…a07f; extrinsics (1): [0x4634…cebf]] 
+2022-08-16 15:32:36 🔖 Pre-sealed block for proposal at 1. Hash now 0xf0869a5cb8ebd0fcc5f2bc194ced84ca782d9749604e888c8b9b515517179847, previously 0x9ab34110e4617454da33a3616efc394eb1ce95ee4bf0daab69aa4cb392d4104b.
+2022-08-16 15:32:36 ✨ Imported #1 (0xf086…9847)
+2022-08-16 15:32:36 💤 Idle (1 peers), best: #1 (0xf086…9847), finalized #0 (0x2cdc…a07f), ⬇ 1.0kiB/s ⬆ 1.0kiB/s
+2022-08-16 15:32:41 💤 Idle (1 peers), best: #1 (0xf086…9847), finalized #0 (0x2cdc…a07f), ⬇ 0.6kiB/s ⬆ 0.6kiB/s
+2022-08-16 15:32:42 ✨ Imported #2 (0x0d5e…2a7f)
+2022-08-16 15:32:46 💤 Idle (1 peers), best: #2 (0x0d5e…2a7f), finalized #0 (0x2cdc…a07f), ⬇ 0.6kiB/s ⬆ 0.6kiB/s
+2022-08-16 15:32:48 🙌 Starting consensus session on top of parent 0x0d5ef31979c2aa17fb88497018206d3057151119337293fe85d9526ebd1e2a7f
+2022-08-16 15:32:48 🎁 Prepared block for proposing at 3 (0 ms) [hash: 0xa307c0112bce39e0dc689132452154da2079a27375b44c4d94790b46a601346a; parent_hash: 0x0d5e…2a7f; extrinsics (1): [0x63cc…39a6]]    
+2022-08-16 15:32:48 🔖 Pre-sealed block for proposal at 3. Hash now 0x0c55670e745dd12892c9e7d5205085a78ccea98df393a822fa9b3865cfb3d51b, previously 0xa307c0112bce39e0dc689132452154da2079a27375b44c4d94790b46a601346a.
+2022-08-16 15:32:48 ✨ Imported #3 (0x0c55…d51b)
+2022-08-16 15:32:51 💤 Idle (1 peers), best: #3 (0x0c55…d51b), finalized #1 (0xf086…9847), ⬇ 0.7kiB/s ⬆ 0.9kiB/s    
+...
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subpeersone.jpg" alt="" /></p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subpeerstwo.jpg" alt="" /></p>
+<p>在这些行中，你可以看到有关你的区块链的以下信息：</p>
+<ul>
+<li>在这个网络中发现第二个节点的标识（<code>12D3KooWBCbmQovz78Hq7MzPxdx9d1gZzXMsn6HtWj29bW51YUKB</code>）。</li>
+<li>该节点有一个peer（<code>1 peers</code>）。</li>
+<li>节点产生了一些块（<code>best: #3 (0x0c55…d51b)</code>）。</li>
+<li>这些块被最终确认（<code>finalized #1 (0xf086…9847)</code>）。</li>
+</ul>
+<ol start="2">
+<li>验证你在启动第二个节点的终端中看到类似的输出。</li>
+<li>在终端中按下的 Control-c，关闭其中一个节点。关闭节点后，你将看到剩余节点现在没有对等节点，并且已停止生成块。例如：</li>
+</ol>
+<pre><code class="language-bash editable noplayground">2022-08-16 15:53:45 💤 Idle (1 peers), best: #143 (0x8f11…1684), finalized #141 (0x5fe3…5a25), ⬇ 0.8kiB/s ⬆ 0.7kiB/s
+2022-08-16 15:53:50 💤 Idle (0 peers), best: #143 (0x8f11…1684), finalized #141 (0x5fe3…5a25), ⬇ 83 B/s ⬆ 83 B/s
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subpeershut.jpg" alt="" /></p>
+<ol start="4">
+<li>通过在终端中按下 Control-c 关闭第二个节点。如果你使用 <code>--dev</code> 命令行选项在开发模式下启动节点的，则节点的所有状态都被清除。</li>
+</ol>
+<h2 id="添加可信任的节点"><a class="header" href="#添加可信任的节点">添加可信任的节点</a></h2>
+<p>在本节教程中，你将为网络中的验证器节点生成自己的密钥。重要的是要记住，区块链网络中的每个参与者都负责生成唯一密钥。有几种方法可以生成密钥，例如，可以使用 <code>node-template</code> 子命令、独立的 <strong>subkey</strong> 命令行程序、Polkadot-JS 应用程序或者第三方密钥生成程序来生成密钥对。</p>
+<p>虽然你可以使用预定义的密钥对来完成本教程，但你应该永远不会在生产环境中使用这些 key。本教程不使用预定义的密钥或更安全的 <code>subkey</code> 程序，而是演示如何使用 Substrate node template 和 <code>key</code> 子命令生成密钥。</p>
+<h3 id="使用-node-template-生成本地密钥"><a class="header" href="#使用-node-template-生成本地密钥">使用 node template 生成本地密钥</a></h3>
+<pre><code class="language-bash editable noplayground">./target/release/node-template key generate --scheme Sr25519 --password-interactive
+
+</code></pre>
+<p>该命令生成密钥并显示类似如下的输出：</p>
+<pre><code class="language-bash editable noplayground">Secret phrase:  pig giraffe ceiling enter weird liar orange decline behind total despair fly
+Secret seed:       0x0087016ebbdcf03d1b7b2ad9a958e14a43f2351cd42f2f0a973771b90fb0112f
+Public key (hex):  0x1a4cc824f6585859851f818e71ac63cf6fdc81018189809814677b2a4699cf45
+Account ID:        0x1a4cc824f6585859851f818e71ac63cf6fdc81018189809814677b2a4699cf45
+Public key (SS58): 5CfBuoHDvZ4fd8jkLQicNL8tgjnK8pVG9AiuJrsNrRAx6CNW
+SS58 Address:      5CfBuoHDvZ4fd8jkLQicNL8tgjnK8pVG9AiuJrsNrRAx6CNW
+</code></pre>
+<p>现在你有了 Sr25519 key，对于一个节点使用 <code>aura</code> 生成块。在本例中，帐户的 Sr25519 公钥为 <code>5CfBuoHDvZ4fd8jkLQicNL8tgjnK8pVG9AiuJrsNrRAx6CNW</code>。</p>
+<p>使用刚刚生成的帐户的 <strong>secret phrase</strong>，使用 Ed25519 签名方案派生密钥。</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template key inspect --password-interactive --scheme Ed25519 &quot;pig giraffe ceiling enter weird liar orange decline behind total despair fly&quot;
+</code></pre>
+<p>该命令显示类似于以下内容的输出：</p>
+<pre><code class="language-bash editable noplayground">Secret phrase `pig giraffe ceiling enter weird liar orange decline behind total despair fly` is account:
+Secret seed:       0x0087016ebbdcf03d1b7b2ad9a958e14a43f2351cd42f2f0a973771b90fb0112f
+Public key (hex):  0x2577ba03f47cdbea161851d737e41200e471cd7a31a5c88242a527837efc1e7b
+Public key (SS58): 5CuqCGfwqhjGzSqz5mnq36tMe651mU9Ji8xQ4JRuUTvPcjVN
+Account ID:        0x2577ba03f47cdbea161851d737e41200e471cd7a31a5c88242a527837efc1e7b
+SS58 Address:      5CuqCGfwqhjGzSqz5mnq36tMe651mU9Ji8xQ4JRuUTvPcjVN
+</code></pre>
+<p>现在你有了 Ed25519 key，对于一个节点使用 <code>grandpa</code> 最终确认块。在本例中，帐户的 Ed25519 公钥为 <code>5CuqCGfwqhjGzSqz5mnq36tMe651mU9Ji8xQ4JRuUTvPcjVN</code>。</p>
+<h3 id="生成第二组密钥"><a class="header" href="#生成第二组密钥">生成第二组密钥</a></h3>
+<p>对于本教程，专用网络仅包含两个节点，因此你需要两组 key。
+为了便于说明，本教程中使用的第二组关键点是：</p>
+<ul>
+<li>Sr25519: 5EJPj83tJuJtTVE2v7B9ehfM7jNT44CBFaPWicvBwYyUKBS6 （<code>aura</code>）</li>
+<li>Ed25519: 5FeJQsfmbbJLTH1pvehBxrZrT5kHvJFj84ZaY5LK7NU87gZS （<code>grandpa</code>）</li>
+</ul>
+<h3 id="创建自定义-chain-specification"><a class="header" href="#创建自定义-chain-specification">创建自定义 chain specification</a></h3>
+<p>为了简单起见，你在本节教程中创建的自定义 chain specification 是本地 chain specification 的修改版本，说明了如何创建双节点网络。如果你有所需的密钥，可以按照相同的步骤向网络添加更多节点。</p>
+<h4 id="修改本地-chain-specification"><a class="header" href="#修改本地-chain-specification">修改本地 chain specification</a></h4>
+<p>你可以修改预定义的本地 chain specification，而不是编写全新的 chain specification。</p>
+<p>在本地 chain specification 的基础上创建一个新的 chain specification：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template build-spec --disable-default-bootnode --chain local &gt; customSpec.json
+</code></pre>
+<p>如果你在文本编辑器中打开 <code>customSpec.json</code> 文件，则会看到它包含多个字段。其中一个字段是使用 <code>cargo build --release</code> 命令构建的运行时的 WebAssembly（Wasm）二进制文件。由于 WebAssembly（WASM）二进制是一个二进制大型对象（blob），因此你可以预览第一行和最后几行，以查看需要更改的字段。预览 <code>customSpec.json</code> 中的前几个字段，通过运行以下命令：
+<code>head customSpec.json</code></p>
+<p>该命令显示文件中的前几个字段。例如：</p>
+<pre><code class="language-bash editable noplayground">{
+ &quot;name&quot;: &quot;Local Testnet&quot;,
+ &quot;id&quot;: &quot;local_testnet&quot;,
+ &quot;chainType&quot;: &quot;Local&quot;,
+ &quot;bootNodes&quot;: [],
+ &quot;telemetryEndpoints&quot;: null,
+ &quot;protocolId&quot;: null,
+ &quot;properties&quot;: null,
+ &quot;consensusEngine&quot;: null,
+ &quot;codeSubstitutes&quot;: {},
+</code></pre>
+<p>预览 <code>customSpec.json</code> 中的最后几个字段，通过运行下面的命令
+<code>tail -n 80 customSpec.json</code></p>
+<p>此命令显示 Wasm 二进制字段后面的最后部分，包括运行时使用的几个 pallets（如 <code>sudo</code> 和 <code>balances</code>）的详细信息。</p>
+<p>在文本编辑器中打开 <code>customSpec.json</code> 文件，修改 <code>name</code> 字段以将此  chain specification 标识为自定义  chain specification。
+<code>&quot;name&quot;: &quot;My Custom Testnet&quot;,</code></p>
+<p>修改 <code>aura</code> 字段，通过为每个网络参与者添加 Sr25519 SS58 地址 keys，指定有权创建块的节点。</p>
+<pre><code class="language-bash editable noplayground">&quot;aura&quot;: { &quot;authorities&quot;: [
+ &quot;5CfBuoHDvZ4fd8jkLQicNL8tgjnK8pVG9AiuJrsNrRAx6CNW&quot;, &quot;5CXGP4oPXC1Je3zf5wEDkYeAqGcGXyKWSRX2Jm14GdME5Xc5&quot;
+ ]
+},
+</code></pre>
+<p>修改 <code>grandpa</code> 字段，以指定节点，并通过为每个网络参与者添加 Ed25519 SS58 地址 keys 来最终确定块。</p>
+<pre><code class="language-bash editable noplayground">&quot;grandpa&quot;: {
+   &quot;authorities&quot;: [
+     [
+       &quot;5CuqCGfwqhjGzSqz5mnq36tMe651mU9Ji8xQ4JRuUTvPcjVN&quot;,
+       1
+     ],
+     [
+       &quot;5DpdMN4bVTMy67TfMMtinQTcUmLhZBWoWarHvEYPM4jYziqm&quot;,
+       1
+     ]
+   ]
+ },
+</code></pre>
+<p>请注意，在 <code>grandpa</code> 部分中有两个 <code>authorities</code> 字段的数据值。第一个值是地址键。第二个值用于支持 <strong>weighted votes</strong>。在本例中，每个验证者的权重为 1 票。</p>
+<h4 id="添加验证者"><a class="header" href="#添加验证者">添加验证者</a></h4>
+<p>如刚才看到的，你可以通过修改 <code>aura</code> 和 <code>grandpa</code> 部分在 chain specification 中添加和更改授权地址。你可以使用此技术添加任意数量的验证者。
+添加验证：</p>
+<ul>
+<li>修改 <code>aura</code> 部分，使其包含 <strong>Sr25519</strong> 地址。</li>
+<li>修改 <code>grandpa</code> 部分，使其包含 <strong>Ed25519</strong> 地址和一个投票权重。</li>
+</ul>
+<p>确保为每个验证者使用唯一的键，如果两个验证器有相同的键，它们就会产生冲突的块。</p>
+<h3 id="转换-chain-specification-为原始格式"><a class="header" href="#转换-chain-specification-为原始格式">转换 chain specification 为原始格式</a></h3>
+<p>在使用验证者信息准备 chain specification 之后，必须将其转换为 raw specification 格式，然后才能使用。raw chain specification 包含与未转换 specification 相同的信息。然而，raw chain specification 还包含编码的存储密钥，节点使用这些密钥来引用其本地存储中的数据。分配 raw chain specification 可确保每个节点使用适当的存储密钥存储数据。
+将 chain specification 转换为使用原始格式：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template build-spec --chain=customSpec.json --raw --disable-default-bootnode &gt; customSpecRaw.json
+</code></pre>
+<h3 id="与其他人共享-chain-specification"><a class="header" href="#与其他人共享-chain-specification">与其他人共享 chain specification</a></h3>
+<p>如果你正在创建私人区块链网络以与其他参与者共享，请确保只有一个人创建 chain specification 并共享该 specification 的最终原始版本，例如 <code>customSpecRaw.json</code> 文件和网络中的所有其他验证器。</p>
+<p>由于 Rust 编译器生成的优化的 WebAssembly 二进制文件在确定性上不可复制，因此生成 Wasm 运行时的人都会生成一个略微不同的 Wasm blob。为了确保确定性，区块链网络中的所有参与者必须使用完全相同的 raw chain specification 文件。</p>
+<h3 id="准备启动私有网络"><a class="header" href="#准备启动私有网络">准备启动私有网络</a></h3>
+<p>要继续，请验证以下内容：</p>
+<ul>
+<li>你已为至少两个授权帐户生成或收集了帐户密钥。</li>
+<li>你已经更新了自定义 chain specification，以包括块生成的 key（<code>aura</code>）和块最终确认的 key（<code>grandpa</code>）。</li>
+<li>你已经将自定义 chain specification 转换为原始格式，并将原始 chain specification 分发给参与私有网络的节点。</li>
+</ul>
+<p>如果你完成了这些步骤，就可以启动私有区块链中的第一个节点了。</p>
+<h3 id="开始第一个节点"><a class="header" href="#开始第一个节点">开始第一个节点</a></h3>
+<p>作为私有区块链网络的第一个参与者，你负责启动第一个节点，被称为 <strong>bootnode</strong>。
+通过运行与以下类似的命令，使用自定义 chain specification 启动第一个节点：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+  --base-path /tmp/node01 \
+  --chain ./customSpecRaw.json \
+  --port 30333 \
+  --ws-port 9945 \
+  --rpc-port 9933 \
+  --telemetry-url &quot;wss://telemetry.polkadot.io/submit/ 0&quot; \
+  --validator \
+  --rpc-methods Unsafe \
+  --name MyNode01 \
+  --password-interactive
+</code></pre>
+<p>注意以下命令行选项启动节点：</p>
+<ul>
+<li><code>--base path</code> 命令行选项指定与第一个节点关联链的自定义位置。</li>
+<li><code>--chain</code> 命令行选项指定自定义 chain specification。</li>
+<li><code>--validator</code> 命令行选项指示此节点已经被链授权。</li>
+<li><code>--rpc-methods Unsafe</code> 命令行选项允许你使用不安全的通信模式，在本教程继续这样用，因为你的区块链未在生产设置中使用。</li>
+<li><code>--name</code> 命令行选项使你能够在遥测 UI 中为节点提供一个方便阅读的名称。</li>
+</ul>
+<p>此命令还使用自己的 keys 而不是预定义的帐户启动节点。由于你没有使用已知 keys 的预定义帐户，因此你需要在单独的步骤中将 keys 添加到密钥库中。</p>
+<h3 id="查看有关节点操作的信息"><a class="header" href="#查看有关节点操作的信息">查看有关节点操作的信息</a></h3>
+<p>启动本地节点后，有关所执行操作的信息将显示在终端外壳中。在该终端中，验证看到的输出与以下类似：</p>
+<pre><code class="language-bash editable noplayground">2021-11-03 15:32:14 Substrate Node
+2021-11-03 15:32:14 ✌️  version 3.0.0-monthly-2021-09+1-bf52814-x86_64-macos
+2021-11-03 15:32:14 ❤️  by Substrate DevHub &lt;https://github.com/substrate-developer-hub&gt;, 2017-2021
+2021-11-03 15:32:14 📋 Chain specification: My Custom Testnet
+2021-11-03 15:32:14 🏷 Node name: MyNode01
+2021-11-03 15:32:14 👤 Role: AUTHORITY
+2021-11-03 15:32:14 💾 Database: RocksDb at /tmp/node01/chains/local_testnet/db
+2021-11-03 15:32:14 ⛓  Native runtime: node-template-100 (node-template-1.tx1.au1)
+2021-11-03 15:32:15 🔨 Initializing Genesis block/state (state: 0x2bde…8f66, header-hash: 0x6c78…37de)
+2021-11-03 15:32:15 👴 Loading GRANDPA authority set from genesis on what appears to be first startup.
+2021-11-03 15:32:15 ⏱  Loaded block-time = 6s from block 0x6c78abc724f83285d1487ddcb1f948a2773cb38219c4674f84c727833be737de
+2021-11-03 15:32:15 Using default protocol ID &quot;sup&quot; because none is configured in the chain specs
+2021-11-03 15:32:15 🏷 Local node identity is: 12D3KooWLmrYDLoNTyTYtRdDyZLWDe1paxzxTw5RgjmHLfzW96SX
+2021-11-03 15:32:15 📦 Highest known block at #0
+2021-11-03 15:32:15 〽️ Prometheus exporter started at 127.0.0.1:9615
+2021-11-03 15:32:15 Listening for new connections on 127.0.0.1:9945.
+2021-11-03 15:32:20 💤 Idle (0 peers), best: #0 (0x6c78…37de), finalized #0 (0x6c78…37de), ⬇ 0 ⬆ 0
+</code></pre>
+<p>注意以下信息：</p>
+<ul>
+<li>输出表明所使用的 chain specification 是你使用 <code>--chain</code> 命令行选项创建和指定的自定义 chain specification。</li>
+<li>输出表明该节点是有授权的，因为你使用 <code>--validator</code> 命令行选项启动了该节点。</li>
+<li>输出显示了使用块哈希初始化的 <strong>创世块</strong><code>(state: 0x2bde…8f66, header-hash: 0x6c78…37de)</code>。</li>
+<li>输出指定了节点的 <strong>本地节点标识</strong>，在本例中，节点标识为 <code>12D3KooWLmrYDLoNTyTYtRdDyZLWDe1paxzxTw5RgjmHLfzW96SX</code>。</li>
+<li>输出指定用于节点的 IP 地址是本地主机 <code>127.0.0.1</code>。</li>
+</ul>
+<p>这些值用于本节教程示例中你的节点，你必须将节点的值提供给其他网络参与者以连接到 bootnode。现在你已经使用自己的密钥成功启动了一个验证器节点，并看到了节点标识，你可以继续下一步。但是，在将密钥添加到密钥库之前，请按 Control-c 停止该节点。</p>
+<h3 id="将-key-添加到密钥库"><a class="header" href="#将-key-添加到密钥库">将 key 添加到密钥库</a></h3>
+<p>启动第一个节点后，尚未生成任何块。下一步是为网络中的每个节点向密钥库添加两种类型的 key。
+对于每个节点：</p>
+<ul>
+<li>添加 <code>aura</code> 授权 keys 以启用区块的生成。</li>
+<li>添加 <code>grandpa</code> 授权 keys 以启用区块的最终确认。</li>
+</ul>
+<p>有几种方法可以将 key 插入密钥库。对于本节教程，你可以使用 <code>key</code> 子命令插入本地生成的 key。</p>
+<p>通过运行与以下类似的命令，插入从 <code>key</code> 子命令生成的 <code>aura</code> 密钥（key）：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template key insert --base-path /tmp/node01 \
+  --chain customSpecRaw.json \
+  --scheme Sr25519 \
+  --suri &lt;your-secret-seed&gt; \
+  --password-interactive \
+  --key-type aura
+</code></pre>
+<p>使用 secret phrase 或者 secret seed 替换 <code>&lt;your-secret-seed&gt;</code> ，在之前 <a href="#%E4%BD%BF%E7%94%A8-node-template-%E7%94%9F%E6%88%90%E6%9C%AC%E5%9C%B0%E5%AF%86%E9%92%A5"><strong>使用 node template 生成本地密钥</strong></a> 的部分查找相关的第一个密钥对。</p>
+<p>在本节教程中，secret phrase 是 <code>pig giraffe ceiling enter weird liar orange decline behind total despair fly</code>，因此 <code>--suri</code> 命令行选项使用这段字符串将 key 插入密钥库。
+<code>--suri &quot;pig giraffe ceiling enter weird liar orange decline behind total despair fly&quot;</code></p>
+<p>你也可以从指定的文件位置插入 key，有关可用命令行选项的信息，请运行以下命令：
+<code>./target/release/node-template key insert --help</code></p>
+<p>输入生成密钥的密码。</p>
+<p>通过运行与以下类似的命令，插入从 key 子命令生成的 <code>grandpa</code> 密钥（key）：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template key insert \
+  --base-path /tmp/node01 \
+  --chain customSpecRaw.json \
+  --scheme Ed25519 \
+  --suri &lt;your-secret-key&gt; \
+  --password-interactive \
+  --key-type gran
+</code></pre>
+<p>使用 secret phrase 或者 secret seed 替换 <code>&lt;your-secret-seed&gt;</code> ，在之前 <a href="#%E4%BD%BF%E7%94%A8-node-template-%E7%94%9F%E6%88%90%E6%9C%AC%E5%9C%B0%E5%AF%86%E9%92%A5"><strong>使用 node template 生成本地密钥</strong></a> 的部分查找相关的第一个密钥对。</p>
+<p>在本节教程中，secret phrase 是 <code>pig giraffe ceiling enter weird liar orange decline behind total despair fly</code>，因此 <code>--suri</code> 命令行选项使用这段字符串将 key 插入密钥库。
+<code>--suri &quot;pig giraffe ceiling enter weird liar orange decline behind total despair fly&quot;</code></p>
+<p>输入生成密钥的密码。</p>
+<p>通过运行以下命令验证你的密钥（key）是否位于 <code>node01</code> 的密钥库中：</p>
+<pre><code class="language-bash editable noplayground">ls /tmp/node01/chains/local_testnet/keystore
+</code></pre>
+<p>该命令显示类似于以下的输出：</p>
+<pre><code class="language-bash editable noplayground">617572611441ddcb22724420b87ee295c6d47c5adff0ce598c87d3c749b776ba9a647f04
+6772616e1441ddcb22724420b87ee295c6d47c5adff0ce598c87d3c749b776ba9a647f04
+</code></pre>
+<p>在 /tmp/node01 下的第一个节点的密钥库中添加了 keys 后，你可以使用先前在 <a href="#%E5%BC%80%E5%A7%8B%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%8A%82%E7%82%B9">开始第一个节点</a> 中使用的命令重新启动节点。</p>
+<h3 id="开启允许其他参与者加入"><a class="header" href="#开启允许其他参与者加入">开启允许其他参与者加入</a></h3>
+<p>现在可以使用 <code>--bootnodes</code> 和 <code>--validator</code> 命令行选项允许其他验证者加入网络。</p>
+<p>向私有网络添加第二个验证者区块链节点：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+  --base-path /tmp/node02 \
+  --chain ./customSpecRaw.json \
+  --port 30334 \
+  --ws-port 9946 \
+  --rpc-port 9934 \
+  --telemetry-url &quot;wss://telemetry.polkadot.io/submit/ 0&quot; \
+  --validator \
+  --rpc-methods Unsafe \
+  --name MyNode02 \
+  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWLmrYDLoNTyTYtRdDyZLWDe1paxzxTw5RgjmHLfzW96SX \
+  --password-interactive
+</code></pre>
+<p>此命令使用 <code>base-path</code>、<code>name</code> 和 <code>validator</code> 命令行选项将此节点标识为专用网络的第二个验证者。<code>--chain</code> 命令行选项指定要使用的 chain specification 文件，对于网络中的所有验证者，此文件必须完全相同。确保为 <code>--bootnodes</code> 命令行选项设置了正确的信息。特别是，请确保已从网络中的第一个节点指定了本地节点标识符。如果未设置正确的 <code>bootnode</code> 标识符，则会看到如下错误：
+<code>The bootnode you want to connect to at ... provided a different peer ID than the one you expect: ... </code></p>
+<p>通过运行与以下类似的命令，插入从 key 子命令生成的 <code>aura</code> 密钥（key）：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template key insert --base-path /tmp/node02 \
+  --chain customSpecRaw.json \
+  --scheme Sr25519 \
+  --suri &lt;second-participant-secret-seed&gt; \
+  --password-interactive \
+  --key-type aura
+</code></pre>
+<p>使用 secret phrase 或者 secret seed 替换 <code>&lt;second-participant-secret-seed&gt;</code> ，在之前 <a href="#%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E7%BB%84%E5%AF%86%E9%92%A5"><strong>生成第二组密钥</strong></a> 的部分查找相关的第二个密钥对。只有 <code>--key-type</code> 的值是 <code>aura</code> 才能开启区块生成功能。</p>
+<p>输入生成密钥的密码。</p>
+<p>通过运行与以下类似的命令，插入从 key 子命令生成的 <code>grandpa</code> 密钥（key）：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template key insert --base-path /tmp/node02 \
+  --chain customSpecRaw.json \
+  --scheme Ed25519 --suri &lt;second-participant-secret-seed&gt; \
+  --password-interactive \
+  --key-type gran
+</code></pre>
+<p>使用 secret phrase 或者 secret seed 替换 <code>&lt;second-participant-secret-seed&gt;</code> ，在之前 <a href="#%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E7%BB%84%E5%AF%86%E9%92%A5"><strong>生成第二组密钥</strong></a> 的部分查找相关的第二个密钥对。只有 <code>--key-type</code> 的值是 <code>gran</code> 才能开启区块最终确认功能。</p>
+<p>块终结需要至少三分之二的验证者将其密钥添加到各自的密钥库中。由于此网络在 chain specification 中配置了两个验证器，因此只有在第二个节点添加了其密钥后，才能开启块最终确认。</p>
+<p>输入生成密钥的密码。</p>
+<p>通过运行以下命令验证你的密钥（key）是否位于 <code>node02</code> 的密钥库中：
+<code>ls /tmp/node02/chains/local_testnet/keystore</code></p>
+<p>该命令显示类似于以下的输出：</p>
+<pre><code class="language-bash editable noplayground">617572611a4cc824f6585859851f818e71ac63cf6fdc81018189809814677b2a4699cf45
+6772616e1a4cc824f6585859851f818e71ac63cf6fdc81018189809814677b2a4699cf45
+</code></pre>
+<p>Substrate nodes 在插入 <code>grandpa</code> 密钥之后需要重新启动，因此，你必须关闭并重新启动节点，然后才能看到正在完成的块。按 Control-c 关闭节点。</p>
+<p>通过运行以下命令重新启动第二个区块链节点：</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+  --base-path /tmp/node02 \
+  --chain ./customSpecRaw.json \
+  --port 30334 \
+  --ws-port 9946 \
+  --rpc-port 9934 \
+  --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' \
+  --validator \
+  --rpc-methods Unsafe \
+  --name MyNode02 \
+  --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWLmrYDLoNTyTYtRdDyZLWDe1paxzxTw5RgjmHLfzW96SX \
+  --password-interactive
+</code></pre>
+<p>在两个节点将其密钥 key 添加到位于 /tmp/node01 和 /tmp/node02 下的各自密钥库并重新启动后，你应该看到相同的 genesis 块和状态根哈希。你还应该看到，每个节点都有一个 peer（<code>1 peers</code>），并且它们生成了一个块 proposal （<code>best: #2 (0xe111…c084)</code>）。几秒钟后，你将看到两个节点上的新块都已最终确认。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subtrust1.jpg" alt="" /></p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subtrust2.jpg" alt="" /></p>
+<h2 id="授权特定节点"><a class="header" href="#授权特定节点">授权特定节点</a></h2>
+<p>本节教程演示了许可网络的简化版本。在许可网络中，仅允许授权节点执行特定的网络活动。例如，你可以授予某些节点验证块的权限，而授予其他节点传播交易的权限。具有被授予特定权限的节点的区块链不同于公共或无许可的区块链。在无许可的区块链中，任何人都可以通过在合适的硬件上运行节点软件来加入网络。一般而言，无许可区块链提供了更大的网络去中心化。然而，在某些用例中，创建许可的区块链可能是合适的。例如，许可区块链适用于以下类型的项目：</p>
+<ul>
+<li>用于私人或联盟网络，例如私人企业或非营利组织。</li>
+<li>在高度监管的数据环境中，如医疗保健、金融或企业对企业之间的联盟。</li>
+<li>用于大规模测试预公开区块链网络。</li>
+</ul>
+<p>本节教程说明如何通过 <a href="https://paritytech.github.io/substrate/master/pallet_node_authorization/index.html">node authorization pallet</a> 使用 Substrate 构建一个许可网络。</p>
+<h3 id="节点授权和所有权"><a class="header" href="#节点授权和所有权">节点授权和所有权</a></h3>
+<p><code>node-authorization</code> pallet 是一个预先构建的 FRAME pallet，使你能够管理网络的一组可配置节点。每个节点由一个 <code>PeerId</code> 标识，每个 <code>PeerId</code> 由一个且仅一个声明节点的 <code>AccountId</code> 拥有。有两种方式可以授权节点加入网络：</p>
+<ul>
+<li>通过将 <code>PeerId</code> 添加到预定义节点的列表中，你必须获得网络中的 governance pallet 或 sudo pallet 的核准才能执行此操作。</li>
+<li>通过请求来自特定节点 paired peer 连接，该节点可以是预定义的节点 <code>PeerId</code>，也可以是普通节点。</li>
+</ul>
+<p>请注意，任何用户都可以声称是 <code>PeerId</code> 的所有者，为了防止错误声明，应在启动节点之前声明节点。在你启动节点后，它的 <code>PeerID</code> 对网络是可见的，任何人随后都可以声明它。</p>
+<p>作为节点的所有者，你可以添加和删除节点的连接。例如，你可以操纵预定义节点与你的节点之间的连接，或者操纵你的节点与其他非预定义节点之间的关系。你不能更改预定义节点的连接，因为他们总是被允许互相连接。</p>
+<p><code>node-authorization</code> pallet 使用一个链下工作机配置其节点连接。请确保在启动节点时已经启用了链外工作机，因为对于非授权节点，它在默认情况下是禁用的。</p>
+<h3 id="构建节点模板"><a class="header" href="#构建节点模板">构建节点模板</a></h3>
+<pre><code class="language-bash editable noplayground">cd substrate-node-template
+git checkout polkadot-v0.9.26
+cargo build --release
+</code></pre>
+<h3 id="添加节点授权pallet"><a class="header" href="#添加节点授权pallet">添加节点授权pallet</a></h3>
+<p>由于 Substrate 运行时编译为包含标准库函数的原生 Rust 二进制文件和不包含标准库的 WebAssembly（Wasm）二进制文件，因此Cargo.toml 文件控制两条重要信息：</p>
+<ul>
+<li>将 pallets 作为运行时的依赖项导入，包括要导入的 pallets 的位置和版本。</li>
+<li>编译原生 Rust 二进制文件时应启用每个 pallet 中的功能。通过从每个 pallet 启用标准库（<code>std</code>）的特性，你可以编译运行时以包含函数、类型和原语，否则在构建 WebAssembly 二进制文件时会丢失这些函数、类型和原语。</li>
+</ul>
+<p>有关在 <code>Cargo.toml</code> 文件中添加依赖项的一些信息，可参见 Cargo 文档中的<a href="https://doc.rust-lang.org/cargo/guide/dependencies.html"><strong>依赖</strong></a>。有关启用和管理依赖包的功能的信息，可参见 Cargo 文档中的<a href="https://doc.rust-lang.org/cargo/reference/features.html"><strong>特性</strong></a>。</p>
+<h4 id="添加节点授权的依赖"><a class="header" href="#添加节点授权的依赖">添加节点授权的依赖</a></h4>
+<p>在 <code>[dependencies]</code> 部分添加 <code>pallet-node-authorization</code> crate，使其用于 node template 运行时：</p>
+<pre><code class="language-bash editable noplayground">[dependencies]
+pallet-node-authorization = { default-features = false, version = &quot;4.0.0-dev&quot;, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
+</code></pre>
+<p>该行 <code>pallet-node-authorization</code> crate 作为依赖导入，并且为该 crate 指定以下配置细节：</p>
+<ul>
+<li>当编译运行时，默认情况下不启用 pallet 特性。</li>
+<li>检索 <code>pallet-node-authorization</code> crate 的存储库位置。</li>
+<li>用于检索 crate 的 commit tag。</li>
+<li>crate 的版本标识符。</li>
+</ul>
+<p>将 <code>pallet-node-authorization/std</code> 特性添加到 <code>features</code> 列表中，以便在编译运行时启用。</p>
+<pre><code class="language-bash editable noplayground">[features]
+default = ['std']
+std = [
+ ...
+ &quot;pallet-node-authorization/std&quot;,    # add this line
+ ...
+]
+</code></pre>
+<p>如果你忘记更新 <code>Cargo.toml</code> 文件中的 <code>features</code> 部分，在编译运行时二进制文件时，你可能会看到 <code>cannot find function</code> 错误。</p>
+<p>通过运行以下命令，检查新依赖项是否正确解析：</p>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<h4 id="添加管理规则"><a class="header" href="#添加管理规则">添加管理规则</a></h4>
+<p>为了在本节教程中模拟治理，你可以配置 pallet 使用 <code>EnsureRoot</code> 特权函数，然后就能被 Sudo pallet 调用 。默认情况下，Sudo pallet 包含在节点模板中，使你能够通过 root-level 管理帐户进行调用。在生产环境中，你将使用更接近现实的基于治理的方式去检查。</p>
+<p>要在运行时启用 <code>EnsureRoot </code> 规则，需要在 <code>runtime/src/lib.rs</code> 文件中添加下面这一行：</p>
+<pre><code class="language-bash editable noplayground">use frame_system::EnsureRoot;
+</code></pre>
+<h3 id="为pallet实现config-trait"><a class="header" href="#为pallet实现config-trait">为pallet实现Config trait</a></h3>
+<p>每个 pallet 都有一个称为 <code>Config</code> 的 <strong>Rust trait</strong>，<code>Config</code> trait 用于识别 pallet 所需的参数和类型。添加一个 pallet 所需的大多数 pallet-specific 代码都是使用 <code>Config</code> trait 实现的。例如，查看你需要在 node-authorization pallet 中实现 <code>Config</code> trait，你可以参考 <a href="https://paritytech.github.io/substrate/master/pallet_node_authorization/pallet/trait.Config.html"><code>pallet_node_authorization::Config</code></a> 的 Rust 文档。</p>
+<p>要在你的运行时实现 <code>node-authorization</code> pallet ，打开 <code>runtime/src/lib.rs</code> 文件：</p>
+<ul>
+<li>为 pallet 在 <code>parameter_types</code> 部分添加以下代码：</li>
+</ul>
+<pre><code class="language-rust editable noplayground">parameter_types! {
+ pub const MaxWellKnownNodes: u32 = 8;
+ pub const MaxPeerIdLength: u32 = 128;
+}
+</code></pre>
+<ul>
+<li>使用以下代码为 pallet 的 <code>Config</code> trait 添加 <code>impl</code> 部分</li>
+</ul>
+<pre><code class="language-rust editable noplayground">impl pallet_node_authorization::Config for Runtime {
+ type Event = Event;
+ type MaxWellKnownNodes = MaxWellKnownNodes;
+ type MaxPeerIdLength = MaxPeerIdLength;
+ type AddOrigin = EnsureRoot&lt;AccountId&gt;;
+ type RemoveOrigin = EnsureRoot&lt;AccountId&gt;;
+ type SwapOrigin = EnsureRoot&lt;AccountId&gt;;
+ type ResetOrigin = EnsureRoot&lt;AccountId&gt;;
+ type WeightInfo = ();
+}
+</code></pre>
+<ul>
+<li>使用以下代码行将 pallet 添加到 <code>construct_runtime</code> 宏：</li>
+</ul>
+<pre><code class="language-bash editable noplayground">construct_runtime!(
+pub enum Runtime where
+   Block = Block,
+   NodeBlock = opaque::Block,
+   UncheckedExtrinsic = UncheckedExtrinsic
+ {
+   /*** Add This Line ***/
+   NodeAuthorization: pallet_node_authorization::{Pallet, Call, Storage, Event&lt;T&gt;, Config&lt;T&gt;},
+ }
+);
+</code></pre>
+<ul>
+<li>
+<p>保存代码并关闭文件。</p>
+</li>
+<li>
+<p>通过运行以下命令检查配置是否可以编译：</p>
+</li>
+</ul>
+<pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
+</code></pre>
+<h4 id="为授权节点添加创世纪存储"><a class="header" href="#为授权节点添加创世纪存储">为授权节点添加创世纪存储</a></h4>
+<p>在启动网络以使用节点授权之前，需要一些额外的配置来处理 peer 标识符和 account 标识符。例如，<code>PeerId</code> 以 bs58 的格式编码，因此你需要在 <code>node/Cargo.toml</code> 中为 bs58 库添加一个新的依赖项对 <code>PeerId</code> 进行解码以获取它的字节。为了简化操作，授权节点与预定义帐户相关联。</p>
+<p>要为授权节点配置 genesis 存储，打开 <code>node/Cargo.toml</code> 文件，在 [dependencies] 部分为 node template 添加 <code>bs58</code> 库：</p>
+<pre><code class="language-bash editable noplayground">[dependencies]
+bs58 = &quot;0.4.0&quot;
+</code></pre>
+<p>保存代码并关闭文件。</p>
+<p>在编辑器中打开 <code>node/src/chain_spec.rs</code> 文件，使用以下代码为授权加入网络的节点添加 genesis 存储：</p>
+<pre><code class="language-bash editable noplayground">use sp_core::OpaquePeerId; // A struct wraps Vec&lt;u8&gt;, represents as our `PeerId`.
+use node_template_runtime::NodeAuthorizationConfig; // The genesis config that serves for our pallet.
+</code></pre>
+<p>为 FRAME 模块配置初始存储状态的 <code>testnet_genesis</code> 函数：</p>
+<pre><code class="language-bash editable noplayground">/// Configure initial storage state for FRAME modules.
+fn testnet_genesis(
+ wasm_binary: &amp;[u8],
+ initial_authorities: Vec&lt;(AuraId, GrandpaId)&gt;,
+ root_key: AccountId,
+ endowed_accounts: Vec&lt;AccountId&gt;,
+ _enable_println: bool,
+ ) -&gt; GenesisConfig {
+</code></pre>
+<p>在 <code>GenesisConfig</code> 声明中，添加以下代码块：</p>
+<pre><code class="language-rust editable noplayground"> node_authorization: NodeAuthorizationConfig {
+   nodes: vec![
+     (
+       OpaquePeerId(bs58::decode(&quot;12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2&quot;).into_vec().unwrap()),
+       endowed_accounts[0].clone()
+     ),
+     (
+       OpaquePeerId(bs58::decode(&quot;12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust&quot;).into_vec().unwrap()),
+       endowed_accounts[1].clone()
+     ),
+   ],
+ },
+</code></pre>
+<p>在这部分代码中，<code>NodeAuthorizationConfig</code> 包含一个 <code>nodes</code> 属性，代表一个拥有两个元素 tuple 的 vector。元组中第一个元素是 <code>OpaquePeerId</code>，<code>bs58::decode</code> 操作转化为方便 human-readable <code>PeerId</code>，如，<code>12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2</code> 到字节。元组中第二个元素是 <code>AccountId</code>，代表此节点的所有者，该示例使用预定义的 Alice 和 Bob，此处标识为 endowed 的帐户 [0] 和 [1]。</p>
+<p>保存代码并关闭文件。</p>
+<h4 id="验证节点是否可编译"><a class="header" href="#验证节点是否可编译">验证节点是否可编译</a></h4>
+<p>现在已经完成了代码更改，可以验证节点是否可编译。</p>
+<pre><code class="language-bash editable noplayground">cargo build --release
+</code></pre>
+<p>如果没有语法错误，则可以继续。如果存在错误，请按照编译输出中的说明进行修复，然后重新运行 <code>cargo build</code> 命令。</p>
+<h3 id="启动许可网络"><a class="header" href="#启动许可网络">启动许可网络</a></h3>
+<p>你现在可以使用预定义帐户的节点密钥和对等标识符来启动许可网络并授权其他节点加入。在本节教程，你将启动四个节点。其中三个节点与预定义的帐户相关联，所有三个节点都允许生成和验证块。第四节点是一个子节点，仅有权在指定节点所有者的批准下从该节点读取数据。</p>
+<h4 id="获取节点-keys-和-peerids"><a class="header" href="#获取节点-keys-和-peerids">获取节点 keys 和 peerIDs</a></h4>
+<p>你已经在 genesis 存储中配置了与 Alice 和 Bob 帐户关联的节点。你可以使用 subkey 程序检查与预定义帐户关联的密钥，并生成和检查你自己的密钥。然而，如果你运行 <code>subkey generate-node-key</code> 命令，那么你的节点 key 和 peer 标识符是随机生成的，与本节教程中使用的 key 并不匹配。由于本节教程使用预定义的帐户和 well-known node keys，下表总结了每个帐户的 key。
+|账户|与账户关联的 Keys|
+|:-----|:-----|
+|Alice|Node key: c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a|
+||PeerID (generated from the node key): 12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2|
+||Decoded PeerID in hex: 0024080112201ce5f00ef6e89374afb625f1ae4c1546d31234e87e3c3f51a62b91dd6bfa57df|
+|Bob|Node key: 6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58
+|
+||PeerID (generated from the node key): 12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust|
+||Decoded PeerID in hex: 002408011220dacde7714d8551f674b8bb4b54239383c76a2b286fa436e93b2b7eb226bf4de7|</p>
+<p>另外两个开发帐户 Charlie 和 Dave 没有 well-known node keys 或 peer 标识符。出于演示目的，我们将使用以下的 keys：
+|账户|与账户关联的 Keys|
+|:-----|:-----|
+|Charlie|Node key: 3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e|
+||PeerID (generated from the node key): 12D3KooWJvyP3VJYymTqG7eH4PM5rN4T2agk5cdNCfNymAqwqcvZ|
+||Decoded PeerID in hex: 002408011220876a7b4984f98006dc8d666e28b60de307309835d775e7755cc770328cdacf2e|
+|Dave|Node key: a99331ff4f0e0a0434a6263da0a5823ea3afcfffe590c9f3014e6cf620f2b19a|
+||PeerID (generated from the node key): 12D3KooWPHWFrfaJzxPnqnAYAoRUyAHHKqACmEycGTVmeVhQYuZN|
+||Decoded PeerID in hex: 002408011220c81bc1d7057a1511eb9496f056f6f53cdfe0e14c8bd5ffca47c70a8d76c1326d|</p>
+<h4 id="启动第一个节点"><a class="header" href="#启动第一个节点">启动第一个节点</a></h4>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+--chain=local \
+--base-path /tmp/validator1 \
+--alice \
+--node-key=c12b6d18942f5ee8528c8e2baf4e147b5c5c18710926ea492d09cbd9f6c9f82a \
+--port 30333 \
+--ws-port 9944
+</code></pre>
+<p>在这个命令中，使用 <code>--node-key</code> 选项指定用于安全连接到网络的 key。该 key 还用于内部生成 human-readable PeerId，如上部分所示。<code>--alice</code> 将节点命名为 alice，并使节点成为可以生成块和完成块的验证者，是 <code>--name alice --validator</code> 的简写。</p>
+<h4 id="启动第二个节点"><a class="header" href="#启动第二个节点">启动第二个节点</a></h4>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+--chain=local \
+--base-path /tmp/validator2 \
+--bob \
+--node-key=6ce3be907dbcabf20a9a5a60a712b4256a54196000a8ed4050d352bc113f8c58 \
+--port 30334 \
+--ws-port 9945
+</code></pre>
+<p>两个节点启动后，你应该能够在两个终端日志中看到生成和完成的新块。</p>
+<h4 id="添加第三个节点到已知节点列表中"><a class="header" href="#添加第三个节点到已知节点列表中">添加第三个节点到已知节点列表中</a></h4>
+<p><code>node-authorization</code> pallet 使用链下工作机来配置节点连接。因为第三个节点不是一个 well-known 节点并且它将网络中的第四个节点配置为 read-only sub-node，因此你必须以命令行选项以启动链下工作机。</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+--chain=local \
+--base-path /tmp/validator3 \
+--name charlie  \
+--node-key=3a9d5b35b9fb4c42aafadeca046f6bf56107bd2579687f069b42646684b94d9e \
+--port 30335 \
+--ws-port=9946 \
+--offchain-worker always
+</code></pre>
+<p>启动此节点后，你应该会看到该节点没有连接的 peers。由于这是一个许可网络，因此必须明确授权节点进行连接。Alice 和 Bob 节点被配置在创世纪 <code>chain_spec.rs</code> 的文件中。所有其它节点都必须通过 Sudo pallet 的调用来手动添加。 </p>
+<h4 id="授权对第三节点的访问"><a class="header" href="#授权对第三节点的访问">授权对第三节点的访问</a></h4>
+<p>本节教程使用 sudo pallet 进行治理。因此，你可以使用 <code>sudo</code> pallet 调用 <code>node-authorization</code> pallet 提供的 <code>add_well_known_node</code> 函数来添加第三个节点。
+切换到 <strong>Developer</strong> 页面，<strong>Sudo</strong> 标签，在应用程序中，提交 <code>nodeAuthorization</code> - <code>add_well_known_node</code> 调用，peer id为 Charlie 节点的十六进制，所有者为 Charlie。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subaddwekno.jpg" alt="" /></p>
+<p>在事务被包括在块中之后，你应该可以看到 charlie 节点被连接到 alice 和 bob 节点，并开始同步块。这三个节点可以使用本地网络中默认启用的 <a href="https://paritytech.github.io/substrate/master/sc_network/index.html">mDNS</a> 发现机制找到彼此。</p>
+<p>如果你的节点不在同一个本地网络上，你应该使用命令行选项 <code>--no-mdns</code> 来禁用它。</p>
+<h4 id="添加一个子节点"><a class="header" href="#添加一个子节点">添加一个子节点</a></h4>
+<p>该网络中的第四节点不是 well-known 的节点。这个节点的所有者是用户 <code>dave</code>，但它是 <code>charlie</code> 的 sub-node。子节点只能通过连接到 <code>charlie</code> 拥有的节点来访问网络。父节点负责任何子节点的授权连接，并在需要删除或审计该子节点时控制访问。</p>
+<pre><code class="language-bash editable noplayground">./target/release/node-template \
+--chain=local \
+--base-path /tmp/validator4 \
+--name dave \
+--node-key=a99331ff4f0e0a0434a6263da0a5823ea3afcfffe590c9f3014e6cf620f2b19a \
+--port 30336 \
+--ws-port 9947 \
+--offchain-worker always
+</code></pre>
+<p>启动后，没有可用的连接。这是一个许可网络，因此首先，Charlie 需要配置他的节点以允许从 Dave 的节点进行连接。
+切换到 <strong>Developer Extrinsics</strong> 页面，让 Charlie 去提交一个 <code>addConnections</code> extrinsic。第一个 PeerId 是 Charlie 所在节点的十六进制 peer id。连接是 Charlie 节点允许的 peer ids 列表，这里我们只添加 Dave 的。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subchaddconn.jpg" alt="" /></p>
+<p>然后，Dave 需要配置他的节点以允许从 Charlie 的节点进行连接。但在他添加这一点之前，Dave 需要声明他的节点，证明这个节点的所有权。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subdavclano.jpg" alt="" /></p>
+<p>类似地，Dave 可以从 Charlie 的节点添加连接。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subdavaddconn.jpg" alt="" /></p>
+<p>你现在应该看到 Dave 正在捕获 blocks，且只有一个属于 Charlie 的同伴！重新启动 Dave 的节点，以防它无法立即与 Charlie 连接。</p>
+<p>任何节点都可以发布影响其他节点行为的 extrinsics，只要它是用作引用链上的数据，并且你在密钥存储库中拥有可用于所需来源的相关帐户的 singing key。本演示中的所有节点都可以访问开发人员的 singing key，因此我们能够代表 charlie 从网络上的任何连接节点发出影响 charlie 子节点的命令。在实际应用中，节点操作员只能访问其节点 keys，并且是唯一能够正确签名和提交 extrinsics 的人，很可能来自他们自己的节点，在那里他们可以控制 key 的安全性。</p>
+<p>现在，您已经学习了如何构建一个网络，其中某些节点具有有限的权限和对网络资源的访问权限。</p>
+<h2 id="监视节点指标"><a class="header" href="#监视节点指标">监视节点指标</a></h2>
+<h2 id="升级一个运行中的网络"><a class="header" href="#升级一个运行中的网络">升级一个运行中的网络</a></h2>
+<p>与许多区块链不同，Substrate 开发框架支持对作为区块链核心的运行时进行<strong>无分叉升级</strong>。大多数区块链项目需要一个<a href="https://docs.substrate.io/reference/glossary/#fork">硬分叉</a>的代码库，以支持新功能的持续开发或现有功能的增强。使用Substrate，你可以部署增强的运行时功能，在不使用硬分叉的情况下进行中断迭代。因为运行时的定义本身是 Substrate 链状态中的一个元素，网络参与者可以通过调用交易中的 <a href="https://paritytech.github.io/substrate/master/frame_system/pallet/enum.Call.html#variant.set_code"><code>set_code</code> 函数</a>来更新此值。由于运行时状态的更新是对区块链的共识机制和加密保证进行验证，网络参与者可以使用区块链本身分发更新或扩展的运行时逻辑，而无需分叉链或发布新的区块链客户端。</p>
+<p>本节教程演示如何通过将以下更改部署到现有的 Substrate 运行时来执行无分叉升级：</p>
+<ul>
+<li>将 Scheduler pallet 添加到运行时。</li>
+<li>使用 Scheduler pallet 增加网络帐户的最低余额。</li>
+</ul>
+<h3 id="使用sudo托盘授权升级"><a class="header" href="#使用sudo托盘授权升级">使用Sudo托盘授权升级</a></h3>
+<p>在 FRAME 中，<code>Root</code> 源标识着运行时管理员。只有此管理员才能通过调用 <code>set_code</code> 函数来更新运行时。要使用 <code>Root</code> 源调用此函数，可以使用 Sudo pallet 中的 <code>sudo</code> 函数来指定具有超级用户管理权限的帐户。</p>
+<p>默认情况下，node template 的 chain specification 文件指定 <code>alice</code> 开发帐户是 Sudo 管理帐户的所有者。因此，本节教程使用 <code>alice</code> 帐户执行运行时升级。</p>
+<h4 id="运行时升级的资源核算"><a class="header" href="#运行时升级的资源核算">运行时升级的资源核算</a></h4>
+<p>分发到 Substrate 运行时的函数调用总是与<a href="https://docs.substrate.io/reference/glossary/#weight">权重</a>相关联，以反映资源使用情况。FRAME System 模块设置边界，可以使用这些交易的块长度和块权重。然而，<code>set_code</code> 函数被有意设计为消耗一个块所能容纳的最大权重。强制运行时升级以消耗整个块，可以防止同一块中的交易在运行时的不同版本上执行。</p>
+<p><code>set_code</code> 函数的权重注释还指定该函数位于 <code>Operational</code> 类中，因为它提供网络功能。标识为可操作的函数调用：</p>
+<ul>
+<li>可以消耗一个块的全部权重限制。</li>
+<li>优先级最高。</li>
+<li>免除支付交易费用。</li>
+</ul>
+<h4 id="管理资源核算"><a class="header" href="#管理资源核算">管理资源核算</a></h4>
+<p>在本节教程中，<a href="https://paritytech.github.io/substrate/master/pallet_sudo/pallet/enum.Call.html#variant.sudo_unchecked_weight"><code>sudo_unchecked_weight</code></a> 函数用于为运行时升级调用 <code>set_code</code> 函数。<code>sudo_unchecked_weight</code> 函数与 <code>sudo</code> 函数相同，只是它支持一个附加参数来指定用于调用的权重。此参数使你能够绕过资源核算保护措施，为分发 <code>set_code</code> 函数的调用指定零权重。此设置允许一个块花费无限时间进行计算，以确保运行时升级不会失败，无论操作多么复杂。它可能需要所有时间才能显示成功或失败。</p>
+<h3 id="升级运行时以添加调度程序pallet"><a class="header" href="#升级运行时以添加调度程序pallet">升级运行时以添加调度程序pallet</a></h3>
+<p>node template 在其运行时中不包含 <a href="https://paritytech.github.io/substrate/master/pallet_scheduler/index.html">Scheduler pallet</a>。为了演示运行时升级，让我们将 Scheduler pallet 添加到运行节点。</p>
+<p>要升级运行时，通过运行下面的命令在开发模式下启动本地节点：</p>
+<pre><code class="language-bash editable noplayground">cargo run --release -- --dev
+</code></pre>
+<p>保持节点运行。你可以编辑并重新编译以升级运行时，而无需停止或重新启动正在运行的节点。</p>
+<p>在第二个终端中，在编辑器中打开 <code>substrate-node-template/runtime/Cargo.toml</code> 文件，添加 Scheduler pallet 作为依赖项。</p>
+<pre><code class="language-toml editable noplayground">[dependencies]
+...
+pallet-scheduler = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.28&quot; }
+...
+</code></pre>
+<p>添加 Scheduler pallet 到 <code>features</code> 列表中。</p>
+<pre><code class="language-toml editable noplayground">[features]
+default = [&quot;std&quot;]
+std = [
+ ...
+ &quot;pallet-scheduler/std&quot;,
+ ...
+</code></pre>
+<p>在编辑器中打开 <code>substrate-node-template/runtime/src/lib.rs</code> 文件，添加 Scheduler pallet 所需的类型。</p>
+<pre><code class="language-rust editable noplayground">parameter_types! {
+ pub MaximumSchedulerWeight: Weight = 10_000_000;
+ pub const MaxScheduledPerBlock: u32 = 50;
+}
+</code></pre>
+<p>为 Scheduler pallet 的 Config trait 添加实现。</p>
+<pre><code class="language-rust editable noplayground">impl pallet_scheduler::Config for Runtime {
+ type Event = Event;
+ type Origin = Origin;
+ type PalletsOrigin = OriginCaller;
+ type Call = Call;
+ type MaximumWeight = MaximumSchedulerWeight;
+ type ScheduleOrigin = frame_system::EnsureRoot&lt;AccountId&gt;;
+ type MaxScheduledPerBlock = MaxScheduledPerBlock;
+ type WeightInfo = ();
+ type OriginPrivilegeCmp = EqualPrivilegeOnly;
+ type PreimageProvider = ();
+ type NoPreimagePostponement = ();
+}
+</code></pre>
+<p>在 <code>construct_runtime!</code> 宏里添加 Scheduler pallet。</p>
+<pre><code class="language-rust editable noplayground">construct_runtime!(
+ pub enum Runtime where
+ Block = Block,
+ NodeBlock = opaque::Block,
+ UncheckedExtrinsic = UncheckedExtrinsic
+ {
+   /*** snip ***/
+   Scheduler: pallet_scheduler,
+ }
+);
+</code></pre>
+<p>在文件的顶部添加以下 trait 依赖：</p>
+<pre><code class="language-rust editable noplayground">pub use frame_support::traits::EqualPrivilegeOnly;
+</code></pre>
+<p>增加 <a href="https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html"><code>RuntimeVersion</code> 结构</a>中的 <a href="https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html#structfield.spec_version">spec_version</a> 以升级运行时版本。</p>
+<pre><code class="language-rust editable noplayground">pub const VERSION: RuntimeVersion = RuntimeVersion {
+ spec_name: create_runtime_str!(&quot;node-template&quot;),
+ impl_name: create_runtime_str!(&quot;node-template&quot;),
+ authoring_version: 1,
+ spec_version: 101,  // *Increment* this value, the template uses 100 as a base
+ impl_version: 1,
+ apis: RUNTIME_API_VERSIONS,
+ transaction_version: 1,
+};
+</code></pre>
+<p>检查 <code>RuntimeVersion</code> 结构体的组件：</p>
+<ul>
+<li><code>spec_name</code> 指定运行时的名称。</li>
+<li><code>impl_name</code> 指定客户端的名称。</li>
+<li><code>authoring_version</code> 指定 <a href="https://docs.substrate.io/reference/glossary/#author">block authors</a> 的版本。</li>
+<li><code>spec_version</code> 指定运行时的版本。</li>
+<li><code>impl_version</code> 指定客户端的版本。</li>
+<li><code>apis</code> 指定支持的 APIs 列表。</li>
+<li><code>transaction_version</code> 指定 <a href="https://docs.substrate.io/reference/glossary/#dispatch">dispatchable function</a> 接口的版本。</li>
+</ul>
+<p>要升级运行时，你必须递增 <code>spec_version</code> 的值。更多信息请参见 <a href="https://github.com/paritytech/substrate/blob/v3.0.0/frame/system/src/lib.rs">FRAME System</a> 模块和 <code>can_set_code</code> 函数。</p>
+<p>保存代码并关闭 <code>substrate-node-template/runtime/src/lib.rs</code> 文件。</p>
+<p>在第二个终端窗口或选项卡中构建更新的运行时，而不停止正在运行的节点。</p>
+<pre><code class="language-bash editable noplayground">cargo build --release -p node-template-runtime
+</code></pre>
+<p><code>--release</code> 命令行选项需要较长的编译时间。然而它生成了一个更小的构建工件，更适合提交到区块链网络。存储优化对于任何区块链都至关重要。使用此命令，构建工件将输出到 <code>target/release</code> 目录。</p>
+<p>连接到本地节点使用新的构建构件升级运行时。
+你可以使用 <a href="https://polkadot.js.org/apps/#/extrinsics?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 连接到本地节点。</p>
+<p>选择 Alice 帐户提交对 <code>sudoUncheckedWeight</code> 函数的调用，并且从 <code>system</code> pallet 调用 <code>setCode</code> 函数作为其参数。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subselaca.jpg" alt="" /></p>
+<p>选择 <code>file upload</code>，然后选择或拖放运行时生成的 WebAssembly 文件。例如，点击选择 <code>target/release/wbuild/node-template-runtime/node_template_runtime.compact.compressed.wasm</code> 文件。保留 <code>_weight</code> 参数的默认值为 <code>0</code>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_sudupg.jpg" alt="" /></p>
+<p>点击 <strong>Submit Transaction</strong>。</p>
+<p>查看授权，然后点击 <strong>Sign and Submit</strong>。</p>
+<p>在交易包含在一个块中之后，Polkadot-JS 应用程序中显示的版本号表明运行时版本现在是 <code>101</code>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subver101.jpg" alt="" /></p>
+<p>如果你的本地节点在终端中生成的块与浏览器中显示的匹配，那么你已经成功完成了运行时升级。</p>
+<p>下一步，我们将：</p>
+<ol>
+<li>升级你的运行时版本</li>
+<li>使用 Scheduler pallet 来调度正在链上运行的运行时升级</li>
+</ol>
+<h3 id="调度一个升级"><a class="header" href="#调度一个升级">调度一个升级</a></h3>
+<p>既然 node template 已经升级到包含 Scheduler pallet，那么 <a href="https://paritytech.github.io/substrate/master/pallet_scheduler/pallet/enum.Call.html#variant.schedule"><code>schedule</code> 函数</a> 就可以用于执行下一次运行时升级。在之前的部分，我们使用 <code>sudo_unchecked_weight</code> 函数覆盖 <code>set_code</code> 函数的关联权重；在本节中，将安排运行时升级，以便它可以作为块中的唯一<a href="https://docs.substrate.io/fundamentals/transaction-types/">外部</a>因素处理。</p>
+<h4 id="准备一个可升级的运行时"><a class="header" href="#准备一个可升级的运行时">准备一个可升级的运行时</a></h4>
+<p>此升级比之前的升级更简单，只需要更新 <code>runtime/src/lib.rs</code> 中的单个值，除了运行时的 <code>spec_version</code> 之外。</p>
+<pre><code class="language-rust editable noplayground">pub const VERSION: RuntimeVersion = RuntimeVersion {
+ spec_name: create_runtime_str!(&quot;node-template&quot;),
+ impl_name: create_runtime_str!(&quot;node-template&quot;),
+ authoring_version: 1,
+ spec_version: 102,  // *Increment* this value.
+ impl_version: 1,
+ apis: RUNTIME_API_VERSIONS,
+ transaction_version: 1,
+};
+
+/*** snip ***/
+
+parameter_types! {
+ pub const ExistentialDeposit: u128 = 1000;  // Update this value.
+ pub const MaxLocks: u32 = 50;
+}
+
+/*** snip ***/
+</code></pre>
+<p>这一变化增加了 Balances pallet 的 <a href="https://docs.substrate.io/reference/glossary/#existential-deposit"><code>ExistentialDeposit</code></a>，从 Balances pallet 的角度来看，需要保持帐户存活的最低余额。</p>
+<p>请记住，此更改不会导致所有在500到1000之间的余额都被获取，这将需要进行存储迁移，不在本节教程的范围。</p>
+<h4 id="构建一个可升级的运行时"><a class="header" href="#构建一个可升级的运行时">构建一个可升级的运行时</a></h4>
+<pre><code class="language-bash editable noplayground">cargo build --release -p node-template-runtime
+</code></pre>
+<p>这将覆盖任何以前的构建工件。因此如果你希望有最后一个运行时 Wasm 构建文件的副本，请确保已经将它们复制到其他地方。</p>
+<h4 id="升级运行时"><a class="header" href="#升级运行时">升级运行时</a></h4>
+<p>在上一节中，<code>Scheduler pallet</code> 配置了 <code>Root</code> 源作为其 <a href="https://paritytech.github.io/substrate/master/pallet_scheduler/pallet/trait.Config.html#associatedtype.ScheduleOrigin"><code>ScheduleOrigin</code></a>，这意味着可以使用 <code>sudo</code> 函数（而不是 <code>sudo_unchecked_weight</code>）来调用 <code>schedule</code> 函数。使用此链接打开 Polkadot JS 应用程序 UI 的 <code>Sudo</code> 标签：<a href="https://polkadot.js.org/apps/#/sudo?rpc=ws://127.0.0.1:9944">https://polkadot.js.org/apps/#/sudo?rpc=ws://127.0.0.1:9944</a>。</p>
+<p>在提供 <code>when</code> 参数之前，等待所有其他字段都被填充。保留 <code>maybe_periodic</code> 参数为空，<code>priority</code> 参数的默认值为 <code>0</code>。选择 System pallet 的 <code>set_code</code> 函数作为 <code>call</code> 参数，并像之前一样提供 Wasm 二进制文件。保留 <strong>with weight override</strong> 选项不激活。一旦填充了所有其他字段，以后使用大约10个区块（1分钟）的区块号来填充 <code>when</code> 参数并快速提交交易。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subschupg.jpg" alt="" /></p>
+<p>你可以使用模板节点的命令行输出或 <a href="https://polkadot.js.org/apps/#/explorer?rpc=ws://127.0.0.1:9944">Polkadot JS Apps UI block explorer</a> 来监视这个预定调用的发生。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subscupsu.jpg" alt="" /></p>
+<p>在目标区块被包含在链中之后，Polkadot JS 应用程序界面左上角的版本号应该反映出运行时的版本现在是 <code>102</code>。</p>
+<p>然后，你可以通过使用 <a href="https://polkadot.js.org/apps/#/chainstate/constants?rpc=ws://127.0.0.1:9944">Polkadot JS app UI Chain State</a> 应用程序来观察升级中所做的具体变化，以从 Balances pallet 中查询 <code>existentialDeposit</code> 常量值。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../blockchain/chapter_1_2_1_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../blockchain/chapter_1_2_1_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../blockchain/chapter_1_2_1_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../blockchain/chapter_1_2_1_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

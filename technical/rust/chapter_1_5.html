@@ -1,0 +1,1147 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust 工具链 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html" class="active"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="rust-工具链"><a class="header" href="#rust-工具链">Rust 工具链</a></h1>
+<h2 id="项目组织"><a class="header" href="#项目组织">项目组织</a></h2>
+<ul>
+<li>基本的项目结构布局，通用的文件和文件夹，一般可由 <code>cargo</code> 生成 </li>
+</ul>
+<table><thead><tr><th>入口</th><th>相关的 <code>code</code></th></tr></thead><tbody>
+<tr><td>📁 <code>.cargo/</code></td><td>项目本地的 cargo 配置，通常会包含 <a href="https://doc.rust-lang.org/cargo/reference/config.html"><strong><code>config.toml</code></strong></a></td></tr>
+<tr><td>📁 <code>benches/</code></td><td>通过运行 <strong>cargo bench</strong> 来为你的 crate 执行基准测试，一般需要设置默认为 nightly</td></tr>
+<tr><td>📁 <code>examples/</code></td><td>通过示例展示如何使用你的 crate，他们会像外部用户一样看到你的 crate</td></tr>
+<tr><td>  my_example.rs</td><td>运行个别的示例像 <strong>cargo run --example my_example</strong></td></tr>
+<tr><td>📁 <code>src/</code></td><td>你项目的源代码</td></tr>
+<tr><td>  <code>main.rs</code></td><td>程序的默认入口文件，被作用于 <strong>cargo run</strong></td></tr>
+<tr><td>  <code>lib.rs</code></td><td>库的默认入口文件，如 对于搜索 <code>my_crate::f()</code> 开始的地方</td></tr>
+<tr><td>📁 <code>src/bin/</code></td><td>存放额外的二进制文件的地方，即使是在库项目中</td></tr>
+<tr><td>  <code>extra.rs</code></td><td>添加二进制文件，使用 <code>cargo run --bin extra</code> 去运行</td></tr>
+<tr><td>📁 <code>tests/</code></td><td>通常用于存放集成测试，通过 <strong>cargo test</strong> 来调用，单元测试一般会保留在 <code>src/</code> 文件中</td></tr>
+<tr><td><code>.rustfmt.toml</code></td><td>用作 <strong>cargo fmt</strong> 自定义的方式</td></tr>
+<tr><td><code>.clippy.toml</code></td><td><strong>clippy lints</strong> 的指定配置，通过使用 <code>cargo clippy</code></td></tr>
+<tr><td><code>build.rs</code></td><td><strong>Pre-build script</strong>，一般在构建 <code>C / FFI</code> 会用到</td></tr>
+<tr><td><code>Cargo.toml</code></td><td>主项目的配置，一般用于定义依赖，组件等等</td></tr>
+<tr><td><code>Cargo.lock</code></td><td>可用于查看依赖关系细节，为程序添加 <code>git</code>，而不是库</td></tr>
+<tr><td><code>rust-toolchain.toml</code></td><td>为项目定义覆盖的工具链（channel、components、targets）</td></tr>
+</tbody></table>
+<h3 id="各种入口文件的小例子"><a class="header" href="#各种入口文件的小例子">各种入口文件的小例子</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">// src/main.rs (程序的默认入口文件)
+
+fn main() {
+    println!(&quot;Hello, AwesomeProgram!&quot;);
+}
+</code></pre></pre>
+<pre><code class="language-rust editable noplayground">// src/lib.rs (库的默认入口文件)
+
+pub fn f() {}      // 因为是根目录中的公开目录，所以可从外部访问
+
+mod m {
+    pub fn g() {}  // 不是根目录中的公开路径(模块 m 不是公开的), 因此 g 不能在 crate 之外被访问
+}  
+</code></pre>
+<pre><code class="language-rust editable noplayground">// src/my_module.rs (单元测试可以在你项目中的任意文件)
+
+fn f() -&gt; u32 { 0 }
+
+#[cfg(test)]
+mod test {
+    use super::f;           // 需要从上级模块中导入目录，可以访问没有公开的成员
+
+    #[test]
+    fn ff() {
+        assert_eq!(f(), 0);
+    }
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// tests/sample.rs (集成测试的例子)
+
+#[test]
+fn my_sample() {
+    assert_eq!(my_crate::f(), 123); // 集成测试和基准测试依赖第三方的 crate，因此，他们仅看到公开的目录
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// benches/sample.rs (基准测试的例子)
+
+#![feature(test)]   // 基准测试仍处于试验阶段
+
+extern crate test;  // 在 2018 版本中需要添加
+
+use test::{black_box, Bencher};
+
+#[bench]
+fn my_algo(b: &amp;mut Bencher) {
+    b.iter(|| black_box(my_crate::f())); // `black_box` 阻止 `f` 被优化掉
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// build.rs (预构建脚本的例子)
+
+fn main() {
+    // 你需要依赖目标 OS 的环境变量，对于当前的 OS 可以表示 `#[cfg(...)]`
+    let target_os = env::var(&quot;CARGO_CFG_TARGET_OS&quot;);
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// src/lib.rs (过程宏的默认入口文件)
+
+extern crate proc_macro;  // 显然需要像这样被导入
+
+use proc_macro::TokenStream;
+
+#[proc_macro_attribute]   // 可以作为 `#[my_attribute]` 被使用
+pub fn my_attribute(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+    item
+}
+
+// Cargo.toml
+
+[package]
+name = &quot;my_crate&quot;
+version = &quot;0.1.0&quot;
+
+[lib]
+proc-macro = true
+</code></pre>
+<h3 id="模块树和namespace导入的使用"><a class="header" href="#模块树和namespace导入的使用">模块树和NameSpace导入的使用</a></h3>
+<table>
+<tr>
+<td align="center">模块树</td>
+</tr>
+<tr>
+<td>模块和源文件的使用方式：</td>
+</tr>
+<tr>
+<td>
+<li><b>模块树</b>需要显式定义，它不是从<b>文件系统树</b>中隐式创建的</li>
+<li><b>Module tree root</b>是库、应用程序等等的入口文件，如 lib.rs</li>
+</td>
+</tr>
+<tr>
+<td>实际模块的定义如下：</td>
+</tr>
+<tr>
+<td>
+<li>一个在文件中定义的 <b><code>mod m {}</code></b>，当使用 <b><code>mod m;</code></b> 时，将会先去读 <b><code>m.rs</code></b> 或者 <b><code>m/mod.rs</code></b> </li>
+<li> <code>.rs</code> 的路径是基于嵌套的，如 <code>mod a { mod b { mod c; }}}</code>、<code>a/b/c.rs</code>、<code>a/b/c/mod.rs</code></li>
+<li>通过一些<code> mod m; </code>来自 <b>Module tree root</b> 而没有路径的文件，是不会被编译器触及到的</li>
+</td>
+</tr>
+</table>
+<br>
+<table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Rust 有三种 NameSpaces</th><th style="text-align: left"></th></tr></thead><tbody>
+<tr><td style="text-align: left">Namespace 类型</td><td style="text-align: left">Namespace 函数</td><td style="text-align: left">Namespace 宏</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>mod X {}</code></td><td style="text-align: left"><code>fn X() {}</code></td><td style="text-align: left"><code>macro_rules! X { ... }</code></td></tr>
+<tr><td style="text-align: left"><code>X (crate)</code></td><td style="text-align: left"><code>const X: u8 = 1;</code></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>trait X {}</code></td><td style="text-align: left"><code>static X: u8 = 1;</code></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>enum X {}</code></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>union X {}</code></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>struct X {}</code></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left">  <code>struct X;</code><sup>1</sup></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left">  <code>struct X();</code><sup>2</sup></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+</tbody></table>
+<ol>
+<li>在<em>类型</em>和<em>函数</em>中，定义类型 <code>X</code> 和常量 <code>X</code></li>
+<li>在<em>类型</em>和<em>函数</em>中，定义类型 <code>X</code> 和函数 <code>X</code></li>
+</ol>
+<ul>
+<li>在任何给定的作用域中，例如在一个模块中，每个名称空间只能存在一个项目
+<ul>
+<li><code>enum X {}</code> 和 <code>fn X() {}</code> 可以共存</li>
+<li><code>struct X;</code> 和 <code>const X</code> 可以共存</li>
+</ul>
+</li>
+<li>使用 <code>use my_mod::X;</code> 时，所有被 <code>X</code> 调用的目录都会被导入</li>
+</ul>
+<p><sup>*<sup>由于命名约定,如 按照约定 <code>fn</code> 和 <code>mod</code> 是小写，并且大多数开发者不会把所有东西都命名为 <code>X</code>， 在通常情况下你不必担心这些类型，它们可以成为设计宏时的一个因素</p>
+<h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
+<p><sup>*<sup>必须要被了解的命令和工具</p>
+<table><thead><tr><th>命令</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>cargo init</code></td><td>在最近的版本创建一个新项目</td></tr>
+<tr><td><code>cargo build</code></td><td>在调试模式中构建项目( <code>--release</code> 适用于所有可以优化的地方)</td></tr>
+<tr><td><code>cargo check</code></td><td>检查项目是否可以编译成功(执行很快)</td></tr>
+<tr><td><code>cargo test</code></td><td>为项目执行测试用例</td></tr>
+<tr><td><code>cargo doc --open</code></td><td>在最近的版本创建一个新项目</td></tr>
+<tr><td><code>cargo run</code></td><td>如果生成了一个二进制文件( <code>main.rs</code> )则执行你的项目</td></tr>
+<tr><td>  <code>cargo run --bin b</code></td><td>运行二进制文件 <code>b</code>，将特性与其它依赖统一在一起，可能会造成混淆</td></tr>
+<tr><td>  <code>cargo run -p w</code></td><td>运行子空间的 <code>w</code>，如你期望的可以更多的面对特性</td></tr>
+<tr><td><code>cargo ... --timings</code></td><td>展示是什么 crate 导致你的构建花费了这么长时间，非常有用</td></tr>
+<tr><td><code>cargo tree</code></td><td>显示依赖关系图</td></tr>
+<tr><td><code>cargo +{nightly, stable} ...</code></td><td>在命令中使用给定的工具链，如 用于 'nightly only' 工具</td></tr>
+<tr><td><code>cargo +nightly ...</code></td><td>一些 <code>nightly-only</code> 的命令，使用下面的命令替换 <code>...</code></td></tr>
+<tr><td>  <code>rustc -- -Zunpretty=expanded</code></td><td>显示展开的宏</td></tr>
+<tr><td><code>rustup doc</code></td><td>打开离线 Rust 文档，包括书籍，在没有网络环境下使用很好</td></tr>
+</tbody></table>
+<p><sup>*</sup>这里的 <code>cargo build</code> 你也可以打印 <code>cargo b</code>，并且 <code>--release</code> 意味着可以用 <code>-r</code> 代替</p>
+<p>下面这些是可选的 rustup 组件，使用 <code>rustup component add [tool]</code> 安装它们</p>
+<table><thead><tr><th>工具</th><th>描述</th></tr></thead><tbody>
+<tr><td>cargo clippy</td><td>增加 lints 捕获一些常见的 <strong>滥用API</strong> 和 <strong>不符合语言习惯</strong> 的代码</td></tr>
+<tr><td>cargo fmt</td><td>自动代码格式化 <code>rustup component add rustfmt</code></td></tr>
+</tbody></table>
+<p><sup>*</sup>有更多可添加的 cargo 插件 <a href="https://crates.io/categories/development-tools::cargo-plugins?sort=downloads"><strong>点我查看</strong></a></p>
+<h2 id="交叉编译"><a class="header" href="#交叉编译">交叉编译</a></h2>
+<p>🔘检查目标系统是支持的</p>
+<p>🔘</sup>通过 <strong><code>rustup target install X</code></strong> 安装不同目标系统的需求</p>
+<p>🔘安装原生的工具链</p>
+<p>从目标主机供应商获取(谷歌、苹果 ...)，可能并非在所有的主机都可用(如 在 Windows 上没有 iOS 的工具连)</p>
+<p>一些工具链需要额外的构建步骤(如 安卓系统需要 <code>make-standalone-toolchain.sh</code> )</p>
+<p>🔘像下面这样更新 <strong><code>~/.cargo/config.toml</code></strong></p>
+<pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
+linker = &quot;[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang&quot;
+</code></pre>
+<pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
+linker = &quot;C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd&quot;
+</code></pre>
+<p>🔘设置环境变量(可选的，等待编译器如果有报错提示后再进行设置)</p>
+<pre><code class="language-rust editable noplayground">set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+set CXX=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe
+...
+</code></pre>
+<p>是否设置它们依赖于编译反馈的报错提示，不一定都是需要的</p>
+<p>一些平台的配置可能会非常敏感，取决于如何指定路径(如 <code>\</code> 与 <code>/</code> )和引用路径</p>
+<p>✔️使用 <code>cargo build --target=X</code> 去编译</p>
+<h2 id="工具指令"><a class="header" href="#工具指令">工具指令</a></h2>
+<p><sup>*<sup>嵌入在源码中的特殊标记通常用于工具或者预处理</p>
+<table>
+<tr>
+<td colspan="2" align="center">宏</td>
+</tr>
+<tr>
+<td colspan="2">在声明宏中，通过示例 <code>macro_rules!</code> 实现以下功能：</td>
+</tr>
+<tr>
+<td><b>在宏内</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>$x:ty</code></td>
+<td>宏的捕获，这里是一种类型</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:item</code></td>
+<td>一个 <code>item</code> ，如 函数、结构、模块等等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:block</code></td>
+<td>一组语句或表达式 <code>block {}</code>，如 <code>{ let x = 5; }</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:stmt</code></td>
+<td>一个语句，如 <code>let x = 1 + 1;</code> 、<code>String::new();</code>、<code>vec![]</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:expr</code></td>
+<td>一个表达式，如 <code>x</code> 、<code>1 + 1</code> 、<code>String::new()</code> 、<code>vec![]</code></td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:pat</code></td>
+<td>一种分支模式，如 <code>Some(t)<code> 、<code>(17, 'a')<code> 、<code>_<code></td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:ty</code></td>
+<td>一种类型，如 <code>String<code> 、<code>usize</code> 、<code>Vec&lt;u8&gt;</code></td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:ident</code></td>
+<td>一个标识符，如 在 <code>let x = 0;</code> 中，标识符是 <code>x</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:path</code></td>
+<td>一个路径，如 <code>foo</code> 、<code>std::mem::replace</code> 、<code>transmute::&lt;_, int&gt;</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:literal</code></td>
+<td>一个字面值，如 <code>3</code> 、<code>"foo"</code> 、 <code>b"bar"</code> 等等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:lifetime</code></td>
+<td>一个生命周期，如 <code>'a</code> 、<code>'static</code> 等等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:meta</code></td>
+<td>一个<code>meta item</code>，在这些 <code>#[...]</code> 、<code>#![...]</code> 里面的属性 </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:vis</code></td>
+<td>一个可见的修饰符，如 <code>pub</code> 、<code>pub(crate)</code> 等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:tt</code></td>
+<td>一个单独的 <code>token tree</code>，<a href="https://stackoverflow.com/a/40303308" >点击查看更多</a></td>
+</tr>
+<tr>
+<td><code>$crate</code></td>
+<td>一个卫生变量，定义宏的 <code>crate</code> </td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="2" align="center">文档</td>
+</tr>
+<tr>
+<td colspan="2">在文档注释中的用法：</td>
+</tr>
+<tr>
+<td><b>在文档注释内</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>```...```</code></td>
+<td>包含一个<b>文档测试</b>，可以使用 <code>cargo test</code>去运行 </td>
+</tr>
+<tr>
+<td><code>```X,Y ...```</code></td>
+<td>同上，并且包括可选配置 <code>X...Y</code></td>
+</tr>
+<tr>
+<td>&emsp; <code>rust</code></td>
+<td>明确使用 <code>Rust</code> 去编写测试，由 Rust 工具实现的</td>
+</tr>
+<tr>
+<td>&emsp; <code>-</code></td>
+<td>默认行为，编译测试，运行测试，如果发生恐慌则测试失败</td>
+</tr>
+<tr>
+<td>&emsp; <code>should_panic</code></td>
+<td>编译测试，运行测试，执行期望应该是恐慌，如果不是，则失败</td>
+</tr>
+<tr>
+<td>&emsp; <code>no_run</code></td>
+<td>编译测试，如果代码无法编译，则测试失败，不会运行测试</td>
+</tr>
+<tr>
+<td>&emsp; <code>compile_fail</code></td>
+<td>编译测试，如果代码可以编译，则测试失败</td>
+</tr>
+<tr>
+<td>&emsp; <code>ignore</code></td>
+<td>不会编译，不会运行，选择上面的选项</td>
+</tr>
+<tr>
+<td>&emsp; <code>edition2018</code></td>
+<td>执行代码为Rust 2018版，默认为 2015版</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>隐藏文档中的一行，如 <code># use x::hidden;</code> </td>
+</tr>
+<tr>
+<td><code>[`S`]</code></td>
+<td>创建指向<code>结构体、枚举、特征、函数……</code>的链接</td>
+</tr>
+<tr>
+<td><code>[`S`](crate::S)</code></td>
+<td>也可以使用路径，以 markdown 链接的形式</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#![globals]</td>
+</tr>
+<tr>
+<td colspan="3">影响整个 crate 和程序的属性：</td>
+</tr>
+<tr>
+<td><b>Opt-Out's</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#![no_std]</code></td>
+<td><code>C</code></td>
+<td>不会自动导入<b>std</b>，将使用<b>core</b>代替</td>
+</tr>
+<tr>
+<td><code>#![no_implicit_prelude]</code></td>
+<td><code>CM</code></td>
+<td>不会添加<b>prelude</b>，需要手动导入<b>None</b> <b>Vec</b> ...</td>
+</tr>
+<tr>
+<td><code>#![no_main]</code></td>
+<td><code>C</code></td>
+<td>如果是这种情况则不要在程序中写入 <code>main()</code> </td>
+</tr>
+<br>
+<tr>
+<td><b>Opt-In's</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#![feature(a, b, c)]</code></td>
+<td><code>C</code></td>
+<td>依赖可能永远不会稳定的特性，<a href="https://doc.rust-lang.org/unstable-book/the-unstable-book.html"><b>Unstable Book.</b></a></td>
+</tr>
+<br>
+<tr>
+<td><b>Builds</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#![windows_subsystem = "x"]	</code></td>
+<td><code>C</code></td>
+<td>在 Windows 上，做一个控制台或者应用程序</td>
+</tr>
+<tr>
+<td><code>#![crate_name = "x"]</code></td>
+<td><code>C</code></td>
+<td>指定当前 crate 的名称，如 当在不使用 cargo 的时候</td>
+</tr>
+<tr>
+<td><code>#![crate_type = "bin"]</code></td>
+<td><code>C</code></td>
+<td>指定当前 crate 的类型，如 bin lib dylib cdylib ...</td>
+</tr>
+<tr>
+<td><code>#![recursion_limit = "123"]</code></td>
+<td><code>C</code></td>
+<td>为 deref 和 macros 设置编译期间的递归限制</td>
+</tr>
+<tr>
+<td><code>#![type_length_limit = "456"]</code></td>
+<td><code>C</code></td>
+<td>限制类型替换的最大数量</td>
+</tr>
+<br>
+<tr>
+<td><b>Handlers</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[panic_handler]</code></td>
+<td><code>F</code></td>
+<td>创建一些应用程序的<b>panic handler</b>，如 <code>fn f(&PanicInfo) -> !</code> </td>
+</tr>
+<tr>
+<td><code>#[global_allocator]</code></td>
+<td><code>S</code></td>
+<td>创建一些静态项目的实现，<code>GlobalAlloc</code> 全局分配器</td>
+</tr>
+</table>
+<br>
+</table>
+<table>
+<tr>
+<td colspan="3" align="center">#[code]</td>
+</tr>
+<tr>
+<td colspan="3">主要控制写出代码的属性：</td>
+</tr>
+<tr>
+<td><b>Developer UX</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[non_exhaustive]</code></td>
+<td><code>T</code></td>
+<td> Future-proof <b>struct</b> 或 <b>enum</b>，暗示它以后数据将会扩大</td>
+</tr>
+<tr>
+<td><code>#[path = "x.rs"]</code></td>
+<td><code>M</code></td>
+<td>从非标准库中获取模块</td>
+</tr>
+<tr>
+<td><b>Codegen</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[inline]</code></td>
+<td><code>F</code></td>
+<td>建议编译器应该在调用点时使用内联函数</td>
+</tr>
+<tr>
+<td><code>#[inline(always)]</code></td>
+<td><code>F</code></td>
+<td>强烈要求编译器使用内联调用</td>
+</tr>
+<tr>
+<td><code>#[inline(never)]</code></td>
+<td><code>F</code></td>
+<td>如果仍然内联函数，则指示编译器不起作用</td>
+</tr>
+<tr>
+<td><code>#[cold]</code></td>
+<td><code>F</code></td>
+<td>提示该函数可能不会被调用</td>
+</tr>
+<tr>
+<td><code>#[target_feature(enable="x")]</code></td>
+<td><code>F</code></td>
+<td>对于 <code>unsafe fn</code> 的代码强制 CPU 开启特性</td>
+</tr>
+<tr>
+<td><code>#[track_caller]</code></td>
+<td><code>F</code></td>
+<td>对于更友好的 panic 输出信息，允许 <code>fn</code> 查找<b>caller</b></td>
+</tr>
+<tr>
+<td><code>#[repr(X)]</code></td>
+<td><code>T</code></td>
+<td>使用另一种表示而不是默认的<b>rust</b></td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(C)]</code></td>
+<td><code>T</code></td>
+<td>使用 C-compatible (f. FFI)、可预测 (f. transmute) 的布局</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(C, u8)]</code></td>
+<td><code>enum</code></td>
+<td>给<b>enum</b>判别器指定类型</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(transparent)]</code></td>
+<td><code>T</code></td>
+<td>为单个元素类型提供与包含字段相同的布局</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(packed(1))]</code></td>
+<td><code>T</code></td>
+<td>结构和包含字段的较低对齐，轻度的 UB 倾向</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(align(8))]</code></td>
+<td><code>T</code></td>
+<td>将结构对齐提高到给定值，如 SIMD 类型</td>
+</tr>
+<tr>
+<td colspan="3" align="left"><sup>*<sup>可以组合一些表示修饰符，如 <code>#[repr(C, packed(1))]</code></td>
+</tr>
+<tr>
+<td><b>Linking</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[no_mangle]</code></td>
+<td><code>*</code></td>
+<td>直接使用项目名称作为符号名称而不修改</td>
+</tr>
+<tr>
+<td><code>#[no_link]</code></td>
+<td><code>X</code></td>
+<td>当想要使用宏时，不去链接<b>extern crate</b></td>
+</tr>
+<tr>
+<td><code>#[link(name="x", kind="y")]</code></td>
+<td><code>X</code></td>
+<td>当查找符号时，要链接的本地库</td>
+</tr>
+<tr>
+<td><code>#[link_name = "foo"]</code></td>
+<td><code>F</code></td>
+<td>要查找以解析 <code>extern fn</code> 的符号名称</td>
+</tr>
+<tr>
+<td><code>#[link_section = ".sample"]</code></td>
+<td><code>FS</code></td>
+<td>应放置项目的目标文件的部分名称</td>
+</tr>
+<tr>
+<td><code>#[export_name = "foo"]</code></td>
+<td><code>FS</code></td>
+<td>以不同的名称导出 <code>fn</code>或 <code>static</code></td>
+</tr>
+<tr>
+<td><code>#[used]</code></td>
+<td><code>S</code></td>
+<td>不要优化掉 <code>static</code> 变量，尽管它看起来并未使用</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#[quality]</td>
+</tr>
+<tr>
+<td colspan="3">Rust 工具用于提高代码质量的属性：</td>
+</tr>
+<tr>
+<td><b>代码模式</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[allow(X)]</code></td>
+<td><code>*</code></td>
+<td>指示 rustc 或 clippy 去忽略 class <code>X</code> 可能的问题</td>
+</tr>
+<tr>
+<td><code>#[warn(X)]</code></td>
+<td><code>*</code></td>
+<td>发出警告，与 clippy lints 在一起使用</td>
+</tr>
+<tr>
+<td><code>#[deny(X)]</code></td>
+<td><code>*</code></td>
+<td>编译失败</td>
+</tr>
+<tr>
+<td><code>#[forbid(X)]</code></td>
+<td><code>*</code></td>
+<td>编译失败并且阻止后续的重写</td>
+</tr>
+<tr>
+<td><code>#[deprecated = "msg"]</code></td>
+<td><code>*</code></td>
+<td>让你用户知道你制造了一个设计错误</td>
+</tr>
+<tr>
+<td><code>#[must_use = "msg"]</code></td>
+<td><code>FTX</code></td>
+<td>使编译器检查由调用者处理的返回值</td>
+</tr>
+<tr>
+<td colspan="3"><sup>*</sup>对于保证高质量 crates 的最佳选择，存在一些争论。积极维护的多个开发版本的 crates 可能会受益于更具侵略性<b>deny</b>或<b>forbid lints</b>；不经常更新的可能更多来自保守使用<b>warn</b>，因为未来的编译器或 clippy 更新可能会突然破坏其他工作代码并出现些小问题</td>
+</tr>
+<tr>
+<td><b>测试</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[test]</code></td>
+<td><code>F</code></td>
+<td>将函数标记为测试，使用 <code>cargo test</code> </td>
+</tr>
+<tr>
+<td><code>#[ignore = "msg"]</code></td>
+<td><code>F</code></td>
+<td>编译但暂时不执行一些 <code>#[test]</code> </td>
+</tr>
+<tr>
+<td><code>#[should_panic]</code></td>
+<td><code>F</code></td>
+<td>测试必须触发 <code>panic!()</code> 才能实际成功</td>
+</tr>
+<tr>
+<td><code>#[bench]</code></td>
+<td><code>F</code></td>
+<td>标记函数在 <code>bench/</code> 作为基准测试，使用 <code>cargo bench</code> </td>
+</tr>
+<tr>
+<td><b>格式化</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[rustfmt::skip]</code></td>
+<td><code>*</code></td>
+<td>防止 <code>cargo fmt</code> 清理项目</td>
+</tr>
+<tr>
+<td><code>#![rustfmt::skip::macros(x)]</code></td>
+<td><code>CM</code></td>
+<td>... 从清理宏 x 开始</td>
+</tr>
+<tr>
+<td><code>#![rustfmt::skip::attributes(x)]</code></td>
+<td><code>CM</code></td>
+<td>... 从清理属性 x 开始</td>
+</tr>
+<tr>
+<td><b>文档</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[doc = "Explanation"]</code></td>
+<td><code>*</code></td>
+<td>与添加 <code>///</code> 文档注释相同</td>
+</tr>
+<tr>
+<td><code>#[doc(alias = "other")]</code></td>
+<td><code>*</code></td>
+<td>提供用户可以在文档中搜索的另一个名称</td>
+</tr>
+<tr>
+<td><code>#[doc(hidden)]</code></td>
+<td><code>*</code></td>
+<td>防止项目出现在文档中</td>
+</tr>
+<tr>
+<td><code>#![doc(html_favicon_url = "")]</code></td>
+<td><code>C</code></td>
+<td>为文档设置 <b>favicon</b> </td>
+</tr>
+<tr>
+<td><code>#![doc(html_logo_url = "")]</code></td>
+<td><code>C</code></td>
+<td>文档中使用的 <b>logo</b> </td>
+</tr>
+<tr>
+<td><code>#![doc(html_playground_url = "")]</code></td>
+<td><code>C</code></td>
+<td>生成 Run 按钮并使用给定的服务</td>
+</tr>
+<tr>
+<td><code>#![doc(html_root_url = "")]</code></td>
+<td><code>C</code></td>
+<td>指向外部 crate 的链接的基本 URL</td>
+</tr>
+<tr>
+<td><code>#![doc(html_no_source)]</code></td>
+<td><code>C</code></td>
+<td>防止源包含在文档中</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#[macros]</td>
+</tr>
+<tr>
+<td colspan="3">与宏的创建和使用相关的属性：</td>
+</tr>
+<tr>
+<td><b>宏示例</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[macro_export]</code></td>
+<td><code>!</code></td>
+<td>导出 <code>macro_rules!</code> 作为公开的在 <code>crate</code> 级别</td>
+</tr>
+<tr>
+<td><code>#[macro_use]</code></td>
+<td><code>MX</code></td>
+<td>让宏持久化的模块，或者从 <code>extern crate</code> 导入</td>
+</tr>
+<tr>
+<td><b>过程宏</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[proc_macro]</code></td>
+<td><code>F</code></td>
+<td>将 <code>fn</code> 标记为<b>function-like</b>的过程宏，可作为 <code>m!()</code> 调用</td>
+</tr>
+<tr>
+<td><code>#[proc_macro_derive(Foo)]</code></td>
+<td><code>F</code></td>
+<td>将可以 <code>#[derive(Foo)]</code> 的 <code>fn</code> 标记为<b>derive macro</b></td>
+</tr>
+<tr>
+<td><code>#[proc_macro_attribute]</code></td>
+<td><code>F</code></td>
+<td>将可以理解成新的 <code>#[x]</code> 的 <code>fn</code> 标记为<b>attribute macro</b></td>
+</tr>
+<tr>
+<td><b>Derives</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[derive(X)]</code></td>
+<td><code>T</code></td>
+<td>让一些过程宏提供一些好的 <code>trait X</code> 的实现</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#[cfg]</td>
+</tr>
+<tr>
+<td colspan="3">控制条件编译的属性：</td>
+</tr>
+<tr>
+<td><b>配置属性</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[cfg(X)]</code></td>
+<td><code>*</code></td>
+<td>如果配置 <code>X</code> 成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg(all(X, Y, Z))]</code></td>
+<td><code>*</code></td>
+<td>如果所有的选项都成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg(any(X, Y, Z))]</code></td>
+<td><code>*</code></td>
+<td>如果至少有一个选项成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg(not(X))]</code></td>
+<td><code>*</code></td>
+<td>如果 <code>X</code> 不成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg_attr(X, foo = "msg")]</code></td>
+<td><code>*</code></td>
+<td>如果配置 <code>X</code> 成立，则应用 <code>#[foo = "msg"]</code></td>
+</tr>
+<tr>
+<td colspan="3"><sup>*</sup>注意，options 一般可以设置多次，即同一个 key 可以出现多个 value。可以同时期望 <code>#[cfg(target_feature = "avx")]</code> 和 <code>#[cfg(target_feature = "avx2")]</code> 为真。</td>
+</tr>
+<tr>
+<td><b>已知选项</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[cfg(target_arch = "x86_64")]</code></td>
+<td><code>*</code></td>
+<td>为了去编译 CPU 架构的 crate </td>
+</tr>
+<tr>
+<td><code>#[cfg(target_feature = "avx")]</code></td>
+<td><code>*</code></td>
+<td>某一类特性类别的指令是否可用</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_os = "macos")]</code></td>
+<td><code>*</code></td>
+<td>你的代码将在其操作系统上运行</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_family = "unix")]</code></td>
+<td><code>*</code></td>
+<td>属于家族操作系统</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_env = "msvc")]</code></td>
+<td><code>*</code></td>
+<td>DLLs 和函数怎样与操作系统接口连接</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_endian = "little")]</code></td>
+<td><code>*</code></td>
+<td>你的 zero-cost 协议失败的主要原因</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_pointer_width = "64")]</code></td>
+<td><code>*</code></td>
+<td>有多少位指针、usize 和 CPU</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_vendor = "apple")]</code></td>
+<td><code>*</code></td>
+<td>目标生产商</td>
+</tr>
+<tr>
+<td><code>#[cfg(debug_assertions)]</code></td>
+<td><code>*</code></td>
+<td><code>debug_assert!()</code>是否会发生 panic</td>
+</tr>
+<tr>
+<td><code>#[cfg(panic = "unwind")]</code></td>
+<td><code>*</code></td>
+<td>是否 unwind 或 abort 将发生恐慌</td>
+</tr>
+<tr>
+<td><code>#[cfg(proc_macro)]</code></td>
+<td><code>*</code></td>
+<td>是否将 crate 编译为过程宏</td>
+</tr>
+<tr>
+<td><code>#[cfg(test)]</code></td>
+<td><code>*</code></td>
+<td>是否与 <code>cargo test</code>一起编译</td>
+</tr>
+<tr>
+<td><code>#[cfg(feature = "serde")]</code></td>
+<td><code>*</code></td>
+<td>是否 feature serde 与你的 crate 被一起编译</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="2" align="center">build.rs</td>
+</tr>
+<tr>
+<td colspan="2">与预构建脚本关联的环境变量与输出</td>
+</tr>
+<tr>
+<td><b>输入环境</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>CARGO_FEATURE_X</code></td>
+<td>为每一个激活的特性 X 设置环境变量</td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_FEATURE_SERDE</code></td>
+<td>如果特性 serde 被强制启用</td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_FEATURE_SOME_FEATURE</code></td>
+<td>如果有一些特性被强制启用，<code>-</code> 会转成 <code>_</code> </td>
+</tr>
+<tr>
+<td><code>CARGO_CFG_X</code></td>
+<td>暴露 cfg's，加入多个选项通过<b>,</b>并且会把<code>-</code> 转换成 <code>_</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_CFG_TARGET_OS=macos</code></td>
+<td>如果 target_os 设置为了 macos </td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_CFG_TARGET_FEATURE=avx,avx2</code></td>
+<td>如果 target_feature 设置为了 avx 和 avx2 </td>
+</tr>
+<tr>
+<td><code>OUT_DIR</code></td>
+<td>输出应该放到哪个目录</td>
+</tr>
+<tr>
+<td><code>TARGET</code></td>
+<td>正在编译的目标三重</td>
+</tr>
+<tr>
+<td><code>HOST</code></td>
+<td>主机三重(运行这个构建脚本)</td>
+</tr>
+<tr>
+<td><code>PROFILE</code></td>
+<td>可以是 debug 或 release </td>
+</tr>
+<tr>
+<td colspan="2" align="left" >通过 <code>env::var()?</code> 从<b>build.rs</b>中是可用的，但并未详尽列出</td>
+</tr>
+<tr>
+<td><b>输出字符串</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>cargo:rerun-if-changed=PATH</code></td>
+<td>仅在如果 PATH 变更了，再次运行这个 build.rs</td>
+</tr>
+<tr>
+<td><code>cargo:rerun-if-env-changed=VAR</code></td>
+<td>仅在如果环境变量 VAR 变更了，再次运行这个 build.rs</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-link-lib=[KIND=]NAME</code></td>
+<td>就像通过<b>-l</b>选项链接本机库一样</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-link-search=[KIND=]PATH</code></td>
+<td>就像通过<b>-l</b>选项，为本地库查找路径</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-flags=FLAGS</code></td>
+<td>向编译器添加指定的 flags </td>
+</tr>
+<tr>
+<td><code>cargo:rustc-cfg=KEY[="VALUE"]</code></td>
+<td>发出给定的 cfg 选项以用于以后的编译</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-env=VAR=VALUE</code></td>
+<td>在 crate 编译期间发出可通过<code>env!()</code>访问的变量</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-cdylib-link-arg=FLAG</code></td>
+<td>当构建一个<b>cdylib</b>时，传递链接器标志</td>
+</tr>
+<tr>
+<td><code>cargo:warning=MESSAGE</code></td>
+<td>发出编译器警告</td>
+</tr>
+<tr>
+<td colspan="2" align="left" >通过 <code>println!()</code> 从<b>build.rs</b>写出，但并未详尽列出</td>
+</tr>
+</table>
+<p><sup>*</sup>对于属性中的On列：</p>
+<ul>
+<li><code>C</code> 表示在 crate 级别（通常 <code>#![my_attr]</code> 在顶级文件中给出）</li>
+<li><code>M</code> 意味着在模块上</li>
+<li><code>F</code> 指功能上</li>
+<li><code>S</code> 意味着静态</li>
+<li><code>T</code> 表示类型</li>
+<li><code>X</code> 意味着一些特殊的东西</li>
+<li><code>!</code> 意味着在宏上</li>
+<li><code>*</code> 意味着几乎任何项目</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../rust/chapter_1_4.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../rust/chapter_1_6.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../rust/chapter_1_4.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../rust/chapter_1_6.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

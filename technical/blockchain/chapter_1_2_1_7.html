@@ -1,0 +1,520 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>工具集成 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html" class="active"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="工具集成"><a class="header" href="#工具集成">工具集成</a></h1>
+<p>本教程重点介绍了工一些具和节点扩展，这些工具和节点扩展使你能够部署与其他系统集成的节点，以及如何使用额外的生态系统工具，让你能够访问、同步，与你自己或其他区块链的信息进行交互。</p>
+<h2 id="集成一个轻客户端节点"><a class="header" href="#集成一个轻客户端节点">集成一个轻客户端节点</a></h2>
+<p>本节教程演示如何使用浏览器中运行的 WebAssembly 轻客户端连接到基于 Substrate 的区块链。在本节教程中，你将使用 Substrate Connect 浏览器扩展与区块链交互，而不使用 RPC 服务。</p>
+<h3 id="什么是substrate-connect"><a class="header" href="#什么是substrate-connect">什么是Substrate Connect</a></h3>
+<p>Substrate Connect是一个基于 WebAssembly 的轻客户端，可以直接在浏览器中运行。Substrate Connect light client 的核心软件组件是 <a href="https://github.com/paritytech/smoldot/">smoldot</a>。该软件需要的资源比完整节点更少，因此它可以在资源受限的环境中运行，包括浏览器、移动端点和物联网设备。轻客户端可以通过连接到一个完整的节点来同步链中的数据，而不是作为一个运行的 peer 并直接连接到区块链，以为了生产区块或导入区块。</p>
+<h4 id="安全同步"><a class="header" href="#安全同步">安全同步</a></h4>
+<p>软件钱包允许用户通过可信任的中间第三方节点来与区块链交互，与之不同的是，轻客户端从完整节点下载区块头，这样他们就可以使用区块头中的 Merkle trie root 来验证正在同步的信息是否被篡改。Merkle trie root 作为数据没有被修改的加密证明，而不需要轻客户端信任整个节点。</p>
+<h4 id="substrate-connect作为一个浏览器扩展"><a class="header" href="#substrate-connect作为一个浏览器扩展">Substrate Connect作为一个浏览器扩展</a></h4>
+<p>因为轻客户端不参与区块生成或共识，所以它们不需要在线，也不需要与网络进行持续通信。但是，如果你将轻客户端作为浏览器扩展来运行，那么你可以同时运行多个轻客户端，并且只要浏览器保持打开状态，就可以在浏览器会话中保持同步。</p>
+<p>运行一个轻客户端作为浏览器扩展还避免了完整节点需要的使用 Transport Layer Security（TLS）和 Secure Socket Layer（SSL）证书。使用 Substrate Connect，同步在后台进行，而不需要通过 WebSocket 端口（一些浏览器会将其作为不安全连接并阻止）。运行Substrate Connect 作为浏览器扩展还提供了更好的应用程序性能和响应更快的用户体验。</p>
+<h4 id="使用substrate-connect的应用程序和用户实践"><a class="header" href="#使用substrate-connect的应用程序和用户实践">使用Substrate Connect的应用程序和用户实践</a></h4>
+<p>如果你使用 Substrate Connect 构建应用程序，<code>smoldot</code> 客户端可以检测到用户是否拥有浏览器扩展，并在浏览器扩展可用时自动使用该扩展。如果用户没有安装浏览器扩展，<code>smoldot</code> 会自动在你的 web 应用程序中创建一个 WebAssembly 轻客户端。虽然将 Substrate Connect 作为浏览器扩展运行是可选的，该扩展提供了以下优势：</p>
+<ul>
+<li>更好的资源使用效率。多个浏览器 tabs 可以共享一个连接到同一条链，而不是每个浏览器 tabs 或窗口打开自己的连接。</li>
+<li>更好的同步速度。只要打开一个浏览器 tabs，浏览器扩展就自动开始与链同步，保持缓存以便连接到链，对于用户打开的每个新标签或浏览器窗口，同步几乎是瞬时的。如果没有浏览器扩展，同步一个链可能需要10到30秒。</li>
+<li>更好的连通性。浏览器扩展可以连接到未安装 TLS/SSL 证书的节点。</li>
+</ul>
+<h3 id="下载substrate-connect"><a class="header" href="#下载substrate-connect">下载Substrate Connect</a></h3>
+<p>由于 Substrate Connect 浏览器扩展提供的优势，第一步首先需要安装浏览器扩展。</p>
+<ol>
+<li>使用 Chrome 或 Firefox 打开链接 https://substrate.io/developers/substrate-connect/。</li>
+<li>点击 <a href="https://chrome.google.com/webstore/detail/substrate-connect-extensi/khccbhhbocaaklceanjginbdheafklai">Chrome</a> 或 <a href="https://addons.mozilla.org/en-US/firefox/addon/substrate-connect/">Firefox</a>。</li>
+<li>点击 <strong>Add to Chrome</strong> 或 <strong>Add to Firefox</strong>，然后确认你想要将扩展添加到浏览器。</li>
+</ol>
+<h3 id="连接到一个众所周知的链"><a class="header" href="#连接到一个众所周知的链">连接到一个众所周知的链</a></h3>
+<p>在 Substrate Connect 轻客户端可以连接到网络之前，你必须有一个 web 应用程序，该应用程序指定了请客户端应该连接到的网络，用于通信的节点，以及它在初始阶段必须具有的共识临界状态。这些信息可以在网络的 chain specification 文件中获得。</p>
+<p>Substrate Connect 预先配置为识别在 <a href="https://paritytech.github.io/substrate-connect/api/enums/connect_src.WellKnownChain.html">WellKnownChain</a> 列表中定义的几个链，这些知名的链是：</p>
+<ul>
+<li>Polkadot 被识别为 <code>polkadot</code></li>
+<li>Kusama 被识别为 <code>ksmcc3</code></li>
+<li>Rococo 被识别为 <code>rococo_v2_2</code></li>
+<li>Westend 被识别为 <code>westend2</code></li>
+</ul>
+<p>要连接到这些链之一，通过以下命令克隆 <code>empty-webapp</code> 模板，创建使用 Substrate Connect 的 web 应用：</p>
+<pre><code class="language-bash editable noplayground">git clone https://github.com/bernardoaraujor/empty-webapp
+
+cd empty-webapp
+
+# 通过运行以下命令安装来自 Polkadot-JS RPC 提供的依赖项
+yarn add @polkadot/rpc-provider
+
+# 通过运行以下命令安装 Polkadot-JS API 中的依赖项
+yarn add @polkadot/api
+</code></pre>
+<p>安装这些依赖项之后，就可以在示例应用程序中使用它们。</p>
+<p>在编辑器中打开 <code>empty-webapp/index.ts</code> 文件，复制并粘贴以下应用程序代码，使用 <code>substrate-connect</code> 作为提供以创建一个 Substrate Connect 实例，使用 <code>polkadot</code> chain specification 文件连接到 <code>Polkadot</code> 中继链。</p>
+<pre><code class="language-javascript editable noplayground">import {
+  ScProvider,
+  WellKnownChain,
+} from &quot;@polkadot/rpc-provider/substrate-connect&quot;;
+import { ApiPromise } from &quot;@polkadot/api&quot;;
+
+window.onload = () =&gt; {
+  void (async () =&gt; {
+    try {
+      const provider = new ScProvider(WellKnownChain.polkadot);
+      
+      await provider.connect();
+      const api = await ApiPromise.create({ provider });
+      await api.rpc.chain.subscribeNewHeads(
+        (lastHeader: { number: unknown; hash: unknown }) =&gt; {
+          console.log(
+            `New block #${lastHeader.number} has hash ${lastHeader.hash}`
+          );
+        }
+      );
+    } catch (error) {
+      console.error(&lt;Error&gt;error);
+    }
+  })();
+};
+</code></pre>
+<p>在 Polkadot-JS API 中，你可以像这样创建一个实例：</p>
+<pre><code class="language-javascript editable noplayground">// Import
+import { ApiPromise, WsProvider } from '@polkadot/api';
+
+// Construct
+const wsProvider = new WsProvider('wss://rpc.polkadot.io');
+const api = await ApiPromise.create({ provider: wsProvider });
+</code></pre>
+<p>对于 Substrate Connect，你将 WebSocket（<code>WsProvider</code>）provider 替换为 Substrate Connect（<code>ScProvider</code>），并指定 Polkadot 网络（<code>WellKnownChain.polkadot</code>）的 chain specification，而不是 WebSocket URL 客户端地址。</p>
+<p>通过运行以下命令安装任何剩余的依赖项：</p>
+<pre><code class="language-bash editable noplayground">yarn
+</code></pre>
+<p>通过运行以下命令启动 web 应用程序：</p>
+<pre><code class="language-bash editable noplayground">yarn dev
+</code></pre>
+<p>如果在启动本地服务器时出现编译器错误，你可能会缺少当前 <code>yarn</code> 配置中没有考虑到的依赖。如果缺少依赖项，可以通过运行类似以下的命令添加依赖包：</p>
+<pre><code class="language-bash editable noplayground">yarn add -D buffer
+</code></pre>
+<p>打开 URL <code>http://localhost:3001/</code> 验证浏览器。</p>
+<p>打开浏览器控制台。打开浏览器控制台的方法取决于所使用的浏览器和操作系统,例如，在 Chrome 上，选择更多工具，开发人员工具，然后单击控制台。</p>
+<p>验证 <code>smoldot</code> 进程已初始化，然后是来自 Polkadot 传入块的哈希值。例如，控制台应该显示类似如下的日志信息：</p>
+<pre><code class="language-bash editable noplayground">[smoldot] Smoldot v0.6.25
+smoldot-light.js:41 [smoldot] Chain initialization complete for polkadot. Name: &quot;Polkadot&quot;. Genesis hash: 0x91b1…90c3. State root hash: 0x29d0d972cd27cbc511e9589fcb7a4506d5eb6a9e8df205f00472e5ab354a4e17. Network identity: 12D3KooWRse9u6Z9ukP4C92YCCH2gXziNm8ThRch2owaaFh9H6D1. Chain specification or database starting at: 0xae3e…f81d (#11228238)
+...
+New block #11322769 has hash 0x464c0199ede92a89920c54c21abc741ea47daca1d62d61d7b9af78062f04c7a3 index.ts:10 
+New block #11322770 has hash 0xd66c61e5417249df228798f38535a6dd17b8b268c165e0a6b0e72ba74e954f9d index.ts:10
+</code></pre>
+<p>这个简单的 web 应用程序只连接到 Polkadot 检索块哈希值。此应用程序的主要目的是演示在不使用中心化的网络入口点（例如特定 RPC 节点的 URL）的情况下连接到链。但是，你可以扩展这个应用程序来做更多的事情，因为在你将 <code>WsProvider</code> 替换为 <code>ScProvider</code> 之后，你可以简单地使用现有的<a href="https://polkadot.js.org/docs/">Polkadot-JS API</a> 为你的应用程序编写代码。</p>
+<p>按 Control-c 停止 <code>smoldot</code> 轻客户端节点。</p>
+<h3 id="连接到自定义chain-specification"><a class="header" href="#连接到自定义chain-specification">连接到自定义chain specification</a></h3>
+<p>连接到自定义 chain specification 或公共可访问的平行链类似于连接到 well-known 的链之一。代码中的主要区别在于，必须显式地标识要使用的 Substrate Connect 的 chain specification。这部分教程演示如何通过连接到 Statemint 平行链来连接到自定义 chain specification。Statemint 是一个连接到 Polkadot 的通用良好的平行链，并且有一个公开的 chain specification 文件。</p>
+<p>要连接到这个链，从 <a href="https://github.com/paritytech/cumulus/blob/master/parachains/chain-specs/statemint.json">cumulus repository</a> 下载定制 chain specification 文件。将下载的 chain specification 复制到你在<a href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E4%BC%97%E6%89%80%E5%91%A8%E7%9F%A5%E7%9A%84%E9%93%BE"><strong>连接到一个众所周知的链</strong></a>中创建的<code>empty-webapp</code> 目录。</p>
+<p>在编辑器中打开 <code>index.ts</code> 文件，删除当前内容。复制并粘贴以下应用程序代码：</p>
+<pre><code class="language-javascript editable noplayground">import { ScProvider, WellKnownChain } from &quot;@polkadot/rpc-provider/substrate-connect&quot;;import { ApiPromise } from &quot;@polkadot/api&quot;;
+import jsonParachainSpec from &quot;./statemint.json&quot;;
+
+window.onload = () =&gt; {
+void (async () =&gt; {
+  try {
+    const relayProvider = new ScProvider(WellKnownChain.polkadot);
+    const parachainSpec = JSON.stringify(jsonParachainSpec);
+    const provider = new ScProvider(parachainSpec, relayProvider);
+    
+    await provider.connect();
+    const api = await ApiPromise.create({ provider });
+    await api.rpc.chain.subscribeNewHeads((lastHeader: { number: unknown; hash: unknown }) =&gt; {
+      console.log(`New block #${lastHeader.number} has hash ${lastHeader.hash}`);
+    });
+  } catch (error) {
+    console.error(&lt;Error&gt;error);
+  }
+})();
+};
+</code></pre>
+<p>正如你看到的，这段代码有一些重要的区别。</p>
+<ul>
+<li><code>statemint.json</code> chain specification 文件导入到 <code>jsonParachainSpec</code> 对象中。</li>
+<li>chain specification 被转换为一个 JSON-encoded 的字符串，并存储在 <code>parachainSpec</code> 变量中，这样它就可以与 web 服务器交换。</li>
+</ul>
+<p><code>ScProvider</code> provider 是为 <code>polkadot</code> 中继链创建的，但它被用作创建和连接到平行链 provider 的参数。Substrate Connect 需要此信息来确定与平行链通信的中继链。</p>
+<p>运行如下命令启动 web 应用程序</p>
+<pre><code class="language-bash editable noplayground">yarn dev
+</code></pre>
+<p>打开 URL <code>http://localhost:3001/</code> 验证浏览器。在浏览器中打开控制台。</p>
+<p>验证 <code>smoldot</code> 进程已初始化，然后是来自 Polkadot 传入块的哈希值。例如，控制台应该显示类似如下的日志信息：</p>
+<pre><code class="language-bash editable noplayground">[smoldot] Parachain initialization complete for statemint. Name: &quot;Statemint&quot;. Genesis hash: 0x68d5…de2f. State root hash: 0xc1ef26b567de07159e4ecd415fbbb0340c56a09c4d72c82516d0f3bc2b782c80. Network identity: 12D3KooWArq3iZHdK2jtRZSJzJkkWrKm17JTa9kjwjZkq9Htx5xR. Relay chain: polkadot (id: 1000 smoldot-light.js:41 
+[smoldot] Smoldot v0.6.25. Current memory usage: 140 MiB. Average download: 35.4 kiB/s. Average upload: 423 B/s.
+New block #1785421 has hash 0x88885ed331f94b4324c5f2eae8413cd36170808ef904b0ec0867646fa53770f7 index.ts:13 
+New block #1785422 has hash 0x2ad4d96e061a681e27403694f1d870bb0c4e5c77b5be232a18c7a2e0b7fb2555 index.ts:13 
+</code></pre>
+<h3 id="高级应用程序开发"><a class="header" href="#高级应用程序开发">高级应用程序开发</a></h3>
+<p>本节教程中的示例使用了 <code>@polkadot/rpc-provider/substrate-connect</code>，因为该 provider 可以直接创建使用 <a href="https://polkadot.js.org/docs/">Polkadot-JS API</a> 与链进行交互的应用程序。对于不依赖 Polkadot-JS API 的更高级应用程序开发，你可以安装并使用 <code>@substrate-connect</code>。例如，如果你正在构建自己的应用程序库或编程接口，则应通过运行以下命令安装 Substrate Connect 依赖项：</p>
+<pre><code class="language-bash editable noplayground">yarn add @substrate/connect
+</code></pre>
+<h2 id="访问evm账户"><a class="header" href="#访问evm账户">访问EVM账户</a></h2>
+<p>本节教程演示了如何使用 <a href="https://github.com/paritytech/frontier">Frontier</a> 项目中的 crates 来构建一个与<strong>以太坊兼容</strong>的区块链，该区块链可以访问基于以太坊的帐户并执行基于 Solidity 的智能合约。Frontier 项目的两个主要目标是使你能够执行以下操作：</p>
+<ul>
+<li>使用本地 Substrate 节点不加修改地运行以太坊去中心化应用。</li>
+<li>从以太坊主网络导入状态</li>
+</ul>
+<p>本节教程使用预定义的节点模板提供的工作环境。模板是使用 <a href="https://github.com/paritytech/frontier/blob/master/docs/node-template-release.md">Frontier release guide</a> 中的说明生成的。</p>
+<p>如果需要为自己生成独立的模板，可以使用 <a href="https://github.com/paritytech/frontier/blob/master/.maintain/node-template-release.sh">node-template-release.sh</a> 模板生成脚本。如果你使用 <a href="https://github.com/paritytech/frontier">frontier</a> 仓库或模板生成脚本构建自己的节点，请注意 frontier 使用自己版本的 Substrate crates，你可能需要更新 <code>Cargo</code> 文件中的依赖，以匹配项目中的依赖。</p>
+<h3 id="创世配置"><a class="header" href="#创世配置">创世配置</a></h3>
+<p><code>frontier-node-template</code> 中的开发 chain specification 定义了一个创世块，该块已经为 <code>alice</code> 帐户预配置了一个 EVM 帐户。当你在开发模式中启动该节点时，<code>alice</code> 的 EVM 帐户将使用默认的 Ether 资金额度。你将使用该帐户查看 EVM 帐户详细信息并调用以太坊智能合约。启动节点后，你将能够使用 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 查看` 的 EVM 帐户的详细信息。</p>
+<h3 id="编译一个frontier节点"><a class="header" href="#编译一个frontier节点">编译一个Frontier节点</a></h3>
+<p>要编译 <a href="https://github.com/substrate-developer-hub/frontier-node-template">Frontier node template</a>，通过运行一下命令克隆 node template 仓库，并编译 node template：</p>
+<pre><code class="language-bash editable noplayground">git clone https://github.com/substrate-developer-hub/frontier-node-template.git
+
+cd frontier-node-template
+
+cargo build --release
+</code></pre>
+<h3 id="连接到节点"><a class="header" href="#连接到节点">连接到节点</a></h3>
+<p>在节点编译后，必须启动该节点才能开始研究预先配置的 EVM 帐户。</p>
+<p>要启动本地 Substrate 节点，在 <code>frontier-node-template</code> 目录下，运行一下命令：</p>
+<pre><code class="language-bash editable noplayground">./target/release/frontier-template-node --dev
+</code></pre>
+<p><code>--dev</code> 命令行选项指定节点使用预定义的 <code>development</code> chain specification 运行，该 chain specification 包括 <code>alice</code> 预定义的 EVM 帐户和用于测试的其他帐户。</p>
+<p>通过检查终端中显示的输出，验证你的节点已成功启动并运行，终端应该显示类似这样的输出：</p>
+<pre><code class="language-bash editable noplayground">2022-07-08 10:06:42 Frontier Node
+2022-07-08 10:06:42 ✌️  version 0.0.0-1b6bff4-x86_64-macos
+2022-07-08 10:06:42 ❤️  by Substrate DevHub &lt;https://github.com/substrate-developer-hub&gt;, 2021-2022
+2022-07-08 10:06:42 📋 Chain specification: Development
+2022-07-08 10:06:42 🏷  Node name: flippant-boat-0444
+2022-07-08 10:06:42 👤 Role: AUTHORITY
+...
+</code></pre>
+<p>使用 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 连接本地节点。</p>
+<p>点击 <strong>Settings</strong>，然后点击 <strong>Developer</strong>
+<img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subsetdev.jpg" alt="" /></p>
+<p>定义以下帐户信息来创建一个 EVM <code>Account</code> 类型，并允许该帐户发送交易和检查区块。要发送交易，你必须定义 <code>Address</code> 和 <code>LookupSource</code> 的值。要检查区块，你必须定义 <code>Transaction</code> 和 <code>Signature</code> 的值。</p>
+<pre><code class="language-json editable noplayground">{
+  &quot;Address&quot;: &quot;MultiAddress&quot;,
+  &quot;LookupSource&quot;: &quot;MultiAddress&quot;,
+  &quot;Account&quot;: {
+     &quot;nonce&quot;: &quot;U256&quot;,
+     &quot;balance&quot;: &quot;U256&quot;
+  },
+  &quot;Transaction&quot;: {
+     &quot;nonce&quot;: &quot;U256&quot;,
+     &quot;action&quot;: &quot;String&quot;,
+     &quot;gas_price&quot;: &quot;u64&quot;,
+     &quot;gas_limit&quot;: &quot;u64&quot;,
+     &quot;value&quot;: &quot;U256&quot;,
+     &quot;input&quot;: &quot;Vec&lt;u8&gt;&quot;,
+     &quot;signature&quot;: &quot;Signature&quot;
+  },
+  &quot;Signature&quot;: {
+     &quot;v&quot;: &quot;u64&quot;,
+     &quot;r&quot;: &quot;H256&quot;,
+     &quot;s&quot;: &quot;H256&quot;
+  }
+}
+</code></pre>
+<p>点击保存</p>
+<h3 id="使用rpc查询余额"><a class="header" href="#使用rpc查询余额">使用RPC查询余额</a></h3>
+<p>在为 EVM 帐户配置对应的设置后，可以使用 Polkadot-JS 应用程序查看 <code>alice</code> 的 EVM 帐户信息。</p>
+<ol>
+<li>验证你的节点仍在运行，并且 Polkadot-JS 应用程序已连接到该节点。</li>
+<li>点击 <strong>Developer</strong>，然后选择 <strong>RPC calls</strong>。</li>
+<li>在 <strong>Submission</strong> 选项卡上，选择 <strong>eth</strong> 作为要调用的端点。</li>
+<li>从要调用的函数列表中选择 <strong>getBalance(address, number)</strong>。</li>
+<li>为 <code>alice</code> 帐户的地址指定 EVM 帐户标识符。
+预定义账户地址为 <code>0xd43593c715fdd31c61141abd04a99fd6822c8558</code>。帐户的地址是使用 <a href="https://github.com/substrate-developer-hub/frontier-node-template/tree/main/utils/README.md#--evm-address-address">Substrate EVM utilities</a> 从 <code>alice</code> 帐户的公钥计算出来的。</li>
+<li>点击 <strong>Submit RPC call</strong>，该调用应该返回如下类似的输出：</li>
+</ol>
+<pre><code class="language-bash editable noplayground">2: eth.getBalance: U256
+340,282,366,920,938,463,463,374,607,431,768,210,955
+</code></pre>
+<h3 id="部署一个智能合约"><a class="header" href="#部署一个智能合约">部署一个智能合约</a></h3>
+<p>现在你已经了解了如何查询以太坊地址的余额，你可能还想探索如何部署和调用以太坊智能合约并测试相关功能。这部分内容会使用一个 <a href="https://www.trufflesuite.com/truffle">Truffle</a> 示例合约来定义 <a href="https://github.com/substrate-developer-hub/frontier-node-template/blob/main/examples/contract-erc20/truffle/contracts/MyToken.sol">ERC-20 token</a>。你也可以使用 Polkadot JS SDK 和 <a href="https://github.com/substrate-developer-hub/frontier-node-template/tree/main/examples/contract-erc20">Typescript</a> 创建一个 ERC-20 token 合约。</p>
+<p>创建 ERC-20 合约。为了方便起见，你可以使用 <a href="https://github.com/substrate-developer-hub/frontier-node-template/blob/main/examples/contract-erc20/truffle/contracts/MyToken.json">MyToken.json</a> 中的 token 合约编译的 <code>bytecode</code>，然后将合约部署到 Substrate 区块链上。</p>
+<p>验证你的节点仍在运行，并且 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 已连接到该节点。</p>
+<p>点击 <strong>Developer</strong>，然后选择 <strong>Extrinsics</strong>。</p>
+<p>选择 <strong>ALICE</strong> 开发帐户作为用于提交交易的帐户。</p>
+<p>选择 <strong>evm</strong>。</p>
+<p>选择 <strong>create</strong> 函数。</p>
+<p>配置该函数的参数：
+|<strong>For this</strong>|<strong>Specify this</strong>|
+|:-----|:-----|
+|<code>source</code>|0xd43593c715fdd31c61141abd04a99fd6822c8558|
+|<code>init</code>|<code>MyToken.json</code> 中的原始 <code>bytecode</code> 十六进制值|
+|<code>value</code>|0|
+|<code>gasLimit</code>|4294967295|
+|<code>maxFeePerGas</code>|100000000|</p>
+<p>你可以将可选参数保留为空，<code>nonce</code> 的值将增加源帐户的已知 nonce 值，并从 <code>0x0</code> 开始。根据所选函数的不同，你可能需要删除未使用的参数。</p>
+<p>点击 <strong>Submit Transaction</strong>。</p>
+<p>点击 <strong>Sign and Submit</strong> 对交易进行授权。</p>
+<h3 id="查看智能合约"><a class="header" href="#查看智能合约">查看智能合约</a></h3>
+<p>提交交易后，合约将部署到网络上，你可以使用 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 查看有关它的信息。</p>
+<p>验证你的节点仍在运行，并且 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 已连接到该节点。</p>
+<p>点击 <strong>Network</strong>，然后选择 <strong>Explorer</strong>。</p>
+<p>点击 <strong>evm.Created</strong> 事件以验证新创建的合约的地址为 <code>0x8a50db1e0f9452cfd91be8dc004ceb11cb08832f</code>。
+<img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subevmcre.jpg" alt="" /></p>
+<p>您还可以使用浏览器的开发人员工具中的控制台查看有关事务的详细信息。因为EVM合同地址是由帐户标识符和合同创建者的nonce决定的，所以部署合同的地址是使用众所周知的帐户标识符0xd43593c715fdd31c61141abd04a99fd6822c8558和alice帐户的nonce 0x0计算的。</p>
+<p>点击 <strong>Developer</strong>，然后选择 <strong>Chain State</strong>。</p>
+<p>选择 <strong>evm</strong> 作为查询和 <strong>accountCodes</strong> 的状态。</p>
+<p>为 <code>alice</code> 帐户指定帐户标识符 <code>0xd43593c715fdd31c61141abd04a99fd6822c8558</code>，注意帐户代码为空（<code>0x</code>）。</p>
+<p>为你使用 <code>alice</code> 开发帐户部署的合约指定合约地址 <code>0x8a50db1e0f9452cfd91be8dc004ceb11cb08832f</code>，注意合约帐户代码是来自 Solidity 合约的字节码。</p>
+<h3 id="查看账户存储"><a class="header" href="#查看账户存储">查看账户存储</a></h3>
+<p>你部署的 ERC-20 合约是基于 <a href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol">OpenZeppelin ERC-20 implementation</a>。该合约包括一个构造函数，该构造函数生成最大数量的 tokens，并将它们存储在与合约创建者关联的帐户中。</p>
+<p>要查询智能合约关联的账户存储信息：</p>
+<p>在以 <strong>evm</strong> 作为要查询状态的 Chain State 中，选择 <strong>accountStorages</strong>。</p>
+<p>指定 ERC-20 合约地址 <code>0x8a50db1e0f9452cfd91be8dc004ceb11cb08832f</code> 作为第一个参数。</p>
+<p>将要读取的存储插槽指定为第二个参数 <code>0x045c0350b9cf0df39c4b40400c965118df2dca5ce0fbcf0de4aafc099aea4a14</code>。地址的存储槽是使用基于槽位 0 和帐户标识符 <code>0xd43593c715fdd31c61141abd04a99fd6822c8558</code> 的 <a href="https://github.com/substrate-developer-hub/frontier-node-template/tree/main/utils/README.md#--erc20-slot-slot-address">Substrate EVM utilities</a> 计算得到的。该值应该返回的是 <code>0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</code>。如果你在部署合同之后检查 <code>alice</code> 帐户的余额，你会看到从帐户中提取了一笔费用，并且 <code>getBalance(address, number)</code> 调用返回一个类似于下面的值：</p>
+<pre><code class="language-bash editable noplayground">340,282,366,920,938,463,463,374,603,530,233,757,803
+</code></pre>
+<h3 id="转移代币"><a class="header" href="#转移代币">转移代币</a></h3>
+<p>到目前为止，你只使用了 <code>alice</code> 开发帐户。接下来是使用部署的合约将 tokens 转移到另一个帐户。</p>
+<p>验证你的节点仍在运行，并且 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 已连接到该节点。</p>
+<p>点击 <strong>Developer</strong>，然后选择 <strong>Extrinsics</strong>。</p>
+<p>选择 <strong>ALICE</strong> 开发帐户作为用于提交交易的帐户。</p>
+<p>选择 <strong>evm</strong>。</p>
+<p>选择 <strong>call</strong> 调用 ERC-20 合约上的 <code>transfer(address, uint256)</code> 函数。</p>
+<p>配置该函数的参数：
+|<strong>For this</strong>|<strong>Specify this</strong>|
+|:-----|:-----|
+|<code>source</code>|0xd43593c715fdd31c61141abd04a99fd6822c8558|
+|<code>target</code>|0x8a50db1e0f9452cfd91be8dc004ceb11cb08832f|
+|<code>input</code>|0xa9059cbb0000000000000000000000008eaf04151687736326c9fea17e25fc528761369300000000000000000000000000000000000000000000000000000000000000dd|
+|<code>value</code>|0|
+|<code>gasLimit</code>|4294967295|
+|<code>maxFeePerGas</code>|100000000|</p>
+<p><code>source</code> 表示持有 tokens 的帐户。在本例中，<code>source</code> 是合约创建者 <code>alice</code> 的 EVM 帐户。<code>target</code> 是将 tokens 从 <code>alice</code> 转移到 <code>bob</code> 的合约地址。<code>input</code> 参数是一个 EVM ABI-encoded 的函数调用，它指定执行转移的函数调用（<code>0xa9059cbb</code>）和函数所需的参数。对于这个函数，参数是 <code>bob</code> EVM 帐户标识符（<code>0x8eaf04151687736326c9fea17e25fc5287613693</code>）和要转移的 <code>tokens</code> 数量（221 或 <code>0xdd</code> 十六进制）。本节教程中的 input 值是使用 <a href="http://remix.ethereum.org/">Remix web IDE</a> 计算得到的。</p>
+<p>点击 <strong>Submit Transaction</strong>。</p>
+<p>点击 <strong>Sign and Submit</strong> 对交易进行授权。</p>
+<h3 id="验证代币转移"><a class="header" href="#验证代币转移">验证代币转移</a></h3>
+<p>提交交易后，合约将部署到网络上，你可以使用 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 查看有关它的信息。</p>
+<p>验证你的节点仍在运行，并且 <a href="https://polkadot.js.org/apps/#?rpc=ws://127.0.0.1:9944">Polkadot-JS application</a> 已连接到该节点。</p>
+<p>点击 <strong>Network</strong>，然后选择 <strong>Explorer</strong>。</p>
+<p>点击 <strong>evm.Executed</strong> 事件来验证已执行的合约地址为 <code>0x8a50db1e0f9452cfd91be8dc004ceb11cb08832f</code>。
+<img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subevmexe.jpg" alt="" /></p>
+<p>点击 <strong>Developer</strong>，然后选择 <strong>Chain State</strong>。</p>
+<p>选择 <strong>evm</strong> 作为要查询的状态和 <strong>accountStorages</strong>。</p>
+<p>查看存储合约地址 <code>0x8a50db1e0f9452cfd91be8dc004ceb11cb08832f</code> 和存储槽 <code>0x045c0350b9cf0df39c4b40400c965118df2dca5ce0fbcf0de4aafc099aea4a14</code>。
+0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff22</p>
+<p>如果你在部署合约之后检查 <code>alice</code> 帐户的余额，你会看到从帐户中提取了一笔费用，<code>getBalance(address, number)</code> 调用返回一个类似于下面的值：
+340,282,366,920,938,463,463,374,603,530,233,366,411</p>
+<h2 id="以太坊集成"><a class="header" href="#以太坊集成">以太坊集成</a></h2>
+<p>通过使用 Frontier 项目的 crates，并将 EVM 和 Ethereum pallets 添加到你的运行时中，你可以构建一个基于 Substrate 的区块链，它支持 Ethereum-based 的账户，并允许执行 Solidity-based 的智能合约。</p>
+<p>以太坊虚拟机（EVM）是一种虚拟计算机，其组件使以太坊网络参与者能够存储数据并就数据的状态达成一致。对于一个基于 Substrate 的区块链，EVM 的核心职责在 <strong>EVM pallet</strong> 中实现的。EVM pallet 负责执行以太坊合约字节码，这些智能合约是用像 Solidity 这样的高级语言编写的，然后编译为 EVM 字节码。下面的图表提供了一个简单的概述，以说明如何将 EVM pallet 和以太坊 RPC 调用集成到你的 Substrate 运行时中。
+<img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subpalevm.jpg" alt="" /></p>
+<p>除了 EVM pallet，Ethereum pallet 还负责存储 Ethereum-formatted 的块、交易收据和交易状态。当用户提交原始以太坊交易时，通过在运行时调用 <code>pallet_ethereum </code>中的 <code>transact</code> 函数，该交易首先会被转换为一个 Substrate transaction。
+<img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subpaleth.jpg" alt="" /></p>
+<p>请注意，使用单独一个私钥不能使以太坊账户和 Substrate 账户直接兼容。关于以太坊帐户、密钥映射到 Substrate 帐户、密钥的信息，请参见 Moonbeam 文档中的 <a href="https://docs.moonbeam.network/learn/features/unified-accounts/#substrate-evm-compatible-blockchain">Unified Accounts</a>。</p>
+<h3 id="以太坊指定的运行时apis和rpcs"><a class="header" href="#以太坊指定的运行时apis和rpcs">以太坊指定的运行时APIs和RPCs</a></h3>
+<p>运行时存储所有可以查询的 Ethereum-formatted 的信息。你可以调用运行时并使用节点 RPC 服务器、运行时 API 和 RPC 客户端调用检索该信息。
+<img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subtorpc.jpg" alt="" /></p>
+<h3 id="frontier区块导入"><a class="header" href="#frontier区块导入">Frontier区块导入</a></h3>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subbloimp.jpg" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../blockchain/chapter_1_2_1_6.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../blockchain/chapter_1_2_1_8.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../blockchain/chapter_1_2_1_6.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../blockchain/chapter_1_2_1_8.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

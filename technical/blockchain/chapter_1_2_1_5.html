@@ -1,0 +1,1541 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>开发智能合约 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html" class="active"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="开发智能合约"><a class="header" href="#开发智能合约">开发智能合约</a></h1>
+<p>本教程指导你如何使用 <a href="https://ink.substrate.io/">ink! 编程语言</a> 用于构建在基于 Substrate 的区块链上运行的智能合约。本节中的教程使用预配置的 <code>contracts-node</code> 和托管 <a href="https://contracts-ui.substrate.io/">Contracts UI</a>。如果要使用标准 node template，需要将 Contracts pallet 和一些其他组件添加到开发环境中。在<strong>配置合约pallet</strong>中详细介绍了为构建智能合约准备 node template 的过程。</p>
+<h2 id="准备第一份合约"><a class="header" href="#准备第一份合约">准备第一份合约</a></h2>
+<h3 id="更新你的rust环境"><a class="header" href="#更新你的rust环境">更新你的Rust环境</a></h3>
+<p>对于本节教程，你需要添加一些Rust源代码到你的Substrate开发环境之中，通过运行下面的命令更新你的Rust环境：</p>
+<pre><code class="language-bash editable noplayground">rustup component add rust-src --toolchain nightly
+</code></pre>
+<p>通过运行下面的命令验证你已经安装了WebAssembly目标：</p>
+<pre><code class="language-bash editable noplayground">rustup target add wasm32-unknown-unknown --toolchain nightly
+</code></pre>
+<p>如果目标已安装且是最新的，则该命令将显示类似于以下内容的输出：</p>
+<pre><code class="language-bash editable noplayground">info: component 'rust-std' for target 'wasm32-unknown-unknown' is up to date
+</code></pre>
+<h3 id="安装substrate合约node"><a class="header" href="#安装substrate合约node">安装Substrate合约node</a></h3>
+<p>为了简化本节教程，你可以为 Linux 和 macOS <a href="https://github.com/paritytech/substrate-contracts-node/releases">下载</a>预编译的 Substrate 节点，预编译的二进制文件默认情况下为智能合约包括了FRAME pallet。或者，你可以通过在你的本地计算机上运行 <code>cargo install contracts-node</code> 手动构建预配置的 <code>contracts-node</code>。</p>
+<p>在 macOS 或 Linux 上安装对应 <a href="https://github.com/paritytech/substrate-contracts-node/releases">Releases</a> 版本的合约节点，为本地计算机下载合适的压缩文件。</p>
+<p>如果无法下载预编译节点，则可以使用类似于以下的命令在本地编译它：</p>
+<pre><code class="language-bash editable noplayground">cargo install contracts-node --git https://github.com/paritytech/substrate-contracts-node.git --tag &lt;latest-tag&gt; --force --locked
+</code></pre>
+<p>你可以在 <a href="https://github.com/paritytech/substrate-contracts-node/tags">Tags</a> 页面上发现最新的 tag。 </p>
+<h3 id="安装其它软件包"><a class="header" href="#安装其它软件包">安装其它软件包</a></h3>
+<p>编译 <code>contracts-node</code> 包后，你需要安装另外两个软件包：</p>
+<ul>
+<li>用于你的操作系统的 WebAssembly <strong>binaryen</strong> 包，为合约优化 WebAssembly 字节码。</li>
+<li>用于配置智能合约项目的 <code>cargo-contract</code> 命令行接口。</li>
+</ul>
+<h4 id="安装webassembly优化器"><a class="header" href="#安装webassembly优化器">安装WebAssembly优化器</a></h4>
+<p>在 Ubuntu 或 Debian 上运行下面的命令：</p>
+<pre><code class="language-bash editable noplayground">sudo apt install binaryen
+</code></pre>
+<p>在 macOS 上运行下面的命令：</p>
+<pre><code class="language-bash editable noplayground">brew install binaryen
+</code></pre>
+<p>对于其它的操作系统，你可以直接从 <a href="https://github.com/WebAssembly/binaryen/releases">WebAssembly releases</a> 上下载 <code>binaryen</code> release。</p>
+<h4 id="安装cargo-contract包"><a class="header" href="#安装cargo-contract包">安装cargo-contract包</a></h4>
+<p>在你安装 WebAssembly <code>binaryen</code> 包之后，你可以安装 <code>cargo-contract</code> 包。<code>cargo-contract</code> 包提供一个命令行接口，用于使用 <code>ink!</code> 语言处理智能合约。</p>
+<p>安装 <code>dylint-link</code>，需要它来 lint ink! contracts，注意你使用 API 的方式可能存在会导致安全的问题：</p>
+<pre><code class="language-bash editable noplayground">cargo install dylint-link
+</code></pre>
+<p>通过运行下面的命令安装 <code>cargo-contract</code>：</p>
+<pre><code class="language-bash editable noplayground">cargo install cargo-contract --force
+</code></pre>
+<p>通过运行以下命令验证安装并尝试命令的可用选项：</p>
+<pre><code class="language-bash editable noplayground">cargo contract --help
+</code></pre>
+<h3 id="创建一个新的智能合约项目"><a class="header" href="#创建一个新的智能合约项目">创建一个新的智能合约项目</a></h3>
+<p>你现在可以开始开发新的智能合约项目了，为智能合约项目生成文件。通过运行下面的命令创建一个名叫 <code>flipper</code> 的新项目文件夹。</p>
+<pre><code class="language-bash editable noplayground">cargo contract new flipper
+</code></pre>
+<p>切换到新项目文件夹中并列出文件夹中所有的内容：</p>
+<pre><code class="language-bash editable noplayground">cd flipper/ &amp;&amp; ls -al
+</code></pre>
+<p>你应该可以看到文件夹中包含下面的文件：</p>
+<pre><code class="language-bash editable noplayground">-rwxr-xr-x   1 dev-doc  staff   285 Mar  4 14:49 .gitignore
+-rwxr-xr-x   1 dev-doc  staff  1023 Mar  4 14:49 Cargo.toml
+-rwxr-xr-x   1 dev-doc  staff  2262 Mar  4 14:49 lib.rs
+</code></pre>
+<p>像其它 Rust 项目一样，<code>Cargo.tmol</code> 文件被用作提供包的依赖关系和配置信息。<code>lib.rs</code> 文件被用作为智能合约编写业务逻辑。</p>
+<h4 id="浏览默认项目文件"><a class="header" href="#浏览默认项目文件">浏览默认项目文件</a></h4>
+<p>默认情况下，创建一个新的智能合约项目生成一些模板源码。一个非常简单的合约，第一个函数 <code>flip()</code>，会将布尔变量从 true 更改为 false；还有第二个函数 <code>get()</code>，会获取当前布尔变量的值。<code>lib.rs</code> 文件还会包含两个为测试合约是否能按照期望工作的函数。</p>
+<p>随着本节教程到最后，你会拥有一个更加高级完整的智能合约，像 <a href="https://github.com/paritytech/ink/blob/master/examples/flipper/lib.rs">Flipper example</a> 一样。</p>
+<p>打开 <code>Cargo.toml</code> 文件并为查看合约的依赖关系，如有必要，在 <code>[dependencies]</code> 部分，修改 <code>scale</code> 和 <code>scale-info</code> 的配置：</p>
+<pre><code class="language-toml editable noplayground">scale = { package = &quot;parity-scale-codec&quot;, version = &quot;3&quot;, default-features = false, features = [&quot;derive&quot;] }
+scale-info = { version = &quot;2&quot;, default-features = false, features = [&quot;derive&quot;], optional = true }
+</code></pre>
+<p>保存对 <code>Cargo.tmol</code> 的任何变更，并关闭该文件。</p>
+<p>打开 <code>lib.rs</code> 文件，并查看为合约定义的函数。</p>
+<h4 id="测试默认的合约"><a class="header" href="#测试默认的合约">测试默认的合约</a></h4>
+<p>在 <code>lib.rs</code> 原代码文件的底部，有一些简单的测试用例可以验证合约的功能性。你可以使用链下测试环境来测试此代码是否按照预期执行。</p>
+<p>通过运行下面的命令，使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来为 <code>flipper</code> 合约执行默认的测试用例：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应显示类似于以下的输出，以表示成功完成测试用例：</p>
+<pre><code class="language-bash editable noplayground">running 2 tests
+test flipper::tests::it_works ... ok
+test flipper::tests::default_works ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<h4 id="构建合约"><a class="header" href="#构建合约">构建合约</a></h4>
+<p>测试完默认的合约之后，你就可以开始编译这个项目到 WebAssembly 了。
+为智能合约构建 WebAssembly，通过运行下面的命令，编译 <code>flipper</code> 智能合约：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly contract build
+</code></pre>
+<p>这个命令会为 <code>flipper</code> 项目构建一个 WebAssembly 二进制文件，一个元数据文件可以包含合约应用二进制接口（ABI），和一个你用来部署合约的 <code>.contract</code> 文件。例如，你应该可以看到类似于下面的输出：</p>
+<pre><code class="language-bash editable noplayground">Original wasm size: 47.9K, Optimized: 22.8K
+
+The contract was built in DEBUG mode.
+
+Your contract artifacts are ready. You can find them in:
+/Users/dev-doc/flipper/target/ink
+
+- flipper.contract (code + metadata)
+- flipper.wasm (the contract's code)
+- metadata.json (the contract's metadata)
+The `.contract` file can be used for deploying your contract to your chain.
+</code></pre>
+<p>在 <code>target/ink</code> 目录中的 <code>metadata.json</code> 文件描述了你可以用来与此合约交互的所有接口。这个文件包含了几个重要的部分：</p>
+<ul>
+<li><code>spec</code> 部分包含有关函数的信息，像可被调用的 <strong>constructors</strong> 和 <strong>messages</strong>，可被发出的 <strong>events</strong>，以及可现实的任何文档。这个部分也包括了一个 <code>selector</code> 字段，它包含一个函数名称的4字哈希，和用于将合约调用到正确的函数。</li>
+<li><code>storage</code> 部分定义了由合约管理的所有存储项以及如何访问它们。</li>
+<li><code>types</code> 部分提供 JSON 其余部分中使用的自定义数据类型。</li>
+</ul>
+<h3 id="启动substrate智能合约节点"><a class="header" href="#启动substrate智能合约节点">启动Substrate智能合约节点</a></h3>
+<p>通过运行下面的命令在本地开发模式中启动预配置的 <code>contracts-node</code>：</p>
+<pre><code class="language-bash editable noplayground">substrate-contracts-node --dev
+</code></pre>
+<p>你应该在终端中看到类似于以下内容的输出：</p>
+<pre><code class="language-bash editable noplayground">2022-03-07 14:46:25 Substrate Contracts Node
+2022-03-07 14:46:25 ✌️  version 0.8.0-382b446-x86_64-macos
+2022-03-07 14:46:25 ❤️  by Parity Technologies &lt;admin@parity.io&gt;, 2021-2022
+2022-03-07 14:46:25 📋 Chain specification: Development
+2022-03-07 14:46:25 🏷  Node name: possible-plants-8517
+2022-03-07 14:46:25 👤 Role: AUTHORITY
+2022-03-07 14:46:25 💾 Database: RocksDb at /var/folders/2_/g86ns85j5l7fdnl621ptzn500000gn/T/substrateEdrJW9/chains/dev/db/full
+2022-03-07 14:46:25 ⛓  Native runtime: substrate-contracts-node-100 (substrate-contracts-node-1.tx1.au1)
+2022-03-07 14:46:25 🔨 Initializing Genesis block/state (state: 0xe9f1…4b89, header-hash: 0xa1b6…0194)
+2022-03-07 14:46:25 👴 Loading GRANDPA authority set from genesis on what appears to be first startup.
+2022-03-07 14:46:26 🏷  Local node identity is: 12D3KooWQ3P8BH7Z1C1ZoNSXhdGPCiPR7irRSeQCQMFg5k3W9uVd
+2022-03-07 14:46:26 📦 Highest known block at #0
+</code></pre>
+<p>在几秒钟后，你还会看到区块被最终确认的状态。为了与区块链交互，你需要连接本节点。你可以通过打开 <a href="https://contracts-ui.substrate.io/">Contracts UI</a> 浏览器页面连接当前节点。然后点击 <strong>Yes allow this application access</strong>，选择本地节点。</p>
+<h3 id="部署合约"><a class="header" href="#部署合约">部署合约</a></h3>
+<p>在 Substrate 中，合约部署过程分为两个步骤：</p>
+<ul>
+<li>将合约代码上传到区块链。</li>
+<li>创建合约的一个实例。</li>
+</ul>
+<p>通过这种模式，你可以将智能合约（如 ERC20标准）的代码存储在区块链上一次，然后将其实例化任意次数。你不需要重复加载相同的源代码，因此你的智能合约不会消耗区块链上不必要的资源。</p>
+<h4 id="上传合约代码"><a class="header" href="#上传合约代码">上传合约代码</a></h4>
+<p>在本节教程中，你将使用 Contracts UI 前端在 Substrate 链上部署 <code>flipper</code> 合约。</p>
+<p>在 web 浏览器中打开 <a href="https://contracts-ui.substrate.io/">Contracts UI</a>，确认你已经连接到了 <strong>Local Node</strong>，点击 <strong>Add New Contract</strong>，点击 <strong>Upload New Contract Code</strong>，选择用于创建合约实例的 <strong>Account</strong>，你可以选择任何已存在的账户，包括一个预定义的账户，如 alice。输入一个智能合约的的名称，例如，Flipper Contract。</p>
+<p>浏览并选择或拖放 <code>flipper.contract</code> 文件，包含绑定的 Wasm blob 和元数据文件到 upload section。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subuplocont.jpg" alt="" /></p>
+<p>然后点击 <strong>Next</strong> 继续。</p>
+<h4 id="在区块链上创建一个实例"><a class="header" href="#在区块链上创建一个实例">在区块链上创建一个实例</a></h4>
+<p>智能合约作为 Substrate 区块链上账户系统的扩展而存在。当你创建此智能合约的实例时，Substrate 将创建一个新的 <code>AccountId</code>，以存储智能合约管理的任何余额，并允许你与该合约进行交互。</p>
+<p>在你上传智能合约并点击 <strong>Next</strong> 之后，Contracts UI 会显示有关智能合约内容的信息。</p>
+<p>查看并接受智能合约初始版本的默认 <code>Deployment Constructor</code> 选项，查看并接受默认的 <strong>Max Gas Allowed</strong> <code>200000</code>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subcreainst.jpg" alt="" /></p>
+<p>点击 <strong>Next</strong>，交易现在已开始进入队列，如果需要进行更改，可以点击 <strong>Go Back</strong> 修改输入。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subcomupl.jpg" alt="" /></p>
+<p>点击 <strong>Upload and Instantiate</strong>，根据你使用的帐户，可能会提示你输入帐户密码。如果你使用了预定义的帐户，则不需要提供密码。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subfirstcon.jpg" alt="" /></p>
+<h3 id="调用智能合约"><a class="header" href="#调用智能合约">调用智能合约</a></h3>
+<p>现在，你的合约已经部署在区块链上了，你可以与之交互。默认的 <code>flipper</code> 智能合约有两个函数 <code>flip()</code> 和 <code>get()</code>，你可以使用  Contracts UI 来尝试使用它们。</p>
+<h4 id="get函数"><a class="header" href="#get函数">get()函数</a></h4>
+<p>当你实例化合约时，将 <code>flipper</code> 合约 <code>value</code> 的初始值设置为 <code>false</code>。你可以使用 <code>get()</code> 函数去验证当前值是否为 <code>false</code>。</p>
+<p>为了测试 <code>get()</code> 函数，从 <strong>Account</strong> 列表中选择任意账户，此合约对允许谁发送这个 <code>get()</code> 请求没有限制，从 <strong>Message to Send</strong> 列表中选择 <strong>get(): bool</strong>，点击 <strong>Read</strong>，验证调用结果的返回值是否为 <code>false</code>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subcallresget.jpg" alt="" /></p>
+<h4 id="flip函数"><a class="header" href="#flip函数">flip()函数</a></h4>
+<p><code>flip()</code> 函数把值从 <code>false</code> 改为 <code>true</code>。</p>
+<p>为了测试 <code>flip()</code> 函数，从 <strong>Account</strong> 列表中选择任意预定义账户，<code>flip()</code> 函数是一个改变链状态的交易，需要一个有资金的帐户来执行调用。因此，你应该选择具有预定义余额的帐户，例如 <code>alice</code> 帐户。从 <strong>Message to Send</strong> 列表中选择 <strong>flip()</strong>，点击 <strong>Call</strong>，验证调用结果中的交易是否成功。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subsucctran.jpg" alt="" /></p>
+<p>从 <strong>Message to Send</strong> 列表中选择 <strong>get(): bool</strong>，点击 <strong>Read</strong>，验证调用结果中的新值是 <code>true</code>。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subfliptrue.jpg" alt="" /></p>
+<h2 id="开发一份智能合约"><a class="header" href="#开发一份智能合约">开发一份智能合约</a></h2>
+<p>在本节教程中，你将开发一个新的智能合约，它将在每次执行函数调用时增加计数器值。</p>
+<h3 id="智能合约与ink"><a class="header" href="#智能合约与ink">智能合约与ink!</a></h3>
+<p>在上一节教程（准备第一份智能合约）之后，你已经位命令行访问 ink! 编程语言安装了 <code>cargo-contract</code> 包。ink! 语言是<a href="https://wiki.haskell.org/Embedded_domain_specific_language">嵌入式领域特定语言</a>。此语言使你能够使用 Rust 编程语言编写基于 WebAssembly 的智能合约。</p>
+<p>该语言使用标准的 Rust 模式和专用的 <code>#[ink(...)]</code> 属性宏。这些属性宏描述了智能合约的不同部分，这样它们就可以被转换为与 Substrate 兼容的 WebAssembly 字节码。</p>
+<h3 id="创建一份新的智能合约项目"><a class="header" href="#创建一份新的智能合约项目">创建一份新的智能合约项目</a></h3>
+<p>本节教程中，你将会为 <code>incrementer</code> 智能合约创建一个新项目。创建的新项目会添加一个项目文件夹，在项目文件夹中有一个默认的启动文件，也可以叫做模板文件。你将会为 <code>incrementer</code> 项目修改这些启动模板文件，来构建智能合约所需的逻辑。</p>
+<p>通过运行下面的命令创建一个名为 <code>incrementer</code> 的新项目：</p>
+<pre><code class="language-bash editable noplayground">cargo contract new incrementer
+</code></pre>
+<p>进入 <strong>incrementer</strong> 文件夹后，打开 <code>lib.rs</code> 文件，默认情况下，<code>lib.rs</code> 模板文件包含 <code>flipper</code> 智能合约的源代码，只是把 <code>flipper</code> 合约的实例重命名为 <code>incrementer</code>。把默认模板的源代码替换为新的 <a href="https://docs.substrate.io/assets/tutorials/smart-contracts/incrementer-template.rs/"><strong>incrementer</strong></a> 源码。保存 <code>lib.rs</code> 文件的改变并关闭。</p>
+<p>打开 <code>Cargo.toml</code> 文件，并为合约检查相关的依赖包。在 <code>[dependencies]</code> 部分，如果需要的话，修改 <code>scale</code> 和 <code>scale-info</code> 配置内容。</p>
+<pre><code class="language-toml editable noplayground">scale = { package = &quot;parity-scale-codec&quot;, version = &quot;3&quot;, default-features = false, features = [&quot;derive&quot;] }
+scale-info = { version = &quot;2&quot;, default-features = false, features = [&quot;derive&quot;], optional = true }
+</code></pre>
+<p>保存代码并关闭 <code>Cargo.toml</code> 文件。</p>
+<p>通过运行下面的命令，验证程序是否编译并通过了简单的测试：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>你可以忽略任何警告，因为此模板只是框架代码，该命令应显示类似以下的输出，以表示成功完成测试：</p>
+<pre><code class="language-bash editable noplayground">running 1 test
+test incrementer::tests::default_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<p>通过运行以下命令，验证你可以为合约构建 WebAssembly。</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly contract build
+</code></pre>
+<p>如果程序成功编译，你就可以开始编码了。</p>
+<h3 id="存储简单的值"><a class="header" href="#存储简单的值">存储简单的值</a></h3>
+<p>现在已经有了一些 <code>incrementer</code> 智能合约的初始源代码，你可以再引入一些新的功能。例如，该合约需要存储简单的值。下面的代码解释了如何使用 <code>#[ink(storage)]</code> 属性宏为该合约存储简单的值。</p>
+<pre><code class="language-rust editable noplayground">#[ink(storage)]
+pub struct MyContract {
+	// Store a bool
+	my_bool: bool,
+	// Store a number
+	my_number: u32,
+}
+</code></pre>
+<h4 id="支持的类型"><a class="header" href="#支持的类型">支持的类型</a></h4>
+<p>Substrate 智能合约支持最常见的 Rust 数据类型，包括布尔类型，未签名和已签名的整数型，字符串，元组，以及数组。这些数据类型使用 <a href="https://github.com/paritytech/parity-scale-codec"><strong>Parity scale codec</strong></a> 进行编码和解码，以便可以在网络上高效的传输。</p>
+<p>除了常见的 Rust 类型使用 scale codec 进行编码解码外，ink! 语言支持 Substrate 特性类型，像 <code>AccountId</code>，<code>Balance</code>，和 <code>Hash</code>，就好像它们是原始类型。下面的代码说明了如何为该合约存储一个 <code>AccountId</code> 和 <code>Balance</code>。</p>
+<pre><code class="language-rust editable noplayground">// We are importing the default ink! types
+use ink_lang as ink;
+
+#[ink::contract]
+mod MyContract {
+
+	// Our struct will use those default ink! types
+	#[ink(storage)]
+	pub struct MyContract {
+		// Store some AccountId
+		my_account: AccountId,
+		// Store some Balance
+		my_balance: Balance,
+	}
+	/* --snip-- */
+}
+</code></pre>
+<h4 id="构造函数"><a class="header" href="#构造函数">构造函数</a></h4>
+<p>每一个 ink! 智能合约必须至少有一个在创建合约时运行的构造函数。然而，如果你需要，一个智能合约也可以有多个多个构造函数。下面的代码说明了如何使用多个构造函数：</p>
+<pre><code class="language-rust editable noplayground">use ink_lang as ink;
+
+#[ink::contract]
+mod mycontract {
+
+	#[ink(storage)]
+	pub struct MyContract {
+		number: u32,
+	}
+
+	impl MyContract {
+		/// Constructor that initializes the `u32` value to the given `init_value`.
+		#[ink(constructor)]
+		pub fn new(init_value: u32) -&gt; Self {
+			Self {
+				number: init_value,
+			}
+		}
+
+		/// Constructor that initializes the `u32` value to the `u32` default.
+		///
+		/// Constructors can delegate to other constructors.
+		#[ink(constructor)]
+		pub fn default() -&gt; Self {
+			Self {
+				number: Default::default(),
+			}
+		}
+	/* --snip-- */
+	}
+}
+</code></pre>
+<h3 id="更新你的智能合约"><a class="header" href="#更新你的智能合约">更新你的智能合约</a></h3>
+<p>现在你已经了解到如何存储简单的值，声明数据类型，以及使用构造函数，你可以更新你的智能合约源代码以实现下面的功能：</p>
+<ul>
+<li>创建一个名为 <code>value</code> 的存储值，数据类型为 <code>i32</code>。</li>
+<li>创建一个新的 <code>Incrementer</code> 构造函数，并且将它的 <code>value</code> 设置为 <code>init_value</code>。</li>
+<li>创建第二个名叫 <code>default</code> 的构造函数，该函数没有输入参数，并创建一个新的 <code>Incrementer</code>，将其 <code>value</code> 设置为 <code>0</code>。</li>
+</ul>
+<p>为了更新智能合约，打开 <code>lib.rs</code> 文件，通过声明名为 <code>value</code> 数据类型为 <code>i32</code> 的存储项，从而替换 <code>Storage Declaration</code> 注释。</p>
+<pre><code class="language-rust editable noplayground">#[ink(storage)]
+pub struct Incrementer {
+   value: i32,
+}
+</code></pre>
+<p>修改 <code>Incrementer</code> 构造函数，将其 <code>value</code> 设置为 <code>init_value</code>。</p>
+<pre><code class="language-rust editable noplayground">impl Incrementer {
+ #[ink(constructor)]
+ pub fn new(init_value: i32) -&gt; Self {
+       Self {
+         value: init_value,
+       }
+ }
+}
+</code></pre>
+<p>添加第二个名为 <code>default</code> 的构造函数，该函数创建一个新的 <code>Incrementer</code>，将其 <code>value</code> 设置为 <code>0</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(constructor)]
+pub fn default() -&gt; Self {
+   Self {
+       value: 0,
+   }
+}
+</code></pre>
+<p>保存代码并关闭文件。</p>
+<p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
+<pre><code class="language-rust editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 1 test
+test incrementer::tests::default_works ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<h3 id="添加一个函数来获取一个存储值"><a class="header" href="#添加一个函数来获取一个存储值">添加一个函数来获取一个存储值</a></h3>
+<p>现在你已经创建并初始化了存储值，可以使用公共和私有函数与它进行交互。在本节教程中，你将添加一个公共函数来获取存储值。请注意，所有公共函数都必须使用 <code>#[ink(message)]</code> 属性宏。</p>
+<p>在智能合约中添加公共函数，打开 <code>lib.rs</code> 文件，更新 <code>get</code> 公共函数，以返回数据类型为 <code>i32</code> 的存储项的 <code>value</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn get(&amp;self) -&gt; i32 {
+   self.value
+}
+</code></pre>
+<p>因为这个函数只从合约存储中读取数据，所以它使用 <code>&amp;self</code> 参数来访问合约函数和存储项，此函数不允许更改存储项 <code>value</code> 的状态。如果函数中的最后一个表达式没有分号（;），Rust 将则将其视为返回值。</p>
+<p>将私有 <code>default_works</code> 函数中的 <code>Test Your Contract</code> 注释替换为测试 <code>get</code> 函数的代码。</p>
+<pre><code class="language-rust editable noplayground">fn default_works() {
+   let contract = Incrementer::default();
+   assert_eq!(contract.get(), 0);
+}
+</code></pre>
+<p>保存代码并关闭文件。</p>
+<p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<h3 id="添加一个函数以修改一个存储值"><a class="header" href="#添加一个函数以修改一个存储值">添加一个函数以修改一个存储值</a></h3>
+<p>此时，智能合约不允许用户修改存储项，要使用户能够修改存储项，必须将 <code>value</code> 显式标记为可变变量。</p>
+<p>添加一个函数以增加存储项的值，打开 <code>lib.rs</code> 文件，添加一个新的 <code>inc</code> 公共函数以增加 <code>value</code> 存储，使用数据类型是 <code>i32</code> 的 <code>by</code> 参数</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn inc(&amp;mut self, by: i32) {
+   self.value += by;
+}
+</code></pre>
+<p>向源代码中添加一个新测试，以验证此函数。</p>
+<pre><code class="language-rust editable noplayground">#[ink::test]
+   fn it_works() {
+       let mut contract = Incrementer::new(42);
+       assert_eq!(contract.get(), 42);
+       contract.inc(5);
+       assert_eq!(contract.get(), 47);
+       contract.inc(-50);
+       assert_eq!(contract.get(), -3);
+}
+</code></pre>
+<p>保存代码并关闭文件。</p>
+<p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 2 tests
+test incrementer::tests::it_works ... ok
+test incrementer::tests::default_works ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<h4 id="为合约构建webassembly"><a class="header" href="#为合约构建webassembly">为合约构建WebAssembly</a></h4>
+<p>在测试 <code>incrementer</code> 合约之后，就可以将此项目编译为 WebAssembly 了。将智能合约编译到 WebAssembly 后，你可以使用 <a href="https://contracts-ui.substrate.io/">Contracts UI</a> 在本地合约节点上部署和测试智能合约。</p>
+<p>为智能合约构建WebAssembly，在 <code>incrementer</code> 项目文件夹里，通过运行下面的命令编译 <code>incrementer</code> 智能合约：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly contract build
+</code></pre>
+<p>该命令显示如下类似的输出：</p>
+<pre><code class="language-bash editable noplayground">Your contract artifacts are ready. You can find them in:
+/Users/dev-docs/incrementer/target/ink
+
+- incrementer.contract (code + metadata)
+- incrementer.wasm (the contract's code)
+- metadata.json (the contract's metadata)
+</code></pre>
+<h3 id="部署与测试智能合约"><a class="header" href="#部署与测试智能合约">部署与测试智能合约</a></h3>
+<p>如果你已经在本地安装了 <code>substrate-contracts-node</code> 节点，你可以为智能合约启动一个本地区块链节点，然后使用 <a href="https://contracts-ui.substrate.io/">Contracts UI</a> 去部署和测试智能合约。</p>
+<p>通过运行以下命令，在本地开发模式下启动合约节点：</p>
+<pre><code class="language-bash editable noplayground">substrate-contracts-node --dev
+</code></pre>
+<p>打开 <a href="https://contracts-ui.substrate.io/">Contracts UI</a> 并验证其是否连接到本地节点。
+点击 <strong>Add New Contract</strong>。
+点击 <strong>Upload New Contract Code</strong>。
+选择 <code>incrementer.contract</code> 文件，然后点击 <strong>Next</strong>。
+点击 <strong>Upload and Instantiate</strong>。
+使用 Contracts UI 探索智能合约并与之交互。</p>
+<p>完整的合约代码：</p>
+<pre><code class="language-rust editable noplayground">
+#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
+
+use ink_lang as ink;
+
+#[ink::contract]
+mod incrementer {
+
+    #[ink(storage)]
+    pub struct Incrementer {
+        value: i32,
+    }
+
+    impl Incrementer {
+        #[ink(constructor)]
+        pub fn new(init_value: i32) -&gt; Self {
+            Self {
+                value: init_value,
+            }
+        }
+
+        #[ink(constructor)]
+        pub fn default() -&gt; Self {
+            Self {
+                value: Default::default(),
+            }
+        }
+
+        #[ink(message)]
+        pub fn get(&amp;self) -&gt; i32 {
+            self.value
+        }
+
+        #[ink(message)]
+        pub fn inc(&amp;mut self, by: i32) {
+            self.value += by;
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use ink_lang as ink;
+
+        #[ink::test]
+        fn default_works() {
+            let contract = Incrementer::default();
+            assert_eq!(contract.get(), 0);
+        }
+
+        #[ink::test]
+        fn it_works() {
+            let mut contract = Incrementer::new(42);
+            assert_eq!(contract.get(), 42);
+            contract.inc(5);
+            assert_eq!(contract.get(), 47);
+            contract.inc(-50);
+            assert_eq!(contract.get(), -3);
+        }
+    }
+}
+</code></pre>
+<h2 id="使用maps存储值"><a class="header" href="#使用maps存储值">使用maps存储值</a></h2>
+<p>本节教程说明了如何可以扩展智能合约的功能，以管理每个用户的一个号码。要添加这个功能，你将会使用 <a href="https://paritytech.github.io/ink/ink_storage/struct.Mapping.html"><code>Mapping</code></a> 类型。</p>
+<p>ink! 语言提供 <a href="https://paritytech.github.io/ink/ink_storage/struct.Mapping.html"><code>Mapping</code></a> 类型，使你能够将数据存储为键值对。例如，下面的代码说明了映射一个用户到一个号码。</p>
+<pre><code class="language-rust editable noplayground">#[ink(storage)]
+pub struct MyContract {
+	// Store a mapping from AccountIds to a u32
+	my_number_map: ink_storage::Mapping&lt;AccountId, u32&gt;,
+}
+</code></pre>
+<p>使用 <code>Mapping</code> 数据类型，可以为每个键存储值的唯一实例。本节教程中，每一个 <code>AccountId</code> 代表一个键，该键映射到一个且仅一个存储的数字 <code>my_value</code>。每个用户只能存储、增加和检索与其自己的 <code>AccountId</code> 关联的值。</p>
+<h3 id="初始化一个mapping"><a class="header" href="#初始化一个mapping">初始化一个mapping</a></h3>
+<p>第一步是初始化 <code>AccountId</code> 和存储值之间的映射。在你的合约中使用映射之前，你必须始终初始化映射，以避免映射错误和不一致。要初始化映射，需要执行以下操作：</p>
+<ul>
+<li>在存储结构上添加 <a href="https://paritytech.github.io/ink/ink_storage/traits/trait.SpreadAllocate.html"><code>SpreadAllocate</code></a></li>
+<li>指定映射键和映射到它的值。</li>
+<li>调用 <a href="https://paritytech.github.io/ink/ink_lang/utils/fn.initialize_contract.html"><code>ink_lang::utils::initalize_contract</code></a> 函数来初始化合约的映射。</li>
+</ul>
+<p>以下示例说明如何初始化一个映射并检索一个值：</p>
+<pre><code class="language-rust editable noplayground">#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
+
+use ink_lang as ink;
+
+#[ink::contract]
+mod mycontract {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct MyContract {
+        // Store a mapping from AccountIds to a u32
+        map: ink_storage::Mapping&lt;AccountId, u32&gt;,
+    }
+
+    impl MyContract {
+        #[ink(constructor)]
+        pub fn new(count: u32) -&gt; Self {
+            // This call is required to correctly initialize the
+            // Mapping of the contract.
+            ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
+                let caller = Self::env().caller();
+                contract.map.insert(&amp;caller, &amp;count);
+            })
+        }
+
+        #[ink(constructor)]
+        pub fn default() -&gt; Self {
+            ink_lang::utils::initialize_contract(|_| {})
+        }
+
+        // Get the number associated with the caller's AccountId, if it exists
+        #[ink(message)]
+        pub fn get(&amp;self) -&gt; u32 {
+            let caller = Self::env().caller();
+            self.map.get(&amp;caller).unwrap_or_default()
+        }
+    }
+}
+</code></pre>
+<h4 id="识别合约的调用者"><a class="header" href="#识别合约的调用者">识别合约的调用者</a></h4>
+<p>在前面的例子中，你可能注意到了 <code>self.env().caller()</code> 函数调用。这个函数在整个合约逻辑中都是可用的，并且总是返回 <strong>contract caller</strong>。重要的是要注意，<strong>contract caller</strong> 与 <strong>origin caller</strong> 是不同的。如果用户访问一个合约，然后再调用后来的合约，那么第二个合约中的 <code>self.env().caller()</code> 是第一个合约的地址，而不是 original user 的地址。</p>
+<h4 id="使用合约的调用者"><a class="header" href="#使用合约的调用者">使用合约的调用者</a></h4>
+<p>在许多情况下，合约调用者都是有用的。例如，你可以使用 <code>self.env().caller()</code> 来创建一个访问控制层，该层只允许用户访问自己的值。你还可以使用 <code>self.env().caller()</code> 在合同部署期间保存合约所有者。例如：</p>
+<pre><code class="language-rust editable noplayground">#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
+
+use ink_lang as ink;
+
+#[ink::contract]
+mod mycontract {
+
+	#[ink(storage)]
+	pub struct MyContract {
+		// Store a contract owner
+		owner: AccountId,
+	}
+
+	impl MyContract {
+		#[ink(constructor)]
+		pub fn new() -&gt; Self {
+			Self {
+				owner: Self::env().caller();
+			}
+		}
+		/* --snip-- */
+	}
+}
+</code></pre>
+<p>因为你已经使用 <code>owner</code> 标识符保存了合约调用者，所以你可以再后面编写函数来检查当前合约调用者是否是合同的所有者。</p>
+<h3 id="添加mapping到智能合约中"><a class="header" href="#添加mapping到智能合约中">添加mapping到智能合约中</a></h3>
+<p>为 <code>incrementer</code> 合约添加 storage map，在 <code>incrementer</code> 项目文件夹中，打开 <code>lib.rs</code>，为你的合约导入 <code>SpreadAllocate</code> 特征并追加派生宏。</p>
+<pre><code class="language-rust editable noplayground">#[ink::contract]
+mod incrementer {
+   use ink_storage::traits::SpreadAllocate;
+
+   #[ink(storage)]
+   #[derive(SpreadAllocate)]
+</code></pre>
+<p>将映射键从 <code>AccountId</code> 添加到存储为 <code>my_value</code> 的 <code>i32</code> 数据类型。</p>
+<pre><code class="language-rust editable noplayground">pub struct Incrementer {
+   value: i32,
+   my_value: ink_storage::Mapping&lt;AccountId, i32&gt;,
+}
+</code></pre>
+<p>使用 <code>initialize_contract</code> 函数为合约中的 <code>new</code> 函数设置一个初始 <code>value</code> 和 <code>my_value</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(constructor)]
+pub fn new(init_value: i32) -&gt; Self {
+   ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
+       contract.value = init_value;
+       let caller = Self::env().caller();
+       contract.my_value.insert(&amp;caller, &amp;0);
+   })
+}
+</code></pre>
+<p>使用 <code>initialize_contract</code> 函数为合约中的 <code>default</code> 函数设置一个初始 <code>value</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(constructor)]
+pub fn default() -&gt; Self {
+   ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
+       contract.value = Default::default();
+   })
+}
+</code></pre>
+<p>添加一个 <code>get_mine</code> 函数，使用 Mapping API <code>get</code> 函数读取 <code>my_value</code>，并为合约调用者返回 <code>my_value</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn get_mine(&amp;self) -&gt; i32 {
+   self.my_value.get(&amp;self.env().caller()).unwrap_or_default()
+}
+</code></pre>
+<p>向初始化帐户添加一个新测试。</p>
+<pre><code class="language-rust editable noplayground">#[ink::test]
+fn my_value_works() {
+   let contract = Incrementer::new(11);
+   assert_eq!(contract.get(), 11);
+   assert_eq!(contract.get_mine(), 0);
+}
+</code></pre>
+<p>保存代码并关闭文件。</p>
+<p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 3 tests
+test incrementer::tests::default_works ... ok
+test incrementer::tests::it_works ... ok
+test incrementer::tests::my_value_works ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<h3 id="插入更新或删除值"><a class="header" href="#插入更新或删除值">插入，更新或删除值</a></h3>
+<p><code>ink_storage</code> 映射提供对存储项的直接访问。例如，你可以用一个已存在的键调用 <code>Mapping::insert()</code> 来替换存储项之前保存的值。你也可以通过使用 <code>Mapping::insert()</code> 在存储中第一次读取值时，然后用 <code>Mapping::insert()</code> 更新这个值。如果不存在给定键的值，则 <code>Mapping::get()</code> 返回 <code>None</code>。因为 Mapping API 提供了对存储的直接访问，所以可以使用 <code>Mapping::remove()</code> 方法从存储中删除给定键的值。</p>
+<p>要添加插入和删除函数到合约中，在 <code>incrementer</code> 项目文件夹中，打开 <code>lib.rs</code> 文件，添加一个 <code>inc_mine()</code> 函数，它允许合约调用者获取 <code>my_value</code> 存储项，并且在映射中插入递增的 <code>value</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn inc_mine(&amp;mut self, by: i32) {
+   let caller = self.env().caller();
+   let my_value = self.get_mine();
+   self.my_value.insert(caller, &amp;(my_value + by));
+}
+</code></pre>
+<p>添加一个 <code>remove_mine()</code> 函数，该函数允许合约调用者从存储中获取可删除的 <code>my_value</code> 存储项。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn remove_mine(&amp;mut self) {
+   self.my_value.remove(&amp;self.env().caller())
+}
+</code></pre>
+<p>添加一个新测试，以验证 <code>inc_mine()</code> 函数是否按预期工作。</p>
+<pre><code class="language-rust editable noplayground">#[ink::test]
+fn inc_mine_works() {
+   let mut contract = Incrementer::new(11);
+   assert_eq!(contract.get_mine(), 0);
+   contract.inc_mine(5);
+   assert_eq!(contract.get_mine(), 5);
+   contract.inc_mine(5);
+   assert_eq!(contract.get_mine(), 10);
+}
+</code></pre>
+<p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 5 tests
+test incrementer::tests::default_works ... ok
+test incrementer::tests::it_works ... ok
+test incrementer::tests::remove_mine_works ... ok
+test incrementer::tests::inc_mine_works ... ok
+test incrementer::tests::my_value_works ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<p>完整的代码如下：</p>
+<pre><code class="language-rust editable noplayground">#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
+
+use ink_lang as ink;
+
+#[ink::contract]
+mod incrementer {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct Incrementer {
+        value: i32,
+        my_value: ink_storage::Mapping&lt;AccountId, i32&gt;,
+    }
+
+    impl Incrementer {
+        #[ink(constructor)]
+        pub fn new(init_value: i32) -&gt; Self {
+            // This call is required in order to correctly initialize the
+            // `Mapping`s of our contract.
+            ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
+                contract.value = init_value;
+                let caller = Self::env().caller();
+                contract.my_value.insert(&amp;caller, &amp;0);
+            })
+        }
+
+        #[ink(constructor)]
+        pub fn default() -&gt; Self {
+            // Even though we're not explicitly initializing the `Mapping`,
+            // we still need to call this
+            ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
+                contract.value = Default::default();
+            })
+        }
+
+        #[ink(message)]
+        pub fn get(&amp;self) -&gt; i32 {
+            self.value
+        }
+
+        #[ink(message)]
+        pub fn inc(&amp;mut self, by: i32) {
+            self.value += by;
+        }
+
+        #[ink(message)]
+        pub fn get_mine(&amp;self) -&gt; i32 {
+            self.my_value.get(&amp;self.env().caller()).unwrap_or_default()
+        }
+
+        #[ink(message)]
+        pub fn inc_mine(&amp;mut self, by: i32) {
+            let caller = self.env().caller();
+            let my_value = self.get_mine();
+            self.my_value.insert(caller, &amp;(my_value + by));
+        }
+
+        #[ink(message)]
+        pub fn remove_mine(&amp;self) {
+            self.my_value.remove(&amp;self.env().caller())
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        use ink_lang as ink;
+
+        #[ink::test]
+        fn default_works() {
+            let contract = Incrementer::default();
+            assert_eq!(contract.get(), 0);
+        }
+
+        #[ink::test]
+        fn it_works() {
+            let mut contract = Incrementer::new(42);
+            assert_eq!(contract.get(), 42);
+            contract.inc(5);
+            assert_eq!(contract.get(), 47);
+            contract.inc(-50);
+            assert_eq!(contract.get(), -3);
+        }
+
+        #[ink::test]
+        fn my_value_works() {
+            let mut contract = Incrementer::new(11);
+            assert_eq!(contract.get(), 11);
+            assert_eq!(contract.get_mine(), 0);
+            contract.inc_mine(5);
+            assert_eq!(contract.get_mine(), 5);
+            contract.inc_mine(10);
+            assert_eq!(contract.get_mine(), 15);
+        }
+
+        #[ink::test]
+        fn inc_mine_works() {
+            let mut contract = Incrementer::new(11);
+            assert_eq!(contract.get_mine(), 0);
+            contract.inc_mine(5);
+            assert_eq!(contract.get_mine(), 5);
+            contract.inc_mine(5);
+            assert_eq!(contract.get_mine(), 10);
+        }
+
+        #[ink::test]
+        fn remove_mine_works() {
+            let mut contract = Incrementer::new(11);
+            assert_eq!(contract.get_mine(), 0);
+            contract.inc_mine(5);
+            assert_eq!(contract.get_mine(), 5);
+            contract.remove_mine();
+            assert_eq!(contract.get_mine(), 0);
+        }
+    }
+}
+</code></pre>
+<h2 id="构建一个token合约"><a class="header" href="#构建一个token合约">构建一个token合约</a></h2>
+<p>本节教程演示了如何使用 ink! 语言构建 ERC-20 代币合约，ERC-20 规范定义了可替换代币的通用标准。拥有定义代币属性的标准，使遵循规范的开发人员，能够构建与其他产品和服务互操作的应用程序。ERC-20 代币标准不是唯一的代币标准，但它是最常用的标准之一。</p>
+<h3 id="erc-20标准的基础知识"><a class="header" href="#erc-20标准的基础知识">ERC-20标准的基础知识</a></h3>
+<p>ERC-20 代币标准定义了运行在以太坊区块链上的大多数智能合约的接口。这些标准接口允许个人在现有的智能合约平台上部署自己的加密货币。</p>
+<p>如果你查看该标准，你会发现有如下被定义的核心函数：</p>
+<pre><code class="language-javascript editable noplayground">// ----------------------------------------------------------------------------
+// ERC Token Standard #20 Interface
+// https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
+// ----------------------------------------------------------------------------
+
+contract ERC20Interface {
+    // Storage Getters
+    function totalSupply() public view returns (uint);
+    function balanceOf(address tokenOwner) public view returns (uint balance);
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining);
+
+    // Public Functions
+    function transfer(address to, uint tokens) public returns (bool success);
+    function approve(address spender, uint tokens) public returns (bool success);
+    function transferFrom(address from, address to, uint tokens) public returns (bool success);
+
+    // Contract Events
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+</code></pre>
+<p>用户余额映射到帐户地址，接口允许用户转移他们拥有的代币或允许第三方代表他们转移代币。最重要的是，必须实现智能合约逻辑，以确保资金不会被无意创建或销毁，并保护用户的资金免受恶意参与者的攻击。请注意，所有公共函数都返回一个 <code>bool</code> 值，该 <code>bool</code> 值仅指示调用是否成功。在Rust中，这些函数通常会返回一个 <code>Result</code>。</p>
+<h3 id="创建token供应"><a class="header" href="#创建token供应">创建token供应</a></h3>
+<p>处理 <code>ERC-20</code> 代币的智能合约类似于上一节教程<a href="#%E4%BD%BF%E7%94%A8maps%E5%AD%98%E5%82%A8%E5%80%BC">使用maps存储值</a>的 Incrementer 合约。对于本教程，ERC-20 合约由固定的代币供应组成，当部署合同时，这些代币全部存入与合同所有者相关联的帐户。然后，合同所有者可以将代币分发给其他用户。在本教程中创建的简单 ERC-20 合约并不是制造和分发代币的唯一方法。然而，这个 ERC-20 合约为扩展你在其他教程中所学到的知识，以及如何使用 ink! 语言用于构建更健壮的智能合约，提供了一个良好的基础。</p>
+<p>对于 ERC-20 代币合约，初始存储包括：</p>
+<ul>
+<li><code>total_supply</code> 代表合约中代币的总供应量。</li>
+<li><code>balances</code> 表示每个账户的个人余额。</li>
+</ul>
+<p>要构建一个 ERC-20 代币智能合约，通过运行以下命令创建一个名为 <code>erc20</code> 的新项目：</p>
+<pre><code class="language-bash editable noplayground">cargo contract new erc20
+</code></pre>
+<p>在 <code>erc20</code> 目录中打开 <code>lib.rs</code> 文件，使用新 <a href="https://docs.substrate.io/assets/tutorials/smart-contracts/erc20-template.rs/">erc20</a> 源码替换默认的模板源码。</p>
+<p>保存代码改变并关闭文件。</p>
+<p>打开 <code>Cargo.toml</code> 文件，并检查合约的依赖关系。</p>
+<p>如有必要，在 <code>[dependencies]</code> 部分，修改 <code>scale</code> 和 <code>scale-info</code> 的配置：</p>
+<pre><code class="language-toml editable noplayground">scale = { package = &quot;parity-scale-codec&quot;, version = &quot;3&quot;, default-features = false, features = [&quot;derive&quot;] }
+scale-info = { version = &quot;2&quot;, default-features = false, features = [&quot;derive&quot;], optional = true }
+</code></pre>
+<p>保存代码改变并关闭文件。</p>
+<p>通过运行下面的命令，验证程序是否编译并通过了简单的测试：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 2 tests
+test erc20::tests::new_works ... ok
+test erc20::tests::balance_works ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<p>通过运行以下命令，验证你可以为合约构建 WebAssembly。</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly contract build
+</code></pre>
+<p>如果程序编译成功，您就可以在当前状态上传它，或者开始向合约添加功能。</p>
+<h3 id="上传并实例化合约"><a class="header" href="#上传并实例化合约">上传并实例化合约</a></h3>
+<p>如果你想测试到目前为止所有的内容，你可以使用 <a href="https://contracts-ui.substrate.io/">Contracts UI</a> 上传该合约。</p>
+<p>在添加新功能之前测试 ERC-20 合同：</p>
+<ol>
+<li>启动本地合约节点。</li>
+<li>上传 <code>erc20.contract</code> 文件。</li>
+<li>为 <code>new</code> 构造函数指定代币的初始供应。</li>
+<li>在运行的本地节点上实例化合同。</li>
+<li>选择 <code>totalSupply</code> 作为要发送的消息，然后点击 <strong>Read</strong> 以验证代币的总供应与初始供应相同。</li>
+<li>选择 <code>balanceOf</code> 作为要发送的消息。</li>
+<li>选择用于实例化合约的帐户 <code>AccountId</code>，然后点击 <strong>Read</strong>。
+如果选择任何其他 <code>AccountId</code>，则点击 <strong>Read</strong>，余额为零，因为所有代币均由合约所有者所有。</li>
+</ol>
+<h3 id="转移tokens"><a class="header" href="#转移tokens">转移tokens</a></h3>
+<p>此时，ERC-20 合约有一个用户帐户，该帐户拥有该合约代币的 total_supply。为了使该合约有用，合约所有者必须能够将代币转移到其他帐户。对于这个简单的 ERC-20 合约，你将添加一个公共 <code>transfer</code> 函数，使你作为合约调用者能够将你拥有的代币转移给另一个用户。</p>
+<p>公共 <code>transfer</code> 函数调用私有 <code>transfer_from_to()</code> 函数。因为这是一个内部函数，所以不需要任何授权检查就可以调用它。但是，转账逻辑必须能够确定 <code>from</code> 帐户是否具有可转移到接收方 <code>to</code> 帐户的代币数量。<code>transfer_from_to()</code> 函数使用合约调用者（<code>self.env().caller()</code>）作为 <code>from</code> 帐户。在此上下文中，<code>transfer_from_to()</code> 函数执行以下操作：</p>
+<ul>
+<li>获取 <code>from</code> 帐户和 <code>to</code> 帐户的当前余额。</li>
+<li>检查 <code>from </code> 余额是否小于要发送的代币的 <code>value </code>。</li>
+</ul>
+<pre><code class="language-rust editable noplayground">let from_balance = self.balance_of(from);
+if from_balance &lt; value {
+return Err(Error::InsufficientBalance)
+}
+</code></pre>
+<p>从转移账户中减去该值，并将该值添加到接收账户。</p>
+<pre><code class="language-rust editable noplayground">self.balances.insert(from, &amp;(from_balance - value));
+let to_balance = self.balance_of(to);
+self.balances.insert(to, &amp;(to_balance + value));
+</code></pre>
+<p>要添加转移函数到智能合约，在 <code>erc20</code> 项目目录中，打开 <code>lib.rs</code> 文件，添加一个 <code>Error</code> 声明，以在帐户中没有足够的代币来完成转账时返回一个错误。</p>
+<pre><code class="language-rust editable noplayground">/// Specify ERC-20 error type.
+#[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+#[cfg_attr(feature = &quot;std&quot;, derive(scale_info::TypeInfo))]
+pub enum Error {
+/// Return if the balance cannot fulfill a request.
+   InsufficientBalance,
+}
+</code></pre>
+<p>添加一个 <code>Result</code> 返回类型，以返回 <code>InsufficientBalance</code> 错误。</p>
+<pre><code class="language-rust editable noplayground">/// Specify the ERC-20 result type.
+pub type Result&lt;T&gt; = core::result::Result&lt;T, Error&gt;;
+</code></pre>
+<p>添加 <code>transfer()</code> 公共函数，使合约调用者能够将代币转移到另一个帐户。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn transfer(&amp;mut self, to: AccountId, value: Balance) -&gt; Result&lt;()&gt; {
+   let from = self.env().caller();
+   self.transfer_from_to(&amp;from, &amp;to, value)
+}
+</code></pre>
+<p>添加 <code>transfer_from_to()</code> 私有函数，将代币从与合约调用者关联的帐户转移到接收帐户。</p>
+<pre><code class="language-rust editable noplayground">fn transfer_from_to(
+   &amp;mut self,
+   from: &amp;AccountId,
+   to: &amp;AccountId,
+   value: Balance,
+) -&gt; Result&lt;()&gt; {
+    let from_balance = self.balance_of_impl(from);
+    if from_balance &lt; value {
+        return Err(Error::InsufficientBalance)
+    }
+
+    self.balances.insert(from, &amp;(from_balance - value));
+    let to_balance = self.balance_of_impl(to);
+    self.balances.insert(to, &amp;(to_balance + value));
+    Ok(())
+}
+</code></pre>
+<p>这段代码片段使用了 <code>balance_of_impl()</code> 函数，<code>balance_of_impl()</code> 函数与 <code>balance_of</code> 函数相同，不同的是它使用引用在 WebAssembly 中以更有效的方式查找帐户余额。在智能合约中添加如下函数即可使用该功能：</p>
+<pre><code class="language-rust editable noplayground">#[inline]
+fn balance_of_impl(&amp;self, owner: &amp;AccountId) -&gt; Balance {
+   self.balances.get(owner).unwrap_or_default()
+}
+</code></pre>
+<p>通过运行下面的命令，验证程序是否编译并通过了测试用例：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 3 tests
+test erc20::tests::new_works ... ok
+test erc20::tests::balance_works ... ok
+test erc20::tests::transfer_works ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<h3 id="创建事件"><a class="header" href="#创建事件">创建事件</a></h3>
+<p>ERC-20 代币标准规定合约调用在提交一个交易时不能直接返回值。然而，你可能希望你的智能合约以某种方式发出已经发生事件的信号。例如，你可能希望你的智能合约显示交易完成的时间或转账通过的时间，你可以使用事件来发送这些类信号。你可以使用事件与任何类型的数据进行通信，为一个事件定义数据类似于定义 <code>struct</code>。事件应该使用 <code>#[ink(event)]</code> 属性被声明。</p>
+<h4 id="添加一个转移事件"><a class="header" href="#添加一个转移事件">添加一个转移事件</a></h4>
+<p>声明一个 <code>Transfer</code> 事件，以提供有关已完成转移操作的信息。<code>Transfer</code> 事件包含以下信息：</p>
+<ul>
+<li><code>Balance</code> 类型的值。</li>
+<li><code>from</code> 帐户的一个 Option-wrapped <code>AccountId</code> 变量。</li>
+<li><code>to</code> 帐户的一个 Option-wrapped <code>AccountId</code> 变量。</li>
+</ul>
+<p>为了更快地访问事件数据，可以使用索引字段。你可以通过在该字段上使用 <code>#[ink(topic)]</code> 属性标签来实现这一点。</p>
+<p>要添加一个 <code>Transfer</code> 事件，打开 <code>lib.rs</code> 文件，使用 <code>#[ink(event)]</code> 属性宏声明事件。</p>
+<pre><code class="language-rust editable noplayground">#[ink(event)]
+pub struct Transfer {
+   #[ink(topic)]
+   from: Option&lt;AccountId&gt;,
+   #[ink(topic)]
+   to: Option&lt;AccountId&gt;,
+   value: Balance,
+ }
+</code></pre>
+<p>你可以使用 <code>.unwrap_or()</code> 函数为 <code>Option&lt;T&gt;</code> 变量检索数据。</p>
+<h4 id="发出事件"><a class="header" href="#发出事件">发出事件</a></h4>
+<p>现在你已经声明了事件并定义了事件包含的信息，接下来需要添加发出事件的代码。你可以通过调用 <code>self.env().emit_event()</code> 来实现这一点，将事件名称作为调用的唯一参数。</p>
+<p>在这个 ERC-20 合约中，你希望在每次发生转移时发出一个 <code>Transfer</code> 事件，代码中有两个地方出现了这种情况</p>
+<ul>
+<li>在初始化合约的 <code>new</code> 调用期间。</li>
+<li>每次调用 <code>transfer_from_to</code>。</li>
+</ul>
+<p><code>from</code> 和 <code>to</code> 字段的值是 <code>Option&lt;AccountId&gt;</code> 数据类型。然而，在 tokens 的初始转移过程中，为 initialsupply 设置的值不是来自任何其他帐户。在本例中，Transfer 事件的 <code>from</code> 值为 <code>None</code>。</p>
+<p>要发出 Transfer 事件，打开 <code>lib.rs</code> 文件，在 <code>new</code> 构造函数中将 <code>Transfer</code> 事件添加到 <code>new_init()</code> 函数中。</p>
+<pre><code class="language-rust editable noplayground">fn new_init(&amp;mut self, initial_supply: Balance) {
+   let caller = Self::env().caller();
+   self.balances.insert(&amp;caller, &amp;initial_supply);
+   self.total_supply = initial_supply;
+   Self::env().emit_event(Transfer {
+       from: None,
+       to: Some(caller),
+       value: initial_supply,
+     });
+   }
+</code></pre>
+<p>将 <code>Transfer</code> 事件添加到 <code>transfer_from_to()</code> 函数中。</p>
+<pre><code class="language-rust editable noplayground">self.balances.insert(from, &amp;(from_balance - value));
+let to_balance = self.balance_of_impl(to);
+self.balances.insert(to, &amp;(to_balance + value));
+self.env().emit_event(Transfer {
+   from: Some(*from),
+   to: Some(*to),
+   value,
+});
+</code></pre>
+<p>注意 <code>value </code> 不需要 <code>Some()</code>，因为值没有存储在 <code>Option</code> 中。</p>
+<p>添加一个将代币从一个帐户转移到另一个帐户的测试用例。</p>
+<pre><code class="language-rust editable noplayground">#[ink::test]
+fn transfer_works() {
+   let mut erc20 = Erc20::new(100);
+   assert_eq!(erc20.balance_of(AccountId::from([0x0; 32])), 0);
+   assert_eq!(erc20.transfer((AccountId::from([0x0; 32])), 10), Ok(()));
+   assert_eq!(erc20.balance_of(AccountId::from([0x0; 32])), 10);
+}
+</code></pre>
+<p>通过运行以下命令验证程序的编译并且通过所有测试用例：</p>
+<pre><code class="language-rust editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应该显示类似以下的输出，以表示成功完成测试：</p>
+<pre><code class="language-bash editable noplayground">running 3 tests
+test erc20::tests::new_works ... ok
+test erc20::tests::balance_works ... ok
+test erc20::tests::transfer_works ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<h3 id="启用第三方转账"><a class="header" href="#启用第三方转账">启用第三方转账</a></h3>
+<p>ERC-20 代币合约现在可以在账户之间转移代币，并在发生这种情况时发出事件。作为最后一步，你可以添加 <code>approve</code> 和 <code>transfer_from</code> 函数以启用第三方转账。</p>
+<p>允许一个账户代表另一个账户消费代币，允许你的智能合约支持去中心化的交易所。你可以批准你所拥有的一些代币以你的名义进行交易，而不是在合同中直接将你的代币转让给另一个用户。当你等待交易执行时，如果需要，你仍然可以控制和使用你的代币。你还可以批准多个合约或用户访问你的代币，因此，如果一个合约提供了最好的交易，你不需要将代币从一个合约移动到另一个合约，这可能是一个高成本和耗时的过程。</p>
+<p>为了确保批准和转移可以安全完成，ERC-20 代币合约使用两步流程，分别从操作中进行批准和转移。</p>
+<h4 id="添加批准逻辑"><a class="header" href="#添加批准逻辑">添加批准逻辑</a></h4>
+<p>批准另一个帐户来使用你的代币是第三方转账流程的第一步。作为一个代币所有者，你可以指定任何帐户代表转账，以及转账任意数量的代币。你不需要批准帐户中的所有令牌，你可以指定批准一个帐户允许转账的最大数量。</p>
+<p>当多次调用 <code>approve</code> 时，将用新值覆盖先前批准的值。默认情况下，任意两个帐户之间的批准值为 <code>0</code>。如果你想撤销帐户中对代币的访问，可以调用值为 <code>0</code> 的 <code>approve</code> 函数。</p>
+<p>要在 ERC-20 合约中存储批准，你需要使用稍微复杂一些的 <code>Mapping</code> 键。由于每个帐户可以有不同的批准金额供其他任何帐户使用，因此需要使用元组作为映射到余额值的键。例如：</p>
+<pre><code class="language-rust editable noplayground">pub struct Erc20 {
+ /// Balances that can be transferred by non-owners: (owner, spender) -&gt; allowed
+ allowances: ink_storage::Mapping&lt;(AccountId, AccountId), Balance&gt;,
+}
+</code></pre>
+<p>元组使用 <code>(owner, spender)</code> 来标识 <code>spender</code> 帐户，该帐户被允许在指定 <code>allowance</code> 代表 <code>owner</code> 访问代币。</p>
+<p>要为智能合约添加批准逻辑，打开 <code>lib.rs</code> 文件，使用 <code>#[ink(event)]</code> 属性宏声明 <code>Approval</code> 事件。</p>
+<pre><code class="language-rust editable noplayground">#[ink(event)]
+pub struct Approval {
+   #[ink(topic)]
+   owner: AccountId,
+   #[ink(topic)]
+   spender: AccountId,
+   value: Balance,
+}
+</code></pre>
+<p>添加一个 <code>Error</code> 声明，以便在转账请求超过帐户限额时返回一个错误。</p>
+<pre><code class="language-rust editable noplayground">#[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+#[cfg_attr(feature = &quot;std&quot;, derive(scale_info::TypeInfo))]
+pub enum Error {
+   InsufficientBalance,
+   InsufficientAllowance,
+}
+</code></pre>
+<p>将所有者和非所有者组合的存储映射添加到帐户余额。</p>
+<pre><code class="language-rust editable noplayground">allowances: Mapping&lt;(AccountId, AccountId), Balance&gt;,
+</code></pre>
+<p>添加 <code>approve()</code> 函数来授权 <code>spender</code> 帐户从调用者的帐户中提取代币，直到取到最大 <code>value</code>。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn approve(&amp;mut self, spender: AccountId, value: Balance) -&gt; Result&lt;()&gt; {
+   let owner = self.env().caller();
+   self.allowances.insert((&amp;owner, &amp;spender), &amp;value);
+   self.env().emit_event(Approval {
+     owner,
+     spender,
+     value,
+   });
+   Ok(())
+}
+</code></pre>
+<p>添加一个 <code>allowance()</code> 函数来返回允许 <code>spender</code> 从 <code>owner</code> 帐户中提取的代币数量。</p>
+<pre><code class="language-rust editable noplayground">#[ink(message)]
+pub fn allowance(&amp;self, owner: AccountId, spender: AccountId) -&gt; Balance {
+   self.allowance_impl(&amp;owner, &amp;spender)
+}
+</code></pre>
+<p>这段代码片段使用了 <code>allowance_impl()</code> 函数。<code>allowance_impl()</code> 函数与 <code>allowance</code> 函数相同，不同之处是它使用引用来在 WebAssembly 中以更有效的方式查找代币限额。在智能合约中添加如下函数即可使用该功能：</p>
+<pre><code class="language-rust editable noplayground">#[inline]
+fn allowance_impl(&amp;self, owner: &amp;AccountId, spender: &amp;AccountId) -&gt; Balance {
+   self.allowances.get((owner, spender)).unwrap_or_default()
+}
+</code></pre>
+<h4 id="从逻辑中添加转账"><a class="header" href="#从逻辑中添加转账">从逻辑中添加转账</a></h4>
+<p>现在你已经为一个帐户设置了代表另一个帐户转移代币的批准，你需要创建一个 <code>transfer_from</code> 函数，以允许已批准的用户转移代币。<code>transfer_from</code> 函数调用私有 <code>transfer_from_to</code> 函数来执行大部分转移逻辑。授权非所有者转让代币有几个要求：</p>
+<ul>
+<li><code>self.env().caller()</code> 合约调用者分配的必须是 <code>from</code> 帐户中可用的代币。</li>
+<li>分配的存储作为 <code>allowance</code> 必须大于要转移的值。</li>
+</ul>
+<p>如果满足了这些要求，合约将更新的限额插入到 <code>allowance</code> 变量中，并使用指定的 <code>from</code> 和 <code>to</code> 帐户调用 <code>transfer_from_to()</code> 函数。</p>
+<p>记住，在调用 <code>transfer_from</code> 时，<code>self.env().caller()</code> 和 <code>from</code> 帐户用于查找当前限额，但 <code>transfer_from</code> 函数是在指定的 <code>from</code> 和 <code>to</code> 帐户之间被调用的。</p>
+<p>每当调用 <code>transfer_from</code> 时，将使用三个帐户变量，你需要确保正确使用它们。</p>
+<p>要为智能合约添加 <code>transfer_from</code>，打开 <code>lib.rs</code> 文件，添加 <code>transfer_from()</code> 函数，以代表 <code>from</code> 帐户到 <code>to</code> 帐户转移代币的 <code>value</code>。</p>
+<pre><code class="language-rust editable noplayground">/// Transfers tokens on the behalf of the `from` account to the `to account
+#[ink(message)]
+pub fn transfer_from(
+   &amp;mut self,
+   from: AccountId,
+   to: AccountId,
+   value: Balance,
+) -&gt; Result&lt;()&gt; {
+   let caller = self.env().caller();
+   let allowance = self.allowance_impl(&amp;from, &amp;caller);
+   if allowance &lt; value {
+       return Err(Error::InsufficientAllowance)
+   }
+   self.transfer_from_to(&amp;from, &amp;to, value)?;
+   self.allowances
+       .insert((&amp;from, &amp;caller), &amp;(allowance - value));
+   Ok(())
+  }
+</code></pre>
+<p>为 <code>transfer_from()</code> 函数添加一个测试用例。</p>
+<pre><code class="language-rust editable noplayground">#[ink::test]
+fn transfer_from_works() {
+   let mut contract = Erc20::new(100);
+   assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
+   contract.approve(AccountId::from([0x1; 32]), 20);
+   contract.transfer_from(AccountId::from([0x1; 32]), AccountId::from([0x0; 32]), 10);
+   assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 10);
+}
+</code></pre>
+<p>通过运行以下命令验证程序的编译并且通过所有测试用例：</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly test
+</code></pre>
+<p>该命令应显示类似如下的输出，以表示测试成功完成：</p>
+<pre><code class="language-bash editable noplayground">running 5 tests
+test erc20::tests::new_works ... ok
+test erc20::tests::balance_works ... ok
+test erc20::tests::transfer_works ... ok
+test erc20::tests::transfer_from_works ... ok
+test erc20::tests::allowances_works ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+</code></pre>
+<p>通过运行以下命令验证你可以为该合约构建 WebAssemnbly</p>
+<pre><code class="language-bash editable noplayground">cargo +nightly contract build
+</code></pre>
+<p>在构建了合约的 WebAssembly 之后，你可以使用 Contracts UI 上传并实例化它，如<a href="#%E4%B8%8A%E4%BC%A0%E5%B9%B6%E5%AE%9E%E4%BE%8B%E5%8C%96%E5%90%88%E7%BA%A6">上传并实例化合约</a>中所述。</p>
+<h3 id="编写测试用例"><a class="header" href="#编写测试用例">编写测试用例</a></h3>
+<p>在本节教程中，你向 <code>lib.rs</code> 文件中添加了简单的单元测试。基本的测试用例通过给出指定的输入值并验证返回的结果来说明函数按预期工作。你可以通过编写额外的测试用例来提高代码的质量。例如，你可以添加测试，对无效输入、空值或超出预期范围的值进行错误处理。</p>
+<p>erc20 最终代码：</p>
+<pre><code class="language-rust editable noplayground">#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
+
+use ink_lang as ink;
+
+#[ink::contract]
+mod erc20 {
+    use ink_storage::traits::SpreadAllocate;
+
+    #[ink(event)]
+    pub struct Transfer {
+        #[ink(topic)]
+        from: Option&lt;AccountId&gt;,
+        #[ink(topic)]
+        to: Option&lt;AccountId&gt;,
+        #[ink(topic)]
+        value: Balance,
+    }
+
+    #[ink(event)]
+    pub struct Approval {
+        #[ink(topic)]
+        owner: AccountId,
+        #[ink(topic)]
+        spender: AccountId,
+        #[ink(topic)]
+        value: Balance,
+    }
+
+    #[cfg(not(feature = &quot;ink-as-dependency&quot;))]
+    #[ink(storage)]
+    #[derive(SpreadAllocate)]
+    pub struct Erc20 {
+        /// The total supply.
+        total_supply: Balance,
+        /// The balance of each user.
+        balances: ink_storage::Mapping&lt;AccountId, Balance&gt;,
+        /// Approval spender on behalf of the message's sender.
+        allowances: ink_storage::Mapping&lt;(AccountId, AccountId), Balance&gt;,
+    }
+
+    impl Erc20 {
+        #[ink(constructor)]
+        pub fn new(initial_supply: Balance) -&gt; Self {
+            ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
+                contract.total_supply = initial_supply;
+                let caller = Self::env().caller();
+                contract.balances.insert(&amp;caller, &amp;initial_supply);
+
+                // NOTE: `allowances` is default initialized by `initialize_contract`, so we don't
+                // need to do anything here
+
+                Self::env().emit_event(Transfer {
+                    from: None,
+                    to: Some(caller),
+                    value: initial_supply,
+                });
+            })
+        }
+
+        #[ink(message)]
+        pub fn total_supply(&amp;self) -&gt; Balance {
+            self.total_supply
+        }
+
+        #[ink(message)]
+        pub fn balance_of(&amp;self, owner: AccountId) -&gt; Balance {
+            self.balances.get(&amp;owner).unwrap_or_default()
+        }
+
+        #[ink(message)]
+        pub fn approve(&amp;mut self, spender: AccountId, value: Balance) -&gt; bool {
+            // Record the new allowance.
+            let owner = self.env().caller();
+            self.allowances.insert(&amp;(owner, spender), &amp;value);
+
+            // Notify offchain users of the approval and report success.
+            self.env().emit_event(Approval {
+                owner,
+                spender,
+                value,
+            });
+
+            true
+        }
+
+        #[ink(message)]
+        pub fn allowance(&amp;self, owner: AccountId, spender: AccountId) -&gt; Balance {
+            self.allowance_of_or_zero(&amp;owner, &amp;spender)
+        }
+
+        #[ink(message)]
+        pub fn transfer_from(
+            &amp;mut self,
+            from: AccountId,
+            to: AccountId,
+            value: Balance,
+        ) -&gt; bool {
+            // Ensure that a sufficient allowance exists.
+            let caller = self.env().caller();
+            let allowance = self.allowance_of_or_zero(&amp;from, &amp;caller);
+            if allowance &lt; value {
+                return false
+            }
+
+            let transfer_result = self.transfer_from_to(from, to, value);
+            // Check `transfer_result` because `from` account may not have enough balance
+            //   and return false.
+            if !transfer_result {
+                return false
+            }
+
+            // Decrease the value of the allowance and transfer the tokens.
+            self.allowances.insert((from, caller), &amp;(allowance - value));
+            true
+        }
+
+        #[ink(message)]
+        pub fn transfer(&amp;mut self, to: AccountId, value: Balance) -&gt; bool {
+            self.transfer_from_to(self.env().caller(), to, value)
+        }
+
+        fn transfer_from_to(
+            &amp;mut self,
+            from: AccountId,
+            to: AccountId,
+            value: Balance,
+        ) -&gt; bool {
+            let from_balance = self.balance_of(from);
+            if from_balance &lt; value {
+                return false
+            }
+
+            // Update the sender's balance.
+            self.balances.insert(&amp;from, &amp;(from_balance - value));
+
+            // Update the receiver's balance.
+            let to_balance = self.balance_of(to);
+            self.balances.insert(&amp;to, &amp;(to_balance + value));
+
+            self.env().emit_event(Transfer {
+                from: Some(from),
+                to: Some(to),
+                value,
+            });
+
+            true
+        }
+
+        fn allowance_of_or_zero(
+            &amp;self,
+            owner: &amp;AccountId,
+            spender: &amp;AccountId,
+        ) -&gt; Balance {
+            // If you are new to Rust, you may wonder what's the deal with all the asterisks and
+            // ampersends.
+            //
+            // In brief, using `&amp;` if we want to get the address of a value (aka reference of the
+            // value), and using `*` if we have the reference of a value and want to get the value
+            // back (aka dereferencing).
+            //
+            // To read more: https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+            self.allowances.get(&amp;(*owner, *spender)).unwrap_or_default()
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        use ink_lang as ink;
+
+        #[ink::test]
+        fn new_works() {
+            let contract = Erc20::new(777);
+            assert_eq!(contract.total_supply(), 777);
+        }
+
+        #[ink::test]
+        fn balance_works() {
+            let contract = Erc20::new(100);
+            assert_eq!(contract.total_supply(), 100);
+            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 0);
+        }
+
+        #[ink::test]
+        fn transfer_works() {
+            let mut contract = Erc20::new(100);
+            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
+            assert!(contract.transfer(AccountId::from([0x0; 32]), 10));
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 10);
+            assert!(!contract.transfer(AccountId::from([0x0; 32]), 100));
+        }
+
+        #[ink::test]
+        fn transfer_from_works() {
+            let mut contract = Erc20::new(100);
+            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
+            contract.approve(AccountId::from([0x1; 32]), 20);
+            contract.transfer_from(
+                AccountId::from([0x1; 32]),
+                AccountId::from([0x0; 32]),
+                10,
+            );
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 10);
+        }
+
+        #[ink::test]
+        fn allowances_works() {
+            let mut contract = Erc20::new(100);
+            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
+            contract.approve(AccountId::from([0x1; 32]), 200);
+            assert_eq!(
+                contract
+                    .allowance(AccountId::from([0x1; 32]), AccountId::from([0x1; 32])),
+                200
+            );
+
+            assert!(contract.transfer_from(
+                AccountId::from([0x1; 32]),
+                AccountId::from([0x0; 32]),
+                50
+            ));
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 50);
+            assert_eq!(
+                contract
+                    .allowance(AccountId::from([0x1; 32]), AccountId::from([0x1; 32])),
+                150
+            );
+
+            assert!(!contract.transfer_from(
+                AccountId::from([0x1; 32]),
+                AccountId::from([0x0; 32]),
+                100
+            ));
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 50);
+            assert_eq!(
+                contract
+                    .allowance(AccountId::from([0x1; 32]), AccountId::from([0x1; 32])),
+                150
+            );
+        }
+    }
+}
+</code></pre>
+<h2 id="智能合约的问题排查"><a class="header" href="#智能合约的问题排查">智能合约的问题排查</a></h2>
+<p>本节介绍了在基于 Substrate 的区块链上编写和部署智能合约时可能遇到的一些常见问题，以及如何解决这些问题。</p>
+<h3 id="意外的运行错误"><a class="header" href="#意外的运行错误">意外的运行错误</a></h3>
+<p>如果你在不正确的情况下中断了一个正在运行的节点，例如，通过关闭终端或计算机切换到睡眠模式，你可能会看到以下错误</p>
+<pre><code class="language-bash editable noplayground">ClientImport(&quot;Unexpected epoch change&quot;)
+</code></pre>
+<p>如果看到此错误，请使用以下命令重新启动节点：</p>
+<pre><code class="language-bash editable noplayground">substrate-contracts-node --dev
+</code></pre>
+<p>此命令清除所有正在运行的节点状态。重新启动节点后，重复关闭节点之前执行的任何步骤。例如，重新部署你之前上传的所有合约。</p>
+<h3 id="本地存储中的过期合约"><a class="header" href="#本地存储中的过期合约">本地存储中的过期合约</a></h3>
+<p>Contracts UI 使用它自己的本地存储来跟踪你已经部署的合约。如果你使用 Contracts UI 部署合约，然后清除链上的节点数据，将提示你需要重置本地存储。重置 Contracts UI 的本地存储后，重复清除节点之前执行的所有步骤，并重新部署之前上传的所有合约。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../blockchain/chapter_1_2_1_4.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../blockchain/chapter_1_2_1_6.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../blockchain/chapter_1_2_1_4.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../blockchain/chapter_1_2_1_6.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>杂经 - 编程语言</title>
+	<subtitle>分享计算机科学知识，技术文章，软件开发，编程，心理学，经济理财，传统文化等</subtitle>
+	<link href="https://awesomeprogram.gitee.io/tags/bian-cheng-yu-yan/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://awesomeprogram.gitee.io"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2022-07-30T00:00:00+00:00</updated>
+	<id>https://awesomeprogram.gitee.io/tags/bian-cheng-yu-yan/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Rust 类型操作分享</title>
+		<published>2022-07-30T00:00:00+00:00</published>
+		<updated>2022-07-30T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/rusttypeoperate/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/rusttypeoperate/</id>
+		<content type="html">&lt;ul&gt;
+&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_6.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
+&lt;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Rust 工具链用法分享</title>
+		<published>2022-07-16T00:00:00+00:00</published>
+		<updated>2022-07-16T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/rusttoolchains/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/rusttoolchains/</id>
+		<content type="html">&lt;ul&gt;
+&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_5.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
+&lt;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Rust 常用标准库实操总结</title>
+		<published>2022-07-10T00:00:00+00:00</published>
+		<updated>2022-07-10T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/ruststdlibrary/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/ruststdlibrary/</id>
+		<content type="html">&lt;ul&gt;
+&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_4.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
+&lt;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Rust 语法归纳</title>
+		<published>2022-07-08T00:00:00+00:00</published>
+		<updated>2022-07-08T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/rustsyntax/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/rustsyntax/</id>
+		<content type="html">&lt;ul&gt;
+&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_1.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
+&lt;ul&gt;
+</content>
+	</entry>
+</feed>

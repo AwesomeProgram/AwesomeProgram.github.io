@@ -1,0 +1,593 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust 标准库 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html" class="active"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="rust标准库"><a class="header" href="#rust标准库">Rust标准库</a></h1>
+<h2 id="单线程"><a class="header" href="#单线程">单线程</a></h2>
+<ul>
+<li>常见的需求但容易忘记的代码片段</li>
+</ul>
+<table><thead><tr><th><strong>字符串</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+<tr><td>拼接字符串（任何实现了 <code>Display</code>）</td><td><code>format!(&quot;{x}{y}&quot;)</code></td></tr>
+<tr><td>追加字符串（任何实现了 <code>Display</code> 到 任何实现了 <code>Write</code>）</td><td><code>write!(x, &quot;{y}&quot;)</code></td></tr>
+<tr><td>按分隔符模式分割</td><td><code>s.split(pattern)</code></td></tr>
+<tr><td>  ...with <code>&amp;str</code></td><td><code>s.split(&quot;abc&quot;)</code></td></tr>
+<tr><td>  ...with <code>char</code></td><td><code>s.split('/')</code></td></tr>
+<tr><td>  ...with <code>closure</code></td><td><code>s.split(char::is_numeric)</code></td></tr>
+<tr><td>按空格切割</td><td><code>s.split_whitespace()</code></td></tr>
+<tr><td>用换行符分割</td><td><code>s.lines()</code></td></tr>
+<tr><td>按正则表达式分割</td><td><code>Regex::new(r&quot;\s&quot;)?.split(&quot;one two three&quot;)</code></td></tr>
+</tbody></table>
+<ol>
+<li>如果 <code>x</code> 或 <code>y</code> 之后不打算用到，考虑使用 <code>write!</code> 或 <code>std::ops::Add</code></li>
+<li>需要 <a href="https://crates.io/crates/regex">regex</a> crate </li>
+</ol>
+<br>
+<table><thead><tr><th><strong>I/O</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+<tr><td>创建一个新文件</td><td><code>File::create(PATH)?</code></td></tr>
+<tr><td>通过<strong>OpenOptions</strong>创建</td><td><code>OpenOptions::new().create(true).write(true).truncate(true).open(PATH)?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th><strong>宏</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+<tr><td>宏 可变参数</td><td><code>macro_rules! var_args { ($($args:expr),*) =&gt; {{ }} }</code></td></tr>
+<tr><td>  使用参数，如多次调用 <code>f</code></td><td><code>$( f($args); )*</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th><strong>Esoterics</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+<tr><td>干净的闭包捕获</td><td><code>wants_closure({ let c = outer.clone(); move || use_clone(c) })</code></td></tr>
+<tr><td>在 <code>try</code> 闭包中的修复推断</td><td><code>iter.try_for_each(|x| { Ok::&lt;(), Error&gt;(()) })?;</code></td></tr>
+<tr><td>如果 <code>T</code> 实现了 Copy，则可迭代和编辑 <code>&amp;mut [T]</code></td><td><code>Cell::from_mut(mut_slice).as_slice_of_cells()</code></td></tr>
+<tr><td>获取带有长度的子切片</td><td><code>&amp;original_slice[offset..][..length]</code></td></tr>
+<tr><td>敏锐的确保特征 <code>T</code> 是对象安全的</td><td><code>const _: Option&lt;&amp;dyn T&gt; = None;</code></td></tr>
+</tbody></table>
+<h2 id="线程安全"><a class="header" href="#线程安全">线程安全</a></h2>
+<table><thead><tr><th>例子</th><th><code>Send*</code></th><th><code>!Send</code></th></tr></thead><tbody>
+<tr><td><code>Sync*</code></td><td>大多数类型是 ...<code>Arc&lt;T&gt;1,2</code>， <code>Mutex&lt;T&gt;</code></td><td><code>MutexGuard&lt;T&gt;</code>，<code>RwLockReadGuard&lt;T&gt;</code></td></tr>
+<tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;2</code>，<code>RefCell&lt;T&gt;</code></td><td><code>Rc&lt;T&gt;</code>，<code>&amp;dyn Trait</code>，<code>*const T</code>，<code>*mut T</code></td></tr>
+</tbody></table>
+<p><sup>*</sup>一个 <code>T: Send</code> 的实例可以被移动到另一个线程，而一个 <code>T: Sync</code> 意味着 <code>&amp;t</code> 可以被移动到移动到另一个线程</p>
+<ol>
+<li>如果 <code>T</code> 是 <code>Sync</code></li>
+<li>如果 <code>T</code> 是 <code>Send</code></li>
+<li>如果你需要去 send 一个裸指针，创建一个新类型 <code>struct Ptr(*const u8)</code> 和 <code>unsafe impl Send for Ptr {}</code>，仅需确保你可以 send 它</li>
+</ol>
+<h2 id="迭代器"><a class="header" href="#迭代器">迭代器</a></h2>
+<table>
+<tr>
+<td align="center">获取迭代器</td>
+</tr>
+<tr>
+<td><b>基本用法</b><br>
+假设有一个类型 <code>C</code> 的集合<b>c</b>：
+<li><code>c.into_iter()</code> — 将集合<b>c</b>转换为一个<b>Iterator</b><b>i</b>和<b>consumes</b><b>c</b>。需要实现了 <code>C</code> 的<b>IntoIterator</b>。条目的类型取决于 <code>C</code> 是什么。获取迭代器的"标准化"方法</li>
+<li><code>c.iter()</code> — 一些集合提供的优雅方法，返回借用的迭代器，不会消耗 <code>c</code> </li>
+<li><code>c.iter_mut()</code> — 同上，但是可变借用的迭代器允许更改集合</li>
+</td>
+</tr>
+<tr>
+<td><b>The Iterator</b><br>
+一旦你有一个 <code>i</code>:
+<li><code>i.next()</code> — 返回下一个元素c提供的 <code>Some(x)</code>，或者如果已经完成了则返回<code>None</code> </li>
+</td>
+</tr>
+<tr>
+<td><b>For 循环</b>
+<li><code>for x in c {}</code> — 语法糖，调用<code>c.into_iter()</code>并且循环i直到为 <code>None</code> </li>
+</td>
+</tr>
+</table>
+<p><sup>*</sup>如果它看起来好像没有消耗 <code>c</code>，那是因为类型是 <code>Copy</code>，如 如果你调用 <code>(&amp;c).into_iter()</code>，它将在 <code>&amp;c</code> 上调用 <code>into_iter()</code> （这将消耗引用并将其转换为迭代器），但c仍保持不变。</p>
+<br>
+<table>
+<tr>
+<td align="center">实现迭代器</td>
+</tr>
+<tr>
+<td><b>基本用法</b><br>
+假设你有一个 `struct Collection<T> {}`
+<li><code>struct IntoIter<T> {}</code> — 创建一个结构来保存你的迭代状态(如 索引)以进行值的迭代</li>
+<li><code>impl Iterator for IntoIter {}</code> — 实现 <code>Iterator::next()</code>，这样它就可以生成元素</li>
+<code>Collection&lt;T&gt;</code><br>
+<code>IntoIter&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = T;</code>
+</td>
+</tr>
+<tr>
+<td><b>共享的和可变迭代器</b>
+<li><code>struct Iter&lt;T&gt; {}</code> — 为共享迭代器去创建持有 <code>&Collection&lt;T&gt;</code> 的结构</li>
+<li><code>struct IterMut&lt;T&gt; {}</code> — 同上，为了可变迭代器去创建持有 <code>&mut Collection&lt;T&gt;</code> 的结构</li>
+<li><code>impl Iterator for Iter<T> {}</code> — 实现共享迭代器</li>
+<li><code>impl Iterator for IterMut<T> {}</code> — 实现可变迭代器</li>
+另外你可能会希望添加一些便捷的方法
+<li><code>Collection::iter(&self) -> Iter</code></li>
+<li><code>Collection::iter_mut(&mut self) -> IterMut</code></li>
+<code>Iter&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = &T;</code><br>
+<code>IterMut&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = &mut T;</code>
+</td>
+</tr>
+<tr>
+<td><b>使用循环的写法</b>
+<li><code>impl IntoIterator for Collection {}</code> — 现在<code>for x in c {}</code>是有用的
+<li><code>impl IntoIterator for &Collection {}</code> — 现在<code>for x in &c {}</code>是有用的
+<li><code>impl IntoIterator for &mut Collection {}</code> — 现在<code>for x in &mut c {}</code>是有用的
+<code>Collection&lt;T&gt;</code> <code>⌾IntoIterator</code> <code>Item = T;</code> <code>To = IntoIter&lt;T&gt;</code> Iterate over <code>T</code> <br>
+<code>&Collection&lt;T&gt;</code> <code>⌾IntoIterator</code> <code>Item = &T;</code> <code>To = Iter&lt;T&gt;</code> Iterate over <code>&T</code> <br>
+<code>&mut Collectn&lt;T&gt;</code> <code>⌾IntoIterator</code> <code>Item = &mut T;</code> <code>To = IterMut&lt;T&gt;</code> Iterate over <code>&mut T</code>
+</tr>
+</table>
+<h2 id="数字转换"><a class="header" href="#数字转换">数字转换</a></h2>
+<table><thead><tr><th>需要转换成的→</th><th><code>u8 … i128</code></th><th><code>f32 / f64</code></th><th><strong><code>String</code></strong></th></tr></thead><tbody>
+<tr><td><code>u8 … i128</code></td><td><code>u8::try_from(x)?</code></td><td><code>x as f32</code></td><td><code>x.to_string()</code></td></tr>
+<tr><td><code>f32 / f64</code></td><td><code>x as u8</code></td><td><code>x as f32</code></td><td><code>x.to_string()</code></td></tr>
+<tr><td><code>String</code></td><td><code>x.parse::&lt;u8&gt;()?</code></td><td><code>x.parse::&lt;f32&gt;()?</code></td><td><code>x</code></td></tr>
+</tbody></table>
+<ol>
+<li>如果打印是正确的话 <code>from()</code>会直接输出，如 <code>u32::from(my_u8)</code></li>
+<li>截断(<code>11.9_f32 as u8 gives 11</code>)，充满(<code>1024_f32 as u8 gives 255</code>)</li>
+<li>可能会有不合适的数字(<code>u64::MAX as f32</code>)或产生 <code>Inf</code> (<code>u128::MAX as f32</code>)</li>
+</ol>
+<h2 id="字符串转换"><a class="header" href="#字符串转换">字符串转换</a></h2>
+<ul>
+<li>如果你想要一个指定类型的字符串</li>
+</ul>
+<table><thead><tr><th>已经存在的类型 <code>x</code></th><th>要转换成 <strong>String</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>x</code></td></tr>
+<tr><td><code>CString</code></td><td><code>x.into_string()?</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>String::from_utf8(x)?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>x.to_string()</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>String::from_utf8_lossy(x).to_string()</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>CString</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>CString::new(x)?</code></td></tr>
+<tr><td><code>CString</code></td><td><code>x</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>CString::new(x)?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>CString::new(x)?</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>x.to_owned()</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>CString::new(x.to_os_string().into_string()?)?</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>CString::new(Vec::from(x))?</code></td></tr>
+<tr><td><code>*mut c_char</code></td><td><code>unsafe { CString::from_raw(x) }</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>OsString</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>OsString::from(x)</code></td></tr>
+<tr><td><code>CString</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>x</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x.into_os_string()</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>OsString::from(x)</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>OsString::from(x)</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>x.as_os_str().to_owned()</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>Vec<u8></strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>x.into_bytes()</code></td></tr>
+<tr><td><code>CString</code></td><td><code>x.into_bytes()</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>?</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>?</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>x</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>Vec::from(x.as_bytes())</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>Vec::from(x.to_bytes_with_nul())</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>x.to_vec()</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;str</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>x.as_str()</code></td></tr>
+<tr><td><code>CString</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>std::str::from_utf8(&amp;x)?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>x</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>std::str::from_utf8(x)?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;CStr</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>CString::new(x)?.as_c_str()</code></td></tr>
+<tr><td><code>CString</code></td><td><code>x.as_c_str()</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>?,4</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>CStr::from_bytes_with_nul(&amp;x)?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>?,4</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>x</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>PathBuf::from(x)</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>CStr::from_bytes_with_nul(x)?</code></td></tr>
+<tr><td><code>*const c_char</code></td><td><code>unsafe { CStr::from_ptr(x) }</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;OsStr</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>OsStr::new(&amp;x)</code></td></tr>
+<tr><td><code>CString</code></td><td><code>?</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>x.as_os_str()</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>x.as_os_str()</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>OsStr::new(x)</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>x</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>x.as_os_str()</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;Path</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>Path::new(x)</code></td></tr>
+<tr><td><code>CString</code></td><td><code>Path::new(x.to_str()?)</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>Path::new(x.to_str()?)</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>Path::new(x.to_str()?)</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>Path::new(x)</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>Path::new(x.to_str()?)</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>Path::new(x)</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>x</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;[u8]</strong></th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>x.as_bytes()</code></td></tr>
+<tr><td><code>CString</code></td><td><code>x.as_bytes()</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>?</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>?</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>&amp;x</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>x.as_bytes()</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>x.to_bytes_with_nul()</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>x.as_bytes()</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>?</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>x</code></td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>Other</strong>( <code>*const c_char</code> )</th></tr></thead><tbody>
+<tr><td><code>CString</code></td><td><code>x.as_ptr()</code> ( <code>*const c_char</code> )</td></tr>
+</tbody></table>
+<p><sup>*</sup>如果类型能被推断出来则可使用简写 <code>x.into()</code></p>
+<p><sup>*</sup>如果类型能被推断出来则可使用简写 <code>x.as_ref()</code></p>
+<ol>
+<li>如果调用了<strong>unsafe</strong>，你应该或必须确保原始数据带有字符串类型的有效表示(如 一个 <code>UTF-8</code> 的字符串)</li>
+<li>仅在一些平台( <code>std::os::&lt;your_os&gt;::ffi::OsStrExt</code> )存在辅助方法去获取底层 <code>OsStr</code> 的原始表示。从那里使用表格的其它部分，如下</li>
+</ol>
+<pre><code class="language-rust editable noplayground">use std::os::unix::ffi::OsStrExt;
+let bytes: &amp;[u8] = my_os_str.as_bytes();
+CString::new(bytes)?
+</code></pre>
+<ol start="3">
+<li><code>c_char</code> 必须来自之前的 <code>CString</code>，如果来自FFI，请参阅 <code>&amp;CStr</code></li>
+<li><code>x</code> 因为缺少终止符 <code>0x0</code>，没有已知的简写，可能最好的方式是通过 <code>CString</code></li>
+<li>必须确保向量实际上以 <code>0x0</code> 结尾</li>
+</ol>
+<h2 id="字符串输出"><a class="header" href="#字符串输出">字符串输出</a></h2>
+<h3 id="apis"><a class="header" href="#apis">APIs</a></h3>
+<ul>
+<li>Rust使用这些APIs将类型转换为字符串化输出，统称为格式宏</li>
+</ul>
+<table><thead><tr><th>宏</th><th>输出</th><th>备注</th></tr></thead><tbody>
+<tr><td><code>format!(fmt)</code></td><td><code>String</code></td><td>&quot;to String&quot; 的转换器</td></tr>
+<tr><td><code>print!(fmt)</code></td><td>Console</td><td>写到标准输出</td></tr>
+<tr><td><code>println!(fmt)</code></td><td>Console</td><td>写到标准输出，换行</td></tr>
+<tr><td><code>eprint!(fmt)</code></td><td>Console</td><td>写到标准错误输出</td></tr>
+<tr><td><code>eprintln!(fmt)</code></td><td>Console</td><td>写到标准错误输出，换行</td></tr>
+<tr><td><code>write!(dst, fmt)</code></td><td>Buffer</td><td>还有 <code>use std::io::Write;</code></td></tr>
+<tr><td><code>writeln!(dst, fmt)</code></td><td>Buffer</td><td>还有 <code>use std::io::Write;</code>，换行</td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>方法</th><th>备注</th></tr></thead><tbody>
+<tr><td><code>x.to_string()</code></td><td>生成 <code>String</code>，实现任何的 <code>Display</code> 类型</td></tr>
+</tbody></table>
+<p><sup>*</sup>这 <code>fmt</code> 是字符串文字，例如 <code>&quot;hello {}&quot;</code>，指定输出和其他参数</p>
+<h3 id="可打印的类型"><a class="header" href="#可打印的类型">可打印的类型</a></h3>
+<p><sup>*</sup>在友好的 <code>format!</code> 中，类型通过 <code>trait Display &quot;{}&quot;</code> 或 <code>Debug &quot;{:?}&quot;</code> 转换，非详尽列表如下</p>
+<table><thead><tr><th>类型</th><th>实现</th></tr></thead><tbody>
+<tr><td><code>String</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>CString</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>OsString</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>PathBuf</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>Vec&lt;u8&gt;</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>&amp;str</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>&amp;CStr</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>&amp;OsStr</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>&amp;Path</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>&amp;[u8]</code></td><td><code>Debug</code></td></tr>
+<tr><td><code>bool</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>char</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>u8 … i128</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>f32, f64</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>!</code></td><td><code>Debug, Display</code></td></tr>
+<tr><td><code>()</code></td><td><code>Debug</code></td></tr>
+</tbody></table>
+<p><sup>*</sup>简而言之，几乎所有东西都是Debug，更多特殊类型可能需要特殊处理或转换到 <code>Display</code></p>
+<h3 id="格式化"><a class="header" href="#格式化">格式化</a></h3>
+<ul>
+<li>格式宏中的每个参数指示符要么是空的 {}，{argument}，要么遵循基本语法</li>
+</ul>
+<pre><code class="language-rust editable noplayground">{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
+</code></pre>
+<table><thead><tr><th>元素</th><th>含义</th></tr></thead><tbody>
+<tr><td><code>argument</code></td><td>数字( <code>0, 1, ...</code> )，变量或名字，如 <code>print!(&quot;{x}&quot;)</code></td></tr>
+<tr><td><code>fill</code></td><td>如果指定了宽度，用(如 <code>0</code> )来填充空白的字符</td></tr>
+<tr><td><code>align</code></td><td>如果指定了宽度，则左(&lt;)、中(^)或右(&gt;)</td></tr>
+<tr><td><code>sign	</code></td><td>可以是 <code>+</code>，标志总是被打印</td></tr>
+<tr><td><code>#</code></td><td>代替格式化，如 美化的 <code>Debug</code> 格式器 <code>?</code> 或前缀十六进制使用 <code>0x</code></td></tr>
+<tr><td><code>width</code></td><td>最小的宽度(≥0)，填充（默认为空格）如果以 <code>0</code> 开头，则补零</td></tr>
+<tr><td><code>precision</code></td><td>数字的小数位(≥0)，或者形容非数字的最大宽度</td></tr>
+<tr><td><code>$</code></td><td>解释宽度(width)或精度(precision)作为参数标识符，而不是允许动态格式化</td></tr>
+<tr><td><strong><code>type</code></strong></td><td><code>Debug</code> 格式化、十六进制(x)、二进制(b)、八进制(o)、指针(p)、exp(e)</td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>格式化示例</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>{}</code></td><td>使用 <code>Display</code> 打印下一个参数</td></tr>
+<tr><td><code>{x}</code></td><td>同上，但在范围内使用变量 <code>x</code></td></tr>
+<tr><td><code>{:?}</code></td><td>使用 <code>Debug</code> 打印下一个参数</td></tr>
+<tr><td><code>{2:#?}</code></td><td>使用 <code>Debug</code> 格式化，较好的打印第三个参数</td></tr>
+<tr><td><code>{val:^2$}</code></td><td>将命名参数 <code>val</code> 居中，宽度由第三个参数指定</td></tr>
+<tr><td><code>{:&lt;10.3}</code></td><td>左对齐宽度为 10，精度为 3</td></tr>
+<tr><td><code>{val:#x}</code></td><td>将参数 <code>val</code> 格式化为十六进制，带前缀 <code>0x</code> (替代格式 <code>x</code> ）</td></tr>
+</tbody></table>
+<br>
+<table><thead><tr><th>完整示例</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>println!(&quot;{}&quot;, x)</code></td><td>使用 <code>Display</code> 在标准输出打印并且追加一个新行</td></tr>
+<tr><td><code>println!(&quot;{x}&quot;)</code></td><td>同上，但在范围内使用变量 <code>x</code></td></tr>
+<tr><td><code>format!(&quot;{a:.3} {b:?}&quot;)</code></td><td>用三位数字转换 <code>PI</code>，增加空格，<code>b</code> 使用 <code>Debug</code>，返回 <code>String</code></td></tr>
+</tbody></table>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../rust/chapter_1_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../rust/chapter_1_5.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../rust/chapter_1_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../rust/chapter_1_5.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

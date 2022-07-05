@@ -1,0 +1,455 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>构建与编码 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html" class="active"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> Move Solidity</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 经典计算与量子计算</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 量子计算中的概念</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子计算中的算法</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="构建与编码"><a class="header" href="#构建与编码">构建与编码</a></h1>
+<p>本节中的主题提供了对用于构造运行时逻辑的编写代码的更详细探索，包括可用于构建和与节点交互的库和工具，以及如何编译逻辑以构建 Substrate 节点的更近一步的观察。</p>
+<h2 id="代码库的介绍"><a class="header" href="#代码库的介绍">代码库的介绍</a></h2>
+<p>在使用 node template 时，你不需要知道任何有关正在使用的底层架构或库的信息，因为基本组件已经组装好并可以直接使用。</p>
+<p>然而，如果你想要设计和构建自定义区块链，你可能需要熟悉可用的库，并了解这些不同库的功能。</p>
+<p>在<strong>substrate 架构设计</strong>中，你了解了 Substrate 节点的核心组件以及节点的不同部分如何承担不同的责任。在技术层面上，节点不同层之间的职责分离反映在用于构建基于 Substrate 的区块链的核心库中。下图说明了库如何映射外节点和运行时职责，以及基本库如何提供两者之间的通信层。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_sublibs.jpg" alt="" /></p>
+<h3 id="核心节点库"><a class="header" href="#核心节点库">核心节点库</a></h3>
+<p>使 Substrate 节点能够处理其网络职责的库，包括共识算法和块执行在内的是以使用 <code>sc_</code> 为前缀名的 Rust crates。例如，<a href="https://paritytech.github.io/substrate/master/sc_service/index.html"><code>sc_service</code></a>库负责为 Substrate 区块链构建网络层，管理网络参与者和交易池之间的通信。</p>
+<p>在外部节点和运行时之间提供通信层的库是以使用 <code>sp_</code> 为前缀名的 Rust crates。这些库编排了需要外部节点和运行时之间交互活动。例如，<a href="https://paritytech.github.io/substrate/master/sp_std/index.html"><code>sp_std</code></a> 库从Rust 标准库中获取有用的基本逻辑，并使其可用于依赖于运行时的任何代码。</p>
+<p>使你能够构建运行时逻辑并对传入和传出运行时的信息进行编码和解码的库是 Rust crates，在 crate 名称中使用 <code>frame_</code> 前缀。<code>frame_*</code> 库为运行时提供了基础代码结构。例如，<a href="https://paritytech.github.io/substrate/master/frame_system/index.html"><code>frame_system</code></a> 库提供了一系列与其他 Substrate 组件交互的基本功能，以及 <a href="https://paritytech.github.io/substrate/master/frame_support/index.html"><code>frame_support</code></a> 允许你声明运行时存储项、错误和事件。</p>
+<p>除了 <code>frame_*</code> 库提供的基础代码结构外，运行时还可以包括一个或多个 <code>pallet_*</code> 库。每个使用 <code>pallet_</code> 为前缀的 Rust crate 都代表一个 FRAME 模块。在大多数情况下，你使用 <code>pallet_*</code> 库来组装你想要加入区块链的功能，以满足你的项目。</p>
+<p>你可以使用 <code>sp_*</code> 核心库公开的基础代码构建 Substrate 运行时，而无需使用 <code>frame_*</code> 或 <code>pallet_*</code> 库。然而，<code>frame_*</code> 或 <code>pallet_*</code> 库为构建 Substrate 运行时提供了最有效方法。</p>
+<h3 id="模块化架构"><a class="header" href="#模块化架构">模块化架构</a></h3>
+<p>核心库的分离为编写区块链逻辑提供了灵活的模块化架构。基础代码库提供了一个外部节点和运行时都可以在此之上构建的方式，而无需彼此直接通信。基础类型和 traits 在它们各自独立的 crates 中公开，因此它们可用于外部节点和运行时组件，而不会引入循环依赖性问题。</p>
+<h3 id="前端代码库"><a class="header" href="#前端代码库">前端代码库</a></h3>
+<p>除了使你能够基于 Substrate 区块链的核心库构建区块链外，你还可以使用客户端库与 Substrate 节点进行交互。你可以使用客户端库来构建特定应用程序的前端。通常，客户端库公开的功能是在 Substrate 远程过程调用（RPC）APIs 的顶部实现的。有关使用元数据和前端库来构建应用程序的更多信息，可参见<strong>应用程序开发</strong>。</p>
+<h2 id="构建过程"><a class="header" href="#构建过程">构建过程</a></h2>
+<p>在架构设计中，你了解到 Substrate 节点由外部节点主机和运行时执行环境组成。这些节点组件通过调用运行时 API 和调用主机函数相互通信。在本节中，你将进一步了解如何将 Substrate 运行时编译为平台本机可执行文件和存储在区块链上的 WebAssembly（Wasm）二进制文件。在你了解了二进制文件如何编译的内部工作原理之后，你将进一步了解为什么有两个二进制文件，何时使用，以及如果需要，如何更改执行策略。</p>
+<h3 id="编译一个优化的组件"><a class="header" href="#编译一个优化的组件">编译一个优化的组件</a></h3>
+<p>你可能已经知道，可以通过在 Substrate node 项目的根目录中运行 <code>cargo build --release</code> 命令来编译 Substrate 节点。此命令为项目构建平台特定的可执行文件和 WebAssembly 二进制文件，并生成优化后的可执行文件。生成优化的可执行文件包括一些编译后处理。</p>
+<p>作为优化过程的一部分，WebAssembly 运行时二进制会通过一系列内部步骤进行编译和压缩，然后再将其包含在链中的 genesis 状态中。为了让你更好地理解该过程，下图总结了这些步骤。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_bc_subnodeexec.jpg" alt="" /></p>
+<p>以下各小节将更详细地描述构建过程。</p>
+<h4 id="构建-webassembly-二进制文件"><a class="header" href="#构建-webassembly-二进制文件">构建 WebAssembly 二进制文件</a></h4>
+<h5 id="webassembly中包含的功能"><a class="header" href="#webassembly中包含的功能">WebAssembly中包含的功能</a></h5>
+<h5 id="用于自定义构建过程的环境变量"><a class="header" href="#用于自定义构建过程的环境变量">用于自定义构建过程的环境变量</a></h5>
+<h5 id="用于自定义构建过程的环境变量-1"><a class="header" href="#用于自定义构建过程的环境变量-1">用于自定义构建过程的环境变量</a></h5>
+<h5 id="压缩-webassembly-二进制文件"><a class="header" href="#压缩-webassembly-二进制文件">压缩 WebAssembly 二进制文件</a></h5>
+<h3 id="执行策略"><a class="header" href="#执行策略">执行策略</a></h3>
+<h3 id="构建没有-native-runtime-的-webassembly"><a class="header" href="#构建没有-native-runtime-的-webassembly">构建没有 native runtime 的 WebAssembly</a></h3>
+<h3 id="不使用-webassembly-编译-rust"><a class="header" href="#不使用-webassembly-编译-rust">不使用 WebAssembly 编译 Rust</a></h3>
+<h2 id="运行时存储"><a class="header" href="#运行时存储">运行时存储</a></h2>
+<h3 id="存储项目"><a class="header" href="#存储项目">存储项目</a></h3>
+<h3 id="声明存储项目"><a class="header" href="#声明存储项目">声明存储项目</a></h3>
+<h3 id="访问存储项目"><a class="header" href="#访问存储项目">访问存储项目</a></h3>
+<h3 id="哈希算法"><a class="header" href="#哈希算法">哈希算法</a></h3>
+<h3 id="初始化配置"><a class="header" href="#初始化配置">初始化配置</a></h3>
+<h3 id="最佳实践"><a class="header" href="#最佳实践">最佳实践</a></h3>
+<h2 id="交易权重和费用"><a class="header" href="#交易权重和费用">交易、权重和费用</a></h2>
+<h3 id="如何计算费用"><a class="header" href="#如何计算费用">如何计算费用</a></h3>
+<h3 id="使用-transaction-payment-pallet"><a class="header" href="#使用-transaction-payment-pallet">使用 transaction payment pallet</a></h3>
+<h3 id="有特殊要求的交易"><a class="header" href="#有特殊要求的交易">有特殊要求的交易</a></h3>
+<h3 id="默认权重注释"><a class="header" href="#默认权重注释">默认权重注释</a></h3>
+<h3 id="提交派发权重校准"><a class="header" href="#提交派发权重校准">提交派发权重校准</a></h3>
+<h3 id="自定义费用"><a class="header" href="#自定义费用">自定义费用</a></h3>
+<h2 id="自定义-pallets"><a class="header" href="#自定义-pallets">自定义 pallets</a></h2>
+<h3 id="pallet-宏和属性"><a class="header" href="#pallet-宏和属性">Pallet 宏和属性</a></h3>
+<h3 id="有用的-frame-traits"><a class="header" href="#有用的-frame-traits">有用的 FRAME traits</a></h3>
+<h3 id="运行时实现"><a class="header" href="#运行时实现">运行时实现</a></h3>
+<h2 id="pallet-耦合"><a class="header" href="#pallet-耦合">Pallet 耦合</a></h2>
+<h3 id="紧密的耦合-pallet"><a class="header" href="#紧密的耦合-pallet">紧密的耦合 Pallet</a></h3>
+<h3 id="松散的耦合-pallet"><a class="header" href="#松散的耦合-pallet">松散的耦合 Pallet</a></h3>
+<h3 id="选择-pallet-耦合策略"><a class="header" href="#选择-pallet-耦合策略">选择 Pallet 耦合策略</a></h3>
+<h2 id="事件和错误"><a class="header" href="#事件和错误">事件和错误</a></h2>
+<h3 id="声明一个事件"><a class="header" href="#声明一个事件">声明一个事件</a></h3>
+<h3 id="向运行时公开事件"><a class="header" href="#向运行时公开事件">向运行时公开事件</a></h3>
+<h3 id="存下一个事件"><a class="header" href="#存下一个事件">存下一个事件</a></h3>
+<h3 id="支持的类型"><a class="header" href="#支持的类型">支持的类型</a></h3>
+<h3 id="监听一个事件"><a class="header" href="#监听一个事件">监听一个事件</a></h3>
+<h3 id="错误"><a class="header" href="#错误">错误</a></h3>
+<h2 id="randomness"><a class="header" href="#randomness">Randomness</a></h2>
+<h3 id="确定随机性"><a class="header" href="#确定随机性">确定随机性</a></h3>
+<h3 id="substrates-randomness-trait"><a class="header" href="#substrates-randomness-trait">Substrate's randomness trait</a></h3>
+<h3 id="安全属性"><a class="header" href="#安全属性">安全属性</a></h3>
+<h2 id="chain-specification"><a class="header" href="#chain-specification">Chain specification</a></h2>
+<h3 id="自定义外部节点配置"><a class="header" href="#自定义外部节点配置">自定义外部节点配置</a></h3>
+<h3 id="自定义初始配置"><a class="header" href="#自定义初始配置">自定义初始配置</a></h3>
+<h3 id="存储-chain-specification-信息"><a class="header" href="#存储-chain-specification-信息">存储 chain specification 信息</a></h3>
+<h3 id="通过一个-chain-specification-启动节点"><a class="header" href="#通过一个-chain-specification-启动节点">通过一个 chain specification 启动节点</a></h3>
+<h3 id="为运行时声明存储项"><a class="header" href="#为运行时声明存储项">为运行时声明存储项</a></h3>
+<h3 id="raw-chain-specifications"><a class="header" href="#raw-chain-specifications">Raw chain specifications</a></h3>
+<h2 id="privileged-calls-and-origins"><a class="header" href="#privileged-calls-and-origins">Privileged calls and origins</a></h2>
+<h3 id="raw-origins"><a class="header" href="#raw-origins">Raw origins</a></h3>
+<h3 id="origin-call"><a class="header" href="#origin-call">Origin call</a></h3>
+<h3 id="custom-origins"><a class="header" href="#custom-origins">Custom origins</a></h3>
+<h3 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h3>
+<h2 id="远程过程调用"><a class="header" href="#远程过程调用">远程过程调用</a></h2>
+<p>远程过程调用，或叫RPCs，是外部编程的一种方式，例如，一个浏览器或前端应用程序，与一个 Substrate 节点通信。他们通常被用作检查存储值、提交交易、并查询当前共识授权。Substrate 附带了几个<a href="https://polkadot.js.org/docs/substrate/rpc/">默认的RPCs</a>。在许多案例中，添加自定义 RPCs 到你的节点中是很有用的。</p>
+<h3 id="rpc扩展构建器"><a class="header" href="#rpc扩展构建器">RPC扩展构建器</a></h3>
+<p>要将自定义 RPC 客户端连接到 Substrate 节点时，你必须提供一个被称为 RPC 扩展构建器的函数。此函数会采用一个参数，为节点应该接受还是拒绝不安全的 RPC 调用，并返回一个节点需要创建 JSON RPC 的 <a href="https://paritytech.github.io/substrate/master/node_rpc/type.IoHandler.html"><code>IoHandler</code></a>。关于更多上下文的内容，可通过查看 <a href="https://paritytech.github.io/substrate/master/sc_service/trait.RpcExtensionBuilder.html"><code>RpcExtensionBuilder</code> trait API</a> 文档。</p>
+<h3 id="rpc类型"><a class="header" href="#rpc类型">RPC类型</a></h3>
+<p>RPCs 可以是节点共识机制的接口，也可以是任何外部用户向区块链提交交易的接口。在所有情况下，重要的是要考虑 RPCs 公开哪些 endpoints。启动一个节点，并运行此命令以查看节点的 RPC API 的全部列表：</p>
+<pre><code class="language-bash editable noplayground">curl -H &quot;Content-Type: application/json&quot; -d '{&quot;id&quot;:1, &quot;jsonrpc&quot;:&quot;2.0&quot;, &quot;method&quot;: &quot;rpc_methods&quot;}' http://localhost:9933/
+</code></pre>
+<h3 id="公开的rpcs"><a class="header" href="#公开的rpcs">公开的RPCs</a></h3>
+<p>Substrate 节点提供以下命令行选项，允许你公开 RPC 接口：</p>
+<pre><code class="language-bash editable noplayground">--ws-external
+--rpc-external
+--unsafe-ws-external
+--unsafe-rpc-external
+</code></pre>
+<p>默认情况下，如果你尝试暴露 RPC 接口并同时运行验证者节点，则该节点会拒绝启动；<code>--unsafe-*</code> 标签允许你取消此安全限制。暴露 RPC 接口会对外暴露一个巨大的攻击可能性，必须要仔细的审查。</p>
+<p>有很多 RPC 方法可以用来控制节点的行为，但是你应该避免暴露它。例如，你不应该暴露下面的 RPC 方法：</p>
+<ul>
+<li><code>author_submitExtrinsic</code> — 允许向本地交易池提交交易。</li>
+<li><code>author_insertKey</code> — 允许向本地密钥存储库插入私钥。</li>
+<li><code>author_rotateKeys</code> — session 密钥轮换。</li>
+<li><code>author_removeExtrinsic</code> — 从池中移除并禁用 extrinsic。</li>
+<li><code>system_addReservedPeer</code> — 添加保留节点。</li>
+<li><code>system_removeReservedPeer</code> — 移除保留节点。</li>
+</ul>
+<p>你还应该避免暴露可能需要很长时间执行的 RPC 方法，这可能会组织客户端的状态同步。例如，你应该避免使用下面的 RPC 方法：</p>
+<ul>
+<li><code>storage_keys_paged</code> — 获取状态中具有指定前缀和分页支持的所有 key。</li>
+<li><code>state_getPairs</code> — 获取状态中具有指定前缀的所有 key 及其值。</li>
+</ul>
+<p>这些 RPCs 是使用 <code>#[rpc(name = &quot;rpc_method&quot;)]</code> 宏声明的，其中 <code>rpc_method</code> 是函数的名称， 例如，<code>author_submitExtrinsic</code> 对应于 <a href="https://paritytech.github.io/substrate/master/sc_rpc/author/trait.AuthorApi.html#tymethod.submit_extrinsic"><code>submit_extrinsic</code></a>。</p>
+<p>如果请求来自不受信任的用户，过滤掉此类调用则至关重要。实现这一点的方法是通过 <a href="https://docs.substrate.io/reference/glossary/#json-rpc">JSON-RPC</a> 代理，该代理能够过滤检查调用并仅传递允许的 APIs。</p>
+<h3 id="rpcs-for-remote_externalities"><a class="header" href="#rpcs-for-remote_externalities">RPCs for remote_externalities</a></h3>
+<p>在 <code>remote_externalities</code> 上下文中存在一种特殊类型的 RPCs 使用方法。<a href="https://paritytech.github.io/substrate/master/remote_externalities/rpc_api/index.html"><code>rpc_api</code></a> 允许你对 Substrate 节点进行一次性的调用，例如，对于使用 <code>try_runtime</code> 等工具进行测试非常有用。</p>
+<h3 id="endpoints"><a class="header" href="#endpoints">Endpoints</a></h3>
+<p>当启用任何 Substrate 节点时，你可以使用下面两个 endpoints：</p>
+<ul>
+<li>HTTP endpoint：<code>http://localhost:9933</code></li>
+<li>WebSocket endpoint：<code>ws://localhost:9944</code></li>
+</ul>
+<p>大多数 Substrate 前端库和工具都使用更强大的 Websocket endpoint 与区块链进行交互。通过 WebSockets，你可以订阅链的状态，诸如事件，以及你的区块链发生在无论任何条件下的所有改变，都会接收推送通知。</p>
+<p>要调用 <code>Metadata</code> 端点，需要与运行节点一起运行下面这行命令：</p>
+<pre><code class="language-bash editable noplayground">curl -H &quot;Content-Type: application/json&quot; -d '{&quot;id&quot;:1, &quot;jsonrpc&quot;:&quot;2.0&quot;, &quot;method&quot;: &quot;state_getMetadata&quot;}' http://localhost:9933/
+</code></pre>
+<p>该命令的返回值不是 human-readable 的格式，基于此，它需要使用<a href="https://docs.substrate.io/reference/scale-codec/">类型编码（SCALE）</a>。</p>
+<p>每个存储项都有一个相关联的存储 key，用于查询存储，这就是 RPC endpoints 知道怎么去查看。</p>
+<h3 id="示例"><a class="header" href="#示例">示例</a></h3>
+<p><strong><code>state_getMetadata</code></strong> 
+RPC 请求：</p>
+<pre><code class="language-javascript editable noplayground">function get_metadata_request(endpoint) {
+  let request = new Request(endpoint, {
+    method: &quot;POST&quot;,
+    body: JSON.stringify({
+      id: 1,
+      jsonrpc: &quot;2.0&quot;,
+      method: &quot;state_getMetadata&quot;,
+    }),
+    headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+  });
+  return request;
+}
+</code></pre>
+<p>原文本解码：</p>
+<pre><code class="language-javascript editable noplayground">function decode_metadata(metadata) {
+  return new TextDecoder().decode(util.hexToU8a(metadata));
+}
+</code></pre>
+<p><strong><code>state_getStorage</code></strong>
+RPC request：</p>
+<pre><code class="language-json editable noplayground">Request:   {&quot;id&quot;:1,&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;state_getStorage&quot;,[&quot;{storage_key}&quot;]}
+</code></pre>
+<p>其中 <code>storage_key</code> 是由对应名称的pallet，函数和 key（可选的）生成的参数。</p>
+<pre><code class="language-javascript editable noplayground">function get_runtime_storage_parameter_with_key(module_name, function_name, key) {
+  // We use xxhash 128 for strings the runtime developer can control
+  let module_hash = util_crypto.xxhashAsU8a(module_name, 128);
+  let function_hash = util_crypto.xxhashAsU8a(function_name, 128);
+
+  // We use blake2 256 for strings the end user can control
+  let key_hash = util_crypto.blake2AsU8a(keyToBytes(key));
+
+  // Special syntax to concatenate Uint8Array
+  let final_key = new Uint8Array([...module_hash, ...function_hash, ...key_hash]);
+
+  // Return a hex string
+  return util.u8aToHex(final_key);
+}
+</code></pre>
+<h2 id="应用程序开发"><a class="header" href="#应用程序开发">应用程序开发</a></h2>
+<h3 id="元数据系统"><a class="header" href="#元数据系统">元数据系统</a></h3>
+<h3 id="元数据格式"><a class="header" href="#元数据格式">元数据格式</a></h3>
+<h3 id="rpc-apis"><a class="header" href="#rpc-apis">RPC APIs</a></h3>
+<h3 id="连接到一个节点"><a class="header" href="#连接到一个节点">连接到一个节点</a></h3>
+<h3 id="开始构建"><a class="header" href="#开始构建">开始构建</a></h3>
+<h3 id="前端用例"><a class="header" href="#前端用例">前端用例</a></h3>
+<h2 id="升级运行时"><a class="header" href="#升级运行时">升级运行时</a></h2>
+<p>无分叉运行时升级是用于 Substrate 框架区块链开发的的一个定义特性。无需分叉代码库就可以更新运行时逻辑，这使你的区块链能够随着时间的推移而发展和改进。通过包含为区块链定义运行时执行环境（运行时 WebAssembly blob）状态中的一个元素，可以实现此功能。</p>
+<p>因为运行时是区块链状态的一部分，所以网络维护人员可以利用区块链的无信任、去中心化共识功能来安全地增强运行时。</p>
+<p>在用于运行时开发的 FRAME 系统中，系统库定义了用于更新运行时定义的 <a href="https://paritytech.github.io/substrate/master/frame_system/pallet/enum.Call.html#variant.set_code">the <code>set_code</code> call</a>。<a href="./chapter_1_2_1_3.html#%E5%8D%87%E7%BA%A7%E4%B8%80%E4%B8%AA%E8%BF%90%E8%A1%8C%E4%B8%AD%E7%9A%84%E7%BD%91%E7%BB%9C">升级一个运行中的网络</a>教程演示了在不关闭节点或中断操作的情况下升级运行时的两种方法。但是，本节教程中的两个升级都演示了向运行时添加功能，而不是更新现有的运行时状态。如果运行时升级需要更改现有状态，则可能需要进行存储迁移。</p>
+<h3 id="运行时版本控制"><a class="header" href="#运行时版本控制">运行时版本控制</a></h3>
+<p>在<a href="#%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B">构建过程</a>中，你了解了编译节点会同时生成平台的原生二进制文件和 WebAssembly 二进制文件，并且可以通过执行策略命令行选项来控制在区块生产过程的不同地方选择使用哪一个二进制文件。选择要与之通信的运行时执行环境的组件称为执行程序。尽管你可以覆盖自定义场景的默认执行策略，但在大多数情况下，或者执行程序通过评估原生二进制和 WebAssembly 二进制的以下信息选择适当的二进制文件来使用：</p>
+<ul>
+<li><code>spec_name</code></li>
+<li><code>spec_version</code></li>
+<li><code>authoring_version</code></li>
+</ul>
+<p>为了向执行程序进程提供此信息，运行时包含类似于以下的<a href="https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html">运行时版本结构</a>：</p>
+<pre><code class="language-rust editable noplayground">pub const VERSION: RuntimeVersion = RuntimeVersion {
+  spec_name: create_runtime_str!(&quot;node-template&quot;),
+  impl_name: create_runtime_str!(&quot;node-template&quot;),
+  authoring_version: 1,
+  spec_version: 1,
+  impl_version: 1,
+  apis: RUNTIME_API_VERSIONS,
+  transaction_version: 1,
+};
+</code></pre>
+<p>结构中的参数提供了以下信息:
+|<strong>This parameter</strong>|<strong>Provides this</strong>|
+|:-----|:-----|
+|<code>spec_name</code>|不同 Substrate 运行时的标识符。|
+|<code>impl_name</code>|spec 实现的名称。这对节点影响不大，只用于区分不同团队实现的代码。|
+|<code>authoring_version</code>|authorship 接口的版本。除非是它的原生运行时，否则生产节点不会尝试生成块。|
+|<code>spec_version</code>|运行时 specification 的版本。完整节点不会尝试使用它的原生运行时来替代链上的 Wasm 运行时，除非 Wasm 和原生二进制文件之间的所有 <code>spec_name</code>、<code>spec_version</code> 和 <code>authoring_version</code> 都是相同的。<code>spec_version</code> 的更新可以作为一个 CI 过程自动化，就像 <a href="https://gitlab.parity.io/parity/polkadot/-/blob/master/scripts/gitlab/check_extrinsics_ordering.sh">Polkadot 网络</a>一样。当 <code>transaction_version</code> 有更新时，通常会递增此参数。|
+|<code>impl_version</code>|specification 的实现版本，节点可以忽略这一点，它只用于表明代码是不同的。只要 <code>authoring_version</code> 和 <code>spec_version</code> 是相同的，代码本身就可能会发生变化，但是原生二进制文件和 Wasm 二进制文件做的是相同的事情。通常只有逻辑之外的破坏性优化才会导致 <code>impl_version</code> 的更改。|
+|<code>transaction_version</code>|处理交易的接口版本。此参数可以用于同步硬件钱包或其他签名设备的固件更新，以验证运行时交易是否有效。该参数允许硬件钱包知道哪些交易可以安全签名。如果在 <code>construct_runtime!</code> 宏中的 pallet 索引发生变化，或者如果对可调用的函数有任何更改，这个数字就会碰撞，比如参数的数量或参数类型。如果更新了这个编号，那么 <code>spec_version</code> 也必须更新。|
+|<code>apis</code>|支持的<a href="https://paritytech.github.io/substrate/master/sp_api/macro.impl_runtime_apis.html">运行时 APIs</a> 及其版本列表。|</p>
+<p>编排引擎，有时被称为执行程序，验证原生运行时是否具有相同的一致性，在 WebAssembly 选择执行之前，将驱动逻辑作为 WebAssembry。但是由于运行时版本是手动设置的，因此如果运行时版本被错误表示，编排引擎仍然可能做出不适当的决策。</p>
+<h3 id="访问运行时版本"><a class="header" href="#访问运行时版本">访问运行时版本</a></h3>
+<p>FRAME 系统通过 <code>state.getRuntimeVersion</code> RPC endpoint 公开运行时版本信息。endpoint 接受一个可选的块标识符。然而，在大多数情况下，你使用运行时<a href="https://docs.substrate.io/main-docs/build/application-development/#metadata-system">元数据</a>来理解运行时公开的 APIs 以及如何与这些 APIs 交互。只有当链的<a href="https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html#structfield.spec_version">运行时 spec_version</a> 更改时，运行时元数据才应该更改。</p>
+<h3 id="无分叉的运行时升级"><a class="header" href="#无分叉的运行时升级">无分叉的运行时升级</a></h3>
+<p>传统区块链在升级其链的状态转换功能时，需要进行硬分叉。硬分叉要求所有节点操作员停止其节点并手动升级到最新的可执行文件。对于分布式生产网络，协调硬分叉升级可能是一个复杂的过程。</p>
+<p>运行时版本属性使基于 Substrate 的区块链能够实时升级运行时逻辑，而不会造成网络分叉。</p>
+<p>要执行无分叉运行时升级，Substrate 使用现有运行时逻辑将存储在区块链上的 Wasm 运行时更新为具有新逻辑的新共识迭代版本。作为共识过程的一部分，这种升级被推送到网络上的所有全节点。在 Wasm 运行时升级之后，编排引擎会发现本机运行时 <code>spec_name</code>、<code>spec_version</code> 或 <code>authoring_version</code> 不再与新的 Wasm 运行时匹配。因此，编配引擎会执行规范的 Wasm 运行时，而不是在任何执行流程中使用原生本地运行时。</p>
+<h3 id="存储迁移"><a class="header" href="#存储迁移">存储迁移</a></h3>
+<p>存储迁移是自定义的一次性函数，允许你更新存储以适应运行时中的更改。例如，如果运行时升级将用于表示用户余额的数据类型从无符号整数更改为有符号整数，存储迁移将读取现有值为无符号整数，并回写已转换为有符号整数的更新值。如果你没有在需要时对数据的存储方式进行此类更改，运行时就无法正确地解释存储值以包含在运行时状态中，并可能导致没有定义的行为。</p>
+<h4 id="使用frame进行存储迁移"><a class="header" href="#使用frame进行存储迁移">使用FRAME进行存储迁移</a></h4>
+<p>使用 <a href="https://paritytech.github.io/substrate/master/frame_support/traits/trait.OnRuntimeUpgrade.html"><code>OnRuntimeUpgrade</code></a> trait 实现 FRAME 存储迁移。<code>OnRuntimeUpgrade</code> trait 指定一个单独的函数，<code>on_runtime_upgrade</code>，它允许你指定在运行时升级之后立即运行的逻辑，但要在任何 <a href="https://docs.substrate.io/main-docs/fundamentals/transaction-lifecycle/#initialize-a-block"><code>on_initialize</code></a> 函数或交易被执行之前。</p>
+<h4 id="准备存储迁移"><a class="header" href="#准备存储迁移">准备存储迁移</a></h4>
+<p>准备存储迁移意味着理解运行时升级所定义的更改。Substrate 存储库使用 <a href="https://github.com/paritytech/substrate/pulls?q=is%3Apr+label%3AE1-runtimemigration"><code>E1-runtimemigration</code></a> 标签来指定此类更改。</p>
+<h4 id="写一个迁移"><a class="header" href="#写一个迁移">写一个迁移</a></h4>
+<p>每次存储迁移都是不同的，具有不同的需求和不同的复杂性级别。但是当你需要进行存储迁移时，可以参考以下推荐实践进行操作：</p>
+<ul>
+<li>将迁移提取到可复用的函数中，并为它们编写测试。</li>
+<li>包括在迁移中的登录以协助调试。</li>
+<li>请记住迁移是在升级的运行时上下文中执行的。迁移代码可能需要包含已弃用的类型，如<a href="https://github.com/hicommonwealth/substrate/blob/5f3933f5735a75d2d438341ec6842f269b886aaa/frame/indices/src/migration.rs#L5-L22">本例</a>所示。</li>
+<li>使用存储版本使迁移更具有声明性，从而使迁移更安全，如<a href="https://github.com/paritytech/substrate/blob/c79b522a11bbc7b3cf2f4a9c0a6627797993cb79/frame/elections-phragmen/src/lib.rs#L119-L157">本例</a>所示。</li>
+</ul>
+<h4 id="迁移的排序"><a class="header" href="#迁移的排序">迁移的排序</a></h4>
+<p>默认情况下，FRAME 命令执行 <code>on_runtime_upgrade</code> 函数，根据 pallet 在 <code>construct_runtime!</code> 宏中出现的顺序。对于升级，函数以相反的顺序运行，从最先执行的最后一个 pallet 开始。如果需要你也可以强制执行自定义顺序（请参阅此处的<a href="https://github.com/hicommonwealth/edgeware-node/blob/7b66f4f0a9ec184fdebcccd41533acc728ebe9dc/node/runtime/src/lib.rs#L845-L866">示例</a>）。
+FRAME 存储迁移按照这个顺序运行：</p>
+<ol>
+<li>如果使用自定义顺序，则需要自定义 <code>on_runtime_upgrade</code>。</li>
+<li>系统 <code>frame_system::on_runtime_upgrade</code> 函数。</li>
+<li>所有的 <code>on_runtime_upgrade</code> 函数都是在运行时中定义的，从 <code>construct_runtime!</code> 宏中的最后一个 pallet 开始。</li>
+</ol>
+<h4 id="测试迁移"><a class="header" href="#测试迁移">测试迁移</a></h4>
+<p>测试存储迁移非常重要，以下是一些可用来测试存储迁移的工具：</p>
+<ul>
+<li><a href="https://github.com/paritytech/substrate-debug-kit">Substrate debug kit</a> 包括一个 <a href="https://github.com/paritytech/substrate-debug-kit/tree/master/remote-externalities">remote externalities</a> 工具，该工具允许对实时的链数据安全地执行存储迁移单元测试。</li>
+<li><a href="https://github.com/maxsam4/fork-off-substrate">fork-off-substrate</a> 脚本可以很容易地创建一个 chain specification，引导一个本地测试链来测试运行时升级和存储迁移。</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../blockchain/chapter_1_2_1_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../blockchain/chapter_1_2_1_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../blockchain/chapter_1_2_1_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../blockchain/chapter_1_2_1_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script type="text/javascript">
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
