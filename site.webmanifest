@@ -1,0 +1,28 @@
+{
+    "name": "杂经",
+    "short_name": "杂经",
+    "description": "分享计算机科学知识，技术文章，软件开发，编程，心理学，经济理财，传统文化等",
+    "start_url": "/index.html",
+    "scope": "/",
+    "background_color": "#111111",
+    "theme_color": "#222222",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-192x192m.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
