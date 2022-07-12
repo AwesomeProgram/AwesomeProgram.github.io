@@ -250,19 +250,18 @@ proc-macro = true
 </tr>
 <tr>
 <td>
-<li>模块树需要显式定义，不是从文件系统树隐式构建的</li>
-<li>模块树根等于库、应用程序……入口点（例如，）。lib.rs</li>
-<li><code>c.iter_mut()</code> — 同上，但是可变借用的迭代器允许更改集合</li>
+<li><b>模块树</b>需要显式定义，它不是从<b>文件系统树</b>中隐式创建的</li>
+<li><b>Module tree root</b>是库、应用程序等等的入口文件，如 lib.rs</li>
 </td>
 </tr>
 <tr>
-<td>实际的模块定义如下：</td>
+<td>实际模块的定义如下：</td>
 </tr>
 <tr>
 <td>
-<li>A在文件中定义模块，而将读取或.mod m {}mod m;m.rsm/mod.rs</li>
-<li>.rs基于嵌套的路径，例如，要么是要么。mod a { mod b { mod c; }}}a/b/c.rsa/b/c/mod.rs</li>
-<li>未通过某些模块树根路径的文件不会被编译器触及！🛑mod m;</li>
+<li>一个在文件中定义的 <b><code>mod m {}</code></b>，当使用 <b><code>mod m;</code></b> 时，将会先去读 <b><code>m.rs</code></b> 或者 <b><code>m/mod.rs</code></b> </li>
+<li> <code>.rs</code> 的路径是基于嵌套的，如 <code>mod a { mod b { mod c; }}}</code>、<code>a/b/c.rs</code>、<code>a/b/c/mod.rs</code></li>
+<li>通过一些<code> mod m; </code>来自 <b>Module tree root</b> 而没有路径的文件，是不会被编译器触及到的</li>
 </td>
 </tr>
 </table>
