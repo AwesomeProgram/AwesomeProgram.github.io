@@ -304,7 +304,7 @@
 <tr><td><code>const X: T = T();</code></td><td>定义<strong>常量</strong>，使用时会复制到临时文件中</td></tr>
 <tr><td><code>let x: T;</code></td><td>在绑定为的堆栈上分配 <code>T</code> 字节，可赋值一次，不可变</td></tr>
 <tr><td><code>let mut x: T;</code></td><td>同上，但允许<strong>可变</strong>和可变借用</td></tr>
-<tr><td>  <code>x = y;</code></td><td>移动y到x，如果 <code>T</code> 没有实现<strong>Copy</strong>，则y是无效的，否则会把y复制一份</td></tr>
+<tr><td>  <code>x = y;</code></td><td>移动 y 到 x，如果 <code>T</code> 没有实现<strong>Copy</strong>，则 y 是无效的，否则会把 y 复制一份</td></tr>
 </tbody></table>
 <ul>
 <li>创建和访问数据结构，以及一些符号类型</li>
@@ -321,7 +321,7 @@
 <tr><td><code>(x)</code></td><td>带括号的表达式</td></tr>
 <tr><td><code>(x,)</code></td><td>单元素<strong>元组</strong>表达式</td></tr>
 <tr><td><code>(S,)</code></td><td>单元素元组类型</td></tr>
-<tr><td><code>[S]</code></td><td>未指定长度的<strong>数组类型</strong>，即slice，不能存储于堆栈中</td></tr>
+<tr><td><code>[S]</code></td><td>未指定长度的<strong>数组类型</strong>，即 slice，不能存储于堆栈中</td></tr>
 <tr><td><code>[S; n]</code></td><td><strong>数组类型</strong>，固定长度是 <code>n</code> ，存储元素的类型是 <code>S</code></td></tr>
 <tr><td><code>[x; n]</code></td><td>具有 <code>x</code> 的 <code>n</code> 个副本的数组实例</td></tr>
 <tr><td><code>[x, y]</code></td><td>具有给定元素 <code>x</code> 和 <code>y</code> 的数组实例</td></tr>
@@ -589,7 +589,7 @@
 <table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>&quot;...&quot;</code></td><td>字符串文字，UTF-8 将解释 <code>\n</code> 为换行符</td></tr>
 <tr><td><code>r&quot;...&quot;</code></td><td>原始字符串文字，UTF-8 不会解释 <code>\n</code></td></tr>
-<tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文字，UTF-8 也可以包含数量可变的&quot;.#</td></tr>
+<tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文字，UTF-8 也可以包含数量可变的 &quot;.#</td></tr>
 <tr><td><code>b&quot;...&quot;</code></td><td>字节字符串文字，构造 ASCII <code>[u8]</code> ，不是字符串</td></tr>
 <tr><td><code>br&quot;...&quot;, br#&quot;...&quot;#</code></td><td>原始字节字符串文字，ASCII <code>[u8]</code>，以上的组合</td></tr>
 <tr><td><code>'🦀'</code></td><td>字符文字，固定 4 字节 unicode <code>char</code></td></tr>
@@ -690,7 +690,7 @@
 </td>
 </tr>
 </table>
-<sup>*</sup>如果它看起来好像没有消耗 `c`，那是因为类型是 `Copy`。如，如果你调用 `(&c).into_iter()`，它将在 `&c` 上调用 `into_iter()` （这将消耗引用并将其转换为迭代器），但c仍保持不变。
+<sup>*</sup>如果它看起来好像没有消耗 `c`，那是因为类型是 `Copy`，如 如果你调用 `(&c).into_iter()`，它将在 `&c` 上调用 `into_iter()` （这将消耗引用并将其转换为迭代器），但c仍保持不变。
 <br>
 <table>
 <tr>
@@ -986,7 +986,28 @@ CString::new(bytes)?
 <tr><td><code>println!(&quot;{x}&quot;)</code></td><td>同上，但在范围内使用变量 <code>x</code></td></tr>
 <tr><td><code>format!(&quot;{a:.3} {b:?}&quot;)</code></td><td>用三位数字转换 <code>PI</code>，增加空格，<code>b</code> 使用 <code>Debug</code>，返回 <code>String</code></td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="go-翻译于官网描述"><a class="header" href="#go-翻译于官网描述">Go 翻译于官网描述</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-工具链"><a class="header" href="#rust-工具链">Rust 工具链</a></h1>
+<h2 id="项目组织"><a class="header" href="#项目组织">项目组织</a></h2>
+<p><sup>*</sup>基本的项目结构布局，通用的文件和文件夹，一般可由 <code>cargo</code> 生成 </p>
+<table><thead><tr><th>入口</th><th>相关的 <code>code</code></th></tr></thead><tbody>
+<tr><td>📁 <code>.cargo/</code></td><td>项目本地的 cargo 配置，通常会包含 <a href="https://doc.rust-lang.org/cargo/reference/config.html"><strong><code>config.toml</code></strong></a></td></tr>
+<tr><td>📁 <code>benches/</code></td><td>通过运行<strong>cargo bench</strong>来为你的 crate 执行基准测试，一般需要设置默认为 nightly</td></tr>
+<tr><td>📁 <code>examples/</code></td><td>通过示例展示如何使用你的 crate，他们会像外部用户一样看到你的 crate</td></tr>
+<tr><td>  my_example.rs</td><td>运行个别的示例像 <strong>cargo run --example my_example</strong></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="go-翻译于官网描述"><a class="header" href="#go-翻译于官网描述">Go 翻译于官网描述</a></h1>
 <h4 id="go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言"><a class="header" href="#go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言">Go 语言具有很强的表达能力，它简洁、清晰而高效。得益于其并发机制， 用它编写的程序能够非常有效地利用多核与联网的计算机，其新颖的类型系统则使程序结构变得灵活而模块化。 Go 代码编译成机器码不仅非常迅速，还具有方便的垃圾收集机制和强大的运行时反射机制。 它是一个快速的、静态类型的编译型语言，感觉却像动态类型的解释型语言。</a></h4>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="go语法"><a class="header" href="#go语法">Go语法</a></h2>
 <h4 id="hello-go"><a class="header" href="#hello-go">Hello, Go!</a></h4>

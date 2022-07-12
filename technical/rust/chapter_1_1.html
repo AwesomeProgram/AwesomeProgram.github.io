@@ -166,7 +166,7 @@
 <tr><td><code>const X: T = T();</code></td><td>定义<strong>常量</strong>，使用时会复制到临时文件中</td></tr>
 <tr><td><code>let x: T;</code></td><td>在绑定为的堆栈上分配 <code>T</code> 字节，可赋值一次，不可变</td></tr>
 <tr><td><code>let mut x: T;</code></td><td>同上，但允许<strong>可变</strong>和可变借用</td></tr>
-<tr><td>  <code>x = y;</code></td><td>移动y到x，如果 <code>T</code> 没有实现<strong>Copy</strong>，则y是无效的，否则会把y复制一份</td></tr>
+<tr><td>  <code>x = y;</code></td><td>移动 y 到 x，如果 <code>T</code> 没有实现<strong>Copy</strong>，则 y 是无效的，否则会把 y 复制一份</td></tr>
 </tbody></table>
 <ul>
 <li>创建和访问数据结构，以及一些符号类型</li>
@@ -183,7 +183,7 @@
 <tr><td><code>(x)</code></td><td>带括号的表达式</td></tr>
 <tr><td><code>(x,)</code></td><td>单元素<strong>元组</strong>表达式</td></tr>
 <tr><td><code>(S,)</code></td><td>单元素元组类型</td></tr>
-<tr><td><code>[S]</code></td><td>未指定长度的<strong>数组类型</strong>，即slice，不能存储于堆栈中</td></tr>
+<tr><td><code>[S]</code></td><td>未指定长度的<strong>数组类型</strong>，即 slice，不能存储于堆栈中</td></tr>
 <tr><td><code>[S; n]</code></td><td><strong>数组类型</strong>，固定长度是 <code>n</code> ，存储元素的类型是 <code>S</code></td></tr>
 <tr><td><code>[x; n]</code></td><td>具有 <code>x</code> 的 <code>n</code> 个副本的数组实例</td></tr>
 <tr><td><code>[x, y]</code></td><td>具有给定元素 <code>x</code> 和 <code>y</code> 的数组实例</td></tr>
@@ -451,7 +451,7 @@
 <table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>&quot;...&quot;</code></td><td>字符串文字，UTF-8 将解释 <code>\n</code> 为换行符</td></tr>
 <tr><td><code>r&quot;...&quot;</code></td><td>原始字符串文字，UTF-8 不会解释 <code>\n</code></td></tr>
-<tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文字，UTF-8 也可以包含数量可变的&quot;.#</td></tr>
+<tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文字，UTF-8 也可以包含数量可变的 &quot;.#</td></tr>
 <tr><td><code>b&quot;...&quot;</code></td><td>字节字符串文字，构造 ASCII <code>[u8]</code> ，不是字符串</td></tr>
 <tr><td><code>br&quot;...&quot;, br#&quot;...&quot;#</code></td><td>原始字节字符串文字，ASCII <code>[u8]</code>，以上的组合</td></tr>
 <tr><td><code>'🦀'</code></td><td>字符文字，固定 4 字节 unicode <code>char</code></td></tr>
