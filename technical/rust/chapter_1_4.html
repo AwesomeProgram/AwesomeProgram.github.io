@@ -197,8 +197,8 @@
 </tr>
 <tr>
 <td><b>基本用法</b><br>
-假设有一个类型 <code>C</code> 的集合**c**：
-<li><code>c.into_iter()</code> — 将集合**c**转换为一个**Iterator****i**和**consumes****c**。需要实现了 <code>C</code> 的**IntoIterator**。条目的类型取决于 <code>C</code> 是什么。获取迭代器的"标准化"方法</li>
+假设有一个类型 <code>C</code> 的集合<b>c</b>：
+<li><code>c.into_iter()</code> — 将集合<b>c</b>转换为一个<b>Iterator</b><b>i</b>和<b>consumes</b><b>c</b>。需要实现了 <code>C</code> 的<b>IntoIterator</b>。条目的类型取决于 <code>C</code> 是什么。获取迭代器的"标准化"方法</li>
 <li><code>c.iter()</code> — 一些集合提供的优雅方法，返回借用的迭代器，不会消耗 <code>c</code> </li>
 <li><code>c.iter_mut()</code> — 同上，但是可变借用的迭代器允许更改集合</li>
 </td>
@@ -225,7 +225,7 @@
 <td><b>基本用法</b><br>
 假设你有一个 `struct Collection<T> {}`
 <li><code>struct IntoIter<T> {}</code> — 创建一个结构来保存你的迭代状态(如，索引)以进行值的迭代</li>
-<li><code>impl Iterator for IntoIter {}</code> — 实现 <code>Iterator::next()`</code>，这样它就可以生成元素</li>
+<li><code>impl Iterator for IntoIter {}</code> — 实现 <code>Iterator::next()</code>，这样它就可以生成元素</li>
 <code>Collection&lt;T&gt;</code><br>
 <code>IntoIter&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = T;</code>
 </td>
@@ -237,8 +237,8 @@
 <li><code>impl Iterator for Iter<T> {}</code> — 实现共享迭代器</li>
 <li><code>impl Iterator for IterMut<T> {}</code> — 实现可变迭代器</li>
 另外你可能会希望添加一些便捷的方法
-<li>Collection::iter(&self) -> Iter</li>
-<li>Collection::iter_mut(&mut self) -> IterMut</li>
+<li><code>Collection::iter(&self) -> Iter</code></li>
+<li><code>Collection::iter_mut(&mut self) -> IterMut</code></li>
 <code>Iter&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = &T;</code><br>
 <code>IterMut&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = &mut T;</code>
 </td>
@@ -433,14 +433,10 @@
 <li>如果调用了<strong>unsafe</strong>，你应该或必须确保原始数据带有字符串类型的有效表示(如 一个 <code>UTF-8</code> 的字符串)</li>
 <li>仅在一些平台( <code>std::os::&lt;your_os&gt;::ffi::OsStrExt</code> )存在辅助方法去获取底层 <code>OsStr</code> 的原始表示。从那里使用表格的其它部分，如下</li>
 </ol>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::os::unix::ffi::OsStrExt;
+<pre><code class="language-rust editable noplayground">use std::os::unix::ffi::OsStrExt;
 let bytes: &amp;[u8] = my_os_str.as_bytes();
 CString::new(bytes)?
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <ol start="3">
 <li><code>c_char</code> 必须来自之前的 <code>CString</code>，如果来自FFI，请参阅 <code>&amp;CStr</code></li>
 <li><code>x</code> 因为缺少终止符 <code>0x0</code>，没有已知的简写，可能最好的方式是通过 <code>CString</code></li>
@@ -486,7 +482,7 @@ CString::new(bytes)?
 <p><sup>*</sup>简而言之，几乎所有东西都是Debug，更多特殊类型可能需要特殊处理或转换到 <code>Display</code></p>
 <h3 id="格式化"><a class="header" href="#格式化">格式化</a></h3>
 <p><sup>*</sup>格式宏中的每个参数指示符要么是空的 {}，{argument}，要么遵循基本语法</p>
-<pre><code>{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
+<pre><code class="language-rust editable noplayground">{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
 </code></pre>
 <table><thead><tr><th>元素</th><th>含义</th></tr></thead><tbody>
 <tr><td><code>argument</code></td><td>数字( <code>0, 1, ...</code> )，变量或名字，如 <code>print!(&quot;{x}&quot;)</code></td></tr>

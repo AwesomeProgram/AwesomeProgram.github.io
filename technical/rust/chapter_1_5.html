@@ -165,81 +165,81 @@
 <tr><td><code>rust-toolchain.toml</code></td><td>为项目定义覆盖的工具链(channel、components、targets)</td></tr>
 </tbody></table>
 <h3 id="各种入口文件的小例子"><a class="header" href="#各种入口文件的小例子">各种入口文件的小例子</a></h3>
-<pre><pre class="playground"><code class="language-rust editable">    // src/main.rs (程序的默认入口文件)
+<pre><pre class="playground"><code class="language-rust editable">// src/main.rs (程序的默认入口文件)
 
-    fn main() {
-        println!(&quot;Hello, AwesomeProgram!&quot;);
-    }
+fn main() {
+    println!(&quot;Hello, AwesomeProgram!&quot;);
+}
 </code></pre></pre>
-<pre><pre class="playground"><code class="language-rust editable">    // src/lib.rs (库的默认入口文件)
+<pre><code class="language-rust editable noplayground">// src/lib.rs (库的默认入口文件)
 
-    pub fn f() {}      // 因为是根目录中的公开目录，所以可从外部访问
+pub fn f() {}      // 因为是根目录中的公开目录，所以可从外部访问
 
-    mod m {
-        pub fn g() {}  // 不是根目录中的公开路径(模块 m 不是公开的), 因此 g 不能在 crate 之外被访问
-    }  
-</code></pre></pre>
-<pre><pre class="playground"><code class="language-rust editable">    // src/my_module.rs (单元测试可以在你项目中的任意文件)
+mod m {
+    pub fn g() {}  // 不是根目录中的公开路径(模块 m 不是公开的), 因此 g 不能在 crate 之外被访问
+}  
+</code></pre>
+<pre><code class="language-rust editable noplayground">// src/my_module.rs (单元测试可以在你项目中的任意文件)
 
-    fn f() -&gt; u32 { 0 }
+fn f() -&gt; u32 { 0 }
 
-    #[cfg(test)]
-    mod test {
-        use super::f;           // 需要从上级模块中导入目录，可以访问没有公开的成员
-
-        #[test]
-        fn ff() {
-            assert_eq!(f(), 0);
-        }
-    }
-</code></pre></pre>
-<pre><pre class="playground"><code class="language-rust editable">    // tests/sample.rs (集成测试的例子)
+#[cfg(test)]
+mod test {
+    use super::f;           // 需要从上级模块中导入目录，可以访问没有公开的成员
 
     #[test]
-    fn my_sample() {
-        assert_eq!(my_crate::f(), 123); // 集成测试和基准测试依赖第三方的 crate，因此，他们仅看到公开的目录
+    fn ff() {
+        assert_eq!(f(), 0);
     }
-</code></pre></pre>
-<pre><pre class="playground"><code class="language-rust editable">    // benches/sample.rs (基准测试的例子)
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// tests/sample.rs (集成测试的例子)
 
-    #![feature(test)]   // 基准测试仍处于试验阶段
+#[test]
+fn my_sample() {
+    assert_eq!(my_crate::f(), 123); // 集成测试和基准测试依赖第三方的 crate，因此，他们仅看到公开的目录
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// benches/sample.rs (基准测试的例子)
 
-    extern crate test;  // 在 2018 版本中需要添加
+#![feature(test)]   // 基准测试仍处于试验阶段
 
-    use test::{black_box, Bencher};
+extern crate test;  // 在 2018 版本中需要添加
 
-    #[bench]
-    fn my_algo(b: &amp;mut Bencher) {
-        b.iter(|| black_box(my_crate::f())); // `black_box` 阻止 `f` 被优化掉
-    }
-</code></pre></pre>
-<pre><pre class="playground"><code class="language-rust editable">    // build.rs (预构建脚本的例子)
+use test::{black_box, Bencher};
 
-    fn main() {
-        // 你需要依赖目标 OS 的环境变量，对于当前的 OS 可以表示 `#[cfg(...)]`
-        let target_os = env::var(&quot;CARGO_CFG_TARGET_OS&quot;);
-    }
-</code></pre></pre>
-<pre><pre class="playground"><code class="language-rust editable">    // src/lib.rs (过程宏的默认入口文件)
+#[bench]
+fn my_algo(b: &amp;mut Bencher) {
+    b.iter(|| black_box(my_crate::f())); // `black_box` 阻止 `f` 被优化掉
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// build.rs (预构建脚本的例子)
 
-    extern crate proc_macro;  // 显然需要像这样被导入
+fn main() {
+    // 你需要依赖目标 OS 的环境变量，对于当前的 OS 可以表示 `#[cfg(...)]`
+    let target_os = env::var(&quot;CARGO_CFG_TARGET_OS&quot;);
+}
+</code></pre>
+<pre><code class="language-rust editable noplayground">// src/lib.rs (过程宏的默认入口文件)
 
-    use proc_macro::TokenStream;
+extern crate proc_macro;  // 显然需要像这样被导入
 
-    #[proc_macro_attribute]   // 可以作为 `#[my_attribute]` 被使用
-    pub fn my_attribute(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
-        item
-    }
+use proc_macro::TokenStream;
 
-    // Cargo.toml
+#[proc_macro_attribute]   // 可以作为 `#[my_attribute]` 被使用
+pub fn my_attribute(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+    item
+}
 
-    [package]
-    name = &quot;my_crate&quot;
-    version = &quot;0.1.0&quot;
+// Cargo.toml
 
-    [lib]
-    proc-macro = true
-</code></pre></pre>
+[package]
+name = &quot;my_crate&quot;
+version = &quot;0.1.0&quot;
+
+[lib]
+proc-macro = true
+</code></pre>
 <h3 id="模块树和namespace导入的使用"><a class="header" href="#模块树和namespace导入的使用">模块树和NameSpace导入的使用</a></h3>
 <table>
 <tr>
