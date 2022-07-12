@@ -159,11 +159,12 @@
 </tbody></table>
 <ol>
 <li>如果 <code>x</code> 或 <code>y</code> 之后不打算用到，考虑使用 <code>write!</code> 或 <code>std::ops::Add</code></li>
-<li>需要 <a href="https://crates.io/crates/regex">regex</a> crate</li>
+<li>需要 <a href="https://crates.io/crates/regex">regex</a> crate </li>
 </ol>
+<br>
 <table><thead><tr><th><strong>I/O</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
 <tr><td>创建一个新文件</td><td><code>File::create(PATH)?</code></td></tr>
-<tr><td>同样，通过<strong>OpenOptions</strong></td><td><code>OpenOptions::new().create(true).write(true).truncate(true).open(PATH)?</code></td></tr>
+<tr><td>通过<strong>OpenOptions</strong>创建</td><td><code>OpenOptions::new().create(true).write(true).truncate(true).open(PATH)?</code></td></tr>
 </tbody></table>
 <br>
 <table><thead><tr><th><strong>宏</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
@@ -172,8 +173,8 @@
 </tbody></table>
 <br>
 <table><thead><tr><th><strong>Esoterics</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
-<tr><td>干净的闭包捕获</td><td>`wants_closure({ let c = outer.clone(); move</td></tr>
-<tr><td>在 <code>try</code> 闭包中的修复推断</td><td>`iter.try_for_each(</td></tr>
+<tr><td>干净的闭包捕获</td><td><code>wants_closure({ let c = outer.clone(); move || use_clone(c) })</code></td></tr>
+<tr><td>在 <code>try</code> 闭包中的修复推断</td><td><code>iter.try_for_each(|x| { Ok::&lt;(), Error&gt;(()) })?;</code></td></tr>
 <tr><td>如果 <code>T</code> 实现了 Copy，则可迭代和编辑 <code>&amp;mut [T]</code></td><td><code>Cell::from_mut(mut_slice).as_slice_of_cells()</code></td></tr>
 <tr><td>获取带有长度的子切片</td><td><code>&amp;original_slice[offset..][..length]</code></td></tr>
 <tr><td>敏锐的确保 trait <code>T</code> 是对象安全的</td><td><code>const _: Option&lt;&amp;dyn T&gt; = None;</code></td></tr>
