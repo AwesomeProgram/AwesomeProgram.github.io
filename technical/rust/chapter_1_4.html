@@ -215,7 +215,7 @@
 </td>
 </tr>
 </table>
-<sup>*</sup>如果它看起来好像没有消耗 `c`，那是因为类型是 `Copy`，如 如果你调用 `(&c).into_iter()`，它将在 `&c` 上调用 `into_iter()` （这将消耗引用并将其转换为迭代器），但c仍保持不变。
+<p><sup>*</sup>如果它看起来好像没有消耗 <code>c</code>，那是因为类型是 <code>Copy</code>，如 如果你调用 <code>(&amp;c).into_iter()</code>，它将在 <code>&amp;c</code> 上调用 <code>into_iter()</code> （这将消耗引用并将其转换为迭代器），但c仍保持不变。</p>
 <br>
 <table>
 <tr>
@@ -433,10 +433,14 @@
 <li>如果调用了<strong>unsafe</strong>，你应该或必须确保原始数据带有字符串类型的有效表示(如 一个 <code>UTF-8</code> 的字符串)</li>
 <li>仅在一些平台( <code>std::os::&lt;your_os&gt;::ffi::OsStrExt</code> )存在辅助方法去获取底层 <code>OsStr</code> 的原始表示。从那里使用表格的其它部分，如下</li>
 </ol>
-<pre><code>use std::os::unix::ffi::OsStrExt;
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::os::unix::ffi::OsStrExt;
 let bytes: &amp;[u8] = my_os_str.as_bytes();
 CString::new(bytes)?
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <ol start="3">
 <li><code>c_char</code> 必须来自之前的 <code>CString</code>，如果来自FFI，请参阅 <code>&amp;CStr</code></li>
 <li><code>x</code> 因为缺少终止符 <code>0x0</code>，没有已知的简写，可能最好的方式是通过 <code>CString</code></li>
@@ -459,8 +463,8 @@ CString::new(bytes)?
 <tr><td><code>x.to_string()</code></td><td>生成 <code>String</code>，实现任何的 <code>Display</code> 类型</td></tr>
 </tbody></table>
 <p><sup>*</sup>这 <code>fmt</code> 是字符串文字，例如 <code>&quot;hello {}&quot;</code>，指定输出和其他参数</p>
-<h3 id="可打印类型"><a class="header" href="#可打印类型">可打印类型</a></h3>
-<p><sup>*</sup>在在友好的 <code>format!</code> 中，类型通过 <code>trait Display &quot;{}&quot;</code> 或 <code>Debug &quot;{:?}&quot;</code> 转换，非详尽列表如下</p>
+<h3 id="可打印的类型"><a class="header" href="#可打印的类型">可打印的类型</a></h3>
+<p><sup>*</sup>在友好的 <code>format!</code> 中，类型通过 <code>trait Display &quot;{}&quot;</code> 或 <code>Debug &quot;{:?}&quot;</code> 转换，非详尽列表如下</p>
 <table><thead><tr><th>类型</th><th>实现</th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>Debug, Display</code></td></tr>
 <tr><td><code>CString</code></td><td><code>Debug</code></td></tr>

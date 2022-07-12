@@ -281,7 +281,7 @@
 <p>一不留意的库（在自定义库中使用 unsafe）可能会很隐藏的破坏语言中的安全规范。</p>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust语法"><a class="header" href="#rust语法">Rust语法</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust语法结构"><a class="header" href="#rust语法结构">Rust语法结构</a></h1>
 <h2 id="hello-rust"><a class="header" href="#hello-rust">Hello, Rust!</a></h2>
 <pre><pre class="playground"><code class="language-rust editable">fn main() {
     println!(&quot;Hello, AwesomeProgram!&quot;);
@@ -691,7 +691,7 @@
 </td>
 </tr>
 </table>
-<sup>*</sup>如果它看起来好像没有消耗 `c`，那是因为类型是 `Copy`，如 如果你调用 `(&c).into_iter()`，它将在 `&c` 上调用 `into_iter()` （这将消耗引用并将其转换为迭代器），但c仍保持不变。
+<p><sup>*</sup>如果它看起来好像没有消耗 <code>c</code>，那是因为类型是 <code>Copy</code>，如 如果你调用 <code>(&amp;c).into_iter()</code>，它将在 <code>&amp;c</code> 上调用 <code>into_iter()</code> （这将消耗引用并将其转换为迭代器），但c仍保持不变。</p>
 <br>
 <table>
 <tr>
@@ -909,10 +909,14 @@
 <li>如果调用了<strong>unsafe</strong>，你应该或必须确保原始数据带有字符串类型的有效表示(如 一个 <code>UTF-8</code> 的字符串)</li>
 <li>仅在一些平台( <code>std::os::&lt;your_os&gt;::ffi::OsStrExt</code> )存在辅助方法去获取底层 <code>OsStr</code> 的原始表示。从那里使用表格的其它部分，如下</li>
 </ol>
-<pre><code>use std::os::unix::ffi::OsStrExt;
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::os::unix::ffi::OsStrExt;
 let bytes: &amp;[u8] = my_os_str.as_bytes();
 CString::new(bytes)?
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <ol start="3">
 <li><code>c_char</code> 必须来自之前的 <code>CString</code>，如果来自FFI，请参阅 <code>&amp;CStr</code></li>
 <li><code>x</code> 因为缺少终止符 <code>0x0</code>，没有已知的简写，可能最好的方式是通过 <code>CString</code></li>
@@ -935,8 +939,8 @@ CString::new(bytes)?
 <tr><td><code>x.to_string()</code></td><td>生成 <code>String</code>，实现任何的 <code>Display</code> 类型</td></tr>
 </tbody></table>
 <p><sup>*</sup>这 <code>fmt</code> 是字符串文字，例如 <code>&quot;hello {}&quot;</code>，指定输出和其他参数</p>
-<h3 id="可打印类型"><a class="header" href="#可打印类型">可打印类型</a></h3>
-<p><sup>*</sup>在在友好的 <code>format!</code> 中，类型通过 <code>trait Display &quot;{}&quot;</code> 或 <code>Debug &quot;{:?}&quot;</code> 转换，非详尽列表如下</p>
+<h3 id="可打印的类型"><a class="header" href="#可打印的类型">可打印的类型</a></h3>
+<p><sup>*</sup>在友好的 <code>format!</code> 中，类型通过 <code>trait Display &quot;{}&quot;</code> 或 <code>Debug &quot;{:?}&quot;</code> 转换，非详尽列表如下</p>
 <table><thead><tr><th>类型</th><th>实现</th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>Debug, Display</code></td></tr>
 <tr><td><code>CString</code></td><td><code>Debug</code></td></tr>
@@ -995,19 +999,174 @@ CString::new(bytes)?
 <tr><td>📁 <code>benches/</code></td><td>通过运行<strong>cargo bench</strong>来为你的 crate 执行基准测试，一般需要设置默认为 nightly</td></tr>
 <tr><td>📁 <code>examples/</code></td><td>通过示例展示如何使用你的 crate，他们会像外部用户一样看到你的 crate</td></tr>
 <tr><td>  my_example.rs</td><td>运行个别的示例像 <strong>cargo run --example my_example</strong></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>📁 <code>src/</code></td><td>你项目的源代码</td></tr>
+<tr><td>  <code>main.rs</code></td><td>程序的默认入口文件，被用于<strong>cargo run</strong></td></tr>
+<tr><td>  <code>lib.rs</code></td><td>库的默认入口文件，如 对于搜索 <code>my_crate::f()</code> 开始的地方</td></tr>
+<tr><td>📁 <code>src/bin/</code></td><td>存放额外的二进制文件的地方，即使是在库项目中</td></tr>
+<tr><td>  <code>extra.rs</code></td><td>添加二进制文件，使用 <code>cargo run --bin extra</code> 去运行</td></tr>
+<tr><td>📁 <code>tests/</code></td><td>通常用于存放集成测试，通过<strong>cargo test</strong>来调用，单元测试一般会保留在 <code>src/</code> 文件中</td></tr>
+<tr><td><code>.rustfmt.toml</code></td><td>用作<strong>cargo fmt</strong>自定义的方式</td></tr>
+<tr><td><code>.clippy.toml</code></td><td><strong>clippy lints</strong>的指定配置，通过使用 <code>cargo clippy</code></td></tr>
+<tr><td><code>build.rs</code></td><td><strong>Pre-build script</strong>，一般在构建 `C / FFI' 会用到</td></tr>
+<tr><td><code>Cargo.toml</code></td><td>主项目的配置，一般用于定义依赖，组件等等</td></tr>
+<tr><td><code>Cargo.lock</code></td><td>可用于查看依赖关系细节，为程序添加 <code>git</code>，而不是库</td></tr>
+<tr><td><code>rust-toolchain.toml</code></td><td>为项目定义覆盖的工具链(channel、components、targets)</td></tr>
 </tbody></table>
+<h3 id="各种入口文件的小例子"><a class="header" href="#各种入口文件的小例子">各种入口文件的小例子</a></h3>
+<pre><pre class="playground"><code class="language-rust editable">    // src/main.rs (程序的默认入口文件)
+
+    fn main() {
+        println!(&quot;Hello, AwesomeProgram!&quot;);
+    }
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable">    // src/lib.rs (库的默认入口文件)
+
+    pub fn f() {}      // 因为是根目录中的公开目录，所以可从外部访问
+
+    mod m {
+        pub fn g() {}  // 不是根目录中的公开路径(模块 m 不是公开的), 因此 g 不能在 crate 之外被访问
+    }  
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable">    // src/my_module.rs (单元测试可以在你项目中的任意文件)
+
+    fn f() -&gt; u32 { 0 }
+
+    #[cfg(test)]
+    mod test {
+        use super::f;           // 需要从上级模块中导入目录，可以访问没有公开的成员
+
+        #[test]
+        fn ff() {
+            assert_eq!(f(), 0);
+        }
+    }
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable">    // tests/sample.rs (集成测试的例子)
+
+    #[test]
+    fn my_sample() {
+        assert_eq!(my_crate::f(), 123); // 集成测试和基准测试依赖第三方的 crate，因此，他们仅看到公开的目录
+    }
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable">    // benches/sample.rs (基准测试的例子)
+
+    #![feature(test)]   // 基准测试仍处于试验阶段
+
+    extern crate test;  // 在 2018 版本中需要添加
+
+    use test::{black_box, Bencher};
+
+    #[bench]
+    fn my_algo(b: &amp;mut Bencher) {
+        b.iter(|| black_box(my_crate::f())); // `black_box` 阻止 `f` 被优化掉
+    }
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable">    // build.rs (预构建脚本的例子)
+
+    fn main() {
+        // 你需要依赖目标 OS 的环境变量，对于当前的 OS 可以表示 `#[cfg(...)]`
+        let target_os = env::var(&quot;CARGO_CFG_TARGET_OS&quot;);
+    }
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust editable">    // src/lib.rs (过程宏的默认入口文件)
+
+    extern crate proc_macro;  // 显然需要像这样被导入
+
+    use proc_macro::TokenStream;
+
+    #[proc_macro_attribute]   // 可以作为 `#[my_attribute]` 被使用
+    pub fn my_attribute(_attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+        item
+    }
+
+    // Cargo.toml
+
+    [package]
+    name = &quot;my_crate&quot;
+    version = &quot;0.1.0&quot;
+
+    [lib]
+    proc-macro = true
+</code></pre></pre>
+<h3 id="模块树和namespace导入的使用"><a class="header" href="#模块树和namespace导入的使用">模块树和NameSpace导入的使用</a></h3>
+<table>
+<tr>
+<td align="center">模块树</td>
+</tr>
+<tr>
+<td>模块和源文件的使用方式：</td>
+</tr>
+<tr>
+<td>
+<li>模块树需要显式定义，不是从文件系统树隐式构建的</li>
+<li>模块树根等于库、应用程序……入口点（例如，）。lib.rs</li>
+<li><code>c.iter_mut()</code> — 同上，但是可变借用的迭代器允许更改集合</li>
+</td>
+</tr>
+<tr>
+<td>实际的模块定义如下：</td>
+</tr>
+<tr>
+<td>
+<li>A在文件中定义模块，而将读取或.mod m {}mod m;m.rsm/mod.rs</li>
+<li>.rs基于嵌套的路径，例如，要么是要么。mod a { mod b { mod c; }}}a/b/c.rsa/b/c/mod.rs</li>
+<li>未通过某些模块树根路径的文件不会被编译器触及！🛑mod m;</li>
+</td>
+</tr>
+</table>
+<br>
+<table><thead><tr><th style="text-align: center"></th><th style="text-align: center">Rust 有三种NameSpaces</th><th style="text-align: center"></th></tr></thead><tbody>
+<tr><td style="text-align: center">Namespace 类型</td><td style="text-align: center">Namespace 函数</td><td style="text-align: center">Namespace 宏</td></tr>
+<tr><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>mod X {}</code></td><td style="text-align: center"><code>fn X() {}</code></td><td style="text-align: center"><code>macro_rules! X { ... }</code></td></tr>
+<tr><td style="text-align: center"><code>X (crate)</code></td><td style="text-align: center"><code>const X: u8 = 1;</code></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>trait X {}</code></td><td style="text-align: center"><code>static X: u8 = 1;</code></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>enum X {}</code></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>union X {}</code></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"><code>struct X {}</code></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"></td><td style="text-align: center"><code>struct X;</code></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: center"></td><td style="text-align: center"><code>struct X();</code></td><td style="text-align: center"></td></tr>
+</tbody></table>
+<ol>
+<li>在<em>类型</em>和<em>函数</em>中，定义类型 <code>X</code> 和常量 <code>X</code></li>
+<li>在<em>类型</em>和<em>函数</em>中，定义类型 <code>X</code> 和函数 <code>X</code></li>
+</ol>
+<ul>
+<li>在任何给定的作用域中，例如在一个模块中，每个名称空间只能存在一个项目
+<ul>
+<li><code>enum X {}</code> 和 <code>fn X() {}</code> 可以共存</li>
+<li><code>struct X;</code> 和 <code>const X</code> 可以共存</li>
+</ul>
+</li>
+<li>使用 <code>use my_mod::X;</code> 时，所有被 <code>X</code> 调用的目录都会被导入</li>
+</ul>
+<p><sup>*<sup>由于命名约定,如 按照约定 <code>fn</code> 和 <code>mod</code> 是小写，并且大多数开发者不会把所有东西都命名为 <code>X</code>， 在通常情况下你不必担心这些类型，它们可以成为设计宏时的一个因素</p>
+<h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
+<p><sup>*<sup>必须要被了解的命令和工具</p>
+<table><thead><tr><th>命令</th><th>描述</th></tr></thead><tbody>
+<tr><td><code>cargo init</code></td><td>在最近的版本创建一个新项目</td></tr>
+<tr><td><code>cargo build</code></td><td>在调试模式中构建项目( <code>--release</code> 适用于所有可以优化的地方)</td></tr>
+<tr><td><code>cargo check</code></td><td>检查项目是否可以编译成功(执行很快)</td></tr>
+<tr><td><code>cargo test</code></td><td>为项目执行测试用例</td></tr>
+<tr><td><code>cargo doc --open</code></td><td>在最近的版本创建一个新项目</td></tr>
+<tr><td><code>cargo run</code></td><td>如果生成了一个二进制文件( <code>main.rs</code> )则执行你的项目</td></tr>
+<tr><td>  <code>cargo run --bin b</code></td><td>运行二进制文件 <code>b</code>，将特性与其它依赖统一在一起，可能会造成混淆</td></tr>
+<tr><td>  <code>cargo run -p w</code></td><td>运行子空间的 <code>w</code>，如你期望的可以更多的面对特性</td></tr>
+<tr><td><code>cargo ... --timings</code></td><td>展示是什么 crate 导致你的构建花费了这么长时间，非常有用</td></tr>
+<tr><td><code>cargo tree</code></td><td>显示依赖关系图</td></tr>
+<tr><td><code>cargo +{nightly, stable} ...</code></td><td>在命令中使用给定的工具链，如 用于 'nightly only' 工具</td></tr>
+<tr><td><code>cargo +nightly ...</code></td><td>一些 <code>nightly-only</code> 的命令，使用下面的命令替换 <code>...</code></td></tr>
+<tr><td>  <code>rustc -- -Zunpretty=expanded</code></td><td>显示展开的宏</td></tr>
+<tr><td><code>rustup doc</code></td><td>打开离线 Rust 文档，包括书籍，在没有网络环境下使用很好</td></tr>
+</tbody></table>
+<p><sup>*</sup>这里的 <code>cargo build</code> 你也可以打印 <code>cargo b</code>，并且 <code>--release</code> 意味着可以用 <code>-r</code> 代替</p>
+<p>下面这些是可选的 rustup 组件，使用 <code>rustup component add [tool]</code> 安装它们</p>
+<table><thead><tr><th>工具</th><th>描述</th></tr></thead><tbody>
+<tr><td>cargo clippy</td><td>增加 lints 捕获一些常见的<strong>滥用API</strong>和<strong>不符合语言习惯</strong>的代码</td></tr>
+<tr><td>cargo fmt</td><td>自动代码格式化 <code>rustup component add rustfmt</code></td></tr>
+</tbody></table>
+<p><sup>*</sup>有更多可添加的 cargo 插件 <a href="https://crates.io/categories/development-tools::cargo-plugins?sort=downloads"><strong>点我查看</strong></a></p>
+<h2 id="交叉编译"><a class="header" href="#交叉编译">交叉编译</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="go-翻译于官网描述"><a class="header" href="#go-翻译于官网描述">Go 翻译于官网描述</a></h1>
 <h4 id="go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言"><a class="header" href="#go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言">Go 语言具有很强的表达能力，它简洁、清晰而高效。得益于其并发机制， 用它编写的程序能够非常有效地利用多核与联网的计算机，其新颖的类型系统则使程序结构变得灵活而模块化。 Go 代码编译成机器码不仅非常迅速，还具有方便的垃圾收集机制和强大的运行时反射机制。 它是一个快速的、静态类型的编译型语言，感觉却像动态类型的解释型语言。</a></h4>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="go语法"><a class="header" href="#go语法">Go语法</a></h2>
