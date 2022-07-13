@@ -318,6 +318,112 @@ proc-macro = true
 </tbody></table>
 <p><sup>*</sup>有更多可添加的 cargo 插件 <a href="https://crates.io/categories/development-tools::cargo-plugins?sort=downloads"><strong>点我查看</strong></a></p>
 <h2 id="交叉编译"><a class="header" href="#交叉编译">交叉编译</a></h2>
+<p>🔘检查目标系统是支持的</p>
+<p>🔘</sup>通过 <strong><code>rustup target install X</code></strong> 安装不同目标系统的需求</p>
+<p>🔘安装原生的工具链</p>
+<p>从目标主机供应商获取(谷歌、苹果 ......)，可能并非在所有的主机都可用(如 在 Windows 上没有 iOS 的工具连)</p>
+<p>一些工具链需要额外的构建步骤(如 安卓系统需要 <code>make-standalone-toolchain.sh</code> )</p>
+<p>🔘像下面这样更新 <strong><code>~/.cargo/config.toml</code></strong></p>
+<pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
+linker = &quot;[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang&quot;
+</code></pre>
+<pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
+linker = &quot;C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd&quot;
+</code></pre>
+<p>🔘设置环境变量(可选的，等待编译器如果有报错提示后再进行设置)</p>
+<pre><code class="language-rust editable noplayground">set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+set CXX=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe
+...
+</code></pre>
+<p>是否设置它们依赖于编译反馈的报错提示，不一定都是需要的</p>
+<p>一些平台的配置可能会非常敏感，取决于如何指定路径(如 <code>\</code> 与 <code>/</code> )和引用路径</p>
+<p>✔️使用 <code>cargo build --target=X</code> 去编译</p>
+<h2 id="工具指令"><a class="header" href="#工具指令">工具指令</a></h2>
+<p><sup>*<sup>嵌入在源码中的特殊标记通常用于工具或者预处理</p>
+<table>
+<tr>
+<td colspan="2" align="center">宏</td>
+</tr>
+<tr>
+<td colspan="2">在声明宏中，通过示例 <code>macro_rules!</code> 实现以下功能：</td>
+</tr>
+<tr>
+<td><b>在宏内</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>$x:ty</code></td>
+<td>宏的捕获，这里是一种类型</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:item</code></td>
+<td>一个 <code>item</code> ，如 函数、结构、模块等等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:block</code></td>
+<td>一组语句或表达式 <code>block {}</code>，如 <code>{ let x = 5; }</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:stmt</code></td>
+<td>一个语句，如 <code>let x = 1 + 1;</code> 、<code>String::new();</code>、<code>vec![]</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:expr</code></td>
+<td>一个表达式，如 <code>x</code> 、<code>1 + 1</code> 、<code>String::new()</code> 、<code>vec![]</code></td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:pat</code></td>
+<td>一种分支模式，如 <code>Some(t)<code> 、<code>(17, 'a')<code> 、<code>_<code></td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:ty</code></td>
+<td>一种类型，如 <code>String<code> 、<code>usize</code> 、<code>Vec&lt;u8&gt;</code></td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:ident</code></td>
+<td>一个标识符，如 在 <code>let x = 0;</code> 中，标识符是 <code>x</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:path</code></td>
+<td>一个路径，如 <code>foo</code> 、<code>std::mem::replace</code> 、<code>transmute::&lt;_, int&gt;</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:literal</code></td>
+<td>一个字面值，如 <code>3</code> 、<code>"foo"</code> 、 <code>b"bar"</code> 等等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:lifetime</code></td>
+<td>一个生命周期，如 <code>'a</code> 、<code>'static</code> 等等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:meta</code></td>
+<td>一个<code>meta item</code>，在这些 <code>#[...]</code> 、<code>#![...]</code> 里面的属性 </td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:vis</code></td>
+<td>一个可见的修饰符，如 <code>pub</code> 、<code>pub(crate)</code> 等</td>
+</tr>
+<tr>
+<td>&emsp; <code>$x:tt</code></td>
+<td>一个单独的 <code>token tree</code>，<a href="https://stackoverflow.com/a/40303308" >点击查看更多</a></td>
+</tr>
+<tr>
+<td><code>$crate</code></td>
+<td>一个卫生变量，定义宏的 <code>crate</code> </td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="2" align="center">文档</td>
+</tr>
+<tr>
+<td colspan="2">在文档注释中使用如下：</td>
+</tr>
+<tr>
+<td><b>在文档注释内</b></td><td><b>解释</b></td>
+</tr>
+</table>
 
                     </main>
 
