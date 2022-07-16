@@ -321,7 +321,7 @@ proc-macro = true
 <p>🔘检查目标系统是支持的</p>
 <p>🔘</sup>通过 <strong><code>rustup target install X</code></strong> 安装不同目标系统的需求</p>
 <p>🔘安装原生的工具链</p>
-<p>从目标主机供应商获取(谷歌、苹果 ......)，可能并非在所有的主机都可用(如 在 Windows 上没有 iOS 的工具连)</p>
+<p>从目标主机供应商获取(谷歌、苹果 ...)，可能并非在所有的主机都可用(如 在 Windows 上没有 iOS 的工具连)</p>
 <p>一些工具链需要额外的构建步骤(如 安卓系统需要 <code>make-standalone-toolchain.sh</code> )</p>
 <p>🔘像下面这样更新 <strong><code>~/.cargo/config.toml</code></strong></p>
 <pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
@@ -418,12 +418,659 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 <td colspan="2" align="center">文档</td>
 </tr>
 <tr>
-<td colspan="2">在文档注释中使用如下：</td>
+<td colspan="2">在文档注释中的用法：</td>
 </tr>
 <tr>
 <td><b>在文档注释内</b></td><td><b>解释</b></td>
 </tr>
+<tr>
+<td><code>```...```</code></td>
+<td>包含一个<b>文档测试</b>，可以使用 <code>cargo test</code>去运行 </td>
+</tr>
+<tr>
+<td><code>```X,Y ...```</code></td>
+<td>同上，并且包括可选配置 <code>X...Y</code></td>
+</tr>
+<tr>
+<td>&emsp; <code>rust</code></td>
+<td>明确使用 <code>Rust</code> 去编写测试，由 Rust 工具实现的</td>
+</tr>
+<tr>
+<td>&emsp; <code>-</code></td>
+<td>默认行为，编译测试，运行测试，如果发生恐慌则测试失败</td>
+</tr>
+<tr>
+<td>&emsp; <code>should_panic</code></td>
+<td>编译测试，运行测试，执行期望应该是恐慌，如果不是，则失败</td>
+</tr>
+<tr>
+<td>&emsp; <code>no_run</code></td>
+<td>编译测试，如果代码无法编译，则测试失败，不会运行测试</td>
+</tr>
+<tr>
+<td>&emsp; <code>compile_fail</code></td>
+<td>编译测试，如果代码可以编译，则测试失败</td>
+</tr>
+<tr>
+<td>&emsp; <code>ignore</code></td>
+<td>不会编译，不会运行，选择上面的选项</td>
+</tr>
+<tr>
+<td>&emsp; <code>edition2018</code></td>
+<td>执行代码为Rust 2018版，默认为 2015版</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>隐藏文档中的一行，如 <code># use x::hidden;</code> </td>
+</tr>
+<tr>
+<td><code>[`S`]</code></td>
+<td>创建指向<code>struct、enum、trait、function ……</code>的链接</td>
+</tr>
+<tr>
+<td><code>[`S`](crate::S)</code></td>
+<td>也可以使用路径，以 markdown 链接的形式</td>
+</tr>
 </table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#![globals]</td>
+</tr>
+<tr>
+<td colspan="3">影响整个 crate 和程序的属性：</td>
+</tr>
+<tr>
+<td><b>Opt-Out's</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#![no_std]</code></td>
+<td><code>C</code></td>
+<td>不会自动导入<b>std</b>，将使用<b>core</b>代替</td>
+</tr>
+<tr>
+<td><code>#![no_implicit_prelude]</code></td>
+<td><code>CM</code></td>
+<td>不会添加<b>prelude</b>，需要手动导入<b>None</b> <b>Vec</b> ...</td>
+</tr>
+<tr>
+<td><code>#![no_main]</code></td>
+<td><code>C</code></td>
+<td>如果是这种情况则不要在程序中写入 <code>main()</code> </td>
+</tr>
+<br>
+<tr>
+<td><b>Opt-In's</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#![feature(a, b, c)]</code></td>
+<td><code>C</code></td>
+<td>依赖可能永远不会稳定的特性，<a href="https://doc.rust-lang.org/unstable-book/the-unstable-book.html"><b>Unstable Book.</b></a></td>
+</tr>
+<br>
+<tr>
+<td><b>Builds</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#![windows_subsystem = "x"]	</code></td>
+<td><code>C</code></td>
+<td>在 Windows 上，做一个控制台或者应用程序</td>
+</tr>
+<tr>
+<td><code>#![crate_name = "x"]</code></td>
+<td><code>C</code></td>
+<td>指定当前 crate 的名称，如 当在不使用 cargo 的时候</td>
+</tr>
+<tr>
+<td><code>#![crate_type = "bin"]</code></td>
+<td><code>C</code></td>
+<td>指定当前 crate 的类型，如 bin lib dylib cdylib ...</td>
+</tr>
+<tr>
+<td><code>#![recursion_limit = "123"]</code></td>
+<td><code>C</code></td>
+<td>为 deref 和 macros 设置编译期间的递归限制</td>
+</tr>
+<tr>
+<td><code>#![type_length_limit = "456"]</code></td>
+<td><code>C</code></td>
+<td>限制类型替换的最大数量</td>
+</tr>
+<br>
+<tr>
+<td><b>Handlers</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[panic_handler]</code></td>
+<td><code>F</code></td>
+<td>创建一些应用程序的<b>panic handler</b>，如 <code>fn f(&PanicInfo) -> !</code> </td>
+</tr>
+<tr>
+<td><code>#[global_allocator]</code></td>
+<td><code>S</code></td>
+<td>创建一些静态项目的实现，<code>GlobalAlloc</code> 全局分配器</td>
+</tr>
+</table>
+<br>
+</table>
+<table>
+<tr>
+<td colspan="3" align="center">#[code]</td>
+</tr>
+<tr>
+<td colspan="3">主要控制写出代码的属性：</td>
+</tr>
+<tr>
+<td><b>Developer UX</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[non_exhaustive]</code></td>
+<td><code>T</code></td>
+<td> Future-proof <b>struct</b> 或 <b>enum</b>，暗示它以后数据将会扩大</td>
+</tr>
+<tr>
+<td><code>#[path = "x.rs"]</code></td>
+<td><code>M</code></td>
+<td>从非标准库中获取模块</td>
+</tr>
+<tr>
+<td><b>Codegen</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[inline]</code></td>
+<td><code>F</code></td>
+<td>建议编译器应该在调用点时使用内联函数</td>
+</tr>
+<tr>
+<td><code>#[inline(always)]</code></td>
+<td><code>F</code></td>
+<td>强烈要求编译器使用内联调用</td>
+</tr>
+<tr>
+<td><code>#[inline(never)]</code></td>
+<td><code>F</code></td>
+<td>如果仍然内联函数，则指示编译器不起作用</td>
+</tr>
+<tr>
+<td><code>#[cold]</code></td>
+<td><code>F</code></td>
+<td>提示该函数可能不会被调用</td>
+</tr>
+<tr>
+<td><code>#[target_feature(enable="x")]</code></td>
+<td><code>F</code></td>
+<td>对于 <code>unsafe fn</code> 的代码强制 CPU 开启特性</td>
+</tr>
+<tr>
+<td><code>#[track_caller]</code></td>
+<td><code>F</code></td>
+<td>对于更友好的 panic 输出信息，允许 <code>fn</code> 查找<b>caller</b></td>
+</tr>
+<tr>
+<td><code>#[repr(X)]</code></td>
+<td><code>T</code></td>
+<td>使用另一种表示而不是默认的<b>rust</b></td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(C)]</code></td>
+<td><code>T</code></td>
+<td>使用 C-compatible (f. FFI)、可预测 (f. transmute) 的布局</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(C, u8)]</code></td>
+<td><code>enum</code></td>
+<td>给<b>enum</b>判别器指定类型</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(transparent)]</code></td>
+<td><code>T</code></td>
+<td>为单个元素类型提供与包含字段相同的布局</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(packed(1))]</code></td>
+<td><code>T</code></td>
+<td>结构和包含字段的较低对齐，轻度的 UB 倾向</td>
+</tr>
+<tr>
+<td>&emsp; <code>#[repr(align(8))]</code></td>
+<td><code>T</code></td>
+<td>将结构对齐提高到给定值，如 SIMD 类型</td>
+</tr>
+<tr>
+<td colspan="3" align="left"><sup>*<sup>可以组合一些表示修饰符，如 <code>#[repr(C, packed(1))]</code></td>
+</tr>
+<tr>
+<td><b>Linking</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[no_mangle]</code></td>
+<td><code>*</code></td>
+<td>直接使用项目名称作为符号名称而不修改</td>
+</tr>
+<tr>
+<td><code>#[no_link]</code></td>
+<td><code>X</code></td>
+<td>当想要使用宏时，不去链接<b>extern crate</b></td>
+</tr>
+<tr>
+<td><code>#[link(name="x", kind="y")]</code></td>
+<td><code>X</code></td>
+<td>当查找符号时，要链接的本地库</td>
+</tr>
+<tr>
+<td><code>#[link_name = "foo"]</code></td>
+<td><code>F</code></td>
+<td>要查找以解析 <code>extern fn</code> 的符号名称</td>
+</tr>
+<tr>
+<td><code>#[link_section = ".sample"]</code></td>
+<td><code>FS</code></td>
+<td>应放置项目的目标文件的部分名称</td>
+</tr>
+<tr>
+<td><code>#[export_name = "foo"]</code></td>
+<td><code>FS</code></td>
+<td>以不同的名称导出 <code>fn</code>或 <code>static</code></td>
+</tr>
+<tr>
+<td><code>#[used]</code></td>
+<td><code>S</code></td>
+<td>不要优化掉 <code>static</code> 变量，尽管它看起来并未使用</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#[quality]</td>
+</tr>
+<tr>
+<td colspan="3">Rust 工具用于提高代码质量的属性：</td>
+</tr>
+<tr>
+<td><b>代码模式</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[allow(X)]</code></td>
+<td><code>*</code></td>
+<td>指示 rustc 或 clippy 去忽略 class <code>X</code> 可能的问题</td>
+</tr>
+<tr>
+<td><code>#[warn(X)]</code></td>
+<td><code>*</code></td>
+<td>发出警告，与 clippy lints 在一起使用</td>
+</tr>
+<tr>
+<td><code>#[deny(X)]</code></td>
+<td><code>*</code></td>
+<td>编译失败</td>
+</tr>
+<tr>
+<td><code>#[forbid(X)]</code></td>
+<td><code>*</code></td>
+<td>编译失败并且阻止后续的重写</td>
+</tr>
+<tr>
+<td><code>#[deprecated = "msg"]</code></td>
+<td><code>*</code></td>
+<td>让你用户知道你制造了一个设计错误</td>
+</tr>
+<tr>
+<td><code>#[must_use = "msg"]</code></td>
+<td><code>FTX</code></td>
+<td>使编译器检查由调用者处理的返回值</td>
+</tr>
+<tr>
+<td colspan="3"><sup>*</sup>对于保证高质量 crates 的最佳选择，存在一些争论。积极维护的多个开发版本的 crates 可能会受益于更具侵略性<b>deny</b>或<b>forbid lints</b>；不经常更新的可能更多来自保守使用<b>warn</b>，因为未来的编译器或 clippy 更新可能会突然破坏其他工作代码并出现些小问题</td>
+</tr>
+<tr>
+<td><b>测试</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[test]</code></td>
+<td><code>F</code></td>
+<td>将函数标记为测试，使用 <code>cargo test</code> </td>
+</tr>
+<tr>
+<td><code>#[ignore = "msg"]</code></td>
+<td><code>F</code></td>
+<td>编译但暂时不执行一些 <code>#[test]</code> </td>
+</tr>
+<tr>
+<td><code>#[should_panic]</code></td>
+<td><code>F</code></td>
+<td>测试必须触发 <code>panic!()</code> 才能实际成功</td>
+</tr>
+<tr>
+<td><code>#[bench]</code></td>
+<td><code>F</code></td>
+<td>标记函数在 <code>bench/</code> 作为基准测试，使用 <code>cargo bench</code> </td>
+</tr>
+<tr>
+<td><b>格式化</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[rustfmt::skip]</code></td>
+<td><code>*</code></td>
+<td>防止 <code>cargo fmt</code> 清理项目</td>
+</tr>
+<tr>
+<td><code>#![rustfmt::skip::macros(x)]</code></td>
+<td><code>CM</code></td>
+<td>... 从清理宏 x 开始</td>
+</tr>
+<tr>
+<td><code>#![rustfmt::skip::attributes(x)]</code></td>
+<td><code>CM</code></td>
+<td>... 从清理属性 x 开始</td>
+</tr>
+<tr>
+<td><b>文档</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[doc = "Explanation"]</code></td>
+<td><code>*</code></td>
+<td>与添加 <code>///</code> 文档注释相同</td>
+</tr>
+<tr>
+<td><code>#[doc(alias = "other")]</code></td>
+<td><code>*</code></td>
+<td>提供用户可以在文档中搜索的另一个名称</td>
+</tr>
+<tr>
+<td><code>#[doc(hidden)]</code></td>
+<td><code>*</code></td>
+<td>防止项目出现在文档中</td>
+</tr>
+<tr>
+<td><code>#![doc(html_favicon_url = "")]</code></td>
+<td><code>C</code></td>
+<td>为文档设置 <b>favicon</b> </td>
+</tr>
+<tr>
+<td><code>#![doc(html_logo_url = "")]</code></td>
+<td><code>C</code></td>
+<td>文档中使用的 <b>logo</b> </td>
+</tr>
+<tr>
+<td><code>#![doc(html_playground_url = "")]</code></td>
+<td><code>C</code></td>
+<td>生成 Run 按钮并使用给定的服务</td>
+</tr>
+<tr>
+<td><code>#![doc(html_root_url = "")]</code></td>
+<td><code>C</code></td>
+<td>指向外部 crate 的链接的基本 URL</td>
+</tr>
+<tr>
+<td><code>#![doc(html_no_source)]</code></td>
+<td><code>C</code></td>
+<td>防止源包含在文档中</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#[macros]</td>
+</tr>
+<tr>
+<td colspan="3">与宏的创建和使用相关的属性：</td>
+</tr>
+<tr>
+<td><b>宏示例</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[macro_export]</code></td>
+<td><code>!</code></td>
+<td>导出 <code>macro_rules!</code> 作为公开的在 <code>crate</code> 级别</td>
+</tr>
+<tr>
+<td><code>#[macro_use]</code></td>
+<td><code>MX</code></td>
+<td>让宏持久化的模块，或者从 <code>extern crate</code> 导入</td>
+</tr>
+<tr>
+<td><b>过程宏</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[proc_macro]</code></td>
+<td><code>F</code></td>
+<td>将 <code>fn</code> 标记为<b>function-like</b>的过程宏，可作为 <code>m!()</code> 调用</td>
+</tr>
+<tr>
+<td><code>#[proc_macro_derive(Foo)]</code></td>
+<td><code>F</code></td>
+<td>将可以 <code>#[derive(Foo)]</code> 的 <code>fn</code> 标记为<b>derive macro</b></td>
+</tr>
+<tr>
+<td><code>#[proc_macro_attribute]</code></td>
+<td><code>F</code></td>
+<td>将可以理解成新的 <code>#[x]</code> 的 <code>fn</code> 标记为<b>attribute macro</b></td>
+</tr>
+<tr>
+<td><b>Derives</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[derive(X)]</code></td>
+<td><code>T</code></td>
+<td>让一些过程宏提供一些好的 <code>trait X</code> 的实现</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="3" align="center">#[cfg]</td>
+</tr>
+<tr>
+<td colspan="3">控制条件编译的属性：</td>
+</tr>
+<tr>
+<td><b>配置属性</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[cfg(X)]</code></td>
+<td><code>*</code></td>
+<td>如果配置 <code>X</code> 成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg(all(X, Y, Z))]</code></td>
+<td><code>*</code></td>
+<td>如果所有的选项都成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg(any(X, Y, Z))]</code></td>
+<td><code>*</code></td>
+<td>如果至少有一个选项成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg(not(X))]</code></td>
+<td><code>*</code></td>
+<td>如果 <code>X</code> 不成立，则包含项目</td>
+</tr>
+<tr>
+<td><code>#[cfg_attr(X, foo = "msg")]</code></td>
+<td><code>*</code></td>
+<td>如果配置 <code>X</code> 成立，则应用 <code>#[foo = "msg"]</code></td>
+</tr>
+<tr>
+<td colspan="3"><sup>*</sup>注意，options 一般可以设置多次，即同一个 key 可以出现多个 value。可以同时期望 <code>#[cfg(target_feature = "avx")]</code> 和 <code>#[cfg(target_feature = "avx2")]</code> 为真。</td>
+</tr>
+<tr>
+<td><b>已知选项</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>#[cfg(target_arch = "x86_64")]</code></td>
+<td><code>*</code></td>
+<td>为了去编译 CPU 架构的 crate </td>
+</tr>
+<tr>
+<td><code>#[cfg(target_feature = "avx")]</code></td>
+<td><code>*</code></td>
+<td>某一类特性类别的指令是否可用</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_os = "macos")]</code></td>
+<td><code>*</code></td>
+<td>你的代码将在其操作系统上运行</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_family = "unix")]</code></td>
+<td><code>*</code></td>
+<td>属于家族操作系统</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_env = "msvc")]</code></td>
+<td><code>*</code></td>
+<td>DLLs 和函数怎样与操作系统接口连接</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_endian = "little")]</code></td>
+<td><code>*</code></td>
+<td>你的 zero-cost 协议失败的主要原因</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_pointer_width = "64")]</code></td>
+<td><code>*</code></td>
+<td>有多少位指针、usize 和 CPU</td>
+</tr>
+<tr>
+<td><code>#[cfg(target_vendor = "apple")]</code></td>
+<td><code>*</code></td>
+<td>目标生产商</td>
+</tr>
+<tr>
+<td><code>#[cfg(debug_assertions)]</code></td>
+<td><code>*</code></td>
+<td><code>debug_assert!()</code>是否会发生 panic</td>
+</tr>
+<tr>
+<td><code>#[cfg(panic = "unwind")]</code></td>
+<td><code>*</code></td>
+<td>是否 unwind 或 abort 将发生恐慌</td>
+</tr>
+<tr>
+<td><code>#[cfg(proc_macro)]</code></td>
+<td><code>*</code></td>
+<td>是否将 crate 编译为过程宏</td>
+</tr>
+<tr>
+<td><code>#[cfg(test)]</code></td>
+<td><code>*</code></td>
+<td>是否与 <code>cargo test</code>一起编译</td>
+</tr>
+<tr>
+<td><code>#[cfg(feature = "serde")]</code></td>
+<td><code>*</code></td>
+<td>是否 feature serde 与你的 crate 被一起编译</td>
+</tr>
+</table>
+<br>
+<table>
+<tr>
+<td colspan="2" align="center">build.rs</td>
+</tr>
+<tr>
+<td colspan="2">与预构建脚本关联的环境变量与输出</td>
+</tr>
+<tr>
+<td><b>输入环境</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>CARGO_FEATURE_X</code></td>
+<td>为每一个激活的特性 X 设置环境变量</td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_FEATURE_SERDE</code></td>
+<td>如果特性 serde 被强制启用</td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_FEATURE_SOME_FEATURE</code></td>
+<td>如果有一些特性被强制启用，<code>-</code> 会转成 <code>_</code> </td>
+</tr>
+<tr>
+<td><code>CARGO_CFG_X</code></td>
+<td>暴露 cfg's，加入多个选项通过<b>,</b>并且会把<code>-</code> 转换成 <code>_</code> </td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_CFG_TARGET_OS=macos</code></td>
+<td>如果 target_os 设置为了 macos </td>
+</tr>
+<tr>
+<td>&emsp; <code>CARGO_CFG_TARGET_FEATURE=avx,avx2</code></td>
+<td>如果 target_feature 设置为了 avx 和 avx2 </td>
+</tr>
+<tr>
+<td><code>OUT_DIR</code></td>
+<td>输出应该放到哪个目录</td>
+</tr>
+<tr>
+<td><code>TARGET</code></td>
+<td>正在编译的目标三重</td>
+</tr>
+<tr>
+<td><code>HOST</code></td>
+<td>主机三重(运行这个构建脚本)</td>
+</tr>
+<tr>
+<td><code>PROFILE</code></td>
+<td>可以是 debug 或 release </td>
+</tr>
+<tr>
+<td colspan="2" align="left" >通过 <code>env::var()?</code> 从<b>build.rs</b>中是可用的，但并未详尽列出</td>
+</tr>
+<tr>
+<td><b>输出字符串</b></td><td><b>On</b></td><td><b>解释</b></td>
+</tr>
+<tr>
+<td><code>cargo:rerun-if-changed=PATH</code></td>
+<td>仅在如果 PATH 变更了，再次运行这个 build.rs</td>
+</tr>
+<tr>
+<td><code>cargo:rerun-if-env-changed=VAR</code></td>
+<td>仅在如果环境变量 VAR 变更了，再次运行这个 build.rs</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-link-lib=[KIND=]NAME</code></td>
+<td>就像通过<b>-l</b>选项链接本机库一样</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-link-search=[KIND=]PATH</code></td>
+<td>就像通过<b>-l</b>选项，为本地库查找路径</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-flags=FLAGS</code></td>
+<td>向编译器添加指定的 flags </td>
+</tr>
+<tr>
+<td><code>cargo:rustc-cfg=KEY[="VALUE"]</code></td>
+<td>发出给定的 cfg 选项以用于以后的编译</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-env=VAR=VALUE</code></td>
+<td>在 crate 编译期间发出可通过<code>env!()</code>访问的变量</td>
+</tr>
+<tr>
+<td><code>cargo:rustc-cdylib-link-arg=FLAG</code></td>
+<td>当构建一个<b>cdylib</b>时，传递链接器标志</td>
+</tr>
+<tr>
+<td><code>cargo:warning=MESSAGE</code></td>
+<td>发出编译器警告</td>
+</tr>
+<tr>
+<td colspan="2" align="left" >通过 <code>println!()</code> 从<b>build.rs</b>写出，但并未详尽列出</td>
+</tr>
+</table>
+<p><sup>*</sup>对于属性中的On列：</p>
+<ul>
+<li><code>C</code> 表示在 crate 级别（通常 <code>#![my_attr]</code> 在顶级文件中给出）</li>
+<li><code>M</code> 意味着在模块上</li>
+<li><code>F</code> 指功能上</li>
+<li><code>S</code> 意味着静态</li>
+<li><code>T</code> 表示类型</li>
+<li><code>X</code> 意味着一些特殊的东西</li>
+<li><code>!</code> 意味着在宏上</li>
+<li><code>*</code> 意味着几乎任何项目</li>
+</ul>
 
                     </main>
 
