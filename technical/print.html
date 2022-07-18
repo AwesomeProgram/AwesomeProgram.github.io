@@ -281,6 +281,7 @@
 <p>一不留意的库（在自定义库中使用 unsafe）可能会很隐藏的破坏语言中的安全规范。</p>
 </li>
 </ul>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_rustlang.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust语法结构"><a class="header" href="#rust语法结构">Rust语法结构</a></h1>
 <h2 id="hello-rust"><a class="header" href="#hello-rust">Hello, Rust!</a></h2>
 <pre><pre class="playground"><code class="language-rust editable">fn main() {
@@ -297,7 +298,7 @@
 <tr><td>  <code>struct S (T);</code></td><td>定义带有编号字段类型的&quot;元组&quot;结构</td></tr>
 <tr><td>  <code>struct S;</code></td><td>定义<strong>零大小</strong>的单元结构，不占空间</td></tr>
 <tr><td><code>enum E {}</code></td><td>定义一个<strong>枚举</strong></td></tr>
-<tr><td>  <code>enum E { A, B(), C {} }</code></td><td>定义枚举的变体；可以是 unit- <code>A</code>， tuple- <code>B()</code> 和struct-like <code>C{}</code></td></tr>
+<tr><td>  <code>enum E { A, B(), C {} }</code></td><td>定义枚举的变体；可以是 unit-<code>A</code>， tuple-<code>B()</code> 和struct-like <code>C{}</code></td></tr>
 <tr><td>  <code>enum E { A = 1 }</code></td><td>如果变体只是与单元类似，则允许赋值，例如 FFI</td></tr>
 <tr><td><code>union U {}</code></td><td>用于兼容 FFI 的，类似 C <strong>union</strong> 的unsafe代码</td></tr>
 <tr><td><code>static X: T = T();</code></td><td>具有生命周期，单独内存位置的<strong>全局变量</strong></td></tr>
@@ -700,7 +701,7 @@
 <tr>
 <td><b>基本用法</b><br>
 假设你有一个 `struct Collection<T> {}`
-<li><code>struct IntoIter<T> {}</code> — 创建一个结构来保存你的迭代状态(如，索引)以进行值的迭代</li>
+<li><code>struct IntoIter<T> {}</code> — 创建一个结构来保存你的迭代状态(如 索引)以进行值的迭代</li>
 <li><code>impl Iterator for IntoIter {}</code> — 实现 <code>Iterator::next()</code>，这样它就可以生成元素</li>
 <code>Collection&lt;T&gt;</code><br>
 <code>IntoIter&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = T;</code>
@@ -1915,7 +1916,155 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 <li><code>!</code> 意味着在宏上</li>
 <li><code>*</code> 意味着几乎任何项目</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="go-翻译于官网描述"><a class="header" href="#go-翻译于官网描述">Go 翻译于官网描述</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-类型操作"><a class="header" href="#rust-类型操作">Rust 类型操作</a></h1>
+<h2 id="类型-trait-泛型"><a class="header" href="#类型-trait-泛型">类型 trait 泛型</a></h2>
+<p><sup>*</sup>允许用户自定义类型，以避免冗余代码</p>
+<h3 id="types-与-traits"><a class="header" href="#types-与-traits">Types 与 Traits</a></h3>
+<h4 id="types"><a class="header" href="#types">Types</a></h4>
+<ul>
+<li>一组具有给定语义、布局等等</li>
+</ul>
+<table><thead><tr><th style="text-align: left">类型</th><th style="text-align: left">值</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>u8</code></td><td style="text-align: left"><code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code></td></tr>
+<tr><td style="text-align: left"><code>char</code></td><td style="text-align: left"><code>{ 'a', 'b', ... '🦀' }</code></td></tr>
+<tr><td style="text-align: left"><code>struct S(u8, char)</code></td><td style="text-align: left"><code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code></td></tr>
+</tbody></table>
+<h4 id="类型等价与转换"><a class="header" href="#类型等价与转换">类型等价与转换</a></h4>
+<ul>
+<li>这可能很明显，但 <code>u8</code>， <code>&amp;u8</code>， <code>&amp;mut u8</code>，彼此完全不同</li>
+<li>任何 <code>t: T</code> 仅接受来自准确的 <code>T</code> 值，如
+<ul>
+<li><code>f(0_u8)</code> 不能被 <code>f(&amp;0_u8)</code> 调用</li>
+<li><code>f(&amp;mut my_u8)</code> 不能被 <code>f(&amp;my_u8)</code> 调用</li>
+<li><code>f(0_u8)</code> 不能被 <code>f(0_i8)</code> 调用</li>
+</ul>
+</li>
+</ul>
+<p><sup>*</sup>在数学意义上，从类型的角度来看 <code>0 != 0</code>，在语言意义上，<code>==(0u8, 0u16)</code> 仅为了阻止一些小意外而没有定义</p>
+<table><thead><tr><th style="text-align: left">类型</th><th style="text-align: left">值</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>u8</code></td><td style="text-align: left"><code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code></td></tr>
+<tr><td style="text-align: left"><code>u16</code></td><td style="text-align: left"><code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, ..., 65_535<sub>u16</sub> }</code></td></tr>
+<tr><td style="text-align: left"><code>&amp;u8	</code></td><td style="text-align: left"><code>{ 0xffaa<sub>&amp;u8</sub>, 0xffbb<sub>&amp;u8</sub>, ... }</code></td></tr>
+<tr><td style="text-align: left"><code>&amp;mut u8</code></td><td style="text-align: left"><code>{ 0xffaa<sub>&amp;mut u8</sub>, 0xffbb<sub>&amp;mut u8</sub>, ... }</code></td></tr>
+</tbody></table>
+<ul>
+<li>然而，Rust 有时可能有助于在类型之间进行转换
+<ul>
+<li><strong>casts</strong>手动转换类型的值，<code>0_i8 as u8</code></li>
+<li><strong>coercions</strong>安全时自动转换类型， <code>let x: &amp;u8 = &amp;mut 0_u8;</code></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>casts</strong>和<strong>coercions</strong>强制转换将一个集合(如 <code>u8</code> )的值转换到另一个集合(如 <code>u16</code> )，可能会添加 CPU 指令来完成此操作；这与子类型不同，意味着类型和子类型是同一个集合的一部分(如 <code>u8</code> 是 <code>u16</code> 的子类型，跟 <code>0_u8</code> 和 <code>0_u16</code> 类似)，而这种转换将纯粹是编译时检查。Rust并不对常规类型使用子类型( <code>0_u8</code> 与 <code>0_u16</code> 确实不同)，而是对生命周期使用某种类型。</li>
+<li>这里的安全不仅仅是物理概念(如 <code>&amp;u8</code> 不能被强制转换为 <code>&amp;u128</code> )，还包括“历史表明这样的转换是否会导致编程错误”。</li>
+</ol>
+<h3 id="implementations--impl-s--"><a class="header" href="#implementations--impl-s--">Implementations — impl S { }</a></h3>
+<pre><code class="language-rust editable noplayground">impl Port {
+    fn f() { ... }
+}
+</code></pre>
+<ul>
+<li>类型通常伴随着实现，如 <code>impl Port {}</code>，与类型相关的行为有：
+<ul>
+<li>相关函数 <code>Port::new(80)</code></li>
+<li>方法 <code>port.close()</code></li>
+</ul>
+</li>
+</ul>
+<p><sup>*<sup>与之相关的更多的是哲学而不是技术，没有什么(除了好的品味)可以阻止 <code>u8::play_sound()</code> 的发生。</p>
+<h3 id="traits--trait-t--"><a class="header" href="#traits--trait-t--">Traits — trait T { }</a></h3>
+<p><code>⌾ Copy</code> <code>⌾ Clone</code> <code>⌾ Sized</code> <code>⌾ ShowHex</code></p>
+<ul>
+<li>Traits ...
+<ul>
+<li>是“抽象”行为的方式</li>
+<li>trait 作者在语义上声明这个 trait 意味着 X</li>
+<li>其他人可以为他们的类型实现该行为</li>
+</ul>
+</li>
+<li>将 trait 视为类型的“成员列表”：</li>
+</ul>
+<table><thead><tr><th style="text-align: center">Copy Trait</th><th></th><th style="text-align: center">Clone Trait</th><th></th><th style="text-align: center">Sized Trait</th></tr></thead><tbody>
+<tr><td style="text-align: center"><strong><code>Self</code></strong></td><td></td><td style="text-align: center"><strong><code>Self</code></strong></td><td></td><td style="text-align: center"><strong><code>Self</code></strong></td></tr>
+<tr><td style="text-align: center"><code>u8</code></td><td></td><td style="text-align: center"><code>u8</code></td><td></td><td style="text-align: center"><code>char</code></td></tr>
+<tr><td style="text-align: center"><code>u16</code></td><td></td><td style="text-align: center"><code>String</code></td><td></td><td style="text-align: center"><code>Port</code></td></tr>
+<tr><td style="text-align: center">...</td><td></td><td style="text-align: center">...</td><td></td><td style="text-align: center">...</td></tr>
+<tr><td style="text-align: center">trait 作为成员表，<strong><code>Self</code></strong> 是指包含的类型</td><td></td><td style="text-align: center"></td><td></td><td style="text-align: center"></td></tr>
+</tbody></table>
+<ul>
+<li>属于该成员名单的任何人都将遵守名单的行为</li>
+<li>Traits 还可以包括相关的方法、函数、...</li>
+</ul>
+<pre><code class="language-rust editable noplayground">trait ShowHex {
+    // Must be implemented according to documentation.
+    fn as_hex() -&gt; String;
+
+    // Provided by trait author.
+    fn print_hex() {}
+}
+</code></pre>
+<p><code>⌾ Copy</code></p>
+<pre><code class="language-rust editable noplayground">trait Copy { }
+</code></pre>
+<ul>
+<li>没有方法的 Traits 通常称为<strong>marker traits</strong></li>
+<li><code>Copy</code> 是标记特征的例子，意味着内存可以按位复制</li>
+</ul>
+<p><code>⌾ Sized</code></p>
+<ul>
+<li>完全在明确控制外的一些 traits</li>
+<li>Sized 由已知大小类型的编译器提供，要么是，要么不是</li>
+</ul>
+<h3 id="implementing-traits-for-types--impl-t-for-s--"><a class="header" href="#implementing-traits-for-types--impl-t-for-s--">Implementing Traits for Types — impl T for S { }</a></h3>
+<pre><code class="language-rust editable noplayground">impl ShowHex for Port { ... }
+</code></pre>
+<ul>
+<li>Traits 是在'at some point'时为类型实现的</li>
+<li><code>impl A for B</code> 添加类型 <code>B</code> 到 trait 成员列表：</li>
+</ul>
+<table><thead><tr><th style="text-align: center"><strong><code>ShowHex Trait</code></strong></th></tr></thead><tbody>
+<tr><td style="text-align: center"><strong><code>Self</code></strong></td></tr>
+<tr><td style="text-align: center"><code>Port</code></td></tr>
+</tbody></table>
+<ul>
+<li>从表面上看，你可以认为该类型因其成员资格而获得 ”badge”</li>
+</ul>
+<table><thead><tr><th style="text-align: left"><code>u8</code></th><th></th><th style="text-align: left"><code>Device</code></th><th></th><th style="text-align: left"><code>Port</code></th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>impl { ... }</code></td><td></td><td style="text-align: left"><code>impl { ... }</code></td><td></td><td style="text-align: left"><code>impl { ... }</code></td></tr>
+<tr><td style="text-align: left"><code>⌾Sized</code></td><td></td><td style="text-align: left"><code>⌾Transport</code></td><td></td><td style="text-align: left"><code>⌾Sized</code></td></tr>
+<tr><td style="text-align: left"><code>⌾Clone</code></td><td></td><td style="text-align: left"></td><td></td><td style="text-align: left"><code>⌾Clone</code></td></tr>
+<tr><td style="text-align: left"><code>⌾Copy</code></td><td></td><td style="text-align: left"></td><td></td><td style="text-align: left"><code>⌾ShowHex</code></td></tr>
+</tbody></table>
+<h3 id="traits-与-interfaces"><a class="header" href="#traits-与-interfaces">Traits 与 Interfaces</a></h3>
+<h4 id="interfaces"><a class="header" href="#interfaces">Interfaces</a></h4>
+<ul>
+<li>在 <strong>Java</strong> 中，用户Alice创建接口 <code>Eat</code></li>
+<li>当用户Bob创建新类型 <code>Venison</code>，他必须决定是否让新类型实现 <code>Eat</code></li>
+<li>换句话说，所有成员资格必须在类型定义期间详尽地说明</li>
+<li>当使用新类型 <code>Venison</code> 时，用户Santa可以利用 <code>Eat</code> 提供的以下行为：</li>
+</ul>
+<pre><code class="language-rust editable noplayground">// Santa imports `Venison` to create it, can `eat()` if he wants.
+import food.Venison;
+
+new Venison(&quot;rudolph&quot;).eat();
+</code></pre>
+<h4 id="traits"><a class="header" href="#traits">Traits</a></h4>
+<ul>
+<li>在 <strong>Rust</strong> 中，用户Alice创建trait <code>Eat</code></li>
+<li>用户Bob创建新类型 <code>Venison</code>，并且决定不去实现 <code>Eat</code>，他可能甚至都不知道 <code>Eat</code> 的存在</li>
+<li>某用户后来决定添加 <code>Eat</code> 到 <code>Venison</code> 将是一个非常好的主意</li>
+<li>当使用 <code>Venison</code> 时，用户Santa必须单独导入 <code>Eat</code>：</li>
+</ul>
+<pre><code class="language-rust editable noplayground">// Santa needs to import `Venison` to create it, and import `Eat` for trait method.
+use food::Venison;
+use tasks::Eat;
+
+// Ho ho ho
+Venison::new(&quot;rudolph&quot;).eat();
+</code></pre>
+<p><sup>*</sup>为了防止两个人实现不同的 <code>Eat</code>，Rust 编译器将限制选择为 Alice 或 Bob 其中的一个， 也就是说 <code>impl Eat for Venison</code> 可能只发生在 Venison crate 或 Eat crate 中。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="go-翻译于官网描述"><a class="header" href="#go-翻译于官网描述">Go 翻译于官网描述</a></h1>
 <h4 id="go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言"><a class="header" href="#go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言">Go 语言具有很强的表达能力，它简洁、清晰而高效。得益于其并发机制， 用它编写的程序能够非常有效地利用多核与联网的计算机，其新颖的类型系统则使程序结构变得灵活而模块化。 Go 代码编译成机器码不仅非常迅速，还具有方便的垃圾收集机制和强大的运行时反射机制。 它是一个快速的、静态类型的编译型语言，感觉却像动态类型的解释型语言。</a></h4>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="go语法"><a class="header" href="#go语法">Go语法</a></h2>
 <h4 id="hello-go"><a class="header" href="#hello-go">Hello, Go!</a></h4>

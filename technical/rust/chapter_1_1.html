@@ -159,7 +159,7 @@
 <tr><td>  <code>struct S (T);</code></td><td>定义带有编号字段类型的&quot;元组&quot;结构</td></tr>
 <tr><td>  <code>struct S;</code></td><td>定义<strong>零大小</strong>的单元结构，不占空间</td></tr>
 <tr><td><code>enum E {}</code></td><td>定义一个<strong>枚举</strong></td></tr>
-<tr><td>  <code>enum E { A, B(), C {} }</code></td><td>定义枚举的变体；可以是 unit- <code>A</code>， tuple- <code>B()</code> 和struct-like <code>C{}</code></td></tr>
+<tr><td>  <code>enum E { A, B(), C {} }</code></td><td>定义枚举的变体；可以是 unit-<code>A</code>， tuple-<code>B()</code> 和struct-like <code>C{}</code></td></tr>
 <tr><td>  <code>enum E { A = 1 }</code></td><td>如果变体只是与单元类似，则允许赋值，例如 FFI</td></tr>
 <tr><td><code>union U {}</code></td><td>用于兼容 FFI 的，类似 C <strong>union</strong> 的unsafe代码</td></tr>
 <tr><td><code>static X: T = T();</code></td><td>具有生命周期，单独内存位置的<strong>全局变量</strong></td></tr>

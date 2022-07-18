@@ -224,7 +224,7 @@
 <tr>
 <td><b>基本用法</b><br>
 假设你有一个 `struct Collection<T> {}`
-<li><code>struct IntoIter<T> {}</code> — 创建一个结构来保存你的迭代状态(如，索引)以进行值的迭代</li>
+<li><code>struct IntoIter<T> {}</code> — 创建一个结构来保存你的迭代状态(如 索引)以进行值的迭代</li>
 <li><code>impl Iterator for IntoIter {}</code> — 实现 <code>Iterator::next()</code>，这样它就可以生成元素</li>
 <code>Collection&lt;T&gt;</code><br>
 <code>IntoIter&lt;T&gt;</code> <code>⌾Iterator</code> <code>Item = T;</code>
