@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>合约ABI规范 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solidity v0.5.0 突破性变化" href="050-breaking-changes.html" />
+    <link rel="prev" title="合约的元数据" href="metadata.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">合约ABI规范</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">基本设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-1">函数选择器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">参数编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">类型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solidityabi">将Solidity映射到ABI类型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">编码的设计标准</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">编码的形式化规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">函数选择器和参数编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">动态类型的使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#abi-events">事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#abi-errors">错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#json">JSON</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">处理元组类型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#abi-packed-mode">严格的编码模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">非标准打包模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indexed-event-encoding">索引事件参数的编码</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>合约ABI规范</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/abi-spec.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="abi">
+<span id="index-0"></span><span id="id1"></span><h1>合约ABI规范<a class="headerlink" href="#abi" title="Permalink to this heading"></a></h1>
+<section id="id2">
+<h2>基本设计<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>合约应用二进制接口（ABI）是在以太坊生态系统中与合约交互的标准方式，
+包括从区块链外部和合约间的交互。数据根据其类型进行编码，如本规范中所述。
+编码不是自描述的，因此需要一种特定的概要（schema）来进行解码。</p>
+<p>我们假设合约的接口函数是强类型的，在编译时就知道，并且是静态的。
+我们假设所有合约在编译时都有它们所调用的任何合约的接口定义。</p>
+<p>本规范不涉及其接口是动态的或其他只有在运行时才知道的合约。</p>
+<span class="target" id="abi-function-selector"></span></section>
+<section id="index-1">
+<span id="id3"></span><h2>函数选择器<a class="headerlink" href="#index-1" title="Permalink to this heading"></a></h2>
+<p>一个函数调用数据的前四个字节指定了要调用的函数。它是函数签名的Keccak-256哈希值的前4字节（高位在左的大端序）。
+签名被定义为基本原型的典型表达，没有数据位置的指定，
+也就是带有括号的参数类型列表的函数名。参数类型由一个逗号分割 - 不使用空格。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>一个函数的返回类型不是这个签名的一部分。在 <a class="reference internal" href="contracts.html#overload-function"><span class="std std-ref">Solidity的函数重载</span></a> 中，
+返回类型不被考虑。原因是为了保持函数调用解析与上下文无关。
+然而 <a class="reference internal" href="#abi-json"><span class="std std-ref">JSON描述的ABI</span></a> 却同时包含了输入和输出。</p>
+</div>
+</section>
+<section id="id4">
+<h2>参数编码<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>从第5字节开始是被编码的参数。这种编码也被用在其他地方，
+比如，返回值和事件的参数也会被用同样的方式进行编码，
+而用来指定函数的4个字节则不需要再进行编码。</p>
+</section>
+<section id="id5">
+<h2>类型<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>以下是基础类型：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint&lt;M&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">M</span></code> 位的无符号整数， <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">M</span> <span class="pre">&lt;=</span> <span class="pre">256</span></code>， <code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">%</span> <span class="pre">8</span> <span class="pre">==</span> <span class="pre">0</span></code>。例如： <code class="docutils literal notranslate"><span class="pre">uint32</span></code>， <code class="docutils literal notranslate"><span class="pre">uint8</span></code>， <code class="docutils literal notranslate"><span class="pre">uint256</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int&lt;M&gt;</span></code>： 以 2 的补码作为符号的 <code class="docutils literal notranslate"><span class="pre">M</span></code> 位整数， <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">M</span> <span class="pre">&lt;=</span> <span class="pre">256</span></code>， <code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">%</span> <span class="pre">8</span> <span class="pre">==</span> <span class="pre">0</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">address</span></code>： 除了字面上的意思和语言类型的区别以外，等价于 <code class="docutils literal notranslate"><span class="pre">uint160</span></code>，
+在计算和函数选择器中，通常使用 <code class="docutils literal notranslate"><span class="pre">address</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint</span></code>， <code class="docutils literal notranslate"><span class="pre">int</span></code>： <code class="docutils literal notranslate"><span class="pre">uint256</span></code>， <code class="docutils literal notranslate"><span class="pre">int256</span></code> 各自的同义词.
+在计算和函数选择器中，通常使用 <code class="docutils literal notranslate"><span class="pre">uint256</span></code> 和 <code class="docutils literal notranslate"><span class="pre">int256</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code>： 等价于 <code class="docutils literal notranslate"><span class="pre">uint8</span></code>，取值限定为 0 或 1。在计算和函数选择器中，通常使用 <code class="docutils literal notranslate"><span class="pre">bool</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixed&lt;M&gt;x&lt;N&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">M</span></code> 位的有符号的固定小数位的十进制数字， <code class="docutils literal notranslate"><span class="pre">8</span> <span class="pre">&lt;=</span> <span class="pre">M</span> <span class="pre">&lt;=</span> <span class="pre">256</span></code>，
+<code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">%</span> <span class="pre">8</span> <span class="pre">==</span> <span class="pre">0</span></code>， 且 <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">N</span> <span class="pre">&lt;=</span> <span class="pre">80</span></code>， 其中值 <code class="docutils literal notranslate"><span class="pre">v</span></code> 是 <code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">/</span> <span class="pre">(10</span> <span class="pre">**</span> <span class="pre">N)</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ufixed&lt;M&gt;x&lt;N&gt;</span></code>： 无符号的 <code class="docutils literal notranslate"><span class="pre">fixed&lt;M&gt;x&lt;N&gt;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixed</span></code>， <code class="docutils literal notranslate"><span class="pre">ufixed</span></code>：  <code class="docutils literal notranslate"><span class="pre">fixed128x18</span></code>， <code class="docutils literal notranslate"><span class="pre">ufixed128x18</span></code> 各自的同义词。
+在计算和函数选择器中，通常使用 <code class="docutils literal notranslate"><span class="pre">fixed128x18</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ufixed128x18</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes&lt;M&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">M</span></code> 字节的二进制类型， <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">M</span> <span class="pre">&lt;=</span> <span class="pre">32</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">function</span></code>： 一个地址（20 字节）之后紧跟一个函数选择器 （4 字节）。编码之后等价于 <code class="docutils literal notranslate"><span class="pre">bytes24</span></code>。</p></li>
+</ul>
+<p>以下是定长数组类型：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;type&gt;[M]</span></code>： 有 <code class="docutils literal notranslate"><span class="pre">M</span></code> 个元素的定长数组， <code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>，数组元素为给定类型。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>虽然这个ABI规范可以表达零元素的固定长度数组，但编译器不支持它们。</p>
+</div>
+</li>
+</ul>
+<p>以下是非定长类型：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes</span></code>： 动态大小的字节序列。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code>： 动态大小的 unicode 字符串，通常呈现为 UTF-8 编码。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;type&gt;[]</span></code>： 元素为给定类型的变长数组。</p></li>
+</ul>
+<p>可以将若干类型放到一对括号中，用逗号分隔开，以此来构成一个元组（tuple）：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(T1,T2,...,Tn)</span></code>： 由 <code class="docutils literal notranslate"><span class="pre">T1</span></code>，…， <code class="docutils literal notranslate"><span class="pre">Tn</span></code>， <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code> 构成的 元组</p></li>
+</ul>
+<p>用元组构成元组，用元组构成数组等等也是可能的。另外也可以构成零元组（当 <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">0</span></code> 时）。</p>
+<section id="solidityabi">
+<h3>将Solidity映射到ABI类型<a class="headerlink" href="#solidityabi" title="Permalink to this heading"></a></h3>
+<p>Solidity 支持上面介绍的除了元祖之外的所有同名类型。
+另一方面，一些 Solidity 类型不被 ABI 支持。
+下表在左栏显示了不属于ABI的Solidity类型，在右栏显示了代表它们的ABI类型。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Solidity</p></th>
+<th class="head"><p>ABI</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="types.html#address"><span class="std std-ref">address payable</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">address</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="contracts.html#contracts"><span class="std std-ref">合约</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">address</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="types.html#enums"><span class="std std-ref">枚举</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uint8</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="types.html#user-defined-value-types"><span class="std std-ref">用户自定义类型</span></a></p></td>
+<td><p>其基本值类型</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="types.html#structs"><span class="std std-ref">结构体</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">元组（tuple）</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>在 <code class="docutils literal notranslate"><span class="pre">0.8.0</span></code> 版本之前，枚举可以有超过256个成员，并由最小的整数类型表示，其大小刚好可以容纳任何成员的值。</p>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>编码的设计标准<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<p>编码被设计为具有以下属性，如果一些参数是嵌套的数组，这些属性特别有用：</p>
+<ol class="arabic simple">
+<li><p>访问一个值所需的读取次数最多是参数数组结构内的值的深度，
+即需要四次读取次数来检索 <code class="docutils literal notranslate"><span class="pre">a_i[k][l][r]</span></code>。
+在ABI的前一个版本中，在最坏的情况下，读取次数的数量与动态参数的总数成线性比例。</p></li>
+<li><p>变量或数组元素的数据不与其他数据交错，它是可重定位的，即它只使用相对的 “地址”。</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>编码的形式化规范<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<p>我们区分了静态和动态类型。静态类型是直接编码的，
+而动态类型是在当前块之后的一个单独分配的位置进行编码。</p>
+<p><strong>定义：</strong> 以下类型被称为“动态”：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></li>
+<li><p>任意类型 <code class="docutils literal notranslate"><span class="pre">T</span></code> 的数组 <code class="docutils literal notranslate"><span class="pre">T[]</span></code></p></li>
+<li><p>任意动态类型 <code class="docutils literal notranslate"><span class="pre">T</span></code> 的定长数组 <code class="docutils literal notranslate"><span class="pre">T[k]</span></code>，其中 <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code></p></li>
+<li><p>由动态的 <code class="docutils literal notranslate"><span class="pre">Ti</span></code> （ <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;=</span> <span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">k</span></code> ）构成的元组 <code class="docutils literal notranslate"><span class="pre">(T1,...,Tk)</span></code></p></li>
+</ul>
+<p>所有其他类型都被称为“静态”。</p>
+<p><strong>定义：</strong> <code class="docutils literal notranslate"><span class="pre">len(a)</span></code> 是一个二进制字符串 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的字节长度。
+<code class="docutils literal notranslate"><span class="pre">len(a)</span></code> 的类型被呈现为 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>。</p>
+<p>我们把实际的编码 <code class="docutils literal notranslate"><span class="pre">enc</span></code> 定义为一个由ABI类型到二进制字符串的值的映射，
+因而，当且仅当 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的类型是动态的， <code class="docutils literal notranslate"><span class="pre">len(enc(X))</span></code> 才会依赖于 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的值。</p>
+<p><strong>定义：</strong> 对任意ABI值 <code class="docutils literal notranslate"><span class="pre">X</span></code>，我们根据 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的实际类型递归地定义 <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code>。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(T1,...,Tk)</span></code> 对于 <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code> 且任意类型 <code class="docutils literal notranslate"><span class="pre">T1</span></code>， …， <code class="docutils literal notranslate"><span class="pre">Tk</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">enc(X)</span> <span class="pre">=</span> <span class="pre">head(X(1))</span> <span class="pre">...</span> <span class="pre">head(X(k))</span> <span class="pre">tail(X(1))</span> <span class="pre">...</span> <span class="pre">tail(X(k))</span></code></p>
+<p>这里， <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">(X(1),</span> <span class="pre">...,</span> <span class="pre">X(k))</span></code> 并且
+<code class="docutils literal notranslate"><span class="pre">head</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tail</span></code> 被定义为如下 <code class="docutils literal notranslate"><span class="pre">Ti</span></code> ：</p>
+<p>如果 <code class="docutils literal notranslate"><span class="pre">Ti</span></code> 是静态类型：</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">head(X(i))</span> <span class="pre">=</span> <span class="pre">enc(X(i))</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tail(X(i))</span> <span class="pre">=</span> <span class="pre">&quot;&quot;</span></code> （空字符串）</p>
+</div></blockquote>
+<p>否则，即 <code class="docutils literal notranslate"><span class="pre">Ti</span></code> 是动态类型时，它们被定义为：</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">head(X(i))</span> <span class="pre">=</span> <span class="pre">enc(len(</span> <span class="pre">head(X(1))</span> <span class="pre">...</span> <span class="pre">head(X(k))</span> <span class="pre">tail(X(1))</span> <span class="pre">...</span> <span class="pre">tail(X(i-1))</span> <span class="pre">))</span></code>
+<code class="docutils literal notranslate"><span class="pre">tail(X(i))</span> <span class="pre">=</span> <span class="pre">enc(X(i))</span></code></p>
+</div></blockquote>
+<p>注意，在动态类型的情况下，由于 head 部分的长度仅取决于类型而非值，所以 <code class="docutils literal notranslate"><span class="pre">head(X(i))</span></code> 是定义明确的。
+它的值是从 <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code> 的开始算起的， <code class="docutils literal notranslate"><span class="pre">tail(X(i))</span></code> 的起始位在 <code class="docutils literal notranslate"><span class="pre">head(X(i))</span></code> 中的偏移量。</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T[k]</span></code> 对于任意 <code class="docutils literal notranslate"><span class="pre">T</span></code> 和 <code class="docutils literal notranslate"><span class="pre">k</span></code>：</p>
+<p><code class="docutils literal notranslate"><span class="pre">enc(X)</span> <span class="pre">=</span> <span class="pre">enc((X[0],</span> <span class="pre">...,</span> <span class="pre">X[k-1]))</span></code></p>
+<p>即，它就像是个由相同类型的 <code class="docutils literal notranslate"><span class="pre">k</span></code> 个元素组成的元组那样被编码的。</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">T[]</span></code> 当 <code class="docutils literal notranslate"><span class="pre">X</span></code> 有 <code class="docutils literal notranslate"><span class="pre">k</span></code> 个元素 （ <code class="docutils literal notranslate"><span class="pre">k</span></code> 的类型为 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>）：</p>
+<p><code class="docutils literal notranslate"><span class="pre">enc(X)</span> <span class="pre">=</span> <span class="pre">enc(k)</span> <span class="pre">enc([X[0],</span> <span class="pre">...,</span> <span class="pre">X[k-1]])</span></code></p>
+<p>即，它就像是个由静态大小 <code class="docutils literal notranslate"><span class="pre">k</span></code> 的数组那样被编码的，且由元素的个数作为前缀。</p>
+</li>
+<li><p>具有 <code class="docutils literal notranslate"><span class="pre">k</span></code> 字节长度的 <code class="docutils literal notranslate"><span class="pre">bytes</span></code>， （假设其类型为 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>）：</p>
+<p><code class="docutils literal notranslate"><span class="pre">enc(X)</span> <span class="pre">=</span> <span class="pre">enc(k)</span> <span class="pre">pad_right(X)</span></code>，即，字节数被编码为 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>，紧跟着实际的 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的字节码序列，
+再在前边（左边）补上可以使 <code class="docutils literal notranslate"><span class="pre">len(enc(X))</span></code> 成为 32 的倍数的最少数量的 0 值字节数据。</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code>：</p>
+<p><code class="docutils literal notranslate"><span class="pre">enc(X)</span> <span class="pre">=</span> <span class="pre">enc(enc_utf8(X))</span></code>， 即 <code class="docutils literal notranslate"><span class="pre">X</span></code> 被 UTF-8 编码，且在后续编码中将这个值解释为 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 类型。
+注意，在随后的编码中使用的长度是其 UTF-8 编码的字符串的字节数，而不是其字符数。</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint&lt;M&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code> 是在 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的大端序编码的高位（左侧）补充若干 0 值字节以使其长度成为 32 字节。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">address</span></code>： 与 <code class="docutils literal notranslate"><span class="pre">uint160</span></code> 的情况相同。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int&lt;M&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code> 是在 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的大端序的 2 的补码编码的高位（左侧）添加若干字节数据以使其长度成为 32 字节；
+对于负数，添加值为 <code class="docutils literal notranslate"><span class="pre">0xff</span></code> 的字节数据，对于正数，添加 0 值字节数据。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code>： 与 <code class="docutils literal notranslate"><span class="pre">uint8</span></code> 的情况相同， <code class="docutils literal notranslate"><span class="pre">1</span></code> 用来表示 <code class="docutils literal notranslate"><span class="pre">true</span></code>， <code class="docutils literal notranslate"><span class="pre">0</span></code> 表示 <code class="docutils literal notranslate"><span class="pre">false</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixed&lt;M&gt;x&lt;N&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">enc(X</span> <span class="pre">*</span> <span class="pre">10**N)</span></code>，其中 <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">*</span> <span class="pre">10**N</span></code> 可以理解为 <code class="docutils literal notranslate"><span class="pre">int256</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixed</span></code>： 与 <code class="docutils literal notranslate"><span class="pre">fixed128x18</span></code> 的情况相同。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ufixed&lt;M&gt;x&lt;N&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">enc(X</span> <span class="pre">*</span> <span class="pre">10**N)</span></code> ，其中 <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">*</span> <span class="pre">10**N</span></code> 可以理解为 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ufixed</span></code>： 与 <code class="docutils literal notranslate"><span class="pre">ufixed128x18</span></code> 的情况相同。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes&lt;M&gt;</span></code>： <code class="docutils literal notranslate"><span class="pre">enc(X)</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">X</span></code> 的字节序列加上为使长度成为 32 字节而添加的若干 0 值字节。</p></li>
+</ul>
+<p>注意，对于任意的 <code class="docutils literal notranslate"><span class="pre">X</span></code>， <code class="docutils literal notranslate"><span class="pre">len(enc(X))</span></code> 都是 32 的倍数。</p>
+</section>
+<section id="id8">
+<h2>函数选择器和参数编码<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h2>
+<p>总而言之，对带有参数 <code class="docutils literal notranslate"><span class="pre">a_1,</span> <span class="pre">...,</span> <span class="pre">a_n</span></code> 的函数 <code class="docutils literal notranslate"><span class="pre">f</span></code> 的调用被编码为：</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">function_selector(f)</span> <span class="pre">enc((a_1,</span> <span class="pre">...,</span> <span class="pre">a_n))</span></code></p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">f</span></code> 的返回值 <code class="docutils literal notranslate"><span class="pre">v_1,</span> <span class="pre">...,</span> <span class="pre">v_k</span></code> 会被编码为：</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">enc((v_1,</span> <span class="pre">...,</span> <span class="pre">v_k))</span></code></p>
+</div></blockquote>
+<p>也就是说，返回值会被组合为一个元组（tuple）进行编码。</p>
+</section>
+<section id="id9">
+<h2>示例<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<p>给定一个合约：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC40LjE2IDwwLjkuMDsKCmNvbnRyYWN0IEZvbyB7CiAgICBmdW5jdGlvbiBiYXIoYnl0ZXMzWzJdIG1lbW9yeSkgcHVibGljIHB1cmUge30KICAgIGZ1bmN0aW9uIGJheih1aW50MzIgeCwgYm9vbCB5KSBwdWJsaWMgcHVyZSByZXR1cm5zIChib29sIHIpIHsgciA9IHggPiAzMiB8fCB5OyB9CiAgICBmdW5jdGlvbiBzYW0oYnl0ZXMgbWVtb3J5LCBib29sLCB1aW50W10gbWVtb3J5KSBwdWJsaWMgcHVyZSB7fQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.4.16</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Foo</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bar</span><span class="p">(</span>bytes3<span class="p">[</span><span class="m m-Decimal">2</span><span class="p">]</span><span class="w"> </span><span class="kt">memory</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">baz</span><span class="p">(</span><span class="kt">uint32</span><span class="w"> </span><span class="nv">x</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>r<span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">32</span><span class="w"> </span><span class="err">||</span><span class="w"> </span>y<span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">sam</span><span class="p">(</span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="p">[]</span><span class="w"> </span><span class="kt">memory</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>因此，对于我们的例子 <code class="docutils literal notranslate"><span class="pre">Foo</span></code>，如果我们想用 <code class="docutils literal notranslate"><span class="pre">69</span></code> 和 <code class="docutils literal notranslate"><span class="pre">true</span></code> 做参数调用 <code class="docutils literal notranslate"><span class="pre">baz</span></code>，
+我们总共需要传送 68 字节，可以分解为：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0xcdcd77c0</span></code>： 方法ID。这源自ASCII格式的 <code class="docutils literal notranslate"><span class="pre">baz(uint32,bool)</span></code> 签名的 Keccak 哈希的前 4 字节。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000045</span></code>： 第一个参数，
+一个被用 0 值字节补充到 32 字节的 uint32 值 <code class="docutils literal notranslate"><span class="pre">69</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000001</span></code>： 第二个参数，
+一个被用 0 值字节补充到 32 字节的 boolean 值 <code class="docutils literal notranslate"><span class="pre">true</span></code>。</p></li>
+</ul>
+<p>合起来就是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001
+</pre></div>
+</div>
+<p>它返回一个 <code class="docutils literal notranslate"><span class="pre">bool</span></code>。比如它返回 <code class="docutils literal notranslate"><span class="pre">false</span></code>，
+那么它的输出将是一个字节数组 <code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000000</span></code>，
+一个 <code class="docutils literal notranslate"><span class="pre">bool</span></code> 值。</p>
+<p>如果我们想用 <code class="docutils literal notranslate"><span class="pre">[&quot;abc&quot;,</span> <span class="pre">&quot;def&quot;]</span></code> 做参数调用 <code class="docutils literal notranslate"><span class="pre">bar</span></code>，我们总共需要传送 68 字节，可以分解为：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0xfce353f6</span></code>： 方法ID。源自 <code class="docutils literal notranslate"><span class="pre">bar(bytes3[2])</span></code> 的签名。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x6162630000000000000000000000000000000000000000000000000000000000</span></code>： 第一个参数的第一部分，
+一个 <code class="docutils literal notranslate"><span class="pre">bytes3</span></code> 值 <code class="docutils literal notranslate"><span class="pre">&quot;abc&quot;</span></code> （左对齐）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x6465660000000000000000000000000000000000000000000000000000000000</span></code>： 第一个参数的第二部分，
+一个 <code class="docutils literal notranslate"><span class="pre">bytes3</span></code> 值 <code class="docutils literal notranslate"><span class="pre">&quot;def&quot;</span></code> （左对齐）。</p></li>
+</ul>
+<p>合起来就是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0xfce353f661626300000000000000000000000000000000000000000000000000000000006465660000000000000000000000000000000000000000000000000000000000
+</pre></div>
+</div>
+<p>如果我们想用 <code class="docutils literal notranslate"><span class="pre">&quot;dave&quot;</span></code>， <code class="docutils literal notranslate"><span class="pre">true</span></code> 和 <code class="docutils literal notranslate"><span class="pre">[1,2,3]</span></code> 作为参数调用 <code class="docutils literal notranslate"><span class="pre">sam</span></code>，
+我们总共需要传送 292 字节，可以分解为：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0xa5643bf2</span></code>： 方法ID。这是从签名 <code class="docutils literal notranslate"><span class="pre">sam(bytes,bool,uint256[])</span></code> 中导出的。注意， <code class="docutils literal notranslate"><span class="pre">uint</span></code> 被替换为其典型代表 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000060</span></code>： 第一个参数（动态类型）的数据部分的位置，即从参数编码块开始位置算起的字节数。在这里，是 <code class="docutils literal notranslate"><span class="pre">0x60</span></code> 。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000001</span></code>： 第二个参数：boolean 的 true。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x00000000000000000000000000000000000000000000000000000000000000a0</span></code>： 第三个参数（动态类型）的数据部分的位置，由字节数计量。在这里，是 <code class="docutils literal notranslate"><span class="pre">0xa0</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000004</span></code>： 第一个参数的数据部分，以字节数组的元素个数作为开始，在这里，是 4。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x6461766500000000000000000000000000000000000000000000000000000000</span></code>： 第一个参数的内容： <code class="docutils literal notranslate"><span class="pre">&quot;dave&quot;</span></code> 的 UTF-8 编码（在这里等同于 ASCII 编码），并在右侧（低位）用 0 值字节补充到 32 字节。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000003</span></code>： 第三个参数的数据部分，以数组的元素个数作为开始，在这里，是 3。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000001</span></code>： 第三个参数的第一个数组元素。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000002</span></code>： 第三个参数的第二个数组元素。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000003</span></code>： 第三个参数的第三个数组元素。</p></li>
+</ul>
+<p>合起来就是:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0xa5643bf20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h2>动态类型的使用<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<p>用值为 <code class="docutils literal notranslate"><span class="pre">(0x123,</span> <span class="pre">[0x456,</span> <span class="pre">0x789],</span> <span class="pre">&quot;1234567890&quot;,</span> <span class="pre">&quot;Hello,</span> <span class="pre">world!&quot;)</span></code> 的签名参数调用
+函数 <code class="docutils literal notranslate"><span class="pre">f(uint,uint32[],bytes10,bytes)</span></code>，其的编码方式如下：</p>
+<p>取得 <code class="docutils literal notranslate"><span class="pre">sha3(&quot;f(uint256,uint32[],bytes10,bytes)&quot;)</span></code> 的前 4 字节，也就是 <code class="docutils literal notranslate"><span class="pre">0x8be65246</span></code>。
+然后我们对所有 4 个参数的头部进行编码。 对静态类型 <code class="docutils literal notranslate"><span class="pre">uint256</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bytes10</span></code>，
+这些我们可以直接传递的值，对于动态类型 <code class="docutils literal notranslate"><span class="pre">uint32[]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bytes</span></code>，
+我们使用的字节数偏移量是它们的数据区域的起始位置，
+由需编码的值的开始位置算起（也就是说，不计算包含了函数签名的前 4 字节），这就是：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000123</span></code> （ <code class="docutils literal notranslate"><span class="pre">0x123</span></code> 补充到 32 字节）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000080</span></code> （第二个参数的数据部分起始位置的偏移量，4*32 字节，正好是头部的大小）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x3132333435363738393000000000000000000000000000000000000000000000</span></code> （ <code class="docutils literal notranslate"><span class="pre">&quot;1234567890&quot;</span></code> 从右边补充到 32 字节）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x00000000000000000000000000000000000000000000000000000000000000e0</span></code> （第四个参数的数据部分起始位置的偏移量 = 第一个动态参数的数据部分起始位置的偏移量 + 第一个动态参数的数据部分的长度 = 4*32 + 3*32，参考后文）</p></li>
+</ul>
+<p>在此之后，跟着第一个动态参数的数据部分， <code class="docutils literal notranslate"><span class="pre">[0x456,</span> <span class="pre">0x789]</span></code> ：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000002</span></code> （数组元素个数，2）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000456</span></code> （第一个数组元素）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000789</span></code> （第二个数组元素）</p></li>
+</ul>
+<p>最后，我们将第二个动态参数的数据部分 <code class="docutils literal notranslate"><span class="pre">&quot;Hello,</span> <span class="pre">world!&quot;</span></code> 进行编码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x000000000000000000000000000000000000000000000000000000000000000d</span></code> （元素个数，在这里是字节数：13）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x48656c6c6f2c20776f726c642100000000000000000000000000000000000000</span></code> （ <code class="docutils literal notranslate"><span class="pre">&quot;Hello,</span> <span class="pre">world!&quot;</span></code> 从右边补充到 32 字节）</p></li>
+</ul>
+<p>最后，合并到一起的编码就是（为了清晰，在函数选择器和每 32 字节之后加了换行）：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0x8be65246
+  0000000000000000000000000000000000000000000000000000000000000123
+  0000000000000000000000000000000000000000000000000000000000000080
+  3132333435363738393000000000000000000000000000000000000000000000
+  00000000000000000000000000000000000000000000000000000000000000e0
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000456
+  0000000000000000000000000000000000000000000000000000000000000789
+  000000000000000000000000000000000000000000000000000000000000000d
+  48656c6c6f2c20776f726c642100000000000000000000000000000000000000
+</pre></div>
+</div>
+<p>让我们使用相同的原理来对一个签名为 <code class="docutils literal notranslate"><span class="pre">g(uint[][],string[])</span></code> ，参数值为
+<code class="docutils literal notranslate"><span class="pre">([[1,</span> <span class="pre">2],</span> <span class="pre">[3]],</span> <span class="pre">[&quot;one&quot;,</span> <span class="pre">&quot;two&quot;,</span> <span class="pre">&quot;three&quot;])</span></code> 的函数来进行编码；但从最原子的部分开始：</p>
+<p>首先我们将第一个根数组 <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2],</span> <span class="pre">[3]]</span></code> 的第一个嵌入的动态数组 <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2]</span></code> 的长度和数据进行编码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000002</span></code>  (第一个数组中的元素数量 2；元素本身是 <code class="docutils literal notranslate"><span class="pre">1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000001</span></code>  (第一个元素)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000002</span></code>  (第二个元素)</p></li>
+</ul>
+<p>然后我们对第一个根数组 <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2],</span> <span class="pre">[3]]</span></code> 的第二个嵌入式动态数组 <code class="docutils literal notranslate"><span class="pre">[3]</span></code> 的长度和数据进行编码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000001</span></code> (第二个数组中的元素数量 1；元素数据是 <code class="docutils literal notranslate"><span class="pre">3</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000003</span></code>  (第一个元素)</p></li>
+</ul>
+<p>然后我们需要为各自的动态数组 <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">[3]</span></code> 找到偏移量 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code>。
+为了计算偏移量，我们可以看一下第一个根数组的编码数据 <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2],</span> <span class="pre">[3]]</span></code> 在编码中枚举每一行。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0 - a                                                                - [1, 2] 的偏移量
+1 - b                                                                - [3] 的偏移量
+2 - 0000000000000000000000000000000000000000000000000000000000000002 - [1, 2] 数组的计数
+3 - 0000000000000000000000000000000000000000000000000000000000000001 - 1 的编码
+4 - 0000000000000000000000000000000000000000000000000000000000000002 - 2 的编码
+5 - 0000000000000000000000000000000000000000000000000000000000000001 - [3] 数组的计数
+6 - 0000000000000000000000000000000000000000000000000000000000000003 - 3 的编码
+</pre></div>
+</div>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">a</span></code> 指向数组 <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2]</span></code> 内容的开始位置，即第 2 行的开始（64 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">0x0000000000000000000000000000000000000000000000000000000000000040</span></code>。</p>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">b</span></code> 指向数组 <code class="docutils literal notranslate"><span class="pre">[3]</span></code> 内容的开始位置，即第 5 行的开始（160 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">0x00000000000000000000000000000000000000000000000000000000000000a0</span></code>。</p>
+<p>然后我们对第二个根数组的嵌入字符串进行编码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000003</span></code> (单词 <code class="docutils literal notranslate"><span class="pre">&quot;one&quot;</span></code> 中的字符个数)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x6f6e650000000000000000000000000000000000000000000000000000000000</span></code> (单词 <code class="docutils literal notranslate"><span class="pre">&quot;one&quot;</span></code> 的 utf8 编码)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000003</span></code> (单词 <code class="docutils literal notranslate"><span class="pre">&quot;two&quot;</span></code> 中的字符个数)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x74776f0000000000000000000000000000000000000000000000000000000000</span></code> (单词 <code class="docutils literal notranslate"><span class="pre">&quot;two&quot;</span></code> 的 utf8 编码)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000005</span></code> (单词 <code class="docutils literal notranslate"><span class="pre">&quot;three&quot;</span></code> 中的字符个数)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x7468726565000000000000000000000000000000000000000000000000000000</span></code> (单词 <code class="docutils literal notranslate"><span class="pre">&quot;three&quot;</span></code> 的 utf8 编码)</p></li>
+</ul>
+<p>作为与第一个根数组的并列，因为字符串也属于动态元素，我们也需要找到它们的偏移量 <code class="docutils literal notranslate"><span class="pre">c</span></code>, <code class="docutils literal notranslate"><span class="pre">d</span></code> 和 <code class="docutils literal notranslate"><span class="pre">e</span></code>：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0 - c                                                                - &quot;one&quot; 的偏移量
+1 - d                                                                - &quot;two&quot; 的偏移量
+2 - e                                                                - &quot;three&quot; 的偏移量
+3 - 0000000000000000000000000000000000000000000000000000000000000003 - &quot;one&quot; 的字符计数
+4 - 6f6e650000000000000000000000000000000000000000000000000000000000 - &quot;one&quot; 的编码
+5 - 0000000000000000000000000000000000000000000000000000000000000003 - &quot;two&quot; 的字符计数
+6 - 74776f0000000000000000000000000000000000000000000000000000000000 - &quot;two&quot; 的编码
+7 - 0000000000000000000000000000000000000000000000000000000000000005 - &quot;three&quot; 的字符计数
+8 - 7468726565000000000000000000000000000000000000000000000000000000 - &quot;three&quot; 的编码
+</pre></div>
+</div>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">c</span></code> 指向字符串 <code class="docutils literal notranslate"><span class="pre">&quot;one&quot;</span></code> 内容的开始位置，即第 3 行的开始（96 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">0x0000000000000000000000000000000000000000000000000000000000000060</span></code>。</p>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">d</span></code> 指向字符串 <code class="docutils literal notranslate"><span class="pre">&quot;two&quot;</span></code> 内容的开始位置，即第 5 行的开始（160 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">0x00000000000000000000000000000000000000000000000000000000000000a0</span></code>。</p>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">e</span></code> 指向字符串 <code class="docutils literal notranslate"><span class="pre">&quot;three&quot;</span></code> 内容的开始位置，即第 7 行的开始（224 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">0x00000000000000000000000000000000000000000000000000000000000000e0</span></code>。</p>
+<p>注意，根数组的嵌入元素的编码并不互相依赖，且具有对于函数签名 <code class="docutils literal notranslate"><span class="pre">g(string[],uint[][])</span></code> 所相同的编码。</p>
+<p>然后我们对第一个根数组的长度进行编码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000002</span></code> (第一个根数组的元素数量 2；这些元素本身是 <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">[3]</span></code>)</p></li>
+</ul>
+<p>而后我们对第二个根数组的长度进行编码：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x0000000000000000000000000000000000000000000000000000000000000003</span></code>  (第二个根数组的元素数量 3；这些字符串本身是 <code class="docutils literal notranslate"><span class="pre">&quot;one&quot;</span></code>， <code class="docutils literal notranslate"><span class="pre">&quot;two&quot;</span></code> 和 <code class="docutils literal notranslate"><span class="pre">&quot;three&quot;</span></code>)</p></li>
+</ul>
+<p>最后，我们找到根动态数组元素 <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2],</span> <span class="pre">[3]]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">[&quot;one&quot;,</span> <span class="pre">&quot;two&quot;,</span> <span class="pre">&quot;three&quot;]</span></code> 的偏移量 <code class="docutils literal notranslate"><span class="pre">f</span></code> 和 <code class="docutils literal notranslate"><span class="pre">g</span></code>。
+汇编数据的正确顺序如下：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0x2289b18c                                                            - 函数签名
+ 0 - f                                                                - [[1, 2], [3]] 的偏移量
+ 1 - g                                                                - [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;] 的偏移量
+ 2 - 0000000000000000000000000000000000000000000000000000000000000002 - [[1, 2], [3]] 的元素计数
+ 3 - 0000000000000000000000000000000000000000000000000000000000000040 - [1, 2] 的偏移量
+ 4 - 00000000000000000000000000000000000000000000000000000000000000a0 - [3] 的偏移量
+ 5 - 0000000000000000000000000000000000000000000000000000000000000002 - [1, 2] 的元素计数
+ 6 - 0000000000000000000000000000000000000000000000000000000000000001 - 1 的编码
+ 7 - 0000000000000000000000000000000000000000000000000000000000000002 - 2 的编码
+ 8 - 0000000000000000000000000000000000000000000000000000000000000001 - [3] 的元素计数
+ 9 - 0000000000000000000000000000000000000000000000000000000000000003 - 3 的编码
+10 - 0000000000000000000000000000000000000000000000000000000000000003 - [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;] 的元素计数
+11 - 0000000000000000000000000000000000000000000000000000000000000060 - 的偏移量&quot;one&quot;
+12 - 00000000000000000000000000000000000000000000000000000000000000a0 - 的偏移量&quot;two&quot;
+13 - 00000000000000000000000000000000000000000000000000000000000000e0 - 的偏移量&quot;three&quot;
+14 - 0000000000000000000000000000000000000000000000000000000000000003 - &quot;one&quot; 的字符计数
+15 - 6f6e650000000000000000000000000000000000000000000000000000000000 - &quot;one&quot; 的编码
+16 - 0000000000000000000000000000000000000000000000000000000000000003 - &quot;two&quot; 的字符计数
+17 - 74776f0000000000000000000000000000000000000000000000000000000000 - &quot;two&quot; 的编码
+18 - 0000000000000000000000000000000000000000000000000000000000000005 - &quot;three&quot; 的字符计数
+19 - 7468726565000000000000000000000000000000000000000000000000000000 - &quot;three&quot; 的编码
+</pre></div>
+</div>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">f</span></code> 指向数组 <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2],</span> <span class="pre">[3]]</span></code> 内容的开始位置，即第 2 行的开始（64 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">0x0000000000000000000000000000000000000000000000000000000000000040</span></code>。</p>
+<p>偏移量 <code class="docutils literal notranslate"><span class="pre">g</span></code> 指向数组 <code class="docutils literal notranslate"><span class="pre">[&quot;one&quot;,</span> <span class="pre">&quot;two&quot;,</span> <span class="pre">&quot;three&quot;]</span></code> 内容的开始位置，即第 10 行的开始（320 字节）；
+所以 <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">=</span> <span class="pre">0x0000000000000000000000000000000000000000000000000000000000000140</span></code>。</p>
+</section>
+<section id="abi-events">
+<span id="id11"></span><h2>事件<a class="headerlink" href="#abi-events" title="Permalink to this heading"></a></h2>
+<p>事件是Ethereum日志/事件观察协议的一个抽象。日志条目提供了合约的地址，
+一系列最多四个主题和一些任意长度的二进制数据。
+事件利用现有的函数ABI，以便将其（连同接口规范）解释为一个正确的类型化结构。</p>
+<p>给定一个事件名称和一系列的事件参数，我们把它们分成两个子系列：那些有索引的和那些没有索引的。
+那些被索引的参数，可能多达3个（对于非匿名事件）或4个（对于匿名事件），
+与事件签名的Keccak散列一起使用，形成日志条目的主题。
+那些没有索引的则构成事件的字节数组。</p>
+<p>实际上，使用该ABI的日志条目被描述为:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">address</span></code>： 合约的地址（由以太坊真正提供）;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">topics[0]</span></code>： <code class="docutils literal notranslate"><span class="pre">keccak(EVENT_NAME+&quot;(&quot;+EVENT_ARGS.map(canonical_type_of).join(&quot;,&quot;)+&quot;)&quot;)</span></code>
+<code class="docutils literal notranslate"><span class="pre">canonical_type_of</span></code> 是一个可以返回给定参数的权威类型的函数，例如，对 <code class="docutils literal notranslate"><span class="pre">uint</span> <span class="pre">indexed</span> <span class="pre">foo</span></code> 它会返回 <code class="docutils literal notranslate"><span class="pre">uint256</span></code>）。
+如果事件被声明为 <code class="docutils literal notranslate"><span class="pre">anonymous</span></code>，那么 <code class="docutils literal notranslate"><span class="pre">topics[0]</span></code> 不会被生成；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">topics[n]</span></code>： 如果事件没有被声明为 <code class="docutils literal notranslate"><span class="pre">anonymous</span></code>， 则为 <code class="docutils literal notranslate"><span class="pre">abi_encode(EVENT_INDEXED_ARGS[n</span> <span class="pre">-</span> <span class="pre">1])</span></code>
+或者如果它被声明为该类型，则为 <code class="docutils literal notranslate"><span class="pre">abi_encode(EVENT_INDEXED_ARGS[n])</span></code>
+（ <code class="docutils literal notranslate"><span class="pre">EVENT_INDEXED_ARGS</span></code> 是被索引的 <code class="docutils literal notranslate"><span class="pre">EVENT_ARGS</span></code> 的系列）;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>： <code class="docutils literal notranslate"><span class="pre">EVENT_NON_INDEXED_ARGS</span></code> 的ABI编码
+（ <code class="docutils literal notranslate"><span class="pre">EVENT_NON_INDEXED_ARGS</span></code> 是一系列没有索引的 <code class="docutils literal notranslate"><span class="pre">EVENT_ARGS</span></code>， <code class="docutils literal notranslate"><span class="pre">abi_encode</span></code> 是ABI编码函数，
+用于从一个函数返回一系列类型的值，如上所述）。</p></li>
+</ul>
+<p>对于所有长度不超过32字节的类型， <code class="docutils literal notranslate"><span class="pre">EVENT_INDEXED_ARGS</span></code> 数组直接包含数值，填充或符号扩展（对于有符号整数）到32字节，
+就像常规ABI编码一样。然而，对于所有 “复杂” 类型或动态长度的类型，包括所有数组， <code class="docutils literal notranslate"><span class="pre">string</span></code>， <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和结构，
+<code class="docutils literal notranslate"><span class="pre">EVENT_INDEXED_ARGS</span></code> 将包含 <em>Keccak散列</em> 的特殊就地编码值（见 <a class="reference internal" href="#indexed-event-encoding"><span class="std std-ref">索引事件参数的编码</span></a>），
+而不是直接编码的值。这允许应用程序有效地查询动态长度类型的值（通过设置编码值的哈希值作为主题），
+但使应用程序无法解码他们没有查询到的索引值。对于动态长度类型，
+应用程序开发人员面临着对预定值的快速搜索（如果参数有索引）和任意值的可读性之间的权衡（这要求参数不被索引）。
+开发者可以通过定义具有两个参数的事件 – 一个是索引的，一个是不索引的 – 来克服这种权衡，实现高效搜索和任意可读性。</p>
+</section>
+<section id="abi-errors">
+<span id="id12"></span><h2>错误<a class="headerlink" href="#abi-errors" title="Permalink to this heading"></a></h2>
+<p>在合约内部发生故障的情况下，合约可以使用一个特殊的操作码来中止执行，并恢复所有的状态变化。
+除了这些效果之外，描述性数据可以返回给调用者。
+这种描述性数据是对一个错误及其参数的编码，其方式与函数调用的数据相同。</p>
+<p>作为一个例子，让我们考虑以下合约，它的 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 函数总是以 “余额不足” 的自定义错误返回。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IFRlc3RUb2tlbiB7CiAgICBlcnJvciBJbnN1ZmZpY2llbnRCYWxhbmNlKHVpbnQyNTYgYXZhaWxhYmxlLCB1aW50MjU2IHJlcXVpcmVkKTsKICAgIGZ1bmN0aW9uIHRyYW5zZmVyKGFkZHJlc3MgLyp0byovLCB1aW50IGFtb3VudCkgcHVibGljIHB1cmUgewogICAgICAgIHJldmVydCBJbnN1ZmZpY2llbnRCYWxhbmNlKDAsIGFtb3VudCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">TestToken</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>error<span class="w"> </span>InsufficientBalance<span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">available</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">required</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="cm">/*to*/</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>revert<span class="w"> </span>InsufficientBalance<span class="p">(</span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>返回数据的编码方式与函数 <code class="docutils literal notranslate"><span class="pre">InsufficientBalance(0,</span> <span class="pre">amount)</span></code>
+对函数 <code class="docutils literal notranslate"><span class="pre">InsufficientBalance(uint256,uint256)</span></code> 的调用方式相同。
+即 <code class="docutils literal notranslate"><span class="pre">0xcf479181</span></code>， <code class="docutils literal notranslate"><span class="pre">uint256(0)</span></code>， <code class="docutils literal notranslate"><span class="pre">uint256(amount)</span></code>。</p>
+<p>错误选择器 <code class="docutils literal notranslate"><span class="pre">0x00000000</span></code> 和 <code class="docutils literal notranslate"><span class="pre">0xffffffff</span></code> 是保留给将来使用的。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>永远不要相信错误数据。
+默认情况下，错误数据通过外部调用在链向上冒泡产生，
+这意味着一个合约可能会收到一个它直接调用的任何合约中没有定义的错误。
+此外，任何合约都可以通过返回与错误签名相匹配的数据来伪造任何错误，即使该错误没有在任何地方定义。</p>
+</div>
+</section>
+<section id="json">
+<span id="abi-json"></span><h2>JSON<a class="headerlink" href="#json" title="Permalink to this heading"></a></h2>
+<p>合约接口的JSON格式是由一个函数，事件和错误描述的数组给出的。
+一个函数描述是一个带有字段的JSON对象：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>： <code class="docutils literal notranslate"><span class="pre">&quot;function&quot;</span></code>， <code class="docutils literal notranslate"><span class="pre">&quot;constructor&quot;</span></code>， <code class="docutils literal notranslate"><span class="pre">&quot;receive&quot;</span></code> （ <a class="reference internal" href="contracts.html#receive-ether-function"><span class="std std-ref">“接收以太币” 函数</span></a> ） 或者 <code class="docutils literal notranslate"><span class="pre">&quot;fallback&quot;</span></code> （ <a class="reference internal" href="contracts.html#fallback-function"><span class="std std-ref">“默认” 函数</span></a>）；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>： 函数名称；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inputs</span></code>： 数组对象，每个数组对象会包含：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>： 参数名称；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>： 参数的权威类型（详见下文）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components</span></code>： 供元组（tuple） 类型使用（详见下文）</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outputs</span></code>： 一个类似于 <code class="docutils literal notranslate"><span class="pre">inputs</span></code> 的数组对象。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stateMutability</span></code>： 为下列值之一： <code class="docutils literal notranslate"><span class="pre">pure</span></code> （<a class="reference internal" href="contracts.html#pure-functions"><span class="std std-ref">指定为不读取区块链状态</span></a>），
+<code class="docutils literal notranslate"><span class="pre">view</span></code> （<a class="reference internal" href="contracts.html#view-functions"><span class="std std-ref">指定为不修改区块链状态</span></a>），
+<code class="docutils literal notranslate"><span class="pre">nonpayable</span></code> （函数不接受以太币 - 默认选项） 和 <code class="docutils literal notranslate"><span class="pre">payable</span></code> （函数可接收以太币）。</p></li>
+</ul>
+<p>Constructor 和 fallback 函数没有 <code class="docutils literal notranslate"><span class="pre">name</span></code> 或 <code class="docutils literal notranslate"><span class="pre">outputs</span></code>。Fallback 函数也没有 <code class="docutils literal notranslate"><span class="pre">inputs</span></code>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>向不接收以太币函数发送非零的以太币将使交易回滚。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在Solidity中，状态可变性 <code class="docutils literal notranslate"><span class="pre">不可支付</span></code> 是完全不指定状态可变性时的修饰语。</p>
+</div>
+<p>一个事件描述是一个有极其相似字段的 JSON 对象：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>： 总是 <code class="docutils literal notranslate"><span class="pre">&quot;event&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>： 事件名称；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inputs</span></code>： 对象数组，每个数组对象会包含：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>： 参数名称。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>： 参数的权威类型（相见下文）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components</span></code>： 供元组（tuple） 类型使用（详见下文）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">indexed</span></code>： 如果此字段是日志的一个主题，则为 <code class="docutils literal notranslate"><span class="pre">true</span></code>， 否则为 <code class="docutils literal notranslate"><span class="pre">false</span></code>。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">anonymous</span></code>： 如果事件被声明为 <code class="docutils literal notranslate"><span class="pre">anonymous</span></code>，则为 <code class="docutils literal notranslate"><span class="pre">true</span></code>。</p></li>
+</ul>
+<p>错误消息如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>： 总是 <code class="docutils literal notranslate"><span class="pre">&quot;error&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>： 错误名称；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inputs</span></code>： 对象数组，每个数组对象会包含：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>： 参数名称。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>： 参数的权威类型（相见下文）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">components</span></code>： 供元组（tuple） 类型使用（详见下文）。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在JSON数组中可能有多个具有相同名称的错误，甚至具有相同的签名，
+例如，如果错误源自合约中的不同文件或从另一个合约引用。
+对于ABI来说，只有错误本身的名称是相关的，而不是它的定义位置。</p>
+</div>
+<p>例如，</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCgpjb250cmFjdCBUZXN0IHsKICAgIGNvbnN0cnVjdG9yKCkgeyBiID0gaGV4IjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyIjsgfQogICAgZXZlbnQgRXZlbnQodWludCBpbmRleGVkIGEsIGJ5dGVzMzIgYik7CiAgICBldmVudCBFdmVudDIodWludCBpbmRleGVkIGEsIGJ5dGVzMzIgYik7CiAgICBlcnJvciBJbnN1ZmZpY2llbnRCYWxhbmNlKHVpbnQyNTYgYXZhaWxhYmxlLCB1aW50MjU2IHJlcXVpcmVkKTsKICAgIGZ1bmN0aW9uIGZvbyh1aW50IGEpIHB1YmxpYyB7IGVtaXQgRXZlbnQoYSwgYik7IH0KICAgIGJ5dGVzMzIgYjsKfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Test</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>b<span class="w"> </span><span class="o">=</span><span class="w"> </span>hex<span class="s2">&quot;12345678901234567890123456789012&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">Event</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">indexed</span><span class="w"> </span>a<span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">b</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">Event2</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">indexed</span><span class="w"> </span>a<span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">b</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span>error<span class="w"> </span>InsufficientBalance<span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">available</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">required</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">foo</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>emit<span class="w"> </span>Event<span class="p">(</span>a<span class="p">,</span><span class="w"> </span>b<span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">b</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>可由如下 JSON 来表示：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span><span class="w"></span>
+<span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;error&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;available&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;uint256&quot;</span><span class="p">},{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;required&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;uint256&quot;</span><span class="p">}],</span><span class="w"></span>
+<span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;InsufficientBalance&quot;</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;event&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;uint256&quot;</span><span class="p">,</span><span class="nt">&quot;indexed&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">},{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;bytes32&quot;</span><span class="p">,</span><span class="nt">&quot;indexed&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">}],</span><span class="w"></span>
+<span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Event&quot;</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;event&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;uint256&quot;</span><span class="p">,</span><span class="nt">&quot;indexed&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">},{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;bytes32&quot;</span><span class="p">,</span><span class="nt">&quot;indexed&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">}],</span><span class="w"></span>
+<span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Event2&quot;</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;function&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;uint256&quot;</span><span class="p">}],</span><span class="w"></span>
+<span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;outputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
+<span class="p">}]</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id13">
+<h3>处理元组类型<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<p>尽管名称被有意地不作为 ABI 编码的一部分，但将它们包含进JSON来显示给最终用户是非常合理的。其结构会按下列方式进行嵌套：</p>
+<p>一个拥有 <code class="docutils literal notranslate"><span class="pre">name</span></code>， <code class="docutils literal notranslate"><span class="pre">type</span></code> 和潜在的 <code class="docutils literal notranslate"><span class="pre">components</span></code> 成员的对象描述了某种类型的变量。
+直至到达一个元组（tuple） 类型且到那点的存储在 <code class="docutils literal notranslate"><span class="pre">type</span></code> 属性中的字符串以 <code class="docutils literal notranslate"><span class="pre">tuple</span></code> 为前缀，
+也就是说，在 <code class="docutils literal notranslate"><span class="pre">tuple</span></code> 之后紧跟一个 <code class="docutils literal notranslate"><span class="pre">[]</span></code> 或有整数 <code class="docutils literal notranslate"><span class="pre">k</span></code> 的 <code class="docutils literal notranslate"><span class="pre">[k]</span></code>，才
+能确定一个元组。 元组的组件元素会被存储在成员 <code class="docutils literal notranslate"><span class="pre">components</span></code> 中，
+它是一个数组类型，且与顶级对象具有同样的结构，只是在这里不允许 <code class="docutils literal notranslate"><span class="pre">已索引的（indexed）</span></code> 数组元素。</p>
+<p>示例代码：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjUgPDAuOS4wOwpwcmFnbWEgYWJpY29kZXIgdjI7Cgpjb250cmFjdCBUZXN0IHsKICAgIHN0cnVjdCBTIHsgdWludCBhOyB1aW50W10gYjsgVFtdIGM7IH0KICAgIHN0cnVjdCBUIHsgdWludCB4OyB1aW50IHk7IH0KICAgIGZ1bmN0aW9uIGYoUyBtZW1vcnksIFQgbWVtb3J5LCB1aW50KSBwdWJsaWMgcHVyZSB7fQogICAgZnVuY3Rpb24gZygpIHB1YmxpYyBwdXJlIHJldHVybnMgKFMgbWVtb3J5LCBUIG1lbW9yeSwgdWludCkge30KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.5</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+pragma<span class="w"> </span>abicoder<span class="w"> </span>v2<span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Test</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">S</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">;</span><span class="w"> </span><span class="kt">uint</span><span class="p">[]</span><span class="w"> </span>b<span class="p">;</span><span class="w"> </span>T<span class="p">[]</span><span class="w"> </span>c<span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">T</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">y</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span>S<span class="w"> </span><span class="kt">memory</span><span class="p">,</span><span class="w"> </span>T<span class="w"> </span><span class="kt">memory</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span>S<span class="w"> </span><span class="kt">memory</span><span class="p">,</span><span class="w"> </span>T<span class="w"> </span><span class="kt">memory</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>可由如下 JSON 来表示：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;f&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tuple&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">          </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256[]&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tuple[]&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">              </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="w"></span>
+<span class="w">              </span><span class="p">},</span><span class="w"></span>
+<span class="w">              </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;y&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="w"></span>
+<span class="w">              </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">]</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tuple&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">          </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;y&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;outputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="abi-packed-mode">
+<span id="id14"></span><h2>严格的编码模式<a class="headerlink" href="#abi-packed-mode" title="Permalink to this heading"></a></h2>
+<p>严格的编码模式是指导致与上述正式规范中定义的编码完全相同的模式。
+这意味着偏移量必须尽可能小，同时还不能在数据区域产生重叠，
+因此不允许有间隙。</p>
+<p>通常，ABI解码器是以直接的方式编写的，只是遵循偏移指针，
+但有些解码器可能会强制执行严格模式。
+Solidity ABI 解码器目前并不强制执行严格模式，但编码器总是以严格模式创建数据。</p>
+</section>
+<section id="id15">
+<h2>非标准打包模式<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h2>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">abi.encodePacked()</span></code>，Solidity支持一种非标准的打包模式，其中：</p>
+<ul class="simple">
+<li><p>短于32字节的类型直接连接，没有填充或符号扩展。</p></li>
+<li><p>动态类型是直接编码的，没有长度。</p></li>
+<li><p>数组元素被填充，但仍被是直接编码</p></li>
+</ul>
+<p>此外，不支持结构以及嵌套数组。</p>
+<p>例如，对 <code class="docutils literal notranslate"><span class="pre">int16(-1),</span> <span class="pre">bytes1(0x42),</span> <span class="pre">uint16(0x03),</span> <span class="pre">string(&quot;Hello,</span> <span class="pre">world!&quot;)</span></code> 进行编码将生成如下结果</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0xffff42000348656c6c6f2c20776f726c6421
+  ^^^^                                 int16(-1)
+      ^^                               bytes1(0x42)
+        ^^^^                           uint16(0x03)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^ 字符串（&quot;Hello, world!&quot;） 没有长度字段
+</pre></div>
+</div>
+<p>更具体地说：</p>
+<ul class="simple">
+<li><p>在编码过程中，所有东西都是直接编码的。这意味着没有像ABI编码那样区分头和尾，也没有对数组的长度进行编码。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.encodePacked</span></code> 的直接参数被编码，没有填充，
+只要不是数组（或 <code class="docutils literal notranslate"><span class="pre">string</span></code> 或 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> ）。</p></li>
+<li><p>一个数组的编码是其元素的编码 <strong>与</strong> 填充的连接。</p></li>
+<li><p>动态大小的类型，如 <code class="docutils literal notranslate"><span class="pre">string</span></code>， <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 或 <code class="docutils literal notranslate"><span class="pre">uint[]</span></code>，在编码时没有长度字段。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code> 或 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 的编码不会在末尾应用填充，
+除非它是数组或结构的一部分（然后它被填充为32字节的倍数）。</p></li>
+</ul>
+<p>一般来说，只要有两个动态大小的元素，编码就会模糊不清，因为缺少长度字段。</p>
+<p>如果需要填充，可以使用明确的类型转换： <code class="docutils literal notranslate"><span class="pre">abi.encodePacked(uint16(0x12))</span> <span class="pre">==</span> <span class="pre">hex&quot;0012&quot;</span></code>。</p>
+<p>由于在调用函数时不使用打包编码，所以没有特别支持预留函数选择器。
+由于编码是模糊的，所以没有解码功能。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>如果使用 <code class="docutils literal notranslate"><span class="pre">keccak256(abi.encodePacked(a，b))</span></code> 并且 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 都是动态类型，
+那么通过将 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的部分移动到 <code class="docutils literal notranslate"><span class="pre">b</span></code> 中，很容易在哈希值中产生冲突，反之亦然。
+更具体地说， <code class="docutils literal notranslate"><span class="pre">abi.encodePacked(&quot;a&quot;,</span> <span class="pre">&quot;bc&quot;)</span> <span class="pre">==</span> <span class="pre">abi.encodePacked(&quot;ab&quot;,</span> <span class="pre">&quot;c&quot;)</span></code>。
+如果你使用 <code class="docutils literal notranslate"><span class="pre">abi.encodePacked</span></code> 进行签名、认证或数据完整性，确保总是使用相同的类型，
+并检查其中最多一个是动态的。除非有令人信服的理由，否则应首选 <code class="docutils literal notranslate"><span class="pre">abi.encode</span></code>。</p>
+</div>
+</section>
+<section id="indexed-event-encoding">
+<span id="id16"></span><h2>索引事件参数的编码<a class="headerlink" href="#indexed-event-encoding" title="Permalink to this heading"></a></h2>
+<p>不属于值类型的索引事件参数，即数组和结构，不直接存储，
+而是存储一个编码的keccak256-hash。这个编码的定义如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">string</span></code> 值的编码只是字符串的内容，没有任何填充或长度前缀。</p></li>
+<li><p>结构的编码是其成员编码的串联，总是填充为32字节的倍数（甚至是 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">string</span></code>）。</p></li>
+<li><p>数组的编码（包括动态和静态大小）是其元素编码的连接，
+总是填充为32字节的倍数（甚至是 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">string</span></code>），没有任何长度前缀。</p></li>
+</ul>
+<p>在上面，像往常一样，一个负数被填充符号扩展，而不是零填充。
+<code class="docutils literal notranslate"><span class="pre">bytesNN</span></code> 类型被填充在右边，而 <code class="docutils literal notranslate"><span class="pre">uintNN</span></code> / <code class="docutils literal notranslate"><span class="pre">intNN</span></code> 被填充在左边。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>如果一个结构包含一个以上的动态大小的数组，那么它的编码是不明确的。
+正因为如此，要经常重新检查事件数据，不要只依赖基于索引参数的搜索结果。</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="metadata.html" class="btn btn-neutral float-left" title="合约的元数据" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="050-breaking-changes.html" class="btn btn-neutral float-right" title="Solidity v0.5.0 突破性变化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity 品牌指南 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Language Influences" href="language-influences.html" />
+    <link rel="prev" title="贡献方式" href="contributing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity 品牌指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Solidity品牌</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Solidity 品牌名称</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Solidity标志许可</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Solidity标志指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">信用</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity 品牌指南</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/brand-guide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity">
+<h1>Solidity 品牌指南<a class="headerlink" href="#solidity" title="Permalink to this heading"></a></h1>
+<p>该品牌指南的特点是关于Solidity的品牌政策和标志使用指南的信息。</p>
+<section id="id1">
+<h2>Solidity品牌<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>Solidity编程语言是一个开源的社区项目，由一个核心团队管理。
+该核心团队由 <a class="reference external" href="https://ethereum.foundation/">以太坊基金会</a> 赞助。</p>
+<p>本文件旨在提供有关如何最好地使用 Solidity 品牌名称和标识的信息。</p>
+<p>我们鼓励您在使用该品牌名称或标志之前仔细阅读本文件。我们非常感谢您的合作!</p>
+</section>
+<section id="id3">
+<h2>Solidity 品牌名称<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>“Solidity” 应该只用来指Solidity编程语言。</p>
+<p>请不要按以下方式使用 “Solidity”：</p>
+<ul class="simple">
+<li><p>指的是任何其他编程语言。</p></li>
+<li><p>以一种误导性的方式，或可能暗示不相关的模块，工具，文档
+或其他资源与 Solidity 编程语言的关联。</p></li>
+<li><p>在方式上，混淆了社区对Solidity编程语言是否开源和免费使用的看法。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Solidity标志许可<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<a class="reference internal image-reference" href="https://i.creativecommons.org/l/by/4.0/88x31.png"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" style="width: 88px;" /></a>
+<p>Solidity标志是在
+<a class="reference external" href="https://creativecommons.org/licenses/by/4.0/">创意共享署名4.0国际许可协议</a> 下发布和许可的。</p>
+<p>这是最宽松的知识共享协议，允许为任何目的进行再利用和修改。</p>
+<p>您可以自由选择以下方式：</p>
+<ul class="simple">
+<li><p><strong>分享</strong> - 以任何媒介或形式复制和重新分发材料。</p></li>
+<li><p><strong>修改</strong> - 为任何目的，甚至为商业目的，对材料进行混音，改造和构建。</p></li>
+</ul>
+<p>根据以下条款：</p>
+<ul class="simple">
+<li><p><strong>署名</strong> - 您必须给予适当的信用，提供到许可证的链接，并说明是否进行了修改。
+您可以以任何合理的方式这样做，但不能以任何方式暗示 Solidity 核心团队认可您或您的使用。</p></li>
+</ul>
+<p>在使用Solidity标识时，请尊重Solidity标识指南。</p>
+</section>
+<section id="id6">
+<h2>Solidity标志指南<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/logo.svg"><img alt="_images/logo.svg" src="_images/logo.svg" width="256" /></a>
+<p><em>（右键点击标识即可下载。）</em></p>
+<p>请不要这样做：</p>
+<ul class="simple">
+<li><p>改变标志的比例（不要拉伸或切割）。</p></li>
+<li><p>改变标志的颜色，除非是绝对必要。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>信用<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<p>本文件部分内容来自于
+<a class="reference external" href="https://www.python.org/psf/trademarks/">Python软件基金会商标使用政策</a>
+和 <a class="reference external" href="https://www.rust-lang.org/policies/media-guide">Rust媒介指南</a> 。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="contributing.html" class="btn btn-neutral float-left" title="贡献方式" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="language-influences.html" class="btn btn-neutral float-right" title="Language Influences" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

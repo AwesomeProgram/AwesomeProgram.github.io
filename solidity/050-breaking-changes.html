@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity v0.5.0 突破性变化 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solidity 0.6.0 版本突破性变化" href="060-breaking-changes.html" />
+    <link rel="prev" title="合约ABI规范" href="abi-spec.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity v0.5.0 突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">仅有语义上的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">语义和语法的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">明确性要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">废弃的元素</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#json">命令行和JSON接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">构造函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">字面常量和后缀</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">语法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interoperability">与旧合约的互操作性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">示例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity v0.5.0 突破性变化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/050-breaking-changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity-v0-5-0">
+<h1>Solidity v0.5.0 突破性变化<a class="headerlink" href="#solidity-v0-5-0" title="Permalink to this heading"></a></h1>
+<p>本节强调了 Solidity 0.5.0 版本中引入的主要突破性变化，
+以及这些变化背后的原因和如何更新受影响的代码。
+对于完整的列表，请查看 <a class="reference external" href="https://github.com/ethereum/solidity/releases/tag/v0.5.0">版本更新日志</a>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>用 Solidity v0.5.0 编译的合约仍然可以与合约甚至用旧版本编译的库对接，
+而无需重新编译或重新部署。
+将接口更改为包含数据位置，可见性和可变性说明符就足够了。
+参见下面的 <a class="reference internal" href="#interoperability"><span class="std std-ref">与旧合约的互操作性</span></a> 部分。</p>
+</div>
+<section id="id2">
+<h2>仅有语义上的变化<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>本节仅列出了语义的变化，因此有可能在现有代码中隐藏新的且不同的行为。</p>
+<ul class="simple">
+<li><p>有符号的右移现在使用正确的算术移位，即向负无穷大取整，而不是向零取整。
+有符号和无符号移位在 君士坦丁堡（Constantinople）版本将有专门的操作码，
+目前由Solidity模拟。</p></li>
+<li><p>在 <code class="docutils literal notranslate"><span class="pre">do...while</span></code> 循环中的 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 语句现在跳转到条件，这是在这种情况下的常见行为。
+以前是跳到循环主体。因此，如果条件是假的，循环就终止了。</p></li>
+<li><p>函数 <code class="docutils literal notranslate"><span class="pre">.call()</span></code>， <code class="docutils literal notranslate"><span class="pre">.delegatecall()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.staticcall()</span></code> 在给定一个 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 参数时，
+不再进行填充。</p></li>
+<li><p>如果EVM的版本是 拜占庭（Byzantium） 或更高版本，
+现在调用 pure 和 view 函数时使用操作码 <code class="docutils literal notranslate"><span class="pre">STATICCALL</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">CALL</span></code>。
+这不允许在EVM层面上改变状态。</p></li>
+<li><p>当在外部函数调用和 <code class="docutils literal notranslate"><span class="pre">abi.encode</span></code> 中使用时，
+ABI编码器现在可以正确地对来自 calldata（ <code class="docutils literal notranslate"><span class="pre">msg.data</span></code> 和外部函数参数）的字节数组和字符串进行填充。
+对于未填充的编码，请使用 <code class="docutils literal notranslate"><span class="pre">abi.encodePacked</span></code>。</p></li>
+<li><p>如果传入的 calldata 太短或指向界外，ABI解码器会在函数的开头和 <code class="docutils literal notranslate"><span class="pre">abi.decode()</span></code> 中回退。
+注意，脏的高阶位仍然会被忽略。</p></li>
+<li><p>从蜜桔前哨（Tangerine Whistle）开始，用外部功能调用转发所有可用气体。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>语义和语法的变化<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>本节重点介绍影响语法和语义的变化。</p>
+<ul class="simple">
+<li><p>函数 <code class="docutils literal notranslate"><span class="pre">.call()</span></code>， <code class="docutils literal notranslate"><span class="pre">.delegatecall()</span></code>， <code class="docutils literal notranslate"><span class="pre">staticcall()</span></code>， <code class="docutils literal notranslate"><span class="pre">keccak256()</span></code>， <code class="docutils literal notranslate"><span class="pre">sha256()</span></code>
+和 <code class="docutils literal notranslate"><span class="pre">ripemd160()</span></code> 现在只接受一个 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 参数。此外，该参数没有被填充。
+这样做是为了使参数的连接方式更加明确和清晰。
+将每个 <code class="docutils literal notranslate"><span class="pre">.call()</span></code> (和家族)改为 <code class="docutils literal notranslate"><span class="pre">.call(&quot;&quot;)</span></code>，
+将每个 <code class="docutils literal notranslate"><span class="pre">.call(signature,</span> <span class="pre">a,b,</span> <span class="pre">c)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">.call(abi.encodeWithSignature(signature,</span> <span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">c))</span></code>
+（最后一项只对值类型有效）。
+将每个 <code class="docutils literal notranslate"><span class="pre">keccak256(a,</span> <span class="pre">b,</span> <span class="pre">c)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">keccak256(abi.encodePacked(a,</span> <span class="pre">b,</span> <span class="pre">c))</span></code>。
+尽管这不是一个突破性的改变，建议开发者将 <code class="docutils literal notranslate"><span class="pre">x.call(bytes4(keccak256(&quot;f(uint256)&quot;)),</span> <span class="pre">a,</span> <span class="pre">b)</span></code>
+改为 <code class="docutils literal notranslate"><span class="pre">x.call(abi.encodeWithSignature(&quot;f(uint256)&quot;,</span> <span class="pre">a,</span> <span class="pre">b))</span></code>。</p></li>
+<li><p>函数 <code class="docutils literal notranslate"><span class="pre">.call()</span></code>， <code class="docutils literal notranslate"><span class="pre">.delegatecall()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.staticcall()</span></code>
+现在返回 <code class="docutils literal notranslate"><span class="pre">(bool,</span> <span class="pre">bytes</span> <span class="pre">memory)</span></code> 以提供对返回数据的访问。
+将 <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span> <span class="pre">=</span> <span class="pre">otherContract.call(&quot;f&quot;)</span></code> 改为
+<code class="docutils literal notranslate"><span class="pre">(bool</span> <span class="pre">success,</span> <span class="pre">bytes</span> <span class="pre">memory</span> <span class="pre">data)</span> <span class="pre">=</span> <span class="pre">otherContract.call(&quot;f&quot;)</span></code>。</p></li>
+<li><p>Solidity 现在为函数局部变量实现了C99风格的范围规则，
+也就是说，变量只能在它们被声明后使用，并且只能在相同或嵌套的范围内使用。
+在 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环的初始化块中声明的变量在循环内部的任何一点都是有效的。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>明确性要求<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>本节列出了现在的代码需要更加明确的变化。
+对于大多数的主题，编译器会提供建议。</p>
+<ul class="simple">
+<li><p>明确的函数可见性现在是强制性的。 在每个函数和构造函数中添加 <code class="docutils literal notranslate"><span class="pre">public</span></code>，
+在每个未指定可见性的回退或接口函数中添加 <code class="docutils literal notranslate"><span class="pre">external</span></code>。</p></li>
+<li><p>所有结构，数组或映射类型的变量的明确数据位置现在是强制性的。
+这也适用于函数参数和返回变量。 例如，将 <code class="docutils literal notranslate"><span class="pre">uint[]</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">z</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">uint[]</span> <span class="pre">storage</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">z</span></code>，
+将 <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(uint[]</span> <span class="pre">[]</span> <span class="pre">x)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(uint[]</span> <span class="pre">[]</span> <span class="pre">memory</span> <span class="pre">x)</span></code>，
+其中 <code class="docutils literal notranslate"><span class="pre">memory</span></code> 是数据位置，可以相应地替换为 <code class="docutils literal notranslate"><span class="pre">storage</span></code> 或 <code class="docutils literal notranslate"><span class="pre">calldata</span></code>。
+注意， <code class="docutils literal notranslate"><span class="pre">external</span></code> 函数要求参数的数据位置为 <code class="docutils literal notranslate"><span class="pre">calldata</span></code>。</p></li>
+<li><p>合约类型不再包括 <code class="docutils literal notranslate"><span class="pre">address</span></code> 成员，以便分离命名空间。
+因此，现在有必要在使用 <code class="docutils literal notranslate"><span class="pre">address</span></code> 成员之前，明确地将合约类型的值转换为地址。
+例如：如果 <code class="docutils literal notranslate"><span class="pre">c</span></code> 是一个合约，把 <code class="docutils literal notranslate"><span class="pre">c.transfer(...)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">address(c).transfer(...)</span></code>，
+把  <code class="docutils literal notranslate"><span class="pre">c.balance</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">address(c).balance</span></code>。</p></li>
+<li><p>现在不允许在不相关的合约类型之间进行显式的转换。您只能从一个合约类型转换到它的一个基础或祖先类型。
+如果您确定一个合约与您想转换的合约类型是兼容的，尽管它没有继承它，
+您可以通过先转换为 <code class="docutils literal notranslate"><span class="pre">address</span></code> 来解决这个问题。
+例如：如果 <code class="docutils literal notranslate"><span class="pre">A</span></code> 和 <code class="docutils literal notranslate"><span class="pre">B</span></code> 是合约类型， <code class="docutils literal notranslate"><span class="pre">B</span></code> 不继承 <code class="docutils literal notranslate"><span class="pre">A</span></code>，而 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是 <code class="docutils literal notranslate"><span class="pre">B</span></code> 类型的合约，
+您仍然可以用 <code class="docutils literal notranslate"><span class="pre">A(address(b))</span></code> 将 <code class="docutils literal notranslate"><span class="pre">b</span></code> 转换成 <code class="docutils literal notranslate"><span class="pre">A</span></code> 类型。
+请注意，您仍然需要注意匹配的payable修饰的回退函数，如下文所述。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">address</span></code> 类型被分成 <code class="docutils literal notranslate"><span class="pre">address</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>，
+其中只有 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 提供 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 功能。
+一个 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 可以直接转换为 <code class="docutils literal notranslate"><span class="pre">address</span></code>，
+但不允许以其他方式转换。将 <code class="docutils literal notranslate"><span class="pre">address</span></code> 转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 是可以通过 <code class="docutils literal notranslate"><span class="pre">uint160</span></code> 转换的。
+如果 <code class="docutils literal notranslate"><span class="pre">c</span></code> 是一个合约， 只有当 <code class="docutils literal notranslate"><span class="pre">c</span></code> 有一个 payable 修饰的回退函数时，
+<code class="docutils literal notranslate"><span class="pre">address(c)</span></code> 的结果是 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>。
+如果您使用 <a class="reference internal" href="common-patterns.html#withdrawal-pattern"><span class="std std-ref">取回模式</span></a>，您很可能不必改变您的代码，
+因为 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 只用于 <code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> 而不是存储地址，
+而且 <code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型。</p></li>
+<li><p>现在不允许不同位数的 <code class="docutils literal notranslate"><span class="pre">bytesX</span></code> 和 <code class="docutils literal notranslate"><span class="pre">uintY</span></code> 之间的转换了，
+因为 <code class="docutils literal notranslate"><span class="pre">bytesX</span></code> 会在右侧填充， <code class="docutils literal notranslate"><span class="pre">uintY</span></code> 会在左侧填充，这可能导致意外的转换结果。
+现在在转换前必须在类型内调整位数。 例如，
+您想要将 <code class="docutils literal notranslate"><span class="pre">bytes4</span></code> （4字节）转换为 <code class="docutils literal notranslate"><span class="pre">uint64</span></code> （8字节），
+首先将 <code class="docutils literal notranslate"><span class="pre">bytes4</span></code> 变量转换为 <code class="docutils literal notranslate"><span class="pre">bytes8</span></code>，然后再转换为 <code class="docutils literal notranslate"><span class="pre">uint64</span></code>。
+当通过 <code class="docutils literal notranslate"><span class="pre">uint32</span></code> 转换时，您会得到相反的填充结果。
+在v0.5.0之前，任何 <code class="docutils literal notranslate"><span class="pre">bytesX</span></code> 和 <code class="docutils literal notranslate"><span class="pre">uintY</span></code> 之间的转换都要通过 <code class="docutils literal notranslate"><span class="pre">uint8X</span></code>。
+例如， <code class="docutils literal notranslate"><span class="pre">uint8(bytes3(0x291807))</span></code> 将被转换为 <code class="docutils literal notranslate"><span class="pre">uint8(uint24(bytes3(0x291807)))</span></code>
+（结果是 <code class="docutils literal notranslate"><span class="pre">0x07</span></code>）。</p></li>
+<li><p>在非payable函数中使用 <code class="docutils literal notranslate"><span class="pre">msg.value</span></code> （或通过修改器引入）是不允许的，因为这是一个安全特性。
+将该函数变成 <code class="docutils literal notranslate"><span class="pre">payable</span></code>，或为程序逻辑创建一个新的内部函数，使用 <code class="docutils literal notranslate"><span class="pre">msg.value</span></code>。</p></li>
+<li><p>为了清晰起见，如果使用标准输入作为源，命令行界面现在需要 <code class="docutils literal notranslate"><span class="pre">-</span></code>。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>废弃的元素<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>这一节列出了废弃以前的功能或语法的变化。 请注意，其中许多变化已经在实验模式 <code class="docutils literal notranslate"><span class="pre">v0.5.0</span></code> 中启用。</p>
+<section id="json">
+<h3>命令行和JSON接口<a class="headerlink" href="#json" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>命令行选项 <code class="docutils literal notranslate"><span class="pre">--formal</span></code> （用于生成Why3输出以进一步形式化验证）已被废弃，现在已被删除。
+一个新的形式化验证模块，SMTChecker，可以通过 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">experimental</span> <span class="pre">SMTChecker;</span></code> 启用。</p></li>
+<li><p>由于中间语言 <code class="docutils literal notranslate"><span class="pre">Julia</span></code> 更名为 <code class="docutils literal notranslate"><span class="pre">Yul</span></code>，命令行选项 <code class="docutils literal notranslate"><span class="pre">--julia</span></code> 被更名为 <code class="docutils literal notranslate"><span class="pre">--yul</span></code>。</p></li>
+<li><p>删除了 <code class="docutils literal notranslate"><span class="pre">--clone-bin</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--combined-json</span> <span class="pre">clone-bin</span></code> 命令行选项。</p></li>
+<li><p>不允许使用空前缀的重映射。</p></li>
+<li><p>JSON AST字段 <code class="docutils literal notranslate"><span class="pre">constant</span></code> 和 <code class="docutils literal notranslate"><span class="pre">payable</span></code> 被删除。
+这些信息现在出现在 <code class="docutils literal notranslate"><span class="pre">stateMutability</span></code> 字段中。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FunctionDefinition</span></code> 节点的JSON AST字段 <code class="docutils literal notranslate"><span class="pre">isConstructor</span></code> 被一个名为 <code class="docutils literal notranslate"><span class="pre">kind</span></code> 的字段取代，
+该字段的值可以是  <code class="docutils literal notranslate"><span class="pre">&quot;constructor&quot;</span></code>， <code class="docutils literal notranslate"><span class="pre">&quot;fallback&quot;</span></code> 或 <code class="docutils literal notranslate"><span class="pre">&quot;function&quot;</span></code>。</p></li>
+<li><p>在非链接的二进制十六进制文件中，库地址占位符现在是完全等同的库名的keccak256哈希值的前36个十六进制字符，
+用 <code class="docutils literal notranslate"><span class="pre">$...$</span></code> 包围。以前，只使用完全等同的库名。这减少了碰撞的机会，特别是在使用长路径的时候。
+二进制文件现在也包含一个从这些占位符到完全等同名称的映射列表。</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>构造函数<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>现在必须使用 <code class="docutils literal notranslate"><span class="pre">constructor</span></code> 关键字来定义构造函数。</p></li>
+<li><p>现在不允许在没有括号的情况下调用基本构造函数。</p></li>
+<li><p>现在不允许在同一继承层次中多次指定基本构造函数参数。</p></li>
+<li><p>现在不允许调用有参数但参数个数错误的构造函数。
+如果您只是想指定一个继承关系而不是给参数，完全不要提供括号。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>函数<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>函数 <code class="docutils literal notranslate"><span class="pre">callcode</span></code> 现在被禁止使用（改用 <code class="docutils literal notranslate"><span class="pre">delegatecall</span></code>）。
+但仍然可以通过内联汇编使用它。</p></li>
+<li><p>现在不允许使用 <code class="docutils literal notranslate"><span class="pre">suicide</span></code> （改用 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code>）。</p></li>
+<li><p>现在不允许使用 <code class="docutils literal notranslate"><span class="pre">sha3</span></code> （改用 <code class="docutils literal notranslate"><span class="pre">keccak256</span></code>）。</p></li>
+<li><p>现在不允许使用 <code class="docutils literal notranslate"><span class="pre">throw</span></code> （改用 <code class="docutils literal notranslate"><span class="pre">revert</span></code>， <code class="docutils literal notranslate"><span class="pre">require</span></code> 和 <code class="docutils literal notranslate"><span class="pre">assert</span></code>）。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>转换<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>现在不允许从数字到 <code class="docutils literal notranslate"><span class="pre">bytesXX</span></code> 类型的显性和隐性转换。</p></li>
+<li><p>现在不允许从十六进制字数到不同大小的 <code class="docutils literal notranslate"><span class="pre">bytesXX</span></code> 类型的显性和隐性转换。</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>字面常量和后缀<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>由于闰年的复杂性和混乱性，现在不允许使用单位名称 <code class="docutils literal notranslate"><span class="pre">years</span></code>。</p></li>
+<li><p>现在不允许出现后面没有数字的尾部圆点。</p></li>
+<li><p>现在不允许将十六进制数字与单位值相结合（例如： <code class="docutils literal notranslate"><span class="pre">0x1e</span> <span class="pre">wei</span></code>）。</p></li>
+<li><p>十六进制数字的前缀 <code class="docutils literal notranslate"><span class="pre">0X</span></code> 是不允许的，只能是 <code class="docutils literal notranslate"><span class="pre">0x</span></code>。</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>变量<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>为了清晰起见，现在不允许声明空结构。</p></li>
+<li><p>现在不允许使用 <code class="docutils literal notranslate"><span class="pre">var</span></code> 关键字，以利于明确性。</p></li>
+<li><p>现在不允许在具有不同组件数量的元组之间进行分配。</p></li>
+<li><p>不允许使用不属于编译时常量的常量值。</p></li>
+<li><p>现在不允许出现数值不匹配的多变量声明。</p></li>
+<li><p>现在不允许出现未初始化的存储变量。</p></li>
+<li><p>现在不允许使用空元组。</p></li>
+<li><p>检测变量和结构中的循环依赖关系，在递归中被限制为256个。</p></li>
+<li><p>现在不允许长度为零的固定长度数组。</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>语法<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>现在不允许使用 <code class="docutils literal notranslate"><span class="pre">constant</span></code> 作为函数状态的可变性修饰符。</p></li>
+<li><p>布尔表达式不能使用算术运算。</p></li>
+<li><p>现在不允许使用单数的 <code class="docutils literal notranslate"><span class="pre">+</span></code> 操作符。</p></li>
+<li><p>如果没有事先转换为明确的类型，字面量不能再使用 <code class="docutils literal notranslate"><span class="pre">abi.encodePacked</span></code>。</p></li>
+<li><p>现在不允许有一个或多个返回值的函数的空返回语句。</p></li>
+<li><p>现在完全不允许使用 “松散汇编” 语法，也就是说，
+不能再使用跳转标签，跳转和非功能指令。使用新的 <code class="docutils literal notranslate"><span class="pre">while</span></code>， <code class="docutils literal notranslate"><span class="pre">switch</span></code> 和 <code class="docutils literal notranslate"><span class="pre">if</span></code> 结构代替。</p></li>
+<li><p>没有实现的函数不能再使用修改器。</p></li>
+<li><p>现在不允许具有命名返回值的函数类型。</p></li>
+<li><p>现在不允许在不是程序块的 if/while/for 语句体中进行单语句变量声明。</p></li>
+<li><p>新的关键字： <code class="docutils literal notranslate"><span class="pre">calldata</span></code> 和 <code class="docutils literal notranslate"><span class="pre">constructor</span></code>。</p></li>
+<li><p>新的保留关键字： <code class="docutils literal notranslate"><span class="pre">alias</span></code>， <code class="docutils literal notranslate"><span class="pre">apply</span></code>， <code class="docutils literal notranslate"><span class="pre">auto</span></code>， <code class="docutils literal notranslate"><span class="pre">copyof</span></code>，
+<code class="docutils literal notranslate"><span class="pre">define</span></code>， <code class="docutils literal notranslate"><span class="pre">immutable</span></code>， <code class="docutils literal notranslate"><span class="pre">implements</span></code>， <code class="docutils literal notranslate"><span class="pre">macro</span></code>， <code class="docutils literal notranslate"><span class="pre">mutable</span></code>，
+<code class="docutils literal notranslate"><span class="pre">override</span></code>， <code class="docutils literal notranslate"><span class="pre">partial</span></code>， <code class="docutils literal notranslate"><span class="pre">promise</span></code>， <code class="docutils literal notranslate"><span class="pre">reference</span></code>， <code class="docutils literal notranslate"><span class="pre">sealed</span></code>，
+<code class="docutils literal notranslate"><span class="pre">sizeof</span></code>， <code class="docutils literal notranslate"><span class="pre">supports</span></code>， <code class="docutils literal notranslate"><span class="pre">typedef</span></code> 和 <code class="docutils literal notranslate"><span class="pre">unchecked</span></code>。</p></li>
+</ul>
+</section>
+</section>
+<section id="interoperability">
+<span id="id12"></span><h2>与旧合约的互操作性<a class="headerlink" href="#interoperability" title="Permalink to this heading"></a></h2>
+<p>通过为它们定义接口，仍然可以与为0.5.0之前的Solidity版本编写的合于对接（或者反过来）。
+考虑到您已经部署了以下0.5.0之前的合约：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjQuMjU7Ci8vIOWcqDAuNC4yNeeJiOacrOeahOe8luivkeWZqOS5i+WJje+8jOi/meWwhuaKpeWRiuS4gOS4quitpuWRigovLyDov5nlnKgwLjUuMOS5i+WQjuWwhuaXoOazlee8luivkeOAggpjb250cmFjdCBPbGRDb250cmFjdCB7CiAgICBmdW5jdGlvbiBzb21lT2xkRnVuY3Rpb24odWludDggYSkgewogICAgICAgIC8vLi4uCiAgICB9CiAgICBmdW5jdGlvbiBhbm90aGVyT2xkRnVuY3Rpb24oKSBjb25zdGFudCByZXR1cm5zIChib29sKSB7CiAgICAgICAgLy8uLi4KICAgIH0KICAgIC8vIC4uLgp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.4.25</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 在0.4.25版本的编译器之前，这将报告一个警告</span>
+<span class="c1">// 这在0.5.0之后将无法编译。</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">OldContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">someOldFunction</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//...</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">anotherOldFunction</span><span class="p">()</span><span class="w"> </span><span class="kt">constant</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//...</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这将不再在Solidity 0.5.0版本中进行编译。然而，您可以为它定义一个兼容的接口：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwppbnRlcmZhY2UgT2xkQ29udHJhY3QgewogICAgZnVuY3Rpb24gc29tZU9sZEZ1bmN0aW9uKHVpbnQ4IGEpIGV4dGVybmFsOwogICAgZnVuY3Rpb24gYW5vdGhlck9sZEZ1bmN0aW9uKCkgZXh0ZXJuYWwgcmV0dXJucyAoYm9vbCk7Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+interface<span class="w"> </span>OldContract<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">someOldFunction</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">anotherOldFunction</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>请注意，我们没有声明 <code class="docutils literal notranslate"><span class="pre">anotherOldFunction</span></code> 是 <code class="docutils literal notranslate"><span class="pre">view</span></code>，尽管它在原始合约中被声明为 <code class="docutils literal notranslate"><span class="pre">constant</span></code>。
+这是由于从Solidity 0.5.0版本开始，<code class="docutils literal notranslate"><span class="pre">staticcall</span></code> 被用来调用 <code class="docutils literal notranslate"><span class="pre">view</span></code> 函数。
+在 0.5.0 版本之前， <code class="docutils literal notranslate"><span class="pre">constant</span></code> 关键字没有被强制执行，
+所以用 <code class="docutils literal notranslate"><span class="pre">staticcall</span></code> 调用一个被声明为 <code class="docutils literal notranslate"><span class="pre">constant</span></code> 的函数仍然可能被还原，
+因为 <code class="docutils literal notranslate"><span class="pre">constant</span></code> 函数仍然可能试图修改存储。因此，当为旧合约定义接口时，
+您应该只使用 <code class="docutils literal notranslate"><span class="pre">view</span></code> 来代替 <code class="docutils literal notranslate"><span class="pre">constant</span></code>，以防您绝对确定该函数能与 <code class="docutils literal notranslate"><span class="pre">staticcall</span></code> 一起工作。</p>
+<p>有了上面定义的接口，您现在可以很容易地使用已经部署的 0.5.0 之前的合约：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwoKaW50ZXJmYWNlIE9sZENvbnRyYWN0IHsKICAgIGZ1bmN0aW9uIHNvbWVPbGRGdW5jdGlvbih1aW50OCBhKSBleHRlcm5hbDsKICAgIGZ1bmN0aW9uIGFub3RoZXJPbGRGdW5jdGlvbigpIGV4dGVybmFsIHJldHVybnMgKGJvb2wpOwp9Cgpjb250cmFjdCBOZXdDb250cmFjdCB7CiAgICBmdW5jdGlvbiBkb1NvbWV0aGluZyhPbGRDb250cmFjdCBhKSBwdWJsaWMgcmV0dXJucyAoYm9vbCkgewogICAgICAgIGEuc29tZU9sZEZ1bmN0aW9uKDB4NDIpOwogICAgICAgIHJldHVybiBhLmFub3RoZXJPbGRGdW5jdGlvbigpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+interface<span class="w"> </span>OldContract<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">someOldFunction</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">anotherOldFunction</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">NewContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">doSomething</span><span class="p">(</span>OldContract<span class="w"> </span>a<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>a<span class="p">.</span>someOldFunction<span class="p">(</span><span class="mh">0x42</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>a<span class="p">.</span>anotherOldFunction<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>同样，0.5.0以前的库可以通过定义库的功能而不需要实现，
+并在连接时提供0.5.0以前的库的地址来使用
+（关于如何使用命令行编译器进行连接，请参见 <a class="reference internal" href="using-the-compiler.html#commandline-compiler"><span class="std std-ref">使用命令行编译器</span></a>）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8g6L+Z5ZyoMC42LjDniYjmnKzkuYvlkI7lsIbml6Dms5XnvJbor5HjgIIKLy8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjUuMDsKCmxpYnJhcnkgT2xkTGlicmFyeSB7CiAgICBmdW5jdGlvbiBzb21lRnVuY3Rpb24odWludDggYSkgcHVibGljIHJldHVybnMoYm9vbCk7Cn0KCmNvbnRyYWN0IE5ld0NvbnRyYWN0IHsKICAgIGZ1bmN0aW9uIGYodWludDggYSkgcHVibGljIHJldHVybnMgKGJvb2wpIHsKICAgICAgICByZXR1cm4gT2xkTGlicmFyeS5zb21lRnVuY3Rpb24oYSk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// 这在0.6.0版本之后将无法编译。</span>
+<span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.5.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">library</span><span class="w"> </span>OldLibrary<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">someFunction</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="p">(</span><span class="kt">bool</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">NewContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>OldLibrary<span class="p">.</span>someFunction<span class="p">(</span>a<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h2>示例<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<p>下面的例子显示了Solidity 0.5.0 版本的合约及其更新版本，其中包括本节中列出的一些变化。</p>
+<p>Old version:</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjQuMjU7Ci8vIOi/meWcqDAuNS4w54mI5pys5LmL5ZCO5bCG5peg5rOV57yW6K+R44CCCgpjb250cmFjdCBPdGhlckNvbnRyYWN0IHsKICAgIHVpbnQgeDsKICAgIGZ1bmN0aW9uIGYodWludCB5KSBleHRlcm5hbCB7CiAgICAgICAgeCA9IHk7CiAgICB9CiAgICBmdW5jdGlvbigpIHBheWFibGUgZXh0ZXJuYWwge30KfQoKY29udHJhY3QgT2xkIHsKICAgIE90aGVyQ29udHJhY3Qgb3RoZXI7CiAgICB1aW50IG15TnVtYmVyOwoKICAgIC8vIOayoeacieaPkOS+m+WHveaVsOeahOWPr+WPmOaAp++8jOS4jeaYr+mUmeivr+OAggogICAgZnVuY3Rpb24gc29tZUludGVnZXIoKSBpbnRlcm5hbCByZXR1cm5zICh1aW50KSB7IHJldHVybiAyOyB9CgogICAgLy8g5rKh5pyJ5o+Q5L6b5Ye95pWw55qE5Y+v6KeB5oCn77yM5LiN5piv6ZSZ6K+v44CCCiAgICAvLyDmsqHmnInmj5Dkvpvlh73mlbDnmoTlj6/lj5jmgKfvvIzkuI3mmK/plJnor6/jgIIKICAgIGZ1bmN0aW9uIGYodWludCB4KSByZXR1cm5zIChieXRlcykgewogICAgICAgIC8vIOWcqOi/meS4queJiOacrOS4re+8jHZhcuaYr+WPr+S7peS9v+eUqOeahOOAggogICAgICAgIHZhciB6ID0gc29tZUludGVnZXIoKTsKICAgICAgICB4ICs9IHo7CiAgICAgICAgLy8g5Zyo6L+Z5Liq54mI5pys5Lit77yMdGhyb3fmmK/lj6/ku6Xkvb/nlKjnmoTjgIIKICAgICAgICBpZiAoeCA+IDEwMCkKICAgICAgICAgICAgdGhyb3c7CiAgICAgICAgYnl0ZXMgbWVtb3J5IGIgPSBuZXcgYnl0ZXMoeCk7CiAgICAgICAgeSA9IC0zID4+IDE7CiAgICAgICAgLy8geSA9PSAtMe+8iOmUme+8jOW6lOivpeaYry0y77yJ44CCCiAgICAgICAgZG8gewogICAgICAgICAgICB4ICs9IDE7CiAgICAgICAgICAgIGlmICh4ID4gMTApIGNvbnRpbnVlOwogICAgICAgICAgICAvLyAnQ29udGludWUnIOS8muWvvOiHtOaXoOmZkOW+queOr+OAggogICAgICAgIH0gd2hpbGUgKHggPCAxMSk7CiAgICAgICAgLy8g6LCD55So5Y+q6L+U5Zue5LiA5Liq5biD5bCU5YC844CCCiAgICAgICAgYm9vbCBzdWNjZXNzID0gYWRkcmVzcyhvdGhlcikuY2FsbCgiZiIpOwogICAgICAgIGlmICghc3VjY2VzcykKICAgICAgICAgICAgcmV2ZXJ0KCk7CiAgICAgICAgZWxzZSB7CiAgICAgICAgICAgIC8vIOWxgOmDqOWPmOmHj+WPr+S7peWcqOWFtuS9v+eUqOWQjuWjsOaYjuOAggogICAgICAgICAgICBpbnQgeTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIGI7CiAgICB9CgogICAgLy/kuI3pnIDopoHkuLonYXJyJ+iuvue9ruaYjuehrueahOaVsOaNruS9jee9rgogICAgZnVuY3Rpb24gZyh1aW50W10gYXJyLCBieXRlczggeCwgT3RoZXJDb250cmFjdCBvdGhlckNvbnRyYWN0KSBwdWJsaWMgewogICAgICAgIG90aGVyQ29udHJhY3QudHJhbnNmZXIoMSBldGhlcik7CgogICAgICAgIC8vIOeUseS6jnVpbnQzMu+8iDTkuKrlrZfoioLvvInlsI/kuo5ieXRlOO+8iDjkuKrlrZfoioLvvInvvIwKICAgICAgICAvLyB455qE5YmNNOS4quWtl+iKguWwhuiiq+S4ouWkseOAggogICAgICAgIC8vIOi/meWPr+iDveS8muWvvOiHtOaEj+aDs+S4jeWIsOeahOihjOS4uu+8jOWboOS4umJ5dGVzWOaYr+WQkeWPs+Whq+WFheeahOOAggogICAgICAgIHVpbnQzMiB5ID0gdWludDMyKHgpOwogICAgICAgIG15TnVtYmVyICs9IHkgKyBtc2cudmFsdWU7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.4.25</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 这在0.5.0版本之后将无法编译。</span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">OtherContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span>y<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="p">()</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Old</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>OtherContract<span class="w"> </span>other<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">myNumber</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 没有提供函数的可变性，不是错误。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">someInteger</span><span class="p">()</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 没有提供函数的可见性，不是错误。</span>
+<span class="w">    </span><span class="c1">// 没有提供函数的可变性，不是错误。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bytes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 在这个版本中，var是可以使用的。</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span>z<span class="w"> </span><span class="o">=</span><span class="w"> </span>someInteger<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">+=</span><span class="w"> </span>z<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 在这个版本中，throw是可以使用的。</span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>x<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">100</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="kt">throw</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>b<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span><span class="kt">bytes</span><span class="p">(</span>x<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>y<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="m m-Decimal">3</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// y == -1（错，应该是-2）。</span>
+<span class="w">        </span><span class="kt">do</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>x<span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>x<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">10</span><span class="p">)</span><span class="w"> </span><span class="kt">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// &#39;Continue&#39; 会导致无限循环。</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="kt">while</span><span class="w"> </span><span class="p">(</span>x<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m m-Decimal">11</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 调用只返回一个布尔值。</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span>other<span class="p">).</span>call<span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span>success<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="kt">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 局部变量可以在其使用后声明。</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="nv">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>b<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">//不需要为&#39;arr&#39;设置明确的数据位置</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">(</span><span class="kt">uint</span><span class="p">[]</span><span class="w"> </span>arr<span class="p">,</span><span class="w"> </span><span class="kt">bytes8</span><span class="w"> </span><span class="nv">x</span><span class="p">,</span><span class="w"> </span>OtherContract<span class="w"> </span>otherContract<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>otherContract<span class="p">.</span>transfer<span class="p">(</span><span class="m m-Decimal">1</span><span class="w"> </span>ether<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 由于uint32（4个字节）小于byte8（8个字节），</span>
+<span class="w">        </span><span class="c1">// x的前4个字节将被丢失。</span>
+<span class="w">        </span><span class="c1">// 这可能会导致意想不到的行为，因为bytesX是向右填充的。</span>
+<span class="w">        </span><span class="kt">uint32</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint32</span><span class="p">(</span>x<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>myNumber<span class="w"> </span><span class="o">+=</span><span class="w"> </span>y<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>新版本：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjUuMDsKLy8g6L+Z5ZyoMC42LjDniYjmnKzkuYvlkI7lsIbml6Dms5XnvJbor5HjgIIKCmNvbnRyYWN0IE90aGVyQ29udHJhY3QgewogICAgdWludCB4OwogICAgZnVuY3Rpb24gZih1aW50IHkpIGV4dGVybmFsIHsKICAgICAgICB4ID0geTsKICAgIH0KICAgIGZ1bmN0aW9uKCkgcGF5YWJsZSBleHRlcm5hbCB7fQp9Cgpjb250cmFjdCBOZXcgewogICAgT3RoZXJDb250cmFjdCBvdGhlcjsKICAgIHVpbnQgbXlOdW1iZXI7CgogICAgLy8g5b+F6aG75oyH5a6a5Ye95pWw55qE5Y+v5Y+Y5oCn44CCCiAgICBmdW5jdGlvbiBzb21lSW50ZWdlcigpIGludGVybmFsIHB1cmUgcmV0dXJucyAodWludCkgeyByZXR1cm4gMjsgfQoKICAgIC8vIOW/hemhu+aMh+WumuWHveaVsOeahOWPr+ingeaAp+OAggogICAgLy8g5b+F6aG75oyH5a6a5Ye95pWw55qE5Y+v5Y+Y5oCn44CCCiAgICBmdW5jdGlvbiBmKHVpbnQgeCkgcHVibGljIHJldHVybnMgKGJ5dGVzIG1lbW9yeSkgewogICAgICAgIC8vIOeOsOWcqOW/hemhu+aYjuehruWcsOe7meWHuuexu+Wei+OAggogICAgICAgIHVpbnQgeiA9IHNvbWVJbnRlZ2VyKCk7CiAgICAgICAgeCArPSB6OwogICAgICAgIC8vIOeOsOWcqOS4jeWFgeiuuOS9v+eUqHRocm9344CCCiAgICAgICAgcmVxdWlyZSh4IDw9IDEwMCk7CiAgICAgICAgaW50IHkgPSAtMyA+PiAxOwogICAgICAgIHJlcXVpcmUoeSA9PSAtMik7CiAgICAgICAgZG8gewogICAgICAgICAgICB4ICs9IDE7CiAgICAgICAgICAgIGlmICh4ID4gMTApIGNvbnRpbnVlOwogICAgICAgICAgICAvLyAnQ29udGludWUn6Lez6L2s5Yiw5LiL6Z2i55qE5p2h5Lu244CCCiAgICAgICAgfSB3aGlsZSAoeCA8IDExKTsKCiAgICAgICAgLy8gY2FsbOi/lOWbnuWAvOS4uihib29sLCBieXRlcykuCiAgICAgICAgLy8g5b+F6aG75oyH5a6a5pWw5o2u5L2N572u44CCCiAgICAgICAgKGJvb2wgc3VjY2VzcywgYnl0ZXMgbWVtb3J5IGRhdGEpID0gYWRkcmVzcyhvdGhlcikuY2FsbCgiZiIpOwogICAgICAgIGlmICghc3VjY2VzcykKICAgICAgICAgICAgcmV2ZXJ0KCk7CiAgICAgICAgcmV0dXJuIGRhdGE7CiAgICB9CgogICAgdXNpbmcgQWRkcmVzc01ha2VQYXlhYmxlIGZvciBhZGRyZXNzOwogICAgLy8g5b+F6aG75oyH5a6aJ2FycifnmoTmlbDmja7kvY3nva4KICAgIGZ1bmN0aW9uIGcodWludFtdIG1lbW9yeSAvKiBhcnIgKi8sIGJ5dGVzOCB4LCBPdGhlckNvbnRyYWN0IG90aGVyQ29udHJhY3QsIGFkZHJlc3MgdW5rbm93bkNvbnRyYWN0KSBwdWJsaWMgcGF5YWJsZSB7CiAgICAgICAgLy8g5rKh5pyJ5o+Q5L6bJ290aGVyQ29udHJhY3QudHJhbnNmZXIn44CCCiAgICAgICAgLy8g55Sx5LqOJ090aGVyQ29udHJhY3Qn55qE5Luj56CB5piv5bey55+l55qE77yM5bm25LiU5YW35pyJ5Zue6YCA5Yqf6IO977yMCiAgICAgICAgLy8gYWRkcmVzcyhvdGhlckNvbnRyYWN0KeWFt+aciSdhZGRyZXNzIHBheWFibGUn57G75Z6L44CCCiAgICAgICAgYWRkcmVzcyhvdGhlckNvbnRyYWN0KS50cmFuc2ZlcigxIGV0aGVyKTsKCiAgICAgICAgLy8g5rKh5pyJ5o+Q5L6bJ3Vua25vd25Db250cmFjdC50cmFuc2ZlcifjgIIKICAgICAgICAvLyDmsqHmnInmj5DkvpsnYWRkcmVzcyh1bmtub3duQ29udHJhY3QpLnRyYW5zZmVyJwogICAgICAgIC8vIOWboOS4uidhZGRyZXNzKHVua25vd25Db250cmFjdCkn5LiN5pivJ2FkZHJlc3MgcGF5YWJsZSfnsbvlnovjgIIKICAgICAgICAvLyDlpoLmnpzor6Xlh73mlbDpnIDopoHkuIDkuKrmgqjmg7Plj5HpgIHotYTph5HnmoQnYWRkcmVzcyfnsbvlnovvvIwKICAgICAgICAvLyDmgqjlj6/ku6XpgJrov4cndWludDE2MCflsIblhbbovazmjaLkuLonYWRkcmVzcyBwYXlhYmxlJ+exu+Wei+OAggogICAgICAgIC8vIOazqOaEj++8muS4jeW7uuiurui/meagt+WBmu+8jOW6lOWwveWPr+iDveS9v+eUqOaYjuehrueahCdhZGRyZXNzIHBheWFibGUn57G75Z6L44CCCiAgICAgICAgLy8g5Li65LqG5o+Q6auY5piO56Gu5oCn77yM5oiR5Lus5bu66K6u5L2/55So5LiA5Liq5bqT5p2l6L+b6KGM6L2s5o2i77yI5Zyo6L+Z5Liq5L6L5a2Q5Lit55qE5ZCI5ZCM5ZCO6Z2i5o+Q5L6b77yJ44CCCiAgICAgICAgYWRkcmVzcyBwYXlhYmxlIGFkZHIgPSB1bmtub3duQ29udHJhY3QubWFrZVBheWFibGUoKTsKICAgICAgICByZXF1aXJlKGFkZHIuc2VuZCgxIGV0aGVyKSk7CgogICAgICAgIC8vIOeUseS6jnVpbnQzMu+8iDTlrZfoioLvvInlsI/kuo5ieXRlczjvvIg45a2X6IqC77yJ77yMCiAgICAgICAgLy8g5omA5Lul5LiN5YWB6K646L+b6KGM6L2s5o2i44CCCiAgICAgICAgLy8g5oiR5Lus6ZyA6KaB5YWI6L2s5o2i5Yiw5LiA5Liq6YCa55So55qE5aSn5bCP77yaCiAgICAgICAgYnl0ZXM0IHg0ID0gYnl0ZXM0KHgpOyAvLyBQYWRkaW5nIGhhcHBlbnMgb24gdGhlIHJpZ2h0CiAgICAgICAgdWludDMyIHkgPSB1aW50MzIoeDQpOyAvLyBDb252ZXJzaW9uIGlzIGNvbnNpc3RlbnQKICAgICAgICAvLyAnbXNnLnZhbHVlJ+S4jeiDveeUqOWcqCfpnZ5wYXlhYmxlJ+exu+Wei+eahOWHveaVsOS4reOAggogICAgICAgIC8vIOaIkeS7rOmcgOimgeaKiuWHveaVsOWPmOaIkHBheWFibGXnsbvlnosKICAgICAgICBteU51bWJlciArPSB5ICsgbXNnLnZhbHVlOwogICAgfQp9CgovLyDmiJHku6zlj6/ku6XlrprkuYnkuIDkuKrlupPvvIzlsIYgYGBhZGRyZXNzYGAg57G75Z6L5piO56Gu6L2s5o2i5Li6IGBgYWRkcmVzcyBwYXlhYmxlYGAg57G75Z6L77yM5L2c5Li65LiA56eN5Y+Y6YCa5pa55rOV44CCCmxpYnJhcnkgQWRkcmVzc01ha2VQYXlhYmxlIHsKICAgIGZ1bmN0aW9uIG1ha2VQYXlhYmxlKGFkZHJlc3MgeCkgaW50ZXJuYWwgcHVyZSByZXR1cm5zIChhZGRyZXNzIHBheWFibGUpIHsKICAgICAgICByZXR1cm4gYWRkcmVzcyh1aW50MTYwKHgpKTsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.5.0</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 这在0.6.0版本之后将无法编译。</span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">OtherContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span>y<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="p">()</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">New</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>OtherContract<span class="w"> </span>other<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">myNumber</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 必须指定函数的可变性。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">someInteger</span><span class="p">()</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 必须指定函数的可见性。</span>
+<span class="w">    </span><span class="c1">// 必须指定函数的可变性。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 现在必须明确地给出类型。</span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>someInteger<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">+=</span><span class="w"> </span>z<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 现在不允许使用throw。</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>x<span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m m-Decimal">100</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="m m-Decimal">3</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>y<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="m m-Decimal">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">do</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>x<span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>x<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">10</span><span class="p">)</span><span class="w"> </span><span class="kt">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// &#39;Continue&#39;跳转到下面的条件。</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="kt">while</span><span class="w"> </span><span class="p">(</span>x<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m m-Decimal">11</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// call返回值为(bool, bytes).</span>
+<span class="w">        </span><span class="c1">// 必须指定数据位置。</span>
+<span class="w">        </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>data<span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span>other<span class="p">).</span>call<span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span>success<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>data<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span>using<span class="w"> </span>AddressMakePayable<span class="w"> </span><span class="kt">for</span><span class="w"> </span><span class="kt">address</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 必须指定&#39;arr&#39;的数据位置</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">(</span><span class="kt">uint</span><span class="p">[]</span><span class="w"> </span><span class="kt">memory</span><span class="w"> </span><span class="cm">/* arr */</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes8</span><span class="w"> </span><span class="nv">x</span><span class="p">,</span><span class="w"> </span>OtherContract<span class="w"> </span>otherContract<span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">unknownContract</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 没有提供&#39;otherContract.transfer&#39;。</span>
+<span class="w">        </span><span class="c1">// 由于&#39;OtherContract&#39;的代码是已知的，并且具有回退功能，</span>
+<span class="w">        </span><span class="c1">// address(otherContract)具有&#39;address payable&#39;类型。</span>
+<span class="w">        </span><span class="kt">address</span><span class="p">(</span>otherContract<span class="p">).</span>transfer<span class="p">(</span><span class="m m-Decimal">1</span><span class="w"> </span>ether<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 没有提供&#39;unknownContract.transfer&#39;。</span>
+<span class="w">        </span><span class="c1">// 没有提供&#39;address(unknownContract).transfer&#39;</span>
+<span class="w">        </span><span class="c1">// 因为&#39;address(unknownContract)&#39;不是&#39;address payable&#39;类型。</span>
+<span class="w">        </span><span class="c1">// 如果该函数需要一个您想发送资金的&#39;address&#39;类型，</span>
+<span class="w">        </span><span class="c1">// 您可以通过&#39;uint160&#39;将其转换为&#39;address payable&#39;类型。</span>
+<span class="w">        </span><span class="c1">// 注意：不建议这样做，应尽可能使用明确的&#39;address payable&#39;类型。</span>
+<span class="w">        </span><span class="c1">// 为了提高明确性，我们建议使用一个库来进行转换（在这个例子中的合同后面提供）。</span>
+<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>addr<span class="w"> </span><span class="o">=</span><span class="w"> </span>unknownContract<span class="p">.</span>makePayable<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>addr<span class="p">.</span>send<span class="p">(</span><span class="m m-Decimal">1</span><span class="w"> </span>ether<span class="p">));</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 由于uint32（4字节）小于bytes8（8字节），</span>
+<span class="w">        </span><span class="c1">// 所以不允许进行转换。</span>
+<span class="w">        </span><span class="c1">// 我们需要先转换到一个通用的大小：</span>
+<span class="w">        </span>bytes4<span class="w"> </span>x4<span class="w"> </span><span class="o">=</span><span class="w"> </span>bytes4<span class="p">(</span>x<span class="p">);</span><span class="w"> </span><span class="c1">// Padding happens on the right</span>
+<span class="w">        </span><span class="kt">uint32</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint32</span><span class="p">(</span>x4<span class="p">);</span><span class="w"> </span><span class="c1">// Conversion is consistent</span>
+<span class="w">        </span><span class="c1">// &#39;msg.value&#39;不能用在&#39;非payable&#39;类型的函数中。</span>
+<span class="w">        </span><span class="c1">// 我们需要把函数变成payable类型</span>
+<span class="w">        </span>myNumber<span class="w"> </span><span class="o">+=</span><span class="w"> </span>y<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// 我们可以定义一个库，将 ``address`` 类型明确转换为 ``address payable`` 类型，作为一种变通方法。</span>
+<span class="kt">library</span><span class="w"> </span>AddressMakePayable<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">makePayable</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span>x<span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="abi-spec.html" class="btn btn-neutral float-left" title="合约ABI规范" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="060-breaking-changes.html" class="btn btn-neutral float-right" title="Solidity 0.6.0 版本突破性变化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

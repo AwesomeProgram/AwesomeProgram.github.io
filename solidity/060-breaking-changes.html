@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity 0.6.0 版本突破性变化 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solidity v0.7.0 突破性变化" href="070-breaking-changes.html" />
+    <link rel="prev" title="Solidity v0.5.0 突破性变化" href="050-breaking-changes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity 0.6.0 版本突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">编译器可能不会发出警告的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">显性要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">语义和语法变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">新功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">接口变化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">新的错误报告器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">元数据哈希选项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yul">Yul 优化器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-api">C API 变化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">如何更新您的代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity 0.6.0 版本突破性变化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/060-breaking-changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity-0-6-0">
+<h1>Solidity 0.6.0 版本突破性变化<a class="headerlink" href="#solidity-0-6-0" title="Permalink to this heading"></a></h1>
+<p>本节强调了 Solidity 0.6.0 版本中引入的主要突破性变化，以及这些变化背后的原因和如何更新受影响的代码。
+对于完整的列表，请查看 <a class="reference external" href="https://github.com/ethereum/solidity/releases/tag/v0.6.0">版本更新日志</a>。</p>
+<section id="id2">
+<h2>编译器可能不会发出警告的变化<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>本节列出了一些变化，在这些变化中，您的代码的行为可能会发生变化，而编译器不会告诉您。</p>
+<ul class="simple">
+<li><p>指数运算的结果类型是基数的类型。
+就像对称运算一样，它曾经是可以同时容纳基数类型和指数类型的最小类型。
+此外，指数化的基数允许是有符号的类型。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>显性要求<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>这一节列出了代码现在需要更显式的更改，但是语义没有改变。
+对于大多数主题，编译器会提供建议。</p>
+<ul class="simple">
+<li><p>现在，只有当函数被标记为 <code class="docutils literal notranslate"><span class="pre">virtual</span></code> 关键字或被定义在一个接口中时，才能被重载。
+在接口之外没有实现的函数必须被标记为 <code class="docutils literal notranslate"><span class="pre">virtual</span></code>。
+当重载一个函数或修改器时，必须使用新的关键字 <code class="docutils literal notranslate"><span class="pre">override</span></code>。
+当重载一个定义在多个并行基类的函数或修改器时，所有基必须在关键字后面的括号中列出，
+像这样： <code class="docutils literal notranslate"><span class="pre">override(Base1,</span> <span class="pre">Base2)</span></code>。</p></li>
+<li><p>成员对数组的 <code class="docutils literal notranslate"><span class="pre">length</span></code> 的访问现在总是只读的，即使是存储数组。
+不再可能通过给存储数组的长度分配一个新值来调整其大小。
+使用 <code class="docutils literal notranslate"><span class="pre">push()</span></code>， <code class="docutils literal notranslate"><span class="pre">push(value)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">pop()</span></code> 代替，
+或者分配一个完整的数组，当然这将覆盖现有内容。
+这背后的原因是为了防止巨大的存储阵列的存储碰撞。</p></li>
+<li><p>新的关键字 <code class="docutils literal notranslate"><span class="pre">abstract</span></code> 可以用来标记合约为抽象的。
+如果一个合约没有实现它的所有功能，就必须使用这个关键字。抽象合约不能用 <code class="docutils literal notranslate"><span class="pre">new</span></code> 操作符创建，
+在编译过程中也不可能为其生成字节码。</p></li>
+<li><p>库合约必须实现其所有功能，而不仅仅是内部功能。</p></li>
+<li><p>在内联汇编中声明的变量名称不能再以 <code class="docutils literal notranslate"><span class="pre">_slot</span></code> 或 <code class="docutils literal notranslate"><span class="pre">_offset</span></code> 结尾。</p></li>
+<li><p>内联汇编中的变量声明不能再影射内联汇编块外的任何声明。
+如果变量名称中包含一个点，那么它的前缀到点的部分不能与内联汇编块外的任何声明冲突。</p></li>
+<li><p>现在不允许状态变量阴影。 一个派生合约只能声明一个状态变量 <code class="docutils literal notranslate"><span class="pre">x</span></code>，
+如果在它的任何基础上没有相同名称的可见状态变量。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>语义和语法变化<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>这一部分列出了您必须修改您的代码，而之后它又做了一些别的事情的变化。</p>
+<ul class="simple">
+<li><p>现在不允许从外部函数类型转换为 <code class="docutils literal notranslate"><span class="pre">address</span></code> 类型。
+相反，外部函数类型有一个叫做 <code class="docutils literal notranslate"><span class="pre">address</span></code> 的成员，类似于现有的 <code class="docutils literal notranslate"><span class="pre">selector</span></code> 成员。</p></li>
+<li><p>动态存储数组的函数 <code class="docutils literal notranslate"><span class="pre">push(value)</span></code> 不再返回新的长度（它什么也不返回）。</p></li>
+<li><p>通常被称为 “回退函数” 的无名函数被拆分为一个新的回退函数，该函数使用 <code class="docutils literal notranslate"><span class="pre">fallback</span></code> 关键字定义，
+并使用 <code class="docutils literal notranslate"><span class="pre">receive</span></code> 关键字定义一个接收以太的函数。</p>
+<ul>
+<li><p>如果存在，每当调用数据为空时（无论是否收到以太），
+都会调用接收以太函数 receive。此函数是隐式的 <code class="docutils literal notranslate"><span class="pre">payable</span></code>。</p></li>
+<li><p>当没有其他函数匹配时，就会调用新的回退函数（如果接收以太的函数receive不存在，则包括调用数据为空的调用）。
+您可以让这个函数是 <code class="docutils literal notranslate"><span class="pre">payable</span></code> 函数或不是。如果它不是 <code class="docutils literal notranslate"><span class="pre">payable</span></code> 函数，
+那么不匹配任何其他发送价值的函数的交易将恢复。
+只有在采用升级或代理模式时，才需要实现新的回退函数。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h2>新功能<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>本节列出了在Solidity 0.6.0之前不可能实现或很难实现的事情。</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="control-structures.html#try-catch"><span class="std std-ref">try/catch语句</span></a> 允许您对失败的外部调用做出反应。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">struct</span></code> 和 <code class="docutils literal notranslate"><span class="pre">enum</span></code> 类型可以在文件级别声明。</p></li>
+<li><p>数组切片可以用于calldata数组，例如 <code class="docutils literal notranslate"><span class="pre">abi.decode(msg.data[4:],</span> <span class="pre">(uint,</span> <span class="pre">uint))</span></code>
+是对函数调用有效负载进行解码的低级方法。</p></li>
+<li><p>Natspec在开发者文档中支持多个返回参数，执行与 <code class="docutils literal notranslate"><span class="pre">&#64;param</span></code> 相同的命名检查。</p></li>
+<li><p>Yul 和内联汇编有一个新的语句，叫做 <code class="docutils literal notranslate"><span class="pre">leave</span></code>，可以退出当前函数。</p></li>
+<li><p>现在可以通过 <code class="docutils literal notranslate"><span class="pre">payable(x)</span></code> 将 <code class="docutils literal notranslate"><span class="pre">address</span></code> 转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>，
+其中 <code class="docutils literal notranslate"><span class="pre">x</span></code> 必须是 <code class="docutils literal notranslate"><span class="pre">address</span></code> 类型。</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>接口变化<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<p>本节列出与语言本身无关但对编译器接口有影响的更改。
+这些可能会改变您在命令行上使用编译器的方式，例如，您如何使用它的可编程接口，
+或者您如何分析它产生的输出。</p>
+<section id="id7">
+<h3>新的错误报告器<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>引入一个新的错误报告器，其目的是在命令行上产生更易访问的错误消息。
+它在默认情况下是启用的，但是通过 <code class="docutils literal notranslate"><span class="pre">--old-reporter</span></code> 可以返回到弃用的旧错误报告器。</p>
+</section>
+<section id="id8">
+<h3>元数据哈希选项<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>编译器现在默认将元数据文件的 <a class="reference external" href="https://ipfs.io/">IPFS</a> 哈希值附加到字节码的末尾
+（详见 <a class="reference internal" href="metadata.html"><span class="doc">合约元数据</span></a> ） 文档。在0.6.0之前，
+编译器默认附加了 <a class="reference external" href="https://ethersphere.github.io/swarm-home/">Swarm</a> 哈希值，
+为了仍然支持这种行为，引入了新的命令行选项 <code class="docutils literal notranslate"><span class="pre">--metadata-hash</span></code>。
+它允许您通过传递 <code class="docutils literal notranslate"><span class="pre">--metadata-hash</span></code> 命令行选项的 <code class="docutils literal notranslate"><span class="pre">ipfs</span></code> 或 <code class="docutils literal notranslate"><span class="pre">swarm</span></code> 值来选择要产生和附加的哈希。
+传递 <code class="docutils literal notranslate"><span class="pre">none</span></code> 则可以完全删除哈希。</p>
+<p>这些变化也可以通过 <a class="reference internal" href="using-the-compiler.html#compiler-api"><span class="std std-ref">标准JSON接口</span></a> 使用，并影响编译器生成的元数据JSON。</p>
+<p>读取元数据的推荐方法是读取最后两个字节，以确定CBOR编码的长度，并对该数据块进行适当的解码，
+这在 <a class="reference internal" href="metadata.html#encoding-of-the-metadata-hash-in-the-bytecode"><span class="std std-ref">元数据部分</span></a> 中有所解释。</p>
+</section>
+<section id="yul">
+<h3>Yul 优化器<a class="headerlink" href="#yul" title="Permalink to this heading"></a></h3>
+<p>与传统的字节码优化器一起，<a class="reference internal" href="yul.html"><span class="doc">Yul</span></a> 优化器现在在用 <code class="docutils literal notranslate"><span class="pre">--optimize</span></code> 参数调用编译器时默认启用。
+可以通过 <code class="docutils literal notranslate"><span class="pre">--no-optimize-yul</span></code> 参数在调用编译器时禁用它。这主要影响到使用ABI coder v2的代码。</p>
+</section>
+<section id="c-api">
+<h3>C API 变化<a class="headerlink" href="#c-api" title="Permalink to this heading"></a></h3>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">libsolc</span></code> 的C API的客户端代码现在可以控制编译器使用的内存。
+为了使这一变化保持一致， <code class="docutils literal notranslate"><span class="pre">solidity_free</span></code> 被重新命名为 <code class="docutils literal notranslate"><span class="pre">solidity_reset</span></code>，
+增加了函数 <code class="docutils literal notranslate"><span class="pre">solidity_alloc</span></code> 和 <code class="docutils literal notranslate"><span class="pre">solidity_free</span></code>，
+<code class="docutils literal notranslate"><span class="pre">solidity_compile</span></code> 现在返回一个必须通过 <code class="docutils literal notranslate"><span class="pre">solidity_free()</span></code> 显式释放的字符串。</p>
+</section>
+</section>
+<section id="id9">
+<h2>如何更新您的代码<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<p>本节详细说明了如何为每一个突破性变化更新先前的代码。</p>
+<ul class="simple">
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">address(f)</span></code>  改为 <code class="docutils literal notranslate"><span class="pre">f.address</span></code>，因为 <code class="docutils literal notranslate"><span class="pre">f</span></code> 是外部函数类型。</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">receive()</span> <span class="pre">external</span> <span class="pre">payable</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>， <code class="docutils literal notranslate"><span class="pre">fallback()</span> <span class="pre">external</span> <span class="pre">[payable]</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>
+或这两个函数一起来替换 <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">()</span> <span class="pre">external</span> <span class="pre">[payable]</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>。
+只要有可能，最好只使用 <code class="docutils literal notranslate"><span class="pre">receive</span></code> 函数。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">uint</span> <span class="pre">length</span> <span class="pre">=</span> <span class="pre">array.push(value)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">array.push(value);</span></code>。
+新的长度可以通过 <code class="docutils literal notranslate"><span class="pre">array.length</span></code> 访问。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">array.length++</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">array.push()</span></code> 来增加数组长度，使用 <code class="docutils literal notranslate"><span class="pre">pop()</span></code> 来减少存储数组的长度。</p></li>
+<li><p>在一个函数的 <code class="docutils literal notranslate"><span class="pre">&#64;dev</span></code> 文档中，为每个命名的返回参数定义一个 <code class="docutils literal notranslate"><span class="pre">&#64;return</span></code> 条目，
+将参数的名称作为第一个词。例如，
+如果您有定义为 <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f()</span> <span class="pre">public</span> <span class="pre">returns</span> <span class="pre">(uint</span> <span class="pre">value)</span></code> 的函数 <code class="docutils literal notranslate"><span class="pre">f()</span></code>，
+并且有 <code class="docutils literal notranslate"><span class="pre">&#64;dev</span></code> 注释，那么记录它的返回参数如下： <code class="docutils literal notranslate"><span class="pre">&#64;return</span> <span class="pre">value</span> <span class="pre">The</span> <span class="pre">return</span> <span class="pre">value.</span></code>。
+您可以混合使用命名的和未命名的返回参数文档，只要这些声明是按照它们在元组返回类型中出现的顺序即可。</p></li>
+<li><p>为内联汇编中的变量声明选择唯一的标识符，不与内联汇编块外的声明冲突。</p></li>
+<li><p>在每一个您打算重载的非接口函数上添加 <code class="docutils literal notranslate"><span class="pre">virtual</span></code>。
+在所有没有具体实现的接口之外的函数上添加 <code class="docutils literal notranslate"><span class="pre">virtual</span></code>。
+对于单继承，在每个重载的函数上添加 <code class="docutils literal notranslate"><span class="pre">override</span></code>。对于多重继承，添加 <code class="docutils literal notranslate"><span class="pre">override(A,</span> <span class="pre">B,</span> <span class="pre">..)</span></code>，
+在括号中列出所有定义了重载函数的合约。当多个基类定义同一个函数时，继承的合约必须重载所有冲突的函数。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="050-breaking-changes.html" class="btn btn-neutral float-left" title="Solidity v0.5.0 突破性变化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="070-breaking-changes.html" class="btn btn-neutral float-right" title="Solidity v0.7.0 突破性变化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

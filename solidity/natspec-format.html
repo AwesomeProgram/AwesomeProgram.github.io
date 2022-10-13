@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>风格指南 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="安全考虑" href="security-considerations.html" />
+    <link rel="prev" title="Solidity v0.8.0 突破性变化" href="080-breaking-changes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">风格指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#header-doc-example">文档示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#header-tags">标签</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-dynamic">动态表达方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-inheritance">继承说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#header-output">文件输出</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#header-user-doc">用户文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#header-developer-doc">开发者文档</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>风格指南</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/natspec-format.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="natspec">
+<span id="id1"></span><h1>风格指南<a class="headerlink" href="#natspec" title="Permalink to this heading"></a></h1>
+<p>Solidity合约可以使用一种特殊形式的注释来为函数，返回变量等提供丰富的文档。
+这种特殊形式被命名为Ethereum自然语言规范格式（NatSpec）。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>NatSpec是受 <a class="reference external" href="https://en.wikipedia.org/wiki/Doxygen">Doxygen</a> 的启发。
+虽然它使用Doxygen风格的注释和标签，但并不打算与Doxygen保持严格的兼容性。
+请仔细检查下面列出的支持的标签。</p>
+</div>
+<p>该文件被划分为以开发人员为中心的信息和面向最终用户的信息。
+这些信息可以在终端用户（人类）与合约交互（即签署交易）时显示给他们。</p>
+<p>建议 Solidity 合约使用 NatSpec 对所有公共接口（ABI中的一切）进行完全地注释。</p>
+<p>NatSpec 包括智能合约作者将使用的注释的格式，
+这些注释可被 Solidity 编译器理解。
+下面还详细介绍了 Solidity 编译器的输出，
+它将这些注释提取为机器可读的格式。</p>
+<p>NatSpec 也可以包括第三方工具使用的注释。
+这些最可能是通过 <code class="docutils literal notranslate"><span class="pre">&#64;custom:&lt;name&gt;</span></code> 标签完成的，
+一个好的用例是分析和验证工具就是如此。</p>
+<section id="header-doc-example">
+<span id="id2"></span><h2>文档示例<a class="headerlink" href="#header-doc-example" title="Permalink to this heading"></a></h2>
+<p>文档可以通过使用 Doxygen 符号格式来嵌入到每个 <code class="docutils literal notranslate"><span class="pre">contract</span></code>， <code class="docutils literal notranslate"><span class="pre">interface</span></code>， <code class="docutils literal notranslate"><span class="pre">library</span></code>，
+<code class="docutils literal notranslate"><span class="pre">function</span></code> 和 <code class="docutils literal notranslate"><span class="pre">event</span></code> 之上。在 NatSpec 中， <code class="docutils literal notranslate"><span class="pre">public</span></code> 状态变量等同于 <code class="docutils literal notranslate"><span class="pre">function</span></code>。</p>
+<ul class="simple">
+<li><p>对于Solidity，您可以选择 <code class="docutils literal notranslate"><span class="pre">///</span></code> 用于单行注释
+或以 <code class="docutils literal notranslate"><span class="pre">/**</span></code> 开始，并以 <code class="docutils literal notranslate"><span class="pre">*/</span></code> 结束的符号用于多行注释</p></li>
+<li><p>对于Vyper来说，使用 <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;&quot;</span></code> 缩进到内部内容来裸注释（译者注：无标记符号注释）。
+参见 <a class="reference external" href="https://vyper.readthedocs.io/en/latest/natspec.html">Vyper 文档</a>。</p></li>
+</ul>
+<p>下面的例子显示了一个合约和一个使用所有可用标记的函数。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Solidity 编译器只在标签是外部或公共的情况下才进行解析。
+但也欢迎您为您的内部和私有函数使用类似的注释，不过这些不会被解析。</p>
+<p>这在未来可能会发生变化。</p>
+</div>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjIgPCAwLjkuMDsKCi8vLyBAdGl0bGUg5qCR55qE5qih5ouf5ZmoCi8vLyBAYXV0aG9yIExhcnJ5IEEuIEdhcmRuZXIKLy8vIEBub3RpY2Ug5oKo5Y+q6IO95bCG5q2k5ZCI57qm55So5LqO5pyA5Z+65pys55qE5qih5ouf44CCCi8vLyBAZGV2IOebruWJjeaJgOacieeahOWHveaVsOiwg+eUqOmDveaYr+WcqOayoeacieWJr+S9nOeUqOeahOaDheWGteS4i+WunueOsOeahAovLy8gQGN1c3RvbTpleHBlcmltZW50YWwg6L+Z5piv5LiA5Liq5a6e6aqM5oCn55qE5ZCI57qm44CCCmNvbnRyYWN0IFRyZWUgewogICAgLy8vIEBub3RpY2Ug6K6h566X5rS75L2T5qCR5pyo55qE5qCR6b6E77yM5oyJ5Zub6IiN5LqU5YWl6K6h566XCiAgICAvLy8gQGRldiBBbGV4YW5kciBOLiBUZXRlYXJpbmcg566X5rOV5Y+v5Lul5o+Q6auY57K+56Gu5bqmCiAgICAvLy8gQHBhcmFtIHJpbmdzIOagkem+hOWtpuagt+acrOeahOeOr+aVsAogICAgLy8vIEByZXR1cm4g5qCR6b6E77yI5bKB77yJ77yM6YOo5YiG5bm05Lu95Zub6IiN5LqU5YWlCiAgICBmdW5jdGlvbiBhZ2UodWludDI1NiByaW5ncykgZXh0ZXJuYWwgdmlydHVhbCBwdXJlIHJldHVybnMgKHVpbnQyNTYpIHsKICAgICAgICByZXR1cm4gcmluZ3MgKyAxOwogICAgfQoKICAgIC8vLyBAbm90aWNlIOi/lOWbnuivpeagkeeahOWPtuWtkOaVsOmHj+OAggogICAgLy8vIEBkZXYg5Zyo5q2k5Y+q5piv6L+U5Zue5LqG5LiA5Liq5Zu65a6a55qE5pWw5a2X44CCCiAgICBmdW5jdGlvbiBsZWF2ZXMoKSBleHRlcm5hbCB2aXJ0dWFsIHB1cmUgcmV0dXJucyh1aW50MjU2KSB7CiAgICAgICAgcmV0dXJuIDI7CiAgICB9Cn0KCmNvbnRyYWN0IFBsYW50IHsKICAgIGZ1bmN0aW9uIGxlYXZlcygpIGV4dGVybmFsIHZpcnR1YWwgcHVyZSByZXR1cm5zKHVpbnQyNTYpIHsKICAgICAgICByZXR1cm4gMzsKICAgIH0KfQoKY29udHJhY3QgS3VtcXVhdFRyZWUgaXMgVHJlZSwgUGxhbnQgewogICAgZnVuY3Rpb24gYWdlKHVpbnQyNTYgcmluZ3MpIGV4dGVybmFsIG92ZXJyaWRlIHB1cmUgcmV0dXJucyAodWludDI1NikgewogICAgICAgIHJldHVybiByaW5ncyArIDI7CiAgICB9CgogICAgLy8vIOi/lOWbnui/meenjeeJueWumuexu+Wei+eahOagkeeahOWPtuWtkOaVsOmHj+OAggogICAgLy8vIEBpbmhlcml0ZG9jIFRyZWUg5ZCI57qmCiAgICBmdW5jdGlvbiBsZWF2ZXMoKSBleHRlcm5hbCBvdmVycmlkZShUcmVlLCBQbGFudCkgcHVyZSByZXR1cm5zKHVpbnQyNTYpIHsKICAgICAgICByZXR1cm4gMzsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// </span><span class="cs">SPDX-License-Identifier:</span><span class="c1"> GPL-3.0</span>
+<span class="k">pragma solidity</span> <span class="o">&gt;=</span><span class="mf">0.8</span><span class="p">.</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">/// </span><span class="cs">@title</span><span class="c1"> 树的模拟器</span>
+<span class="c1">/// </span><span class="cs">@author</span><span class="c1"> Larry A. Gardner</span>
+<span class="c1">/// </span><span class="cs">@notice</span><span class="c1"> 您只能将此合约用于最基本的模拟。</span>
+<span class="c1">/// </span><span class="cs">@dev</span><span class="c1"> 目前所有的函数调用都是在没有副作用的情况下实现的</span>
+<span class="c1">/// </span><span class="cs">@custom:experimental</span><span class="c1"> 这是一个实验性的合约。</span>
+<span class="kd">contract</span> <span class="n">Tree</span> <span class="p">{</span>
+    <span class="c1">/// </span><span class="cs">@notice</span><span class="c1"> 计算活体树木的树龄，按四舍五入计算</span>
+    <span class="c1">/// </span><span class="cs">@dev</span><span class="c1"> Alexandr N. Tetearing 算法可以提高精确度</span>
+    <span class="c1">/// </span><span class="cs">@param</span><span class="c1"> rings 树龄学样本的环数</span>
+    <span class="c1">/// </span><span class="cs">@return</span><span class="c1"> 树龄（岁），部分年份四舍五入</span>
+    <span class="kd">function</span> <span class="n">age</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">rings</span><span class="p">)</span> <span class="k">external</span> <span class="k">virtual</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">rings</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// </span><span class="cs">@notice</span><span class="c1"> 返回该树的叶子数量。</span>
+    <span class="c1">/// </span><span class="cs">@dev</span><span class="c1"> 在此只是返回了一个固定的数字。</span>
+    <span class="kd">function</span> <span class="n">leaves</span><span class="p">()</span> <span class="k">external</span> <span class="k">virtual</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">contract</span> <span class="n">Plant</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="n">leaves</span><span class="p">()</span> <span class="k">external</span> <span class="k">virtual</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">contract</span> <span class="n">KumquatTree</span> <span class="k">is</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">Plant</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="n">age</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">rings</span><span class="p">)</span> <span class="k">external</span> <span class="k">override</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">rings</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// 返回这种特定类型的树的叶子数量。</span>
+    <span class="c1">/// </span><span class="cs">@inheritdoc</span><span class="c1"> Tree 合约</span>
+    <span class="kd">function</span> <span class="n">leaves</span><span class="p">()</span> <span class="k">external</span> <span class="k">override</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Plant</span><span class="p">)</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="header-tags">
+<span id="id3"></span><h2>标签<a class="headerlink" href="#header-tags" title="Permalink to this heading"></a></h2>
+<p>所有标签都是可选的。下表解释了每个 NatSpec 标签的目的和它可能被使用的地方。
+有一种特殊情况，如果没有使用标签，那么 Solidity 编译器将以同样的方式进行 <code class="docutils literal notranslate"><span class="pre">///</span></code> 或 <code class="docutils literal notranslate"><span class="pre">/**</span></code> 注释，
+如同它被标记为 <code class="docutils literal notranslate"><span class="pre">&#64;notice</span></code>。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 50%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>标签</p></th>
+<th class="head"></th>
+<th class="head"><p>应用于</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;title</span></code></p></td>
+<td><p>一个应该描述合约/接口的标题</p></td>
+<td><p>contract, library, interface</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;author</span></code></p></td>
+<td><p>作者的名字</p></td>
+<td><p>contract, library, interface</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;notice</span></code></p></td>
+<td><p>向终端用户解释这个东西的作用</p></td>
+<td><p>contract, library, interface, function, public state variable, event</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;dev</span></code></p></td>
+<td><p>向开发人员解释任何额外的细节</p></td>
+<td><p>contract, library, interface, function, state variable, event</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;param</span></code></p></td>
+<td><p>就像在Doxygen中一样记录一个参数（必须在参数名之后）</p></td>
+<td><p>function, event</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;return</span></code></p></td>
+<td><p>记录一个合约的函数的返回变量</p></td>
+<td><p>function, public state variable</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;inheritdoc</span></code></p></td>
+<td><p>从基本函数中复制所有缺失的标签（必须在合约名称之后）</p></td>
+<td><p>function, public state variable</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;custom:...</span></code></p></td>
+<td><p>自定义标签，语义由应用程序定义</p></td>
+<td><p>everywhere</p></td>
+</tr>
+</tbody>
+</table>
+<p>如果您的函数返回多个值，如 <code class="docutils literal notranslate"><span class="pre">(int</span> <span class="pre">quotient,</span> <span class="pre">int</span> <span class="pre">remainder)</span></code>
+那么使用多个 <code class="docutils literal notranslate"><span class="pre">&#64;return</span></code> 语句，格式与 <code class="docutils literal notranslate"><span class="pre">&#64;param</span></code> 语句相同。</p>
+<p>自定义标签以 <code class="docutils literal notranslate"><span class="pre">&#64;custom:</span></code> 开头，后面必须有一个或多个小写字母或连字符。
+然而，它不能以连字符开始。它们可以在任何地方使用，是开发者文档的一部分。</p>
+<section id="header-dynamic">
+<span id="id4"></span><h3>动态表达方式<a class="headerlink" href="#header-dynamic" title="Permalink to this heading"></a></h3>
+<p>Solidity 编译器将通过 NatSpec 文档从您的 Solidity 源代码传递到本指南所述的 JSON 输出。
+此 JSON 输出的使用者，例如最终用户的客户端软件，可以直接将其呈现给最终用户，或者它可以应用一些预处理。</p>
+<p>例如，一些客户端软件会呈现为：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8vIEBub3RpY2Ug6L+Z5Liq5Ye95pWw5bCG5L2/IGBhYCDkuZjku6U3"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">/// </span><span class="cs">@notice</span><span class="c1"> 这个函数将使 `a` 乘以7</span>
+</pre></div>
+</div>
+<p>对终端用户来说，是：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>这个函数将10乘以7
+</pre></div>
+</div>
+<p>如果一个函数被调用，并且输入的 <code class="docutils literal notranslate"><span class="pre">a</span></code> 被赋值为10。</p>
+<p>指定这些动态表达式超出了 Solidity 文档的范围，您可以在
+<a class="reference external" href="https://github.com/aragon/radspec">radspec 项目</a> 阅读更多内容。</p>
+</section>
+<section id="header-inheritance">
+<span id="id5"></span><h3>继承说明<a class="headerlink" href="#header-inheritance" title="Permalink to this heading"></a></h3>
+<p>没有NatSpec的函数将自动继承其基函数的文档。这方面的例外情况是：</p>
+<ul class="simple">
+<li><p>当参数名称不同时。</p></li>
+<li><p>当有不止一个的基础函数时。</p></li>
+<li><p>当有一个明确的 <code class="docutils literal notranslate"><span class="pre">&#64;inheritdoc</span></code> 标签，指定了应该使用哪个合约来继承。</p></li>
+</ul>
+</section>
+</section>
+<section id="header-output">
+<span id="id6"></span><h2>文件输出<a class="headerlink" href="#header-output" title="Permalink to this heading"></a></h2>
+<p>当被编译器解析时，像上面例子中的文档将产生两个不同的JSON文件。
+一个是为了让终端用户在执行函数时作为通知使用，另一个是为了让开发人员使用。</p>
+<p>如果上述合约被保存为 <code class="docutils literal notranslate"><span class="pre">ex1.sol</span></code>，那么您可以用以下方法生成文档：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=c29sYyAtLXVzZXJkb2MgLS1kZXZkb2MgZXgxLnNvbA=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="n">solc</span> <span class="o">--</span><span class="n">userdoc</span> <span class="o">--</span><span class="n">devdoc</span> <span class="n">ex1</span><span class="p">.</span><span class="n">sol</span>
+</pre></div>
+</div>
+<p>输出如下。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>从Solidity 0.6.11版开始，NatSpec输出也包含一个 <code class="docutils literal notranslate"><span class="pre">version（版本号）</span></code> 和一个 <code class="docutils literal notranslate"><span class="pre">kind（种类）</span></code> 字段。
+目前， <code class="docutils literal notranslate"><span class="pre">version</span></code> 被设置为 <code class="docutils literal notranslate"><span class="pre">1</span></code>， <code class="docutils literal notranslate"><span class="pre">kind</span></code> 必须是 <code class="docutils literal notranslate"><span class="pre">user（用户）</span></code> 或 <code class="docutils literal notranslate"><span class="pre">dev（开发者）</span></code> 之一。
+在未来，有可能会引入新的版本，淘汰旧的版本。</p>
+</div>
+<section id="header-user-doc">
+<span id="id7"></span><h3>用户文档<a class="headerlink" href="#header-user-doc" title="Permalink to this heading"></a></h3>
+<p>上述文档将产生以下用户文档 JSON 文件作为输出：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=ewogICJ2ZXJzaW9uIiA6IDEsCiAgImtpbmQiIDogInVzZXIiLAogICJtZXRob2RzIiA6CiAgewogICAgImFnZSh1aW50MjU2KSIgOgogICAgewogICAgICAibm90aWNlIiA6ICLorqHnrpfmtLvkvZPmoJHmnKjnmoTmoJHpvoTvvIzmjInlm5voiI3kupTlhaXorqHnrpciCiAgICB9CiAgfSwKICAibm90aWNlIiA6ICLmgqjlj6rog73lsIbmraTlkIjnuqbnlKjkuo7mnIDln7rmnKznmoTmqKHmi5/jgIIiCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s">&quot;version&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">&quot;kind&quot;</span> <span class="o">:</span> <span class="s">&quot;user&quot;</span><span class="p">,</span>
+  <span class="s">&quot;methods&quot;</span> <span class="o">:</span>
+  <span class="p">{</span>
+    <span class="s">&quot;age(uint256)&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+      <span class="s">&quot;notice&quot;</span> <span class="o">:</span> <span class="s">&quot;计算活体树木的树龄，按四舍五入计算&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">&quot;notice&quot;</span> <span class="o">:</span> <span class="s">&quot;您只能将此合约用于最基本的模拟。&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>请注意，找到方法的关键是 <a class="reference internal" href="abi-spec.html#abi-function-selector"><span class="std std-ref">合约 ABI</span></a> 中定义的函数的标准签名，
+而不是简单的函数名称。</p>
+</section>
+<section id="header-developer-doc">
+<span id="id8"></span><h3>开发者文档<a class="headerlink" href="#header-developer-doc" title="Permalink to this heading"></a></h3>
+<p>除了用户文档文件，还应该产生一个开发者文档的JSON文件，看起来应该是这样的：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=ewogICJ2ZXJzaW9uIiA6IDEsCiAgImtpbmQiIDogImRldiIsCiAgImF1dGhvciIgOiAiTGFycnkgQS4gR2FyZG5lciIsCiAgImRldGFpbHMiIDogIuebruWJjeaJgOacieeahOWHveaVsOiwg+eUqOmDveaYr+WcqOayoeacieWJr+S9nOeUqOeahOaDheWGteS4i+WunueOsOeahCIsCiAgImN1c3RvbTpleHBlcmltZW50YWwiIDogIui/meaYr+S4gOS4quWunumqjOaAp+eahOWQiOe6puOAgiIsCiAgIm1ldGhvZHMiIDoKICB7CiAgICAiYWdlKHVpbnQyNTYpIiA6CiAgICB7CiAgICAgICJkZXRhaWxzIiA6ICJBbGV4YW5kciBOLiBUZXRlYXJpbmcg566X5rOV5Y+v5Lul5o+Q6auY57K+56Gu5bqmIiwKICAgICAgInBhcmFtcyIgOgogICAgICB7CiAgICAgICAgInJpbmdzIiA6ICLmoJHpvoTlrabmoLfmnKznmoTnjq/mlbAiCiAgICAgIH0sCiAgICAgICJyZXR1cm4iIDogIuagkem+hO+8iOWyge+8ie+8jOmDqOWIhuW5tOS7veWbm+iIjeS6lOWFpSIKICAgIH0KICB9LAogICJ0aXRsZSIgOiAi5qCR55qE5qih5ouf5ZmoIgp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s">&quot;version&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">&quot;kind&quot;</span> <span class="o">:</span> <span class="s">&quot;dev&quot;</span><span class="p">,</span>
+  <span class="s">&quot;author&quot;</span> <span class="o">:</span> <span class="s">&quot;Larry A. Gardner&quot;</span><span class="p">,</span>
+  <span class="s">&quot;details&quot;</span> <span class="o">:</span> <span class="s">&quot;目前所有的函数调用都是在没有副作用的情况下实现的&quot;</span><span class="p">,</span>
+  <span class="s">&quot;custom:experimental&quot;</span> <span class="o">:</span> <span class="s">&quot;这是一个实验性的合约。&quot;</span><span class="p">,</span>
+  <span class="s">&quot;methods&quot;</span> <span class="o">:</span>
+  <span class="p">{</span>
+    <span class="s">&quot;age(uint256)&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+      <span class="s">&quot;details&quot;</span> <span class="o">:</span> <span class="s">&quot;Alexandr N. Tetearing 算法可以提高精确度&quot;</span><span class="p">,</span>
+      <span class="s">&quot;params&quot;</span> <span class="o">:</span>
+      <span class="p">{</span>
+        <span class="s">&quot;rings&quot;</span> <span class="o">:</span> <span class="s">&quot;树龄学样本的环数&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;return&quot;</span> <span class="o">:</span> <span class="s">&quot;树龄（岁），部分年份四舍五入&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">&quot;title&quot;</span> <span class="o">:</span> <span class="s">&quot;树的模拟器&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="080-breaking-changes.html" class="btn btn-neutral float-left" title="Solidity v0.8.0 突破性变化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="security-considerations.html" class="btn btn-neutral float-right" title="安全考虑" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

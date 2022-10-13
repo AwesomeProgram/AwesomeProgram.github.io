@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>资源 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Import Path Resolution" href="path-resolution.html" />
+    <link rel="prev" title="SMT检查器和形式化验证" href="smtchecker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">资源</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">一般资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">集成（以太坊）开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">编辑器集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">Solidity 工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">第三方Solidity解析器和语法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>资源</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/resources.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>资源<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<section id="id2">
+<h2>一般资源<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ethereum.org/en/developers/">Ethereum.org开发者门户网站</a></p></li>
+<li><p><a class="reference external" href="https://ethereum.stackexchange.com/">Ethereum StackExchange</a></p></li>
+<li><p><a class="reference external" href="https://soliditylang.org/">Solidity门户网站</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ethereum/solidity/blob/develop/Changelog.md">Solidity变更日志</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ethereum/solidity/">GitHub上的Solidity源代码</a></p></li>
+<li><p><a class="reference external" href="https://matrix.to/#/#ethereum_solidity:gitter.im">Solidity语言用户聊天室</a></p></li>
+<li><p><a class="reference external" href="https://matrix.to/#/#ethereum_solidity-dev:gitter.im">Solidity编译器开发人员聊天室</a></p></li>
+<li><p><a class="reference external" href="https://github.com/bkrem/awesome-solidity">很棒的Solidity</a></p></li>
+<li><p><a class="reference external" href="https://solidity-by-example.org/">通过实例学Solidity</a></p></li>
+<li><p><a class="reference external" href="https://github.com/solidity-docs">Solidity文档社区翻译</a></p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>集成（以太坊）开发环境<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://eth-brownie.readthedocs.io/en/stable/">Brownie</a></dt><dd><p>面向以太坊虚拟机的基于Python的智能合约开发和测试框架。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://dapp.tools/">Dapp</a></dt><dd><p>用于从命令行构建，测试和部署智能合约的工具。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://framework.embarklabs.io/">Embark</a></dt><dd><p>构建和部署去中心化应用程序的开发者平台。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/gakonst/foundry">Foundry</a></dt><dd><p>用Rust编写的用于Ethereum应用开发的快速，可移植和模块化的工具包。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://hardhat.org/">Hardhat</a></dt><dd><p>以太坊开发环境具有本地以太坊网络，调试功能和插件生态系统。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://remix.ethereum.org/">Remix</a></dt><dd><p>基于浏览器的IDE，具有集成的编译器和Solidity运行环境，没有服务器端组件。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://www.trufflesuite.com/truffle">Truffle</a></dt><dd><p>以太坊开发框架。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id10">
+<h2>编辑器集成<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>Atom</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/0mkara/etheratom">Etheratom</a></dt><dd><p>Atom编辑器的插件，具有语法高亮、编译和运行环境（兼容后端节点和虚拟机）的功能。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://atom.io/packages/linter-solidity">Atom Solidity 语法检查器</a></dt><dd><p>为Atom编辑器提供Solidity语法检查的插件。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://atom.io/packages/linter-solium">Atom Solium 语法检查器</a></dt><dd><p>以Solium（现在的Ethlint）为基础，为Atom提供可配置的Solidity语法检查器。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Emacs</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/ethereum/emacs-solidity/">Emacs Solidity</a></dt><dd><p>Emacs编辑器的插件，提供语法高亮和编译错误报告。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>IntelliJ</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://plugins.jetbrains.com/plugin/9475-intellij-solidity">IntelliJ IDEA 插件</a></dt><dd><p>IntelliJ IDEA（和所有其他JetBrains IDEs）的Solidity插件</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Sublime</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://packagecontrol.io/packages/Ethereum/">SublimeText的软件包 - Solidity语言语法</a></dt><dd><p>用于 SublimeText 编辑器的 Solidity 语法高亮。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Vim</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/tomlion/vim-solidity/">Vim Solidity</a></dt><dd><p>为Vim编辑器提供语法高亮的插件。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/vim-syntastic/syntastic">Vim Syntastic</a></dt><dd><p>为Vim编辑器提供编译检查的插件。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Visual Studio Code</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://juan.blanco.ws/solidity-contracts-in-visual-studio-code/">Visual Studio Code 扩展</a></dt><dd><p>Microsoft Visual Studio Code的Solidity插件，包括语法高亮和Solidity编译器。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor">Solidity Visual Auditor 扩展</a></dt><dd><p>在Visual Studio Code中增加了以安全为中心的语法和语义突出显示。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="id11">
+<h2>Solidity 工具<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://gist.github.com/chriseth/8f533d133fa0c15b0d6eaf3ec502c82b">ABI到Solidity接口转换器</a></dt><dd><p>一个用于从智能合约的ABI生成合约接口的脚本。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/gnidan/abi-to-sol">abi-to-sol</a></dt><dd><p>从一个给定的ABI JSON生成Solidity接口源的工具。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/DigixGlobal/doxity">Doxity</a></dt><dd><p>Solidity的文档生成器。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/duaraghav8/Ethlint">Ethlint</a></dt><dd><p>识别和修复Solidity中的风格和安全问题的语法检查器。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/Arachnid/evmdis">evmdis</a></dt><dd><p>EVM反汇编程序，对字节码进行静态分析，提供比原始EVM操作更高的抽象水平。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/ethereum/evmlab/">EVM Lab</a></dt><dd><p>丰富的工具包，与EVM互动。包括一个虚拟机、以太链API，以及一个带有gas成本显示的跟踪查看器。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/dapphub/dapptools/tree/master/src/hevm#readme">hevm</a></dt><dd><p>EVM调试器和符号执行引擎。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/clemlak/leafleth">leafleth</a></dt><dd><p>Solidity智能合约的文档生成器。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://piet.slock.it/">PIET</a></dt><dd><p>一个通过简单图形界面开发，审计和使用Solidity智能合约的工具。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/scaffold-eth/scaffold-eth">Scaffold-ETH</a></dt><dd><p>专注于产品快速迭代的可分叉的以太坊开发堆栈。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://www.npmjs.com/package/sol2uml">sol2uml</a></dt><dd><p>Solidity合约的统一建模语言（UML）类图生成器。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/crytic/solc-select">solc-select</a></dt><dd><p>一个在 Solidity 编译器版本之间快速切换的脚本。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/prettier-solidity/prettier-plugin-solidity">优化Solidity语言格式插件</a></dt><dd><p>Solidity格式美化插件。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/raineorshine/solidity-repl">Solidity REPL</a></dt><dd><p>使用命令行solidity控制台立即尝试solidity。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/raineorshine/solgraph">solgraph</a></dt><dd><p>可视化Solidity控制流并突出潜在的安全漏洞。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/protofire/solhint">Solhint</a></dt><dd><p>Solidity语法检查器，为智能合约的验证提供安全，风格指南和最佳实践规则。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://sourcify.dev/">Sourcify</a></dt><dd><p>去中心化的自动合约验证服务和合约元数据的公共存储库。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/ConsenSys/surya/">Sūrya</a></dt><dd><p>智能合约系统的实用工具，提供一些可视化输出和关于合约结构的信息。还支持查询函数调用图。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/agroce/universalmutator">Universal Mutator</a></dt><dd><p>一个用于突变生成的工具，具有可配置的规则并支持Solidity和Vyper。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="id13">
+<h2>第三方Solidity解析器和语法<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/solidity-parser/parser">用于JavaScript的Solidity解析器</a></dt><dd><p>一个建立在强大的ANTLR4语法之上的JS Solidity解析器。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="smtchecker.html" class="btn btn-neutral float-left" title="SMT检查器和形式化验证" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="path-resolution.html" class="btn btn-neutral float-right" title="Import Path Resolution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

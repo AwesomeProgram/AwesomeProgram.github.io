@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity v0.8.0 突破性变化 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="风格指南" href="natspec-format.html" />
+    <link rel="prev" title="Solidity v0.7.0 突破性变化" href="070-breaking-changes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity v0.8.0 突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">语义的微小变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">新的限制条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">接口变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">如何更新您的代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity v0.8.0 突破性变化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/080-breaking-changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity-v0-8-0">
+<h1>Solidity v0.8.0 突破性变化<a class="headerlink" href="#solidity-v0-8-0" title="Permalink to this heading"></a></h1>
+<p>本节强调了 Solidity 0.8.0 版本中引入的主要突破性变化。对于完整的列表，请查看
+<a class="reference external" href="https://github.com/ethereum/solidity/releases/tag/v0.8.0">版本更新日志</a>。</p>
+<section id="id2">
+<h2>语义的微小变化<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>本节列出了现有代码在编译器没有通知您的情况下改变其行为的更改。</p>
+<ul>
+<li><p>算术操作在下溢和溢出时都会恢复。您可以使用 <code class="docutils literal notranslate"><span class="pre">unchecked</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> 来使用以前的包装行为。</p>
+<p>溢出的检查是非常普遍的，所以我们把它作为默认的检查，
+以增加代码的可读性，即使它是以略微增加gas成本为代价的。</p>
+</li>
+<li><p>ABI编码器v2默认是激活的。</p>
+<p>您可以使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v1;</span></code> 来选择使用旧的行为。
+语句 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">experimental</span> <span class="pre">ABIEncoderV2;</span></code> 仍然有效，但它已被废弃，没有效果。
+如果您想显示使用，请使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v2;</span></code> 代替。</p>
+<p>请注意，ABI coder v2比v1支持更多的类型，并对输入进行更多的合理性检查。
+ABI coder v2使一些函数调用更加昂贵，而且当合约中包含不符合参数类型的数据时，它还会使合约调用回退，
+而在ABI coder v1中则没有回退。</p>
+</li>
+<li><p>指数是右联的，也就是说，表达式 <code class="docutils literal notranslate"><span class="pre">a**b**c</span></code> 被解析为 <code class="docutils literal notranslate"><span class="pre">a**（b**c）</span></code>。
+在0.8.0之前，它被解析为 <code class="docutils literal notranslate"><span class="pre">(a**b)**c</span></code>。</p>
+<p>这是解析指数运算符的常用方法。</p>
+</li>
+<li><p>失败的断言和其他内部检查，如除以零或算术溢出，不使用无效的操作码，而是使用恢复操作码。
+更具体地说，它们将使用等于对 <code class="docutils literal notranslate"><span class="pre">Panic(uint256)</span></code> 的函数调用的错误数据，其错误代码是针对具体情况的。</p>
+<p>这将节省错误的gas，同时它仍然允许静态分析工具将这些情况与无效输入的恢复区分开来，
+比如一个失败的 <code class="docutils literal notranslate"><span class="pre">require</span></code>。</p>
+</li>
+<li><p>如果访问存储中的一个字节数组，其长度被错误地编码，就会引起panic错误。
+合约不会出现这种情况，除非使用内联汇编来修改存储字节数组的原始表示。</p></li>
+<li><p>如果常数被用于数组长度表达式中，Solidity 的先前版本将在评估树的所有分支中使用任意精度。
+现在，如果常量变量被用作中间表达式，它们的值将以与它们在运行时表达式中使用时相同的方式被正确舍入。</p></li>
+<li><p>类型 <code class="docutils literal notranslate"><span class="pre">byte</span></code> 已经被删除。它是 <code class="docutils literal notranslate"><span class="pre">bytes1</span></code> 的别名。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>新的限制条件<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>本节列出了可能导致现有合约不再编译的变化。</p>
+<ul>
+<li><p>有一些与字面常量的显式转换有关的新限制。以前在以下情况下的行为可能是模糊的：</p>
+<ol class="arabic simple">
+<li><p>不允许从负数字段和大于 <code class="docutils literal notranslate"><span class="pre">type(uint160).max</span></code> 的字段显式转换为 <code class="docutils literal notranslate"><span class="pre">address</span></code>。</p></li>
+<li><p>只有当字面常量位于 <code class="docutils literal notranslate"><span class="pre">type(T).min</span></code> 和 <code class="docutils literal notranslate"><span class="pre">type(T).max</span></code> 之间时，
+才允许字面常量与整数类型 <code class="docutils literal notranslate"><span class="pre">T</span></code> 之间的明确转换。
+特别的是，用 <code class="docutils literal notranslate"><span class="pre">type(uint).max</span></code> 代替 <code class="docutils literal notranslate"><span class="pre">uint(-1)</span></code> 的使用。</p></li>
+<li><p>只有当字面常量能够代表枚举中的一个值时，才允许字面常量和枚举之间的显式转换。</p></li>
+<li><p>字面常量和 <code class="docutils literal notranslate"><span class="pre">address</span></code> 类型之间的显式转换（例如， <code class="docutils literal notranslate"><span class="pre">address(literal)</span></code>）是 <code class="docutils literal notranslate"><span class="pre">address</span></code> 类型，
+而不是 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型。通过使用显式转换，即 <code class="docutils literal notranslate"><span class="pre">payable(literal)</span></code>，
+可以得到一个payable类型的地址类型。</p></li>
+</ol>
+</li>
+<li><p><a class="reference internal" href="types.html#address-literals"><span class="std std-ref">地址字面常量</span></a> 的类型是 <code class="docutils literal notranslate"><span class="pre">address</span></code>，而不是 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>。
+它们可以通过显式的转换转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型，
+例如： <code class="docutils literal notranslate"><span class="pre">payable(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF)</span></code>。</p></li>
+<li><p>对显式类型转换有新的限制。只有当符号，宽度或类型类别（ <code class="docutils literal notranslate"><span class="pre">int</span></code>， <code class="docutils literal notranslate"><span class="pre">address</span></code>， <code class="docutils literal notranslate"><span class="pre">bytesNN</span></code> 等）
+有最多一次变化时，才允许进行转换。要执行多个变化，请使用多个转换。</p>
+<p>让我们使用符号 <code class="docutils literal notranslate"><span class="pre">T(S)</span></code> 来表示显式转换 <code class="docutils literal notranslate"><span class="pre">T(x)</span></code>，其中， <code class="docutils literal notranslate"><span class="pre">T</span></code> 和 <code class="docutils literal notranslate"><span class="pre">S</span></code> 是类型，
+<code class="docutils literal notranslate"><span class="pre">x</span></code> 是 <code class="docutils literal notranslate"><span class="pre">S</span></code> 类型的任何任意变量。这种不允许的转换的例子是 <code class="docutils literal notranslate"><span class="pre">uint16(int8)</span></code>，
+因为它同时改变了宽度（8位到16位）和符号（有符号整数到无符号整数）。为了进行转换，我们必须通过一个中间类型。
+在前面的例子中，这将是 <code class="docutils literal notranslate"><span class="pre">uint16(uint8(int8))</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">uint16(int16(int8))</span></code>。
+请注意，这两种转换方式将产生不同的结果，例如，对于 <code class="docutils literal notranslate"><span class="pre">-1</span></code>。下面是这个规则不允许的一些转换的例子。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">address(uint)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">uint(address)</span></code>：同时转换类型和宽度。
+分别用 <code class="docutils literal notranslate"><span class="pre">address(uint160(uint))</span></code> 和 <code class="docutils literal notranslate"><span class="pre">uint(uint160(address))</span></code> 代替。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payable(uint160)</span></code>， <code class="docutils literal notranslate"><span class="pre">payable(bytes20)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">payable(integer-literal)</span></code>： 同时转换了类型和状态可变性。
+分别用 <code class="docutils literal notranslate"><span class="pre">payable(address(uint160))</span></code>， <code class="docutils literal notranslate"><span class="pre">payable(address(bytes20))</span></code> 和
+<code class="docutils literal notranslate"><span class="pre">payable(address(integer-literal))</span></code> 代替。请注意， <code class="docutils literal notranslate"><span class="pre">payable(0)</span></code> 是有效的，是规则的例外。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int80(bytes10)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bytes10(int80)</span></code>：同时转换了类型和符号。
+分别用 <code class="docutils literal notranslate"><span class="pre">int80(uint80(bytes10))</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bytes10(uint80(int80))</span></code> 代替。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Contract(uint)</span></code>: 同时转换类型和宽度。用 <code class="docutils literal notranslate"><span class="pre">Contract(address(uint160(uint)))</span></code> 代替。</p></li>
+</ul>
+<p>这些转换是不允许的，以避免歧义。例如，在表达式 <code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">uint16(int8(-1))</span></code> 中，
+<code class="docutils literal notranslate"><span class="pre">x</span></code> 的值取决于是先应用符号还是宽度转换。</p>
+</li>
+<li><p>函数调用选项只能给出一次，即 <code class="docutils literal notranslate"><span class="pre">c.f{gas:</span> <span class="pre">10000}{value:</span> <span class="pre">1}()</span></code> 是无效的，
+必须改成 <code class="docutils literal notranslate"><span class="pre">c.f{gas:</span> <span class="pre">10000,</span> <span class="pre">value:</span> <span class="pre">1}()</span></code>。</p></li>
+<li><p>全局函数 <code class="docutils literal notranslate"><span class="pre">log0</span></code>， <code class="docutils literal notranslate"><span class="pre">log1</span></code>， <code class="docutils literal notranslate"><span class="pre">log2</span></code>， <code class="docutils literal notranslate"><span class="pre">log3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">log4</span></code> 已被删除。</p>
+<p>这些都是低级别的函数，基本上没有被使用过。它们的行为可以通过内联汇编访问。</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enum</span></code> 定义包含的成员不能超过256个。</p>
+<p>这将使我们可以安全地假设ABI中的底层类型总是 <code class="docutils literal notranslate"><span class="pre">uint8</span></code>。</p>
+</li>
+<li><p>除了公共函数和事件之外，不允许使用 <code class="docutils literal notranslate"><span class="pre">this</span></code>， <code class="docutils literal notranslate"><span class="pre">super</span></code> 和 <code class="docutils literal notranslate"><span class="pre">_</span></code> 的名称进行声明。
+这个例外是为了使声明用Solidity以外的语言实现的合约的接口成为可能，这些语言确实允许这种函数名称。</p></li>
+<li><p>移除对代码中的 <code class="docutils literal notranslate"><span class="pre">\b</span></code>， <code class="docutils literal notranslate"><span class="pre">\f</span></code> 和 <code class="docutils literal notranslate"><span class="pre">\v</span></code> 转义序列的支持。
+它们仍然可以通过十六进制转义插入，例如：分别是 <code class="docutils literal notranslate"><span class="pre">\x08</span></code>， <code class="docutils literal notranslate"><span class="pre">\x0c</span></code>， 和 <code class="docutils literal notranslate"><span class="pre">\x0b</span></code>。</p></li>
+<li><p>全局变量 <code class="docutils literal notranslate"><span class="pre">tx.origin</span></code> 和 <code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> 的类型是 <code class="docutils literal notranslate"><span class="pre">address</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>。
+我们可以通过显式转换将它们转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型，
+即 <code class="docutils literal notranslate"><span class="pre">payable(tx.origin)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">payable(msg.sender)</span></code>。</p>
+<p>做这个改变是因为编译器不能确定这些地址是否可以支付，所以现在需要一个明确的转换来使这个要求可见。</p>
+</li>
+<li><p>显式转换为 <code class="docutils literal notranslate"><span class="pre">address</span></code> 类型总是返回一个非-payable类型的 <code class="docutils literal notranslate"><span class="pre">address</span></code>。
+特别是，以下显式转换的类型是 <code class="docutils literal notranslate"><span class="pre">address</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">address(u)</span></code> 其中 <code class="docutils literal notranslate"><span class="pre">u</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">uint160</span></code> 类型的变量。
+我们可以通过两个显式转换将 <code class="docutils literal notranslate"><span class="pre">u</span></code> 转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型，即 <code class="docutils literal notranslate"><span class="pre">payable(address(u))</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">address(b)</span></code> 其中 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">bytes20</span></code> 类型的变量。
+我们可以通过两个显式转换将 <code class="docutils literal notranslate"><span class="pre">b</span></code> 转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型，即 <code class="docutils literal notranslate"><span class="pre">payable(address(b))</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">address(c)</span></code> 其中 <code class="docutils literal notranslate"><span class="pre">c</span></code> 是一个合约。以前，这种转换的返回类型取决于合约是否可以接收以太
+（要么有一个receive函数，要么有一个payable类型的fallback函数）。
+转换 <code class="docutils literal notranslate"><span class="pre">payable(c)</span></code> 的类型为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>，只有当合约 <code class="docutils literal notranslate"><span class="pre">c</span></code> 可以接收以太时才允许。
+一般来说，人们总是可以通过使用以下显式转换将 <code class="docutils literal notranslate"><span class="pre">c</span></code> 转换为 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 的类型：
+<code class="docutils literal notranslate"><span class="pre">payable(address(c))</span></code>。请注意， <code class="docutils literal notranslate"><span class="pre">address(this)</span></code> 与 <code class="docutils literal notranslate"><span class="pre">address(c)</span></code> 属于同一类别，
+同样的规则也适用于它。</p></li>
+</ul>
+</li>
+<li><p>内联汇编中的 <code class="docutils literal notranslate"><span class="pre">chainid</span></code> 现在被认为是 <code class="docutils literal notranslate"><span class="pre">view</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">pure</span></code>。</p></li>
+<li><p>一元求反不能再用于无符号整数，只能用于有符号整数。</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>接口变化<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--combined-json</span></code> 的输出已经改变。JSON字段 <code class="docutils literal notranslate"><span class="pre">abi</span></code>, <code class="docutils literal notranslate"><span class="pre">devdoc</span></code>, <code class="docutils literal notranslate"><span class="pre">userdoc</span></code> 和
+<code class="docutils literal notranslate"><span class="pre">storage-layout</span></code> 现在是子对象。在0.8.0之前，它们曾被序列化为字符串。</p></li>
+<li><p>“传统AST“ 已被删除（ <code class="docutils literal notranslate"><span class="pre">--ast-json</span></code> 在命令行界面， <code class="docutils literal notranslate"><span class="pre">legacyAST</span></code> 用于标准JSON）。
+使用 “紧凑型AST”（ <code class="docutils literal notranslate"><span class="pre">--ast-compact-json</span></code> 参数. <code class="docutils literal notranslate"><span class="pre">AST</span></code>）作为替代。</p></li>
+<li><p>旧的错误报告器（ <code class="docutils literal notranslate"><span class="pre">--old-reporter</span></code> ）已经被删除。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>如何更新您的代码<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>如果您依赖包装算术，请用 <code class="docutils literal notranslate"><span class="pre">unchecked</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> 包裹每个操作。</p></li>
+<li><p>可选：如果您使用SafeMath或类似的库，将 <code class="docutils literal notranslate"><span class="pre">x.add(y)</span></code>  改为 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code>， <code class="docutils literal notranslate"><span class="pre">x.mul(y)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span></code> 等等。</p></li>
+<li><p>如果您想继续使用旧的ABI编码器，请添加 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v1;</span></code>。</p></li>
+<li><p>可以选择删除 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">experimental</span> <span class="pre">ABIEncoderV2</span></code> 或 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v2</span></code> 因为它是多余的。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">byte</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">bytes1</span></code>。</p></li>
+<li><p>如果需要的话，添加中间显式类型转换。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">c.f{gas:</span> <span class="pre">10000}{value:</span> <span class="pre">1}()</span></code> 合并为 <code class="docutils literal notranslate"><span class="pre">c.f{gas:</span> <span class="pre">10000,</span> <span class="pre">value:</span> <span class="pre">1}()</span></code>。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">msg.sender.transfer(x)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">payable(msg.sender).transfer(x)</span></code>
+或者使用 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code> 类型的存储变量。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">x**y**z</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">(x**y)**z</span></code>。</p></li>
+<li><p>Use inline assembly as a replacement for <code class="docutils literal notranslate"><span class="pre">log0</span></code>, …, <code class="docutils literal notranslate"><span class="pre">log4</span></code>.</p></li>
+<li><p>使用内联汇编作为 <code class="docutils literal notranslate"><span class="pre">log0</span></code>， …， <code class="docutils literal notranslate"><span class="pre">log4</span></code> 的替代。</p></li>
+<li><p>通过从某类型的最大值中减去该值并加上1来否定该无符号整数
+（例如， <code class="docutils literal notranslate"><span class="pre">type(uint256).max</span> <span class="pre">-</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code>，同时确保 <cite>x</cite> 不是零）。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="070-breaking-changes.html" class="btn btn-neutral float-left" title="Solidity v0.7.0 突破性变化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="natspec-format.html" class="btn btn-neutral float-right" title="风格指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

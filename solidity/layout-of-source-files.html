@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity 源文件结构 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="合约结构" href="structure-of-a-contract.html" />
+    <link rel="prev" title="Solidity 合约示例" href="solidity-by-example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity 源文件结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#spdx">SPDX 许可标识符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pragma">编译指示</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-pragma">版本编译指示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abi">ABI编码编译指示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experimental-pragma">实验性编译指示</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#abiv2">ABI编码器V2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#smt">SMT检查器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#import">导入其他源文件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">语法与语义</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-5">导入路径</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#index-6">注释</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity 源文件结构</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/layout-of-source-files.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity">
+<h1>Solidity 源文件结构<a class="headerlink" href="#solidity" title="Permalink to this heading"></a></h1>
+<p>源文件可以包含任意数量的
+<a class="reference internal" href="structure-of-a-contract.html#contract-structure"><span class="std std-ref">contract 定义</span></a>, <a class="reference internal" href="#import">import</a> 指令,
+<a class="reference internal" href="#pragma"><span class="std std-ref">pragma 指令</span></a> 和 <a class="reference internal" href="types.html#structs"><span class="std std-ref">struct</span></a>,
+<a class="reference internal" href="types.html#enums"><span class="std std-ref">enum</span></a>, <a class="reference internal" href="contracts.html#functions"><span class="std std-ref">function</span></a>, <a class="reference internal" href="contracts.html#errors"><span class="std std-ref">error</span></a>
+以及 <a class="reference internal" href="contracts.html#constants"><span class="std std-ref">constant 变量</span></a> 的定义。</p>
+<section id="spdx">
+<span id="index-0"></span><h2>SPDX 许可标识符<a class="headerlink" href="#spdx" title="Permalink to this heading"></a></h2>
+<p>如果智能合约的源代码是公开的，就可以更好地建立对智能合约的信任。
+由于提供源代码总是涉及到版权方面的法律问题，
+Solidity编译器鼓励使用机器可读的 <a class="reference external" href="https://spdx.org">SPDX 许可标识符</a> 。
+每个源文件都应该以一个注释开始，表明其许可证</p>
+<p><code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">SPDX-License-Identifier:</span> <span class="pre">MIT</span></code></p>
+<p>编译器不会验证许可证是否属于 <a class="reference external" href="https://spdx.org/licenses/">SPDX许可的列表</a>，
+但它确实包括在 <a class="reference internal" href="metadata.html#metadata"><span class="std std-ref">字节码元数据（bytecode metadata）</span></a> 提供的字符串中。</p>
+<p>如果您不想指定一个许可，或者源代码不是开源的，
+请使用特殊值 <code class="docutils literal notranslate"><span class="pre">UNLICENSED</span></code>。请注意， <code class="docutils literal notranslate"><span class="pre">UNLICENSED</span></code> （不允许使用，
+不存在于SPDX许可证列表中）与 <code class="docutils literal notranslate"><span class="pre">UNLICENSED</span></code> （授予所有人所有权利）不同。
+Solidity遵循 <a class="reference external" href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license">npm 的推荐</a>。</p>
+<p>提供这个注释并不能使您摆脱与许可有关的其他义务，
+如必须在每个源文件中提到特定的许可头或原始版权人。</p>
+<p>编译器可以在文件的任何位置识别该注释，
+但建议把它放在文件的顶部。</p>
+<p>关于如何使用SPDX许可证标识的更多信息可以在 <a class="reference external" href="https://spdx.org/ids-how">SPDX 网站</a> 中找到。</p>
+</section>
+<section id="pragma">
+<span id="index-1"></span><span id="id4"></span><h2>编译指示<a class="headerlink" href="#pragma" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pragma</span></code> 关键字用于启用某些编译器特性或检查。
+一个 pragma 指令始终是源文件的本地指令，
+所以如果您想在整个项目中使用pragma指令，
+您必须在您的所有文件中添加这个指令。
+如果您 <a class="reference internal" href="#import"><span class="std std-ref">import</span></a> 另一个文件，
+该文件的pragma指令 <em>不会</em> 自动应用于导入文件。</p>
+<section id="version-pragma">
+<span id="index-2"></span><span id="id5"></span><h3>版本编译指示<a class="headerlink" href="#version-pragma" title="Permalink to this heading"></a></h3>
+<p>源文件可以（而且应该）用版本pragma指令来注释，
+以拒绝用未来的编译器版本进行编译，因为这可能会引入不兼容的变化。
+我们力图把这类变更做到尽可能小，
+我们需要以一种当修改语义时必须同步修改语法的方式引入变更，
+当然这有时候也难以做到。正因为如此，
+至少在包含重大变化的版本中，通读一下更新日志总是一个好主意。
+这些版本总是有 <code class="docutils literal notranslate"><span class="pre">0.x.0</span></code> 或 <code class="docutils literal notranslate"><span class="pre">x.0.0</span></code> 形式的版本。</p>
+<p>版本编译指示使用如下： <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">solidity</span> <span class="pre">^0.5.2;</span></code></p>
+<p>带有上述代码的源文件在0.5.2版本之前的编译器上不能编译，
+在0.6.0版本之后的编译器上也不能工作（这第二个条件是通过使用 <code class="docutils literal notranslate"><span class="pre">^</span></code> 添加的）。
+因为在 <code class="docutils literal notranslate"><span class="pre">0.6.0</span></code> 版本之前不会有任何重大的变化，
+所以您可以确信您的代码是按照您的预期编译的。
+上面例子中不固定编译器的具体版本号，因此编译器的补丁版也可以使用。</p>
+<p>可以为编译器版本指定更复杂的规则，
+这些规则与 <a class="reference external" href="https://docs.npmjs.com/cli/v6/using-npm/semver">npm</a> 使用相同的语法。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>使用版本 pragma指令 <em>不会</em> 改变编译器的版本。
+它也 <em>不会</em> 启用或禁用编译器的功能。
+它只是指示编译器检查它的版本是否与编译指示所要求的版本一致。
+如果不匹配，编译器会发出一个错误。</p>
+</div>
+</section>
+<section id="abi">
+<h3>ABI编码编译指示<a class="headerlink" href="#abi" title="Permalink to this heading"></a></h3>
+<p>通过使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v1</span></code> 或 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v2</span></code> ，
+您可以选择ABI编码器和解码器的两种实现。</p>
+<p>新的ABI编码器（v2）能够对任意的嵌套数组和结构进行编码和解码。
+它可能产生不太理想的代码，并且没有得到像旧编码器那样多的测试，
+但从 Solidity 0.6.0 起，它被认为是非实验性的。
+您仍然必须使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v2;</span></code> 明确激活它。
+由于它将从Solidity 0.8.0 开始被默认激活，
+所以可以选择使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v1;</span></code> 来选择旧的编码器。</p>
+<p>新编码器所支持的类型集是旧编码器所支持的类型的一个严格超集。
+使用新编码器的合约可以与不使用新编码器的合约进行交互，没有任何限制。
+只有当非 <code class="docutils literal notranslate"><span class="pre">abicoder</span> <span class="pre">v2</span></code> 的合约不试图进行需要解码新编码器支持的类型的调用时，
+才有可能出现相反的情况。
+编译器可以检测到这一点，并会发出一个错误。
+只要为您的合同启用 <code class="docutils literal notranslate"><span class="pre">abicoder</span> <span class="pre">v2</span></code> ，就足以使错误消失。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这个编译指示适用于激活它的文件中定义的所有代码，
+无论这些代码最终在哪里结束。这意味着，
+一个合约的源文件被选择用ABI编码器v1编译，
+它仍然可以包含通过从另一个合约继承来使用新编码器的代码。
+如果新类型只在内部使用，而不是在外部函数签名中使用，
+这是被允许的。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>到Solidity 0.7.4为止，可以通过使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">experimental</span> <span class="pre">ABIEncoderV2</span></code>
+来选择ABI编码器v2，但不可能明确选择编码器v1，因为它是默认的。</p>
+</div>
+</section>
+<section id="experimental-pragma">
+<span id="index-3"></span><span id="id7"></span><h3>实验性编译指示<a class="headerlink" href="#experimental-pragma" title="Permalink to this heading"></a></h3>
+<p>第二个编译指示是实验性的编译指示。
+它可以用来启用编译器或语言中尚未默认启用的功能。
+目前支持以下实验性编译指示：</p>
+<section id="abiv2">
+<h4>ABI编码器V2<a class="headerlink" href="#abiv2" title="Permalink to this heading"></a></h4>
+<p>因为ABI编码器v2不再被认为是实验性的，
+它可以通过 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">abicoder</span> <span class="pre">v2</span></code> （请见上文）从Solidity 0.7.4开始选择。</p>
+</section>
+<section id="smt">
+<span id="smt-checker"></span><h4>SMT检查器<a class="headerlink" href="#smt" title="Permalink to this heading"></a></h4>
+<p>这个组件必须在构建 Solidity 编译器时被启用，
+因此它不是在所有 Solidity 二进制文件中都可用。
+<a class="reference internal" href="installing-solidity.html#smt-solvers-build"><span class="std std-ref">构建说明</span></a> 解释了如何激活这个选项。
+它在大多数版本中为 Ubuntu PPA 版本激活，
+但不用于Docker镜像、Windows二进制文件或静态构建的Linux二进制文件。
+如果您在本地安装了SMT检查器并通过节点（而不是通过浏览器）运行solc-js，
+可以通过 <a class="reference external" href="https://github.com/ethereum/solc-js#example-usagewith-smtsolver-callback">smtCallback</a>
+为solc-js激活它。</p>
+<p>如果您使用 <code class="docutils literal notranslate"><span class="pre">pragma</span> <span class="pre">experimental</span> <span class="pre">SMTChecker;</span></code>，
+那么您会得到额外的 <a class="reference internal" href="smtchecker.html#formal-verification"><span class="std std-ref">安全警告</span></a>。
+这些警告是通过查询SMT求解器获得的。
+该组件还不支持Solidity语言的所有功能，可能会输出许多警告。
+如果它报告不支持的功能，那么分析可能不完全正确。</p>
+</section>
+</section>
+</section>
+<section id="import">
+<span id="index-4"></span><span id="id8"></span><h2>导入其他源文件<a class="headerlink" href="#import" title="Permalink to this heading"></a></h2>
+<section id="id9">
+<h3>语法与语义<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<p>Solidity 支持导入语句，以帮助模块化您的代码，
+这些语句与 JavaScript 中可用的语句相似(从ES6开始)。
+然而，Solidity并不支持 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export#Description">默认导出</a>
+的概念。</p>
+<p>在全局层面，您可以使用以下形式的导入语句：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=aW1wb3J0ICJmaWxlbmFtZSI7"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">import</span><span class="w"> </span><span class="s2">&quot;filename&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">filename</span></code> 部分被称为 <em>导入路径</em>。
+该语句将所有来自 “filename” 的全局符号（以及在那里导入的符号）
+导入到当前的全局范围（与ES6中不同，但对Solidity来说是向后兼容的）。
+这种形式不建议使用，因为它不可预测地污染了命名空间。
+如果您在 “filename” 里面添加新的顶层项目，
+它们会自动出现在所有像这样从 “filename” 导入的文件中。
+最好是明确地导入特定的符号。</p>
+<p>下面的例子创建了一个新的全局符号 <code class="docutils literal notranslate"><span class="pre">symbolName</span></code>，其成员均来自 <code class="docutils literal notranslate"><span class="pre">&quot;filename&quot;</span></code> 中全局符号；</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=aW1wb3J0ICogYXMgc3ltYm9sTmFtZSBmcm9tICJmaWxlbmFtZSI7"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>as<span class="w"> </span>symbolName<span class="w"> </span>from<span class="w"> </span><span class="s2">&quot;filename&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这意味着所有全局符号以 <code class="docutils literal notranslate"><span class="pre">symbolName.symbol</span></code> 的格式提供。</p>
+<p>另一种语法不属于 ES6，但可能是有用的：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=aW1wb3J0ICJmaWxlbmFtZSIgYXMgc3ltYm9sTmFtZTs="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">import</span><span class="w"> </span><span class="s2">&quot;filename&quot;</span><span class="w"> </span>as<span class="w"> </span>symbolName<span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这条语句等同于 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">*</span> <span class="pre">as</span> <span class="pre">symbolName</span> <span class="pre">from</span> <span class="pre">&quot;filename&quot;;</span></code>。</p>
+<p>如果有命名冲突，您可以在导入的同时重命名符号。
+例如，下面的代码创建了新的全局符号 <code class="docutils literal notranslate"><span class="pre">alias</span></code> 和 <code class="docutils literal notranslate"><span class="pre">symbol2</span></code>，
+它们分别从 <code class="docutils literal notranslate"><span class="pre">&quot;filename&quot;</span></code> 里面引用 <code class="docutils literal notranslate"><span class="pre">symbol1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">symbol2</span></code>。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=aW1wb3J0IHtzeW1ib2wxIGFzIGFsaWFzLCBzeW1ib2wyfSBmcm9tICJmaWxlbmFtZSI7"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">import</span><span class="w"> </span><span class="p">{</span>symbol1<span class="w"> </span>as<span class="w"> </span>alias<span class="p">,</span><span class="w"> </span>symbol2<span class="p">}</span><span class="w"> </span>from<span class="w"> </span><span class="s2">&quot;filename&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="index-5">
+<span id="id11"></span><h3>导入路径<a class="headerlink" href="#index-5" title="Permalink to this heading"></a></h3>
+<p>为了能够在所有平台上支持可重复的构建，
+Solidity 编译器必须抽象出存储源文件的文件系统的细节。
+由于这个原因，导入路径并不直接指向主机文件系统中的文件。
+相反，编译器维护一个内部数据库（ <em>虚拟文件系统</em> 或简称 <em>VFS</em> ），
+每个源单元被分配一个唯一的 <em>源单元名称</em>，
+这是一个不透明的、非结构化的标识。
+在导入语句中指定的导入路径被转译成源单元名称，并用于在这个数据库中找到相应的源单元。</p>
+<p>使用 <a class="reference internal" href="using-the-compiler.html#compiler-api"><span class="std std-ref">标准 JSON</span></a> API，
+可以直接提供所有源文件的名称和内容作为编译器输入的一部分。
+在这种情况下，源单元的名称确实是任意的。
+然而，如果您想让编译器自动查找并将源代码加载到VFS中，
+您的源单元名称需要以一种结构化的方式，使 <a class="reference internal" href="path-resolution.html#import-callback"><span class="std std-ref">回调引用</span></a> 能够定位它们。
+当使用命令行编译器时，默认的回调引用只支持从主机文件系统加载源代码，
+这意味着您的源单元名称必须是路径。一些环境提供了自定义的回调，其用途更广。
+例如， <a class="reference external" href="https://remix.ethereum.org/">Remix IDE</a> 提供了一个可以让您
+<a class="reference external" href="https://remix-ide.readthedocs.io/en/latest/import.html">从HTTP、IPFS和Swarm URL导入文件，或者直接引用NPM注册表中的包</a>。</p>
+<p>关于虚拟文件系统和编译器使用的路径解析逻辑的完整描述，请参见 <a class="reference internal" href="path-resolution.html#path-resolution"><span class="std std-ref">路径解析</span></a>。</p>
+</section>
+</section>
+<section id="index-6">
+<span id="id12"></span><h2>注释<a class="headerlink" href="#index-6" title="Permalink to this heading"></a></h2>
+<p>可以使用单行注释（ <code class="docutils literal notranslate"><span class="pre">//</span></code> ）和多行注释（ <code class="docutils literal notranslate"><span class="pre">/*...*/</span></code> ）</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8g6L+Z5piv5LiA5Liq5Y2V6KGM5rOo6YeK44CCCgovKgrov5nmmK/kuIDkuKoK5aSa6KGM5rOo6YeK44CCCiov"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// 这是一个单行注释。</span>
+
+<span class="cm">/*</span>
+<span class="cm">这是一个</span>
+<span class="cm">多行注释。</span>
+<span class="cm">*/</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>单行注释由UTF-8编码中的任何单码行结束符（LF、VF、FF、CR、NEL、LS或PS）结束。
+终结符在注释之后仍然是源代码的一部分，
+所以如果它不是一个ASCII符号（这些是NEL、LS和PS），将导致解析器错误。</p>
+</div>
+<p>此外，还有一种注释叫做NatSpec注释，在 <a class="reference internal" href="style-guide.html#style-guide-natspec"><span class="std std-ref">格式指南</span></a> 中详细说明。
+它们用三斜线（ <code class="docutils literal notranslate"><span class="pre">///</span></code> ）或双星号块（ <code class="docutils literal notranslate"><span class="pre">/**</span> <span class="pre">...</span> <span class="pre">*/</span></code> ）来写，
+它们应该直接用在函数声明或语句的上方。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="solidity-by-example.html" class="btn btn-neutral float-left" title="Solidity 合约示例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="structure-of-a-contract.html" class="btn btn-neutral float-right" title="合约结构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>速查表 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="语法" href="grammar.html" />
+    <link rel="prev" title="内联汇编" href="assembly.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">速查表</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#order">操作符的优先顺序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-1">全局变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-2">函数可见性说明符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-3">修改器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">保留字</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>速查表</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cheatsheet.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>速查表<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<section id="order">
+<span id="index-0"></span><span id="id2"></span><h2>操作符的优先顺序<a class="headerlink" href="#order" title="Permalink to this heading"></a></h2>
+<p>以下是按评估顺序列出的操作符优先级。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 14%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>优先级</p></th>
+<th class="head"><p>描述</p></th>
+<th class="head"><p>操作符</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>1</em></p></td>
+<td><p>后置自增和自减</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">++</span></code>, <code class="docutils literal notranslate"><span class="pre">--</span></code></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>创建类型实例</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">&lt;typename&gt;</span></code></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>数组元素</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;array&gt;[&lt;index&gt;]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>访问成员</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;object&gt;.&lt;member&gt;</span></code></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>函数调用</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;func&gt;(&lt;args...&gt;)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>小括号</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(&lt;statement&gt;)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>2</em></p></td>
+<td><p>前置自增和自减</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">++</span></code>, <code class="docutils literal notranslate"><span class="pre">--</span></code></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>一元运算减</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-</span></code></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>一元操作符</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">delete</span></code></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>逻辑非</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">!</span></code></p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>按位非</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>3</em></p></td>
+<td><p>乘方</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">**</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>4</em></p></td>
+<td><p>乘、除和模运算</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">%</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>5</em></p></td>
+<td><p>算术加和减</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>6</em></p></td>
+<td><p>移位操作符</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>7</em></p></td>
+<td><p>按位与</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>8</em></p></td>
+<td><p>按位异或</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>9</em></p></td>
+<td><p>按位或</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">=</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>10</em></p></td>
+<td><p>非等操作符</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>11</em></p></td>
+<td><p>等于操作符</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>12</em></p></td>
+<td><p>逻辑与</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>13</em></p></td>
+<td><p>逻辑或</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">==</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>14</em></p></td>
+<td><p>三元操作符</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;conditional&gt;</span> <span class="pre">?</span> <span class="pre">&lt;if-true&gt;</span> <span class="pre">:</span> <span class="pre">&lt;if-false&gt;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>赋值操作符</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">=</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">^=</span></code>, <code class="docutils literal notranslate"><span class="pre">&amp;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">+=</span></code>, <code class="docutils literal notranslate"><span class="pre">-=</span></code>, <code class="docutils literal notranslate"><span class="pre">*=</span></code>, <code class="docutils literal notranslate"><span class="pre">/=</span></code>, <code class="docutils literal notranslate"><span class="pre">%=</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><em>15</em></p></td>
+<td><p>逗号</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">,</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="index-1">
+<span id="id3"></span><h2>全局变量<a class="headerlink" href="#index-1" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.decode(bytes</span> <span class="pre">memory</span> <span class="pre">encodedData,</span> <span class="pre">(...))</span> <span class="pre">returns</span> <span class="pre">(...)</span></code>： <a class="reference internal" href="abi-spec.html#abi"><span class="std std-ref">ABI</span></a> -对提供的数据进行解码。类型在括号中作为第二个参数给出。
+示例： <code class="docutils literal notranslate"><span class="pre">(uint</span> <span class="pre">a,</span> <span class="pre">uint[2]</span> <span class="pre">memory</span> <span class="pre">b,</span> <span class="pre">bytes</span> <span class="pre">memory</span> <span class="pre">c)</span> <span class="pre">=</span> <span class="pre">abi.decode(data,</span> <span class="pre">(uint,</span> <span class="pre">uint[2],</span> <span class="pre">bytes))</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.encode(...)</span> <span class="pre">returns</span> <span class="pre">(bytes</span> <span class="pre">memory)</span></code>： <a class="reference internal" href="abi-spec.html#abi"><span class="std std-ref">ABI</span></a>-对给定的参数进行编码。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.encodePacked(...)</span> <span class="pre">returns</span> <span class="pre">(bytes</span> <span class="pre">memory)</span></code>： 对给定的参数执行 <a class="reference internal" href="abi-spec.html#abi-packed-mode"><span class="std std-ref">紧密打包</span></a>。
+请注意，这种编码可能是不明确的!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.encodeWithSelector(bytes4</span> <span class="pre">selector,</span> <span class="pre">...)</span> <span class="pre">returns</span> <span class="pre">(bytes</span> <span class="pre">memory)</span></code>： <a class="reference internal" href="abi-spec.html#abi"><span class="std std-ref">ABI</span></a>-对给定参数进行编码，
+并以给定的函数选择器作为起始的 4 字节数据一起返回</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.encodeCall(function</span> <span class="pre">functionPointer,</span> <span class="pre">(...))</span> <span class="pre">returns</span> <span class="pre">(bytes</span> <span class="pre">memory)</span></code>： 对 <code class="docutils literal notranslate"><span class="pre">functionPointer</span></code> 的调用进行ABI编码，
+参数在元组中找到。执行全面的类型检查，确保类型与函数签名相符。结果等于 <code class="docutils literal notranslate"><span class="pre">abi.encodeWithSelector(functionPointer.selector(..))</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abi.encodeWithSignature(string</span> <span class="pre">memory</span> <span class="pre">signature,</span> <span class="pre">...)</span> <span class="pre">returns</span> <span class="pre">(bytes</span> <span class="pre">memory)</span></code>： 等价于
+<code class="docutils literal notranslate"><span class="pre">abi.encodeWithSelector(bytes4(keccak256(bytes(signature)),</span> <span class="pre">...)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes.concat(...)</span> <span class="pre">returns</span> <span class="pre">(bytes</span> <span class="pre">memory)</span></code>： <a class="reference internal" href="types.html#bytes-concat"><span class="std std-ref">将可变数量的参数连接成一个字节数组</span></a>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string.concat(...)</span> <span class="pre">returns</span> <span class="pre">(string</span> <span class="pre">memory)</span></code>： <a class="reference internal" href="types.html#string-concat"><span class="std std-ref">将可变数量的参数连接成一个字符串数组</span></a>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.basefee</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 当前区块的基本费用 （ <a class="reference external" href="https://eips.ethereum.org/EIPS/eip-3198">EIP-3198</a> 和 <a class="reference external" href="https://eips.ethereum.org/EIPS/eip-1559">EIP-1559</a> ）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.chainid</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 当前链的ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.coinbase</span></code> (<code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>)： 当前区块矿工的地址</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.difficulty</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 当前区块的难度值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.gaslimit</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 当前区块的 gas 上限</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.number</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 当前区块的区块号</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 当前区块的时间戳，自Unix epoch以来的秒数</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gasleft()</span> <span class="pre">returns</span> <span class="pre">(uint256)</span></code>： 剩余gas</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msg.data</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes</span></code>)： 完整的调用数据</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> (<code class="docutils literal notranslate"><span class="pre">address</span></code>)： 消息发送方（当前调用）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msg.sig</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes4</span></code>)： Calldata的前四个字节（即函数标识符）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">msg.value</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 随消息发送的 wei 的数量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tx.gasprice</span></code> (<code class="docutils literal notranslate"><span class="pre">uint</span></code>)： 交易的 gas 价格</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tx.origin</span></code> (<code class="docutils literal notranslate"><span class="pre">address</span></code>)： 交易发送方（完整调用链上的原始发送方）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assert(bool</span> <span class="pre">condition)</span></code>： 如果条件为 <code class="docutils literal notranslate"><span class="pre">false</span></code>，则中止执行并恢复状态变化（用于内部错误）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">require(bool</span> <span class="pre">condition)</span></code>： 如果条件为 <code class="docutils literal notranslate"><span class="pre">false</span></code>，则中止执行并恢复状态变化（用于错误的输入或外部组件的错误）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">require(bool</span> <span class="pre">condition,</span> <span class="pre">string</span> <span class="pre">memory</span> <span class="pre">message)</span></code>： 如果条件为 <code class="docutils literal notranslate"><span class="pre">false</span></code>，则中止执行并恢复状态变化（用于错误的输入或外部组件的错误）。同时提供错误信息。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">revert()</span></code>： 中止执行并恢复状态变化</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">revert(string</span> <span class="pre">memory</span> <span class="pre">message)</span></code>： 中止执行并恢复状态变化，提供一个解释性的字符串</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">blockhash(uint</span> <span class="pre">blockNumber)</span> <span class="pre">returns</span> <span class="pre">(bytes32)</span></code>： 给定区块的哈希值 - 只对最近的256个区块有效</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keccak256(bytes</span> <span class="pre">memory)</span> <span class="pre">returns</span> <span class="pre">(bytes32)</span></code>： 计算输入的Keccak-256哈希值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sha256(bytes</span> <span class="pre">memory)</span> <span class="pre">returns</span> <span class="pre">(bytes32)</span></code>： 计算输入的SHA-256哈希值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ripemd160(bytes</span> <span class="pre">memory)</span> <span class="pre">returns</span> <span class="pre">(bytes20)</span></code>： 计算输入的RIPEMD-160的哈希值</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ecrecover(bytes32</span> <span class="pre">hash,</span> <span class="pre">uint8</span> <span class="pre">v,</span> <span class="pre">bytes32</span> <span class="pre">r,</span> <span class="pre">bytes32</span> <span class="pre">s)</span> <span class="pre">returns</span> <span class="pre">(address)</span></code>： 从椭圆曲线签名中恢复与公钥相关的地址，错误时返回0</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">addmod(uint</span> <span class="pre">x,</span> <span class="pre">uint</span> <span class="pre">y,</span> <span class="pre">uint</span> <span class="pre">k)</span> <span class="pre">returns</span> <span class="pre">(uint)</span></code>： 计算 <code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">+</span> <span class="pre">y)</span> <span class="pre">%</span> <span class="pre">k</span></code> 的值，其中加法的结果即使超过 <code class="docutils literal notranslate"><span class="pre">2**256</span></code> 也不会被截取。从 0.5.0 版本开始会加入对 <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">!=</span> <span class="pre">0</span></code> 的 assert（即会在此函数开头执行 <code class="docutils literal notranslate"><span class="pre">assert(k</span> <span class="pre">!=</span> <span class="pre">0);</span></code> 作为参数检查，译者注）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mulmod(uint</span> <span class="pre">x,</span> <span class="pre">uint</span> <span class="pre">y,</span> <span class="pre">uint</span> <span class="pre">k)</span> <span class="pre">returns</span> <span class="pre">(uint)</span></code>： 计算 <code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">+</span> <span class="pre">y)</span> <span class="pre">%</span> <span class="pre">k</span></code> 的值，其中乘法的结果即使超过 <code class="docutils literal notranslate"><span class="pre">2**256</span></code> 也不会被截取。从 0.5.0 版本开始会加入对 <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">!=</span> <span class="pre">0</span></code> 的 assert（即会在此函数开头执行 <code class="docutils literal notranslate"><span class="pre">assert(k</span> <span class="pre">!=</span> <span class="pre">0);</span></code> 作为参数检查，译者注）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">this</span></code> （当前合约的类型）： 当前合约，可明确转换为 <code class="docutils literal notranslate"><span class="pre">address</span></code> 或 <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">payable</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">super</span></code>： 继承层次中高一级的合约</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">selfdestruct(address</span> <span class="pre">payable</span> <span class="pre">recipient)</span></code>： 销毁当前合约，将其资金发送到给定的地址。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;address&gt;.balance</span></code> (<code class="docutils literal notranslate"><span class="pre">uint256</span></code>)： <a class="reference internal" href="types.html#address"><span class="std std-ref">地址类型</span></a> 的余额，以 Wei 为单位</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;address&gt;.code</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes</span> <span class="pre">memory</span></code>)： 在 <a class="reference internal" href="types.html#address"><span class="std std-ref">地址类型</span></a> 的代码（可以是空的）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;address&gt;.codehash</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes32</span></code>)： <a class="reference internal" href="types.html#address"><span class="std std-ref">地址类型</span></a> 的代码哈希值。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;address</span> <span class="pre">payable&gt;.send(uint256</span> <span class="pre">amount)</span> <span class="pre">returns</span> <span class="pre">(bool)</span></code>： 向 <a class="reference internal" href="types.html#address"><span class="std std-ref">地址类型</span></a> 发送给定数量的 Wei，失败时返回 <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;address</span> <span class="pre">payable&gt;.transfer(uint256</span> <span class="pre">amount)</span></code>： 向 <a class="reference internal" href="types.html#address"><span class="std std-ref">地址类型</span></a> 发送给定数量的 Wei，失败时会把错误抛出（throw）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(C).name</span></code> (<code class="docutils literal notranslate"><span class="pre">string</span></code>)： 合约的名称</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(C).creationCode</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes</span> <span class="pre">memory</span></code>)： 给定合约的创建字节码，参见 <a class="reference internal" href="units-and-global-variables.html#meta-type"><span class="std std-ref">类型信息</span></a>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(C).runtimeCode</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes</span> <span class="pre">memory</span></code>)： 给定合约的运行时字节码，参见 <a class="reference internal" href="units-and-global-variables.html#meta-type"><span class="std std-ref">类型信息</span></a>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(I).interfaceId</span></code> (<code class="docutils literal notranslate"><span class="pre">bytes4</span></code>)： 包含给定接口的EIP-165接口标识符的值，参见 <a class="reference internal" href="units-and-global-variables.html#meta-type"><span class="std std-ref">类型信息</span></a>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(T).min</span></code> (<code class="docutils literal notranslate"><span class="pre">T</span></code>)： 整数类型 <code class="docutils literal notranslate"><span class="pre">T</span></code> 所能代表的最小值，参见 <a class="reference internal" href="units-and-global-variables.html#meta-type"><span class="std std-ref">类型信息</span></a>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(T).max</span></code> (<code class="docutils literal notranslate"><span class="pre">T</span></code>)： 整数类型 <code class="docutils literal notranslate"><span class="pre">T</span></code> 所能代表的最大值，参见 <a class="reference internal" href="units-and-global-variables.html#meta-type"><span class="std std-ref">类型信息</span></a>。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>当合约在链下而不是在区块中包含的交易的背景下被计算时，
+您不应该认为 <code class="docutils literal notranslate"><span class="pre">block.*</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tx.*</span></code> 是指任何特定区块或交易的值。
+这些值是由执行合约的EVM实现提供的，可以是任意的。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>不要依赖 <code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code> 或 <code class="docutils literal notranslate"><span class="pre">blockhash</span></code> 作为随机性的来源。除非您知道您在做什么。</p>
+<p>时间戳和区块哈希值都可以在一定程度上受到矿工的影响。
+挖矿社区的不良行为者可以在选定的哈希上运行赌场支付功能，
+如果他们没有收到任何钱，只需重试一个不同的哈希。</p>
+<p>当前区块的时间戳必须比前一个区块的时间戳大，
+但唯一可以确定的就是它会是权威链（主链或者主分支）上两个连续区块时间戳之间的一个数值。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>由于可扩展性的原因，块的哈希值并不是对所有的块都可用。
+您只能访问最近的256个区块的哈希值，所有其他的值都是零。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在0.5.0版本中，删除了以下别名： <code class="docutils literal notranslate"><span class="pre">suicide</span></code> 是 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code> 的别名，
+<code class="docutils literal notranslate"><span class="pre">msg.gas</span></code> 是 <code class="docutils literal notranslate"><span class="pre">gasleft</span></code> 的别名， <code class="docutils literal notranslate"><span class="pre">block.blockhash</span></code> 是 <code class="docutils literal notranslate"><span class="pre">blockhash</span></code> 的别名，
+<code class="docutils literal notranslate"><span class="pre">sha3</span></code> 是 <code class="docutils literal notranslate"><span class="pre">keccak256</span></code> 的别名。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在0.7.0版本中，删除了别名 <code class="docutils literal notranslate"><span class="pre">now</span></code> （用于 <code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code>）。</p>
+</div>
+</section>
+<section id="index-2">
+<span id="id4"></span><h2>函数可见性说明符<a class="headerlink" href="#index-2" title="Permalink to this heading"></a></h2>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=ZnVuY3Rpb24gbXlGdW5jdGlvbigpIDx2aXNpYmlsaXR5IHNwZWNpZmllcj4gcmV0dXJucyAoYm9vbCkgewogICAgcmV0dXJuIHRydWU7Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">function</span><span class="w"> </span><span class="nv">myFunction</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span>visibility<span class="w"> </span>specifier<span class="o">&gt;</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span></code>： 内部、外部均可见（参考为存储/状态变量创建 <a class="reference internal" href="contracts.html#getter-functions"><span class="std std-ref">getter function</span></a> 函数）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">private</span></code>： 仅在当前合约内可见</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">external</span></code>： 仅在外部可见（仅可修饰函数）——就是说，仅可用于消息调用（即使在合约内调用，也只能通过 <code class="docutils literal notranslate"><span class="pre">this.func</span></code> 的方式）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">internal</span></code>： 仅在内部可见（也就是在当前 Solidity 源代码文件内均可见，不仅限于当前合约内，译者注）</p></li>
+</ul>
+</section>
+<section id="index-3">
+<span id="id5"></span><h2>修改器<a class="headerlink" href="#index-3" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pure</span></code> 修饰函数时：不允许修改或访问状态。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">view</span></code> 修饰函数时：不允许修改状态。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payable</span></code> 修饰函数时：允许从调用中接收以太币。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">constant</span></code> 修饰状态变量时：不允许赋值（除初始化以外），不会占据 存储插槽（storage slot）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">immutable</span></code> 修饰状态变量时：在构造时允许有一个确切的赋值，之后是恒定的。被存储在代码中。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">anonymous</span></code> 修饰事件时：不把事件签名作为 topic 存储。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">indexed</span></code> 修饰事件参数时：将参数作为 topic 存储。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">virtual</span></code> 修饰函数和修改时：允许在派生合约中改变函数或修改器的行为。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">override</span></code> 表示该函数、修改器或公共状态变量改变了基类合约中的函数或修改器的行为。</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>保留字<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<p>以下是 Solidity 的保留字，未来可能会变为语法的一部分：</p>
+<p><code class="docutils literal notranslate"><span class="pre">after</span></code>， <code class="docutils literal notranslate"><span class="pre">alias</span></code>， <code class="docutils literal notranslate"><span class="pre">apply</span></code>， <code class="docutils literal notranslate"><span class="pre">auto</span></code>， <code class="docutils literal notranslate"><span class="pre">byte</span></code>， <code class="docutils literal notranslate"><span class="pre">case</span></code>， <code class="docutils literal notranslate"><span class="pre">copyof</span></code>， <code class="docutils literal notranslate"><span class="pre">default</span></code>，
+<code class="docutils literal notranslate"><span class="pre">define</span></code>， <code class="docutils literal notranslate"><span class="pre">final</span></code>， <code class="docutils literal notranslate"><span class="pre">implements</span></code>， <code class="docutils literal notranslate"><span class="pre">in</span></code>， <code class="docutils literal notranslate"><span class="pre">inline</span></code>， <code class="docutils literal notranslate"><span class="pre">let</span></code>， <code class="docutils literal notranslate"><span class="pre">macro</span></code>， <code class="docutils literal notranslate"><span class="pre">match</span></code>，
+<code class="docutils literal notranslate"><span class="pre">mutable</span></code>， <code class="docutils literal notranslate"><span class="pre">null</span></code>， <code class="docutils literal notranslate"><span class="pre">of</span></code>， <code class="docutils literal notranslate"><span class="pre">partial</span></code>， <code class="docutils literal notranslate"><span class="pre">promise</span></code>， <code class="docutils literal notranslate"><span class="pre">reference</span></code>， <code class="docutils literal notranslate"><span class="pre">relocatable</span></code>，
+<code class="docutils literal notranslate"><span class="pre">sealed</span></code>， <code class="docutils literal notranslate"><span class="pre">sizeof</span></code>， <code class="docutils literal notranslate"><span class="pre">static</span></code>， <code class="docutils literal notranslate"><span class="pre">supports</span></code>， <code class="docutils literal notranslate"><span class="pre">switch</span></code>， <code class="docutils literal notranslate"><span class="pre">typedef</span></code>， <code class="docutils literal notranslate"><span class="pre">typeof</span></code>，
+<code class="docutils literal notranslate"><span class="pre">var</span></code>。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="assembly.html" class="btn btn-neutral float-left" title="内联汇编" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="grammar.html" class="btn btn-neutral float-right" title="语法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

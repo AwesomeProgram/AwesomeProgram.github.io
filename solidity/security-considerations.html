@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>安全考虑 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SMT检查器和形式化验证" href="smtchecker.html" />
+    <link rel="prev" title="风格指南" href="natspec-format.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">安全考虑</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">陷阱</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">隐私信息和随机性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">重入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gas">gas 限制和循环</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">发送和接收以太币</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">调用栈深度</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">授权的代理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tx-origin">tx.origin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#underflow-overflow">二进制补码 / 下溢 / 上溢</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clearing-mappings">清除映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">细枝末节</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">推荐做法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">认真对待警告</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">限制以太币的数量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">保持合约简练且模块化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checks-effects-interactions">使用“检查-生效-交互”（Checks-Effects-Interactions）模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fail-safe">包含故障-安全（Fail-Safe）模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">请求同行评审</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>安全考虑</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/security-considerations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="security-considerations">
+<span id="id1"></span><h1>安全考虑<a class="headerlink" href="#security-considerations" title="Permalink to this heading"></a></h1>
+<p>虽然通常很容易建立起按预期工作的软件，但要检查没有人能够以 <strong>非</strong> 预期的方式使用它，就难得多了。</p>
+<p>在 Solidity 中，这一点更加重要，因为您可以使用智能合约来处理代币，
+甚至可能是更有价值的东西。此外，
+智能合约的每一次执行都是公开的，而且源代码也通常是容易获得的。</p>
+<p>当然，您总是要考虑有多大的风险：您可以将智能合约与一个对公众开放（因此也对恶意行为者开放），
+甚至可能是开源的网络服务进行比较。如果您只在该网络服务上存储您的杂货清单，
+您可能不必太过小心，但如果您使用该网络服务管理您的银行账户，您就应该更加小心。</p>
+<p>本节将列出一些陷阱和一般安全建议，但当然不可能是完整的。
+此外，请记住，即使您的智能合约代码没有错误，编译器或平台本身也可能有一个错误。
+编译器的一些公开的，与安全有关的bug列表可以在 <a class="reference internal" href="bugs.html#known-bugs"><span class="std std-ref">已知错误列表</span></a> 中找到，
+它也是机器可读的。请注意，有一个涵盖 Solidity 编译器代码生成器的错误赏金计划。</p>
+<p>像往常一样，对于开源文档，请帮助我们扩展这部分内容（尤其是，一些例子不会有什么影响）！</p>
+<p>注意：除了下面的列表，您也可以在
+<a class="reference external" href="https://github.com/guylando/KnowledgeLists/blob/master/EthereumSmartContracts.md">Guy Lando 的知识列表</a>
+和 <a class="reference external" href="https://consensys.github.io/smart-contract-best-practices/">Consensys GitHub 代码仓库</a>
+中找到更多的安全建议和最佳实践。</p>
+<section id="id2">
+<h2>陷阱<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>隐私信息和随机性<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<p>您在智能合约中使用的所有东西都是公开可见的，即使是标记为 <code class="docutils literal notranslate"><span class="pre">private</span></code> 的局部变量和状态变量。</p>
+<p>如果您不希望矿工能够作弊，在智能合约中使用随机数是相当棘手的。</p>
+</section>
+<section id="id4">
+<h3>重入<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<p>一个合约（A）与另一个合约（B）的任何交互和任何以太币的转移都会将控制权交给该合约（B）。
+这使得 B 有可能在这个交互完成之前回调回 A。举个例子，
+下面的代码包含了一个漏洞（这只是一个片段，而不是一个完整的合约）：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC42LjAgPDAuOS4wOwoKLy8g5q2k5ZCI57qm5YyF5ZCr5LiA5Liq5ryP5rSeIC0g6K+35Yu/5L2/55SoCmNvbnRyYWN0IEZ1bmQgewogICAgLy8vIEBkZXYg5ZCI57qm55qE5Lul5aSq5biB5Lu96aKd55qE5pig5bCE44CCCiAgICBtYXBwaW5nKGFkZHJlc3MgPT4gdWludCkgc2hhcmVzOwogICAgLy8vIOaPkOWPluaCqOeahOS7vemineOAggogICAgZnVuY3Rpb24gd2l0aGRyYXcoKSBwdWJsaWMgewogICAgICAgIGlmIChwYXlhYmxlKG1zZy5zZW5kZXIpLnNlbmQoc2hhcmVzW21zZy5zZW5kZXJdKSkKICAgICAgICAgICAgc2hhcmVzW21zZy5zZW5kZXJdID0gMDsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.6.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// 此合约包含一个漏洞 - 请勿使用</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">Fund</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// @dev 合约的以太币份额的映射。</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>shares<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 提取您的份额。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>send<span class="p">(</span>shares<span class="p">[</span><span class="k">msg.sender</span><span class="p">]))</span><span class="w"></span>
+<span class="w">            </span>shares<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这里的问题不是太严重，因为作为 <code class="docutils literal notranslate"><span class="pre">send</span></code> 的一部分，gas 有限，
+但它仍然暴露了一个弱点: 以太币的转移总是可以包括代码的执行，
+所以接收者可以是一个回调到 <code class="docutils literal notranslate"><span class="pre">withdraw</span></code> 的合约。
+这将让它获得多次退款，并基本上取回合约中的所有以太。
+特别的是，下面的合约将允许攻击者多次退款，因为它使用了 <code class="docutils literal notranslate"><span class="pre">call</span></code>，
+它会默认转发所有剩余 gas。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC42LjIgPDAuOS4wOwoKLy/mraTlkIjnuqbljIXlkKvkuIDkuKrmvI/mtJ4gLSDor7fli7/kvb/nlKgKY29udHJhY3QgRnVuZCB7CiAgICAvLy8gQGRldiDlkIjnuqbnmoTku6XlpKrluIHku73pop3nmoTmmKDlsITjgIIKICAgIG1hcHBpbmcoYWRkcmVzcyA9PiB1aW50KSBzaGFyZXM7CiAgICAvLy8g5o+Q5Y+W5oKo55qE5Lu96aKd44CCCiAgICBmdW5jdGlvbiB3aXRoZHJhdygpIHB1YmxpYyB7CiAgICAgICAgKGJvb2wgc3VjY2VzcywpID0gbXNnLnNlbmRlci5jYWxse3ZhbHVlOiBzaGFyZXNbbXNnLnNlbmRlcl19KCIiKTsKICAgICAgICBpZiAoc3VjY2VzcykKICAgICAgICAgICAgc2hhcmVzW21zZy5zZW5kZXJdID0gMDsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.6.2</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">//此合约包含一个漏洞 - 请勿使用</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">Fund</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// @dev 合约的以太币份额的映射。</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>shares<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 提取您的份额。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">,)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">.</span>call<span class="p">{</span>value<span class="p">:</span><span class="w"> </span>shares<span class="p">[</span><span class="k">msg.sender</span><span class="p">]}(</span><span class="s2">&quot;&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>success<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>shares<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>为了避免重入，您可以使用 检查-生效-交互（Checks-Effects-Interactions）模式，下面将进一步介绍：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC42LjAgPDAuOS4wOwoKY29udHJhY3QgRnVuZCB7CiAgICAvLy8gQGRldiDlkIjnuqbnmoTku6XlpKrluIHku73pop3nmoTmmKDlsITjgIIKICAgIG1hcHBpbmcoYWRkcmVzcyA9PiB1aW50KSBzaGFyZXM7CiAgICAvLy8g5o+Q5Y+W5oKo55qE5Lu96aKd44CCCiAgICBmdW5jdGlvbiB3aXRoZHJhdygpIHB1YmxpYyB7CiAgICAgICAgdWludCBzaGFyZSA9IHNoYXJlc1ttc2cuc2VuZGVyXTsKICAgICAgICBzaGFyZXNbbXNnLnNlbmRlcl0gPSAwOwogICAgICAgIHBheWFibGUobXNnLnNlbmRlcikudHJhbnNmZXIoc2hhcmUpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.6.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Fund</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// @dev 合约的以太币份额的映射。</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>shares<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 提取您的份额。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">share</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>shares<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span>shares<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>share<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>请注意，重入不仅是以太传输的影响，也是对另一个合约的任何函数调用的影响。
+此外，您还必须考虑到多合约的情况。一个被调用的合约可以修改您所依赖的另一个合约的状态。</p>
+</section>
+<section id="gas">
+<h3>gas 限制和循环<a class="headerlink" href="#gas" title="Permalink to this heading"></a></h3>
+<p>对于没有固定迭代次数的循环，例如，依赖于存储值的循环，必须谨慎使用：
+由于块 gas 的限制，事务只能消耗一定量的 gas。
+无论是明确的还是仅仅由于正常的操作，循环中的迭代次数可以增长到超过块 gas 限制，
+这可能导致完整的合约在某一点上停滞。这可能不适用于只为从区块链上读取数据而执行的 <code class="docutils literal notranslate"><span class="pre">view</span></code> 函数。
+但是，这样的函数可能会被其他合约调用，作为链上操作的一部分，并使其停滞。请在您的合约文档中明确说明这种情况。</p>
+</section>
+<section id="id5">
+<h3>发送和接收以太币<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>无论是合约还是 “外部账户”，目前都无法阻止有人向他们发送以太币。
+合约可以对普通的转账做出反应并拒绝，但有一些方法可以在不创建消息调用的情况下转移以太币。
+一种方法是简单地向合约地址“挖矿”，第二种方法是使用 <code class="docutils literal notranslate"><span class="pre">selfdestruct(x)</span></code>。</p></li>
+<li><p>如果一个合约收到了以太（没有函数被调用），要么是执行 <a class="reference internal" href="contracts.html#receive-ether-function"><span class="std std-ref">receive 方法</span></a>，
+要么执行 <a class="reference internal" href="contracts.html#fallback-function"><span class="std std-ref">fallback</span></a> 函数。如果它没有 receive 也没有 fallback 函数，
+那么该以太将被拒绝（抛出一个异常）。在这些函数的执行过程中，
+合约只能依靠此时它所传递的 “gas津贴”（2300 gas）可用。但这个津贴不足以修改存储
+（但不要认为这是理所当然的，这个津贴可能会随着未来的硬分叉而改变）。
+为了确保您的合约能够以这种方式接收以太，请检查 receive 和 fallback 函数的 gas 要求
+（在 Remix 的“详细”章节会举例说明）。</p></li>
+<li><p>有一种方法可以使用 <code class="docutils literal notranslate"><span class="pre">addr.call{value:</span> <span class="pre">x}(&quot;&quot;)</span></code> 将更多的 gas 转发给接收合约。
+这与 <code class="docutils literal notranslate"><span class="pre">addr.transfer(x)</span></code> 本质上是一样的，只是它转发了所有剩余的 gas，
+并为接收方提供了执行更昂贵的操作的能力（而且它返回一个失败代码，而不是自动传播错误）。
+这可能包括回调到发送合约或其他您可能没有想到的状态变化。
+因此，这种方法无论是给诚实用户还是恶意行为者都提供了极大的灵活性。</p></li>
+<li><p>尽可能使用最精确的单位来表示 wei 的数量，因为您会因为缺乏精确性而失去任何四舍五入的结果。</p></li>
+<li><p>如果您想用 <code class="docutils literal notranslate"><span class="pre">address.transfer</span></code> 来发送以太，有一些细节需要注意：</p>
+<ol class="arabic simple">
+<li><p>如果接收者是一个合约，它会导致其 receive 或 fallback 函数被执行，
+而该函数又可以回调发送以太的合约。</p></li>
+<li><p>发送以太可能由于调用深度超过1024而失败。由于调用者完全控制着调用深度，他们可以迫使传输失败；
+考虑到这种可能性，或者使用 <code class="docutils literal notranslate"><span class="pre">send</span></code>，并确保总是检查其返回值。
+更好的办法是，使用接收者可以提取以太币的模式来编写您的合约。</p></li>
+<li><p>发送以太也可能失败，因为接收合约的执行需要超过分配的 gas 值
+（确切地说，是使用了 <a class="reference internal" href="control-structures.html#assert-and-require"><span class="std std-ref">require</span></a>， <a class="reference internal" href="control-structures.html#assert-and-require"><span class="std std-ref">assert</span></a>，
+<a class="reference internal" href="control-structures.html#assert-and-require"><span class="std std-ref">revert</span></a> 或者因为操作太昂贵）- 它 “耗尽了 gas“（OOG）。
+如果您使用 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 或 <code class="docutils literal notranslate"><span class="pre">send</span></code>，并带有返回值检查，这可能为接收者提供一种手段来阻止发送合约的进展。
+同样，这里的最佳做法是使用 <a class="reference internal" href="common-patterns.html#withdrawal-pattern"><span class="std std-ref">“提款” 模式而不是 “发送”模式</span></a>。</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>调用栈深度<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<p>外部函数调用随时都可能失败，因为它们超过了最大调用堆栈大小1024的限制。
+在这种情况下，Solidity 会抛出一个异常。恶意的行为者可能会在与您的合约交互之前，
+将调用堆栈逼到一个高值。请注意，由于 <a class="reference external" href="https://eips.ethereum.org/EIPS/eip-608">桔子哨子（Tangerine Whistle）</a>
+硬分叉， <a class="reference external" href="https://eips.ethereum.org/EIPS/eip-150">63/64规则</a> 使得调用栈深度攻击不切实际。
+还要注意的是，调用栈和表达式栈是不相关的，尽管两者都有1024个栈槽的大小限制。</p>
+<p>注意 <code class="docutils literal notranslate"><span class="pre">.send()</span></code> 在调用栈被耗尽的情况下 <strong>不会</strong> 抛出异常，
+而是会返回 <code class="docutils literal notranslate"><span class="pre">false</span></code>。低级函数 <code class="docutils literal notranslate"><span class="pre">.call()</span></code>， <code class="docutils literal notranslate"><span class="pre">.delegatecall()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.staticcall()</span></code>
+也都是这样的。</p>
+</section>
+<section id="id8">
+<h3>授权的代理<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>如果您的合约可以作为一个代理，也就是说，如果它可以用用户提供的数据调用任意的合约，
+那么用户基本上可以承担代理合约的身份。即使您有其他的保护措施，
+最好是建立您的合约系统，使代理没有任何权限（甚至对自己也没有）。
+如果需要，您可以使用第二个代理来完成：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguMDsKY29udHJhY3QgUHJveHlXaXRoTW9yZUZ1bmN0aW9uYWxpdHkgewogICAgUGVybWlzc2lvbmxlc3NQcm94eSBwcm94eTsKCiAgICBmdW5jdGlvbiBjYWxsT3RoZXIoYWRkcmVzcyBfYWRkciwgYnl0ZXMgbWVtb3J5IF9wYXlsb2FkKSBwdWJsaWMKICAgICAgICAgICAgcmV0dXJucyAoYm9vbCwgYnl0ZXMgbWVtb3J5KSB7CiAgICAgICAgcmV0dXJuIHByb3h5LmNhbGxPdGhlcihfYWRkciwgX3BheWxvYWQpOwogICAgfQogICAgLy8g5YW25LuW5Ye95pWw5ZKM5YW25LuW5Yqf6IO9Cn0KCi8vIOi/meaYr+WujOaVtOeahOWQiOe6pu+8jOWug+ayoeacieWFtuS7luWKn+iDve+8jOS4jemcgOimgeS7u+S9leadg+mZkOWwseWPr+S7peW3peS9nOOAggpjb250cmFjdCBQZXJtaXNzaW9ubGVzc1Byb3h5IHsKICAgIGZ1bmN0aW9uIGNhbGxPdGhlcihhZGRyZXNzIF9hZGRyLCBieXRlcyBtZW1vcnkgX3BheWxvYWQpIHB1YmxpYwogICAgICAgICAgICByZXR1cm5zIChib29sLCBieXRlcyBtZW1vcnkpIHsKICAgICAgICByZXR1cm4gX2FkZHIuY2FsbChfcGF5bG9hZCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">ProxyWithMoreFunctionality</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>PermissionlessProxy<span class="w"> </span>proxy<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">callOther</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_addr</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_payload<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"></span>
+<span class="w">            </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>proxy<span class="p">.</span>callOther<span class="p">(</span>_addr<span class="p">,</span><span class="w"> </span>_payload<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 其他函数和其他功能</span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// 这是完整的合约，它没有其他功能，不需要任何权限就可以工作。</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">PermissionlessProxy</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">callOther</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_addr</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>_payload<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"></span>
+<span class="w">            </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>_addr<span class="p">.</span>call<span class="p">(</span>_payload<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="tx-origin">
+<h3>tx.origin<a class="headerlink" href="#tx-origin" title="Permalink to this heading"></a></h3>
+<p>永远不要使用 tx.origin 做身份认证。假设您有一个这样的钱包合约：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwovLyDmnKzlkIjnuqbljIXlkKvkuIDkuKrmvI/mtJ4gLSDor7fli7/kvb/nlKgKY29udHJhY3QgVHhVc2VyV2FsbGV0IHsKICAgIGFkZHJlc3Mgb3duZXI7CgogICAgY29uc3RydWN0b3IoKSB7CiAgICAgICAgb3duZXIgPSBtc2cuc2VuZGVyOwogICAgfQoKICAgIGZ1bmN0aW9uIHRyYW5zZmVyVG8oYWRkcmVzcyBwYXlhYmxlIGRlc3QsIHVpbnQgYW1vdW50KSBwdWJsaWMgewogICAgICAgIC8vIOa8j+a0nuWwseWcqOi/memHjO+8jOaCqOW/hemhu+S9v+eUqCBtc2cuc2VuZGVyIOiAjOS4jeaYryB0eC5vcmlnaW7jgIIKICAgICAgICByZXF1aXJlKHR4Lm9yaWdpbiA9PSBvd25lcik7CiAgICAgICAgZGVzdC50cmFuc2ZlcihhbW91bnQpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 本合约包含一个漏洞 - 请勿使用</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">TxUserWallet</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transferTo</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>dest<span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 漏洞就在这里，您必须使用 msg.sender 而不是 tx.origin。</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">tx.origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>dest<span class="p">.</span>transfer<span class="p">(</span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>现在有人欺骗您，让您向这个攻击钱包的地址发送以太币：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwppbnRlcmZhY2UgVHhVc2VyV2FsbGV0IHsKICAgIGZ1bmN0aW9uIHRyYW5zZmVyVG8oYWRkcmVzcyBwYXlhYmxlIGRlc3QsIHVpbnQgYW1vdW50KSBleHRlcm5hbDsKfQoKY29udHJhY3QgVHhBdHRhY2tXYWxsZXQgewogICAgYWRkcmVzcyBwYXlhYmxlIG93bmVyOwoKICAgIGNvbnN0cnVjdG9yKCkgewogICAgICAgIG93bmVyID0gcGF5YWJsZShtc2cuc2VuZGVyKTsKICAgIH0KCiAgICByZWNlaXZlKCkgZXh0ZXJuYWwgcGF5YWJsZSB7CiAgICAgICAgVHhVc2VyV2FsbGV0KG1zZy5zZW5kZXIpLnRyYW5zZmVyVG8ob3duZXIsIG1zZy5zZW5kZXIuYmFsYW5jZSk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+interface<span class="w"> </span>TxUserWallet<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transferTo</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>dest<span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">TxAttackWallet</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>owner<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span>receive<span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>TxUserWallet<span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transferTo<span class="p">(</span>owner<span class="p">,</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">.</span>balance<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>如果您的钱包检查了 <code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> 的授权，它将得到攻击钱包的地址，而不是所有者地址。
+但是通过检查 <code class="docutils literal notranslate"><span class="pre">tx.origin</span></code>，它得到的是启动交易的原始地址，这仍然是所有者地址。
+攻击钱包会立即耗尽您的所有资金。</p>
+</section>
+<section id="underflow-overflow">
+<span id="id9"></span><h3>二进制补码 / 下溢 / 上溢<a class="headerlink" href="#underflow-overflow" title="Permalink to this heading"></a></h3>
+<p>正如在许多编程语言中，Solidity 的整数类型实际上不是整数。
+当数值较小时，它们类似于整数，但也不能表示任意大的数字。</p>
+<p>下面的代码会导致溢出，因为加法的结果太大，不能存储在 <code class="docutils literal notranslate"><span class="pre">uint8</span></code> 类型中：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=dWludDggeCA9IDI1NTsKdWludDggeSA9IDE7CnJldHVybiB4ICsgeTs="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">255</span><span class="p">;</span><span class="w"></span>
+<span class="kt">uint8</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="kt">return</span><span class="w"> </span>x<span class="w"> </span><span class="o">+</span><span class="w"> </span>y<span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Solidity 有两种模式来处理这些溢出。检查和不检查或 “包装” 模式。</p>
+<p>默认的检查模式将检测到溢出并导致一个失败的断言。
+您可以使用 <code class="docutils literal notranslate"><span class="pre">unchecked</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>，使溢出被无声地忽略。
+上面的代码如果用 <code class="docutils literal notranslate"><span class="pre">unchecked</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> 包装，将返回 <code class="docutils literal notranslate"><span class="pre">0</span></code>。</p>
+<p>即使在检查模式下，也不要认为您受到了保护，不会出现溢出错误。
+在这种模式下，溢出总是会被还原。如果无法避免溢出，这可能导致智能合约被卡在某个状态。</p>
+<p>一般来说，请阅读关于二进制补码表示法的限制，它甚至对有符号的数字有一些更特殊的边缘情况。</p>
+<p>尝试使用 <code class="docutils literal notranslate"><span class="pre">require</span></code> 将输入的大小限制在一个合理的范围内，
+并使用:ref:<cite>SMT 检查器 &lt;smt_checker&gt;</cite> 来发现潜在的溢出。</p>
+</section>
+<section id="clearing-mappings">
+<span id="id10"></span><h3>清除映射<a class="headerlink" href="#clearing-mappings" title="Permalink to this heading"></a></h3>
+<p>Solidity <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 类型（见 <a class="reference internal" href="types.html#mapping-types"><span class="std std-ref">映射类型</span></a>）是一个仅有存储空间的键值数据结构，
+它不跟踪被分配非零值的键。正因为如此，清理映射时不可能有关于写入键的额外信息。
+如果 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 被用作动态存储数组的基本类型，删除或弹出数组将不会对 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 元素产生影响。
+例如，如果一个 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 被用作一个 <code class="docutils literal notranslate"><span class="pre">struct</span></code> 的成员字段的类型，
+而该结构是一个动态存储阵列的基本类型，同样的情况也会发生。
+<code class="docutils literal notranslate"><span class="pre">mapping</span></code> 在包含 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 的结构或数组的分配中也会被忽略。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC42LjAgPDAuOS4wOwoKY29udHJhY3QgTWFwIHsKICAgIG1hcHBpbmcgKHVpbnQgPT4gdWludClbXSBhcnJheTsKCiAgICBmdW5jdGlvbiBhbGxvY2F0ZSh1aW50IF9uZXdNYXBzKSBwdWJsaWMgewogICAgICAgIGZvciAodWludCBpID0gMDsgaSA8IF9uZXdNYXBzOyBpKyspCiAgICAgICAgICAgIGFycmF5LnB1c2goKTsKICAgIH0KCiAgICBmdW5jdGlvbiB3cml0ZU1hcCh1aW50IF9tYXAsIHVpbnQgX2tleSwgdWludCBfdmFsdWUpIHB1YmxpYyB7CiAgICAgICAgYXJyYXlbX21hcF1bX2tleV0gPSBfdmFsdWU7CiAgICB9CgogICAgZnVuY3Rpb24gcmVhZE1hcCh1aW50IF9tYXAsIHVpbnQgX2tleSkgcHVibGljIHZpZXcgcmV0dXJucyAodWludCkgewogICAgICAgIHJldHVybiBhcnJheVtfbWFwXVtfa2V5XTsKICAgIH0KCiAgICBmdW5jdGlvbiBlcmFzZU1hcHMoKSBwdWJsaWMgewogICAgICAgIGRlbGV0ZSBhcnJheTsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.6.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Map</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)[]</span><span class="w"> </span>array<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">allocate</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_newMaps</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"> </span>i<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>_newMaps<span class="p">;</span><span class="w"> </span>i<span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span>array<span class="p">.</span>push<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">writeMap</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_map</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_key</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_value</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>array<span class="p">[</span>_map<span class="p">][</span>_key<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>_value<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">readMap</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_map</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_key</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>array<span class="p">[</span>_map<span class="p">][</span>_key<span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">eraseMaps</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>delete<span class="w"> </span>array<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>考虑一下上面的例子和下面的调用序列： <code class="docutils literal notranslate"><span class="pre">allocate(10)</span></code>， <code class="docutils literal notranslate"><span class="pre">writeMap(4,</span> <span class="pre">128,</span> <span class="pre">256)</span></code>。
+此时，调用 <code class="docutils literal notranslate"><span class="pre">readMap(4,</span> <span class="pre">128)</span></code> 返回256。如果我们调用 <code class="docutils literal notranslate"><span class="pre">eraseMaps</span></code>，
+状态变量 <code class="docutils literal notranslate"><span class="pre">array</span></code> 的长度被清零，但由于它的 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 元素不能被清零，
+它们的信息在合约的存储中仍然存在。
+删除 <code class="docutils literal notranslate"><span class="pre">array</span></code> 后，调用 <code class="docutils literal notranslate"><span class="pre">allocate(5)</span></code> 允许我们再次访问 <code class="docutils literal notranslate"><span class="pre">array[4]</span></code>，
+调用 <code class="docutils literal notranslate"><span class="pre">readMap(4,</span> <span class="pre">128)</span></code> 则返回256，即使没有再次调用 <code class="docutils literal notranslate"><span class="pre">writeMap</span></code>。</p>
+<p>如果您的 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 信息必须被删除，可以考虑使用类似于
+<a class="reference external" href="https://github.com/ethereum/dappbin/blob/master/library/iterable_mapping.sol">可迭代的映射</a> 的库，
+它允许您在适当的 <code class="docutils literal notranslate"><span class="pre">mapping</span></code> 中遍历键并删除其值。</p>
+</section>
+<section id="id12">
+<h3>细枝末节<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>没有占满32字节的类型可能包含 “脏高位”。
+这在当您访问 <code class="docutils literal notranslate"><span class="pre">msg.data</span></code> 的时候尤为重要 —— 它带来了延展性风险：
+您既可以用原始字节 <code class="docutils literal notranslate"><span class="pre">0xff000001</span></code>，也可以用 <code class="docutils literal notranslate"><span class="pre">0x00000001</span></code> 作为参数来调用
+函数 <code class="docutils literal notranslate"><span class="pre">f(uint8</span> <span class="pre">x)</span></code>  以构造交易。
+您可以制作一些交易，调用一个函数 <code class="docutils literal notranslate"><span class="pre">f(uint8</span> <span class="pre">x)</span></code> ，这两个参数都会被正常提供给合约，
+就 <code class="docutils literal notranslate"><span class="pre">x</span></code>  而言，两者看起来都是数字 <code class="docutils literal notranslate"><span class="pre">1</span></code>， 但 <code class="docutils literal notranslate"><span class="pre">msg.data</span></code> 将是不同的，
+所以如果您无论怎么使用 <code class="docutils literal notranslate"><span class="pre">keccak256(msg.data)</span></code>，您都会得到不同的结果。</p></li>
+</ul>
+</section>
+</section>
+<section id="id13">
+<h2>推荐做法<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<section id="id14">
+<h3>认真对待警告<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<p>如果编译器警告您一些事情，您应该改变它。
+即使您不认为这个特定的警告有安全问题，但也可能在它下面埋藏着另一个问题。
+我们发出的任何编译器警告都可以通过对代码的轻微修改来消除。</p>
+<p>始终使用最新版本的编译器，以获知所有最近引入的警告。</p>
+<p>编译器发出的 <code class="docutils literal notranslate"><span class="pre">info</span></code> 类型的信息并不危险，只是代表编译器认为可能对用户有用的额外建议和可选信息。</p>
+</section>
+<section id="id15">
+<h3>限制以太币的数量<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<p>限制智能合约中可存储的以太币（或其他代币）的数量。
+如果您的源代码，编译器或平台有错误，这些资金可能会丢失。
+如果您想限制您的损失，就限制以太币的数量。</p>
+</section>
+<section id="id16">
+<h3>保持合约简练且模块化<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<p>保持您的合约短小而容易理解。把不相关的功能单独放在其他合约中或放在库中。
+关于源代码质量的一般建议当然也适用：限制局部变量的数量和函数的长度，等等。
+给您的函数添加注释，这样别人就可以看到您的意图是什么，
+并判断代码是否按照正确的意图实现。</p>
+</section>
+<section id="checks-effects-interactions">
+<h3>使用“检查-生效-交互”（Checks-Effects-Interactions）模式<a class="headerlink" href="#checks-effects-interactions" title="Permalink to this heading"></a></h3>
+<p>大多数函数会首先进行一些检查（谁调用了这个函数，参数是否在范围内，
+他们是否发送了足够的以太，这个人是否有代币，等等）。这些检查应该首先完成。</p>
+<p>第二步，如果所有的检查都通过了，就应该对当前合约的状态变量进行影响。
+与其他合约的交互应该是任何函数的最后一步。</p>
+<p>早期的合约延迟了一些效果，等待外部函数调用在非错误状态下返回。
+这往往是一个严重的错误，因为上面解释了重入问题。</p>
+<p>请注意，对已知合约的调用也可能反过来导致对未知合约的调用，因此，最好总是应用这种模式。</p>
+</section>
+<section id="fail-safe">
+<h3>包含故障-安全（Fail-Safe）模式<a class="headerlink" href="#fail-safe" title="Permalink to this heading"></a></h3>
+<p>尽管将系统完全去中心化可以省去许多中间环节，但包含某种故障-安全模式仍然是好的做法，
+尤其是对于新的代码来说：</p>
+<p>您可以在您的智能合约中添加一个功能，执行一些自我检查，如 “是否有任何以太币泄漏？”，
+“代币的总和是否等于合约的余额？” 或类似的事情。
+请记住，您不能为此使用太多的 gas，所以可能需要通过链外计算的帮助。</p>
+<p>如果自我检查失败，合约会自动切换到某种 “故障安全” 模式，
+例如，禁用大部分功能，将控制权移交给一个固定的，可信赖的第三方，
+或者只是将合约转换为一个简单的 “退回我的钱” 的合约。</p>
+</section>
+<section id="id17">
+<h3>请求同行评审<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<p>检查一段代码的人越多，发现的问题就越多。
+要求其他人审查您的代码也有助于作为交叉检查，
+找出您的代码是否容易理解 - 这是好的智能合约的一个非常重要的标准。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="natspec-format.html" class="btn btn-neutral float-left" title="风格指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="smtchecker.html" class="btn btn-neutral float-right" title="SMT检查器和形式化验证" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

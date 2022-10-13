@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>表达式和控制结构 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="合约" href="contracts.html" />
+    <link rel="prev" title="单位和全局变量" href="units-and-global-variables.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">表达式和控制结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#index-1">控制结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function-calls">函数调用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#internal-function-calls">内部函数调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#external-function-calls">外部函数调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">具名调用和匿名函数参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">省略函数参数名称</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#new">通过 <code class="docutils literal notranslate"><span class="pre">new</span></code> 创建合约</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create2">加盐合约创建 / create2</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">表达式计算顺序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-4">赋值</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#index-5">解构赋值和返回多个值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">数组和结构体的复杂情况</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#default-value">作用域和声明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unchecked">检查或不检查的算术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-require-revert-and-exceptions">错误处理：Assert, Require, Revert and Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#assert-panic-require-error">通过 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 引起Panic异常和通过 <code class="docutils literal notranslate"><span class="pre">require</span></code> 引起Error异常</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#revert"><code class="docutils literal notranslate"><span class="pre">revert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#try-catch"><code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">catch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>表达式和控制结构</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/control-structures.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>表达式和控制结构<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<span class="target" id="index-0"></span><section id="index-1">
+<span id="id2"></span><h2>控制结构<a class="headerlink" href="#index-1" title="Permalink to this heading"></a></h2>
+<p>大多数从大括号语言中知道的控制结构都可以在Solidity中使用：</p>
+<p>有： <code class="docutils literal notranslate"><span class="pre">if</span></code>， <code class="docutils literal notranslate"><span class="pre">else</span></code>，  <code class="docutils literal notranslate"><span class="pre">while</span></code>， <code class="docutils literal notranslate"><span class="pre">do</span></code>， <code class="docutils literal notranslate"><span class="pre">for</span></code>， <code class="docutils literal notranslate"><span class="pre">break</span></code>， <code class="docutils literal notranslate"><span class="pre">continue</span></code>， <code class="docutils literal notranslate"><span class="pre">return</span></code>，
+这些在 C 或者 JavaScript 中表达相同语义的关键词。</p>
+<p>Solidity也支持 <code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">catch</span></code> 形式的语句的异常处理，
+但只适用于 <a class="reference internal" href="#external-function-calls"><span class="std std-ref">外部函数调用</span></a> 和合约创建调用。
+可以使用 <a class="reference internal" href="#revert-statement"><span class="std std-ref">恢复状态</span></a> 来创建错误。</p>
+<p>条件句 <em>不能</em> 省略括号，但单句体周围可以省略大括号。</p>
+<p>请注意，没有像C和JavaScript那样从非布尔类型到布尔类型的类型转换，
+所以 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(1)</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> 在Solidity <em>不是</em> 有效的。</p>
+</section>
+<section id="function-calls">
+<span id="index-2"></span><span id="id3"></span><h2>函数调用<a class="headerlink" href="#function-calls" title="Permalink to this heading"></a></h2>
+<section id="internal-function-calls">
+<span id="id4"></span><h3>内部函数调用<a class="headerlink" href="#internal-function-calls" title="Permalink to this heading"></a></h3>
+<p>当前合约中的函数可以直接（“从内部”）调用，也可以递归调用，就像下边这个荒谬的例子一样：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC40LjIyIDwwLjkuMDsKCi8vIOi/meS8muacieS4gOS4quitpuWRigpjb250cmFjdCBDIHsKICAgIGZ1bmN0aW9uIGcodWludCBhKSBwdWJsaWMgcHVyZSByZXR1cm5zICh1aW50IHJldCkgeyByZXR1cm4gYSArIGYoKTsgfQogICAgZnVuY3Rpb24gZigpIGludGVybmFsIHB1cmUgcmV0dXJucyAodWludCByZXQpIHsgcmV0dXJuIGcoNykgKyBmKCk7IH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.4.22</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// 这会有一个警告</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">ret</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span>a<span class="w"> </span><span class="o">+</span><span class="w"> </span>f<span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">ret</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span>g<span class="p">(</span><span class="m m-Decimal">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>f<span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这些函数调用在EVM内部被转化为简单的跳转。
+这样做的效果是，当前的内存不会被清空，也就是说，
+将内存引用传递给内部调用的函数是非常有效的。
+但只有同一合约实例的函数可以被内部调用。</p>
+<p>您还是应该避免过度的递归调用，因为每个内部函数的调用都会占用至少一个堆栈槽，而可用的堆栈槽只有1024个。</p>
+</section>
+<section id="external-function-calls">
+<span id="id5"></span><h3>外部函数调用<a class="headerlink" href="#external-function-calls" title="Permalink to this heading"></a></h3>
+<p>函数也可以使用 <code class="docutils literal notranslate"><span class="pre">this.g(8);</span></code> 和 <code class="docutils literal notranslate"><span class="pre">c.g(2);</span></code> 符号来调用，
+其中 <code class="docutils literal notranslate"><span class="pre">c</span></code> 是一个合约实例， <code class="docutils literal notranslate"><span class="pre">g</span></code> 是属于 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的函数。
+通过这两种方式调用函数 <code class="docutils literal notranslate"><span class="pre">g</span></code> 会导致它被 “外部” 调用，
+使用消息调用而不是直接通过跳转。
+请注意，对 <code class="docutils literal notranslate"><span class="pre">this</span></code> 的函数调用不能在构造函数中使用，因为实际的合约还没有被创建。</p>
+<p>其他合约的函数必须被外部调用。对于一个外部调用，
+所有的函数参数都必须被拷贝到内存中。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>从一个合约到另一个合约的函数调用并不创建自己的交易，它是作为整个交易的一部分的消息调用。</p>
+</div>
+<p>当调用其他合约的函数时，您可以用特殊的选项 <code class="docutils literal notranslate"><span class="pre">{value:</span> <span class="pre">10,</span> <span class="pre">gas:</span> <span class="pre">10000}</span></code> 指定随调用发送的Wei或气体（gas）数量。
+请注意，不鼓励明确指定气体值，因为操作码的气体成本可能在未来发生变化。
+您发送给合约的任何Wei都会被添加到该合约的总余额中：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC42LjIgPDAuOS4wOwoKY29udHJhY3QgSW5mb0ZlZWQgewogICAgZnVuY3Rpb24gaW5mbygpIHB1YmxpYyBwYXlhYmxlIHJldHVybnMgKHVpbnQgcmV0KSB7IHJldHVybiA0MjsgfQp9Cgpjb250cmFjdCBDb25zdW1lciB7CiAgICBJbmZvRmVlZCBmZWVkOwogICAgZnVuY3Rpb24gc2V0RmVlZChJbmZvRmVlZCBhZGRyKSBwdWJsaWMgeyBmZWVkID0gYWRkcjsgfQogICAgZnVuY3Rpb24gY2FsbEZlZWQoKSBwdWJsaWMgeyBmZWVkLmluZm97dmFsdWU6IDEwLCBnYXM6IDgwMH0oKTsgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.6.2</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">InfoFeed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">info</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">ret</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span><span class="m m-Decimal">42</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Consumer</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>InfoFeed<span class="w"> </span>feed<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">setFeed</span><span class="p">(</span>InfoFeed<span class="w"> </span>addr<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>feed<span class="w"> </span><span class="o">=</span><span class="w"> </span>addr<span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">callFeed</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>feed<span class="p">.</span>info<span class="p">{</span>value<span class="p">:</span><span class="w"> </span><span class="m m-Decimal">10</span><span class="p">,</span><span class="w"> </span>gas<span class="p">:</span><span class="w"> </span><span class="m m-Decimal">800</span><span class="p">}();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>您需要对 <code class="docutils literal notranslate"><span class="pre">info</span></code> 函数使用修饰符 <code class="docutils literal notranslate"><span class="pre">payable</span></code>，
+因为不这样的话， <code class="docutils literal notranslate"><span class="pre">value</span></code> 选项则不可用。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>注意 <code class="docutils literal notranslate"><span class="pre">feed.info{value:</span> <span class="pre">10,</span> <span class="pre">gas:</span> <span class="pre">800}</span></code> 只在本地设置 <code class="docutils literal notranslate"><span class="pre">value</span></code> 和随函数调用发送的 <code class="docutils literal notranslate"><span class="pre">gas</span></code> 数量，
+最后的括号执行实际调用。所以 <code class="docutils literal notranslate"><span class="pre">feed.info{value:</span> <span class="pre">10,</span> <span class="pre">gas:</span> <span class="pre">800}</span></code> 不会调用函数，
+<code class="docutils literal notranslate"><span class="pre">value</span></code> 和 <code class="docutils literal notranslate"><span class="pre">gas</span></code> 的设置也会丢失，
+只有 <code class="docutils literal notranslate"><span class="pre">feed.info{value:</span> <span class="pre">10,</span> <span class="pre">gas:</span> <span class="pre">800}()</span></code> 执行了函数调用。</p>
+</div>
+<p>由于EVM认为对一个不存在的合约的调用总是成功的，
+Solidity使用 <code class="docutils literal notranslate"><span class="pre">extcodesize</span></code> 操作码来检查即将被调用的合约是否真的存在（它包含代码），
+如果不存在就会引起异常。如果返回数据将在调用后被解码，
+则跳过该检查，因此ABI解码器将捕获不存在的合约的情况。</p>
+<p>请注意，这个检查在 <a class="reference internal" href="units-and-global-variables.html#address-related"><span class="std std-ref">低级调用</span></a> 的情况下不执行，
+这些调用是对地址而不是合约实例进行操作。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在对 <a class="reference internal" href="introduction-to-smart-contracts.html#precompiledcontracts"><span class="std std-ref">预编译合约</span></a> 使用高级调用时要小心，
+因为根据上述逻辑，编译器认为它们不存在，即使它们执行代码并可以返回数据。</p>
+</div>
+<p>如果被调用的合约本身抛出异常或超出了gas值，函数调用也会引起异常。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>与另一个合约的任何互动都会带来潜在的危险，
+特别是当合约的源代码事先不知道的时候。
+当前的合约将控制权交给了被调用的合约，而这有可能做任何事情。
+即使被调用的合约继承自一个已知的父合约，
+继承的合约也只需要有一个正确的接口。
+然而，合约的实现完全可以是任意的，因此这会带来危险。
+此外，要做好准备，以防它调用到您系统中的其他合约，
+甚至在第一次调用返回之前就回到调用合约中。
+这意味着被调用的合约可以通过这个函数改变调用合约的状态变量。
+编写您的函数时，例如，对外部函数的调用发生在对您的合约中的状态变量的任何改变之后，
+这样您的合约就不会受到重入性漏洞的攻击。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在 Solidity 0.6.2 之前，指定以太值和气体值的推荐方法是
+使用 <code class="docutils literal notranslate"><span class="pre">f.value(x).gas(g)()</span></code>。这在Solidity 0.6.2中被废弃，
+并且从Solidity 0.7.0开始不再支持。</p>
+</div>
+</section>
+<section id="id6">
+<h3>具名调用和匿名函数参数<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<p>函数调用参数可以用名字来表示，如果用 <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code> 括起来的话，
+可以用任何顺序，如下面的例子所示。
+参数列表在名称上必须与函数声明中的参数列表相一致，但可以有任意的顺序。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC40LjAgPDAuOS4wOwoKY29udHJhY3QgQyB7CiAgICBtYXBwaW5nKHVpbnQgPT4gdWludCkgZGF0YTsKCiAgICBmdW5jdGlvbiBmKCkgcHVibGljIHsKICAgICAgICBzZXQoe3ZhbHVlOiAyLCBrZXk6IDN9KTsKICAgIH0KCiAgICBmdW5jdGlvbiBzZXQodWludCBrZXksIHVpbnQgdmFsdWUpIHB1YmxpYyB7CiAgICAgICAgZGF0YVtrZXldID0gdmFsdWU7CiAgICB9Cgp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.4.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>data<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>set<span class="p">({</span>value<span class="p">:</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">,</span><span class="w"> </span>key<span class="p">:</span><span class="w"> </span><span class="m m-Decimal">3</span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">set</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">key</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>data<span class="p">[</span>key<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>value<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>省略函数参数名称<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>未使用的参数（尤其是返回参数）的名称可以省略。
+这些参数将仍然存在于堆栈中，但它们是不可访问的。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC40LjIyIDwwLjkuMDsKCmNvbnRyYWN0IEMgewogICAgLy8g55yB55Wl5Y+C5pWw5ZCN56ewCiAgICBmdW5jdGlvbiBmdW5jKHVpbnQgaywgdWludCkgcHVibGljIHB1cmUgcmV0dXJucyh1aW50KSB7CiAgICAgICAgcmV0dXJuIGs7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.4.22</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 省略参数名称</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">func</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">k</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>k<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="new">
+<span id="creating-contracts"></span><span id="index-3"></span><h2>通过 <code class="docutils literal notranslate"><span class="pre">new</span></code> 创建合约<a class="headerlink" href="#new" title="Permalink to this heading"></a></h2>
+<p>一个合约可以使用 <code class="docutils literal notranslate"><span class="pre">new</span></code> 关键字创建其他合约。
+待创建合约的完整代码必须在创建的合约被编译时知道，
+所以递归的创建依赖是不可能的。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwpjb250cmFjdCBEIHsKICAgIHVpbnQgcHVibGljIHg7CiAgICBjb25zdHJ1Y3Rvcih1aW50IGEpIHBheWFibGUgewogICAgICAgIHggPSBhOwogICAgfQp9Cgpjb250cmFjdCBDIHsKICAgIEQgZCA9IG5ldyBEKDQpOyAvLyDlsIbkvZzkuLrlkIjnuqYgQyDmnoTpgKDlh73mlbDnmoTkuIDpg6jliIbmiafooYwKCiAgICBmdW5jdGlvbiBjcmVhdGVEKHVpbnQgYXJnKSBwdWJsaWMgewogICAgICAgIEQgbmV3RCA9IG5ldyBEKGFyZyk7CiAgICAgICAgbmV3RC54KCk7CiAgICB9CgogICAgZnVuY3Rpb24gY3JlYXRlQW5kRW5kb3dEKHVpbnQgYXJnLCB1aW50IGFtb3VudCkgcHVibGljIHBheWFibGUgewogICAgICAgIC8vIOmaj+WQiOe6pueahOWIm+W7uuWPkemAgSBldGhlcgogICAgICAgIEQgbmV3RCA9IG5ldyBEe3ZhbHVlOiBhbW91bnR9KGFyZyk7CiAgICAgICAgbmV3RC54KCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">D</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span>a<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>D<span class="w"> </span>d<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span>D<span class="p">(</span><span class="m m-Decimal">4</span><span class="p">);</span><span class="w"> </span><span class="c1">// 将作为合约 C 构造函数的一部分执行</span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createD</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>D<span class="w"> </span>newD<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span>D<span class="p">(</span>arg<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>newD<span class="p">.</span>x<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createAndEndowD</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">arg</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 随合约的创建发送 ether</span>
+<span class="w">        </span>D<span class="w"> </span>newD<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span>D<span class="p">{</span>value<span class="p">:</span><span class="w"> </span>amount<span class="p">}(</span>arg<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>newD<span class="p">.</span>x<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>正如在例子中所看到的，在使用 <code class="docutils literal notranslate"><span class="pre">value</span></code> 选项创建 <code class="docutils literal notranslate"><span class="pre">D</span></code> 的实例时，
+可以发送以太，但不可能限制气体的数量。
+如果创建失败（由于堆栈耗尽，没有足够的余额或其他问题），会抛出一个异常。</p>
+<section id="create2">
+<h3>加盐合约创建 / create2<a class="headerlink" href="#create2" title="Permalink to this heading"></a></h3>
+<p>当创建一个合约时，合约的地址是由创建合约的地址和一个计数器计算出来的，
+这个计数器在每次创建合约时都会增加。</p>
+<p>如果您指定了选项 <code class="docutils literal notranslate"><span class="pre">salt</span></code> （一个32字节的值），
+那么合约的创建将使用一种不同的机制来得出新合约的地址。</p>
+<p>它将从创建合约的地址、给定的盐值、创建合约的（创建）字节码和构造函数参数中计算出地址。</p>
+<p>特别的是，计数器（“nonce”）没有被使用。这使得创建合约时有更多的灵活性。
+您能够在新合约创建之前得出它的地址。此外，在创建合约的同时创建其他合约的情况下，
+您也可以依赖这个地址。</p>
+<p>这里的主要用例是做为链外互动的评判的合约，
+只有在有争议的时候才需要创建。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwpjb250cmFjdCBEIHsKICAgIHVpbnQgcHVibGljIHg7CiAgICBjb25zdHJ1Y3Rvcih1aW50IGEpIHsKICAgICAgICB4ID0gYTsKICAgIH0KfQoKY29udHJhY3QgQyB7CiAgICBmdW5jdGlvbiBjcmVhdGVEU2FsdGVkKGJ5dGVzMzIgc2FsdCwgdWludCBhcmcpIHB1YmxpYyB7CiAgICAgICAgLy8g6L+Z5Liq5aSN5p2C55qE6KGo6L6+5byP5Y+q5piv5ZGK6K+J5oKo5aaC5L2V6aKE5YWI6K6h566X5Ye65Zyw5Z2A44CCCiAgICAgICAgLy8g5a6D5Y+q5piv55So5LqO6K+05piO6Zeu6aKY44CCCiAgICAgICAgLy8g5a6e6ZmF5LiK5oKo5Y+q6ZyA6KaBIGBgbmV3IER7c2FsdDogc2FsdH0oYXJnKWBg44CCCiAgICAgICAgYWRkcmVzcyBwcmVkaWN0ZWRBZGRyZXNzID0gYWRkcmVzcyh1aW50MTYwKHVpbnQoa2VjY2FrMjU2KGFiaS5lbmNvZGVQYWNrZWQoCiAgICAgICAgICAgIGJ5dGVzMSgweGZmKSwKICAgICAgICAgICAgYWRkcmVzcyh0aGlzKSwKICAgICAgICAgICAgc2FsdCwKICAgICAgICAgICAga2VjY2FrMjU2KGFiaS5lbmNvZGVQYWNrZWQoCiAgICAgICAgICAgICAgICB0eXBlKEQpLmNyZWF0aW9uQ29kZSwKICAgICAgICAgICAgICAgIGFyZwogICAgICAgICAgICApKQogICAgICAgICkpKSkpOwoKICAgICAgICBEIGQgPSBuZXcgRHtzYWx0OiBzYWx0fShhcmcpOwogICAgICAgIHJlcXVpcmUoYWRkcmVzcyhkKSA9PSBwcmVkaWN0ZWRBZGRyZXNzKTsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">D</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span>a<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">createDSalted</span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">salt</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">arg</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 这个复杂的表达式只是告诉您如何预先计算出地址。</span>
+<span class="w">        </span><span class="c1">// 它只是用于说明问题。</span>
+<span class="w">        </span><span class="c1">// 实际上您只需要 ``new D{salt: salt}(arg)``。</span>
+<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">predictedAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span><span class="kt">uint</span><span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span><span class="w"></span>
+<span class="w">            </span>bytes1<span class="p">(</span><span class="mh">0xff</span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span>salt<span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span><span class="w"></span>
+<span class="w">                </span>type<span class="p">(</span>D<span class="p">).</span>creationCode<span class="p">,</span><span class="w"></span>
+<span class="w">                </span>arg<span class="w"></span>
+<span class="w">            </span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="p">)))));</span><span class="w"></span>
+
+<span class="w">        </span>D<span class="w"> </span>d<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span>D<span class="p">{</span>salt<span class="p">:</span><span class="w"> </span>salt<span class="p">}(</span>arg<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span>d<span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>predictedAddress<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>在用加盐方式创建合约时，有一些特殊性。一个合约可以在被销毁后在同一地址重新创建。
+然而，新创建的合约有可能具有不同的部署字节码，
+即使创建字节码是相同的（这是一个要求，否则地址会改变）。
+这是由于构造函数可以查询在两次创建之间可能发生变化的外部状态，
+并在存储之前将其纳入部署字节码。</p>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>表达式计算顺序<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h2>
+<p>表达式的计算顺序不是特定的（更准确地说，
+表达式树中某节点的字节点间的计算顺序不是特定的，但它们的结算肯定会在节点自己的结算之前）。
+该规则只能保证语句按顺序执行，并对布尔表达式进行短路处理。</p>
+</section>
+<section id="index-4">
+<span id="id9"></span><h2>赋值<a class="headerlink" href="#index-4" title="Permalink to this heading"></a></h2>
+<section id="index-5">
+<span id="id10"></span><h3>解构赋值和返回多个值<a class="headerlink" href="#index-5" title="Permalink to this heading"></a></h3>
+<p>Solidity 内部允许元组 (tuple) 类型，也就是一个在编译时元素数量固定的对象列表，
+列表中的元素可以是不同类型的对象。这些元组可以用来同时返回多个数值，
+也可以用它们来同时赋值给多个新声明的变量或者既存的变量（或通常的 LValues）：</p>
+<p>在Solidity中，元组不是适当的类型，它们只能被用来构建表达式的语法分组。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwoKY29udHJhY3QgQyB7CiAgICB1aW50IGluZGV4OwoKICAgIGZ1bmN0aW9uIGYoKSBwdWJsaWMgcHVyZSByZXR1cm5zICh1aW50LCBib29sLCB1aW50KSB7CiAgICAgICAgcmV0dXJuICg3LCB0cnVlLCAyKTsKICAgIH0KCiAgICBmdW5jdGlvbiBnKCkgcHVibGljIHsKICAgICAgICAvLyDnlKjnsbvlnovlo7DmmI7nmoTlj5jph4/vvIzlubbku47ov5Tlm57nmoTlhYPnu4TkuK3liIbphY3vvIwKICAgICAgICAvLyDkuI3mmK/miYDmnInnmoTlhYPntKDpg73lv4XpobvooqvmjIflrprvvIjkvYbmlbDph4/lv4XpobvljLnphY3vvInjgIIKICAgICAgICAodWludCB4LCAsIHVpbnQgeSkgPSBmKCk7CiAgICAgICAgLy8g5Lqk5o2i5pWw5YC855qE5bi46KeB5oqA5benIC0tIOWvuemdnuaVsOWAvOWtmOWCqOexu+Wei+S4jei1t+S9nOeUqOOAggogICAgICAgICh4LCB5KSA9ICh5LCB4KTsKICAgICAgICAvLyDlhYPntKDlj6/ku6XkuI3kvb/nlKjvvIjkuZ/pgILnlKjkuo7lj5jph4/lo7DmmI7vvInjgIIKICAgICAgICAoaW5kZXgsICwgKSA9IGYoKTsgLy8g5bCGaW5kZXjorr7nva7kuLogNwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">index</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">7</span><span class="p">,</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 用类型声明的变量，并从返回的元组中分配，</span>
+<span class="w">        </span><span class="c1">// 不是所有的元素都必须被指定（但数量必须匹配）。</span>
+<span class="w">        </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">,</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>f<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 交换数值的常见技巧 -- 对非数值存储类型不起作用。</span>
+<span class="w">        </span><span class="p">(</span>x<span class="p">,</span><span class="w"> </span>y<span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>y<span class="p">,</span><span class="w"> </span>x<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 元素可以不使用（也适用于变量声明）。</span>
+<span class="w">        </span><span class="p">(</span>index<span class="p">,</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>f<span class="p">();</span><span class="w"> </span><span class="c1">// 将index设置为 7</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>不可能混合使用声明和非声明变量赋值。
+例如，下面的方法是无效的。 <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">uint</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">(1,</span> <span class="pre">2);</span></code>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在0.5.0版本之前，给具有更少元素数的元组赋值都是可能的，
+要么在左边填充，要么在右边填充（无论哪个是空的）。
+现在这是不允许的，所以两边必须有相同数量的元素。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>当涉及到引用类型时，在同时向多个变量赋值时要小心，因为这可能导致意外的复制行为。</p>
+</div>
+</section>
+<section id="id11">
+<h3>数组和结构体的复杂情况<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<p>对于像数组和结构体这样的非值类型，包括 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">string</span></code>，赋值的语义更为复杂，
+详见 <a class="reference internal" href="types.html#data-location-assignment"><span class="std std-ref">数据位置和赋值行为</span></a>。</p>
+<p>在下面的例子中，调用 <code class="docutils literal notranslate"><span class="pre">g(x)</span></code> 对 <code class="docutils literal notranslate"><span class="pre">x</span></code> 没有影响，
+因为它在内存中创建了一个独立的存储值的副本。然而， <code class="docutils literal notranslate"><span class="pre">h(x)</span></code> 成功地修改了 <code class="docutils literal notranslate"><span class="pre">x</span></code>，
+因为传递了一个引用而不是一个拷贝。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC40LjIyIDwwLjkuMDsKCmNvbnRyYWN0IEMgewogICAgdWludFsyMF0geDsKCiAgICBmdW5jdGlvbiBmKCkgcHVibGljIHsKICAgICAgICBnKHgpOwogICAgICAgIGgoeCk7CiAgICB9CgogICAgZnVuY3Rpb24gZyh1aW50WzIwXSBtZW1vcnkgeSkgaW50ZXJuYWwgcHVyZSB7CiAgICAgICAgeVsyXSA9IDM7CiAgICB9CgogICAgZnVuY3Rpb24gaCh1aW50WzIwXSBzdG9yYWdlIHkpIGludGVybmFsIHsKICAgICAgICB5WzNdID0gNDsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.4.22</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="p">[</span><span class="m m-Decimal">20</span><span class="p">]</span><span class="w"> </span>x<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>g<span class="p">(</span>x<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>h<span class="p">(</span>x<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">(</span><span class="kt">uint</span><span class="p">[</span><span class="m m-Decimal">20</span><span class="p">]</span><span class="w"> </span><span class="kt">memory</span><span class="w"> </span>y<span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span>pure<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>y<span class="p">[</span><span class="m m-Decimal">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">h</span><span class="p">(</span><span class="kt">uint</span><span class="p">[</span><span class="m m-Decimal">20</span><span class="p">]</span><span class="w"> </span>storage<span class="w"> </span>y<span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>y<span class="p">[</span><span class="m m-Decimal">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">4</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="default-value">
+<span id="index-6"></span><span id="id12"></span><h2>作用域和声明<a class="headerlink" href="#default-value" title="Permalink to this heading"></a></h2>
+<p>一个被声明的变量将有一个初始默认值，其字节表示为所有的零。
+变量的 “默认值” 是任何类型的典型 “零状态”。
+例如， <code class="docutils literal notranslate"><span class="pre">bool</span></code> 的默认值是 <code class="docutils literal notranslate"><span class="pre">false</span></code>。
+<code class="docutils literal notranslate"><span class="pre">uint</span></code> 或 <code class="docutils literal notranslate"><span class="pre">int</span></code> 类型的默认值是 <code class="docutils literal notranslate"><span class="pre">0</span></code>。
+对于静态大小的数组和 <code class="docutils literal notranslate"><span class="pre">bytes1</span></code> 到 <code class="docutils literal notranslate"><span class="pre">bytes32</span></code>，
+每个单独的元素将被初始化为与其类型相应的默认值。
+对于动态大小的数组， <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">string</span></code>，默认值是一个空数组或字符串。
+对于 <code class="docutils literal notranslate"><span class="pre">enum</span></code> 类型，默认值是其第一个成员。</p>
+<p>Solidity 中的作用域规则遵循了 C99（与其他很多语言一样）：
+变量将会从它们被声明之后可见，直到一对 <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code> 块的结束。
+这一规则有个例外，在 for 循环语句中初始化的变量，其可见性仅维持到 for 循环的结束。</p>
+<p>类似于参数的变量（函数参数、修改器参数、捕获（catch）参数……）
+在后面的代码块中是可见的–对于函数和修改器参数，在函数/修改器的主体中，
+对于捕获参数，在捕获块中。</p>
+<p>在代码块之外声明的变量，例如函数、合约、用户定义的类型等，
+甚至在声明之前就已经可见。
+这意味着您可以在声明之前使用状态变量，并递归地调用函数。</p>
+<p>因此，下面的例子在编译时不会出现警告，因为这两个变量的名字虽然相同，但作用域不同。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwpjb250cmFjdCBDIHsKICAgIGZ1bmN0aW9uIG1pbmltYWxTY29waW5nKCkgcHVyZSBwdWJsaWMgewogICAgICAgIHsKICAgICAgICAgICAgdWludCBzYW1lOwogICAgICAgICAgICBzYW1lID0gMTsKICAgICAgICB9CgogICAgICAgIHsKICAgICAgICAgICAgdWludCBzYW1lOwogICAgICAgICAgICBzYW1lID0gMzsKICAgICAgICB9CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">minimalScoping</span><span class="p">()</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">uint</span><span class="w"> </span><span class="nv">same</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span>same<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">uint</span><span class="w"> </span><span class="nv">same</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span>same<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>作为 C99 作用域规则的特例，请注意在下边的例子里，
+第一次对 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的赋值实际上将赋给外层变量而不是内层变量。
+在任何情况下，您都会得到一个关于外部变量被影射（译者注：就是说被在内部作用域中由一个同名变量所替代）的警告。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwovLyDov5nlsIbmiqXlkYrkuIDkuKrorablkYrkv6Hmga8KY29udHJhY3QgQyB7CiAgICBmdW5jdGlvbiBmKCkgcHVyZSBwdWJsaWMgcmV0dXJucyAodWludCkgewogICAgICAgIHVpbnQgeCA9IDE7CiAgICAgICAgewogICAgICAgICAgICB4ID0gMjsgLy8gdGhpcyB3aWxsIGFzc2lnbiB0byB0aGUgb3V0ZXIgdmFyaWFibGUKICAgICAgICAgICAgdWludCB4OwogICAgICAgIH0KICAgICAgICByZXR1cm4geDsgLy8geCBoYXMgdmFsdWUgMgogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 这将报告一个警告信息</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">;</span><span class="w"> </span><span class="c1">// this will assign to the outer variable</span>
+<span class="w">            </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>x<span class="p">;</span><span class="w"> </span><span class="c1">// x has value 2</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>在0.5.0版本之前，Solidity遵循与JavaScript相同的作用域规则，
+也就是说，在一个函数中的任何地方声明的变量都会在整个函数的作用域中，不管它是在哪里声明。
+下面的例子显示了一个曾经可以编译的代码片段，但从0.5.0版本开始导致了一个错误。</p>
+</div>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwovLyDov5nlsIbml6Dms5XnvJbor5EKY29udHJhY3QgQyB7CiAgICBmdW5jdGlvbiBmKCkgcHVyZSBwdWJsaWMgcmV0dXJucyAodWludCkgewogICAgICAgIHggPSAyOwogICAgICAgIHVpbnQgeDsKICAgICAgICByZXR1cm4geDsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 这将无法编译</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>x<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="unchecked">
+<span id="index-7"></span><span id="id13"></span><h2>检查或不检查的算术<a class="headerlink" href="#unchecked" title="Permalink to this heading"></a></h2>
+<p>上溢或下溢是指算术运算的结果值，当对一个不受限制的整数执行时，超出了结果类型的范围。</p>
+<p>在Solidity 0.8.0之前，算术运算总是在下溢或上溢的情况下被包起来，
+这导致广泛使用引入额外检查的库。</p>
+<p>从Solidity 0.8.0开始，在默认情况下所有的算术运算都会在上溢和下溢时还原，
+从而使这些库的使用变得没有必要。</p>
+<p>为了获得以前的行为，可以使用一个 <code class="docutils literal notranslate"><span class="pre">未检查（unchecked）</span></code> 区块。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguMDsKY29udHJhY3QgQyB7CiAgICBmdW5jdGlvbiBmKHVpbnQgYSwgdWludCBiKSBwdXJlIHB1YmxpYyByZXR1cm5zICh1aW50KSB7CiAgICAgICAgLy8g6L+Z5Liq5YeP5rOV5bCG5Zyo5LiL5rqi5pe26KKr5YyF6LW35p2l44CCCiAgICAgICAgdW5jaGVja2VkIHsgcmV0dXJuIGEgLSBiOyB9CiAgICB9CiAgICBmdW5jdGlvbiBnKHVpbnQgYSwgdWludCBiKSBwdXJlIHB1YmxpYyByZXR1cm5zICh1aW50KSB7CiAgICAgICAgLy8g6L+Z5Liq5YeP5rOV5Zyo5LiL5rqi5pe25bCG6KKr6L+Y5Y6f44CCCiAgICAgICAgcmV0dXJuIGEgLSBiOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 这个减法将在下溢时被包起来。</span>
+<span class="w">        </span>unchecked<span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span>a<span class="w"> </span><span class="o">-</span><span class="w"> </span>b<span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">b</span><span class="p">)</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 这个减法在下溢时将被还原。</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>a<span class="w"> </span><span class="o">-</span><span class="w"> </span>b<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>调用 <code class="docutils literal notranslate"><span class="pre">f(2,</span> <span class="pre">3)</span></code> 将返回 <code class="docutils literal notranslate"><span class="pre">2**256-1</span></code>，而 <code class="docutils literal notranslate"><span class="pre">g(2,</span> <span class="pre">3)</span></code> 将导致一个失败的断言。</p>
+<p><code class="docutils literal notranslate"><span class="pre">unchecked</span></code> 代码块可以在代码块内的任何地方使用，但不能替代代码块。
+它也不能被嵌套。</p>
+<p>该设置只影响到在语法上位于代码块内的语句。
+从 <code class="docutils literal notranslate"><span class="pre">unchecked</span></code> 代码块内调用的函数不继承该属性。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>为了避免歧义，您不能在一个 <code class="docutils literal notranslate"><span class="pre">unchecked</span></code> 代码块内使用 <code class="docutils literal notranslate"><span class="pre">_;</span></code>。</p>
+</div>
+<p>以下运算符在上溢或下溢时将导致一个失败的断言，
+如果在一个未检查的代码块内使用，将被包裹而不会出现错误。</p>
+<p><code class="docutils literal notranslate"><span class="pre">++</span></code>， <code class="docutils literal notranslate"><span class="pre">--</span></code>， <code class="docutils literal notranslate"><span class="pre">+</span></code>， 二进制 <code class="docutils literal notranslate"><span class="pre">-</span></code>， 单进制 <code class="docutils literal notranslate"><span class="pre">-</span></code>， <code class="docutils literal notranslate"><span class="pre">*</span></code>， <code class="docutils literal notranslate"><span class="pre">/</span></code>， <code class="docutils literal notranslate"><span class="pre">%</span></code>， <code class="docutils literal notranslate"><span class="pre">**</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">+=</span></code>， <code class="docutils literal notranslate"><span class="pre">-=</span></code>， <code class="docutils literal notranslate"><span class="pre">*=</span></code>， <code class="docutils literal notranslate"><span class="pre">/=</span></code>， <code class="docutils literal notranslate"><span class="pre">%=</span></code></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>不能使用 <code class="docutils literal notranslate"><span class="pre">unchecked</span></code> 代码块来禁止检查除以0或对0取余数。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>位操作符不执行上溢或下溢检查。
+这在使用位操作符移位（ <code class="docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> ， <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code>， <code class="docutils literal notranslate"><span class="pre">&lt;&lt;=</span></code>， <code class="docutils literal notranslate"><span class="pre">&gt;&gt;=</span></code>）来代替整数除法和2的幂次方时尤其明显。
+例如 <code class="docutils literal notranslate"><span class="pre">type(uint256).max</span> <span class="pre">&lt;&lt;</span> <span class="pre">3</span></code> 不会恢复操作，尽管 <code class="docutils literal notranslate"><span class="pre">type(uint256).max</span> <span class="pre">*</span> <span class="pre">8</span></code> 会恢复操作。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">type(int).min;</span> <span class="pre">-x;</span></code> 中的第二条语句将导致溢出，
+因为负数范围可以比正数范围多容纳一个值。</p>
+</div>
+<p>明确的类型转换将总是截断，并且永远不会导致失败的断言，但从整数到枚举类型的转换除外。</p>
+</section>
+<section id="assert-require-revert-and-exceptions">
+<span id="assert-and-require"></span><span id="index-8"></span><h2>错误处理：Assert, Require, Revert and Exceptions<a class="headerlink" href="#assert-require-revert-and-exceptions" title="Permalink to this heading"></a></h2>
+<p>Solidity 使用状态恢复异常来处理错误。
+这种异常将撤消对当前调用（及其所有子调用）中的状态所做的所有更改，
+并且还向调用者标记错误。</p>
+<p>当异常发生在子调用中时，它们会自动 “冒泡”（也就是说，异常被重新抛出），
+除非它们被 <code class="docutils literal notranslate"><span class="pre">try/catch</span></code> 语句捕获。这个规则的例外是 <code class="docutils literal notranslate"><span class="pre">send</span></code>
+和低级函数 <code class="docutils literal notranslate"><span class="pre">call</span></code>， <code class="docutils literal notranslate"><span class="pre">delegatecall</span></code> 和 <code class="docutils literal notranslate"><span class="pre">staticcall</span></code>：
+它们在发生异常时返回 <code class="docutils literal notranslate"><span class="pre">false</span></code> 作为第一个返回值而不是 “冒泡”。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>如果被调用的账户不存在，低级函数 <code class="docutils literal notranslate"><span class="pre">call</span></code>， <code class="docutils literal notranslate"><span class="pre">delegatecall</span></code> 和 <code class="docutils literal notranslate"><span class="pre">staticcall</span></code>
+的第一个返回值为 <code class="docutils literal notranslate"><span class="pre">true</span></code>，这是EVM设计的一部分。
+如果需要的话，必须在调用之前检查账户是否存在。</p>
+</div>
+<p>异常可以包含错误数据，以 <a class="reference internal" href="contracts.html#errors"><span class="std std-ref">错误实例</span></a> 的形式传回给调用者。
+内置的错误 <code class="docutils literal notranslate"><span class="pre">Error(string)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Panic(uint256)</span></code> 被特殊函数使用，
+解释如下。 <code class="docutils literal notranslate"><span class="pre">Error</span></code> 用于 “常规” 错误条件，而 <code class="docutils literal notranslate"><span class="pre">Panic</span></code> 用于在无错误代码中不应该出现的错误。</p>
+<section id="assert-panic-require-error">
+<h3>通过 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 引起Panic异常和通过 <code class="docutils literal notranslate"><span class="pre">require</span></code> 引起Error异常<a class="headerlink" href="#assert-panic-require-error" title="Permalink to this heading"></a></h3>
+<p>快捷函数 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 和 <code class="docutils literal notranslate"><span class="pre">require</span></code> 可以用来检查条件，如果不符合条件就抛出一个异常。</p>
+<p><code class="docutils literal notranslate"><span class="pre">assert</span></code> 函数创建了一个 <code class="docutils literal notranslate"><span class="pre">Panic(uint256)</span></code> 类型的错误。
+在某些情况下，编译器也会产生同样的错误，如下所述。</p>
+<p>Assert应该只用于测试内部错误，以及检查不变量。
+正确运行的代码不应该创建一个Panic异常，甚至在无效的外部输入时也不应该。
+如果发生这种情况，那么您的合约中就有一个错误，您应该修复它。
+语言分析工具可以评估您的合约，以确定会导致Panic异常的条件和函数调用。</p>
+<p>在下列情况下会产生一个Panic异常。
+与错误数据一起提供的错误代码表明Panic异常的种类。</p>
+<ol class="arabic simple">
+<li><p>0x00： 用于一般的编译器插入Panic异常的情况。</p></li>
+<li><p>0x01： 如果您带参数调用 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 时结果是false。</p></li>
+<li><p>0x11： 如果一个算术运算在一个 <code class="docutils literal notranslate"><span class="pre">unchecked</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> 代码块之外导致下溢或上溢。</p></li>
+<li><p>0x12： 如果您对0做除法或者取余（例如 <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">/</span> <span class="pre">0</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">23</span> <span class="pre">%</span> <span class="pre">0</span></code> ）。</p></li>
+<li><p>0x21： 如果您把一个太大的或负数的值转换成一个枚举类型。</p></li>
+<li><p>0x22： 如果您访问一个编码不正确的存储字节数组。</p></li>
+<li><p>0x31： 如果您在一个空数组上调用 <code class="docutils literal notranslate"><span class="pre">.pop()</span></code>。</p></li>
+<li><p>0x32： 如果您访问一个数组， <code class="docutils literal notranslate"><span class="pre">bytesN</span></code> 或一个数组切片索引超出数组长度或负索引（即 <code class="docutils literal notranslate"><span class="pre">x[i]</span></code>，其中 <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;=</span> <span class="pre">x.length</span></code> 或 <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">0</span></code> ）。</p></li>
+<li><p>0x41： 如果您分配了太多的内存空间或创建了一个太大的数组。</p></li>
+<li><p>0x51： 如果您调用一个零初始化的内部函数类型的变量。</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">require</span></code> 函数要么创造一个没有任何数据的错误，
+要么创造一个 <code class="docutils literal notranslate"><span class="pre">Error(string)</span></code> 类型的错误。
+它应该被用来确保在执行之前无法检测到的有效条件。
+这包括对输入的条件或调用外部合约的返回值。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>目前不能将自定义错误与 <code class="docutils literal notranslate"><span class="pre">require</span></code> 结合使用。
+请使用 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(!condition)</span> <span class="pre">revert</span> <span class="pre">CustomError();</span></code> 代替。</p>
+</div>
+<p>在下列情况下，编译器会产生一个 <code class="docutils literal notranslate"><span class="pre">Error(string)</span></code> 异常（或者没有数据的异常）。</p>
+<ol class="arabic simple">
+<li><p>调用 <code class="docutils literal notranslate"><span class="pre">require(x)</span></code>，其中 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的值为 <code class="docutils literal notranslate"><span class="pre">false</span></code>。</p></li>
+<li><p>如果您使用 <code class="docutils literal notranslate"><span class="pre">revert()</span></code> 或 <code class="docutils literal notranslate"><span class="pre">revert(&quot;错误描述&quot;)</span></code>。</p></li>
+<li><p>如果您执行一个外部函数调用，目标是一个不包含代码的合约。</p></li>
+<li><p>如果您的合约通过一个没有 <code class="docutils literal notranslate"><span class="pre">payable</span></code> 修饰符的公开函数（包括构造函数和备用函数）接收以太。</p></li>
+<li><p>如果您的合约通过一个公共的getter函数接收以太。</p></li>
+</ol>
+<p>对于以下情况，来自外部调用的错误数据（如果提供的话）会被转发。
+这意味着它既可以引起 <cite>Error</cite> 异常，也可以引起 <cite>Panic</cite> 异常（或提供的其他什么错误）。</p>
+<ol class="arabic simple">
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">.transfer()</span></code> 失败。</p></li>
+<li><p>如果您通过消息调用一个函数，但它不能正常完成
+（即，耗尽了气体，没有匹配的函数，或自己抛出一个异常），
+除非使用低级操作 <code class="docutils literal notranslate"><span class="pre">call</span></code>， <code class="docutils literal notranslate"><span class="pre">send</span></code>， <code class="docutils literal notranslate"><span class="pre">delegatecall</span></code>， <code class="docutils literal notranslate"><span class="pre">callcode</span></code>
+或 <code class="docutils literal notranslate"><span class="pre">staticcall</span></code>。低级操作从不抛出异常，但通过返回 <code class="docutils literal notranslate"><span class="pre">false</span></code> 表示失败。</p></li>
+<li><p>如果您使用 <code class="docutils literal notranslate"><span class="pre">new</span></code> 关键字创建一个合约，
+但合约创建 <a class="reference internal" href="#creating-contracts"><span class="std std-ref">没有正常完成</span></a>。</p></li>
+</ol>
+<p>您可以选择为 <code class="docutils literal notranslate"><span class="pre">require</span></code> 提供一个信息字符串，但不能为 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 提供。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果您没有给 <code class="docutils literal notranslate"><span class="pre">require</span></code> 提供一个字符串参数，它将以空的错误数据进行还原，
+甚至不包括错误选择器。</p>
+</div>
+<p>下面的例子显示了如何使用 <code class="docutils literal notranslate"><span class="pre">require</span></code> 来检查输入的条件
+和 <code class="docutils literal notranslate"><span class="pre">assert</span></code> 进行内部错误检查。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwoKY29udHJhY3QgU2hhcmVyIHsKICAgIGZ1bmN0aW9uIHNlbmRIYWxmKGFkZHJlc3MgcGF5YWJsZSBhZGRyKSBwdWJsaWMgcGF5YWJsZSByZXR1cm5zICh1aW50IGJhbGFuY2UpIHsKICAgICAgICByZXF1aXJlKG1zZy52YWx1ZSAlIDIgPT0gMCwgIkV2ZW4gdmFsdWUgcmVxdWlyZWQuIik7CiAgICAgICAgdWludCBiYWxhbmNlQmVmb3JlVHJhbnNmZXIgPSBhZGRyZXNzKHRoaXMpLmJhbGFuY2U7CiAgICAgICAgYWRkci50cmFuc2Zlcihtc2cudmFsdWUgLyAyKTsKICAgICAgICAvLyDnlLHkuo7ovazotKblpLHotKXlkI7mipvlh7rlvILluLjlubbkuJTkuI3og73lnKjov5nph4zlm57osIPvvIwKICAgICAgICAvLyDlm6DmraTmiJHku6zlupTor6XmsqHmnInlip7ms5Xku43nhLbmnInkuIDljYrnmoTpkrHjgIIKICAgICAgICBhc3NlcnQoYWRkcmVzcyh0aGlzKS5iYWxhbmNlID09IGJhbGFuY2VCZWZvcmVUcmFuc2ZlciAtIG1zZy52YWx1ZSAvIDIpOwogICAgICAgIHJldHVybiBhZGRyZXNzKHRoaXMpLmJhbGFuY2U7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Sharer</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">sendHalf</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>addr<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">balance</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="err">%</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Even value required.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">balanceBeforeTransfer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">).</span>balance<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>addr<span class="p">.</span>transfer<span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 由于转账失败后抛出异常并且不能在这里回调，</span>
+<span class="w">        </span><span class="c1">// 因此我们应该没有办法仍然有一半的钱。</span>
+<span class="w">        </span>assert<span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">).</span>balance<span class="w"> </span><span class="o">==</span><span class="w"> </span>balanceBeforeTransfer<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">msg.value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">).</span>balance<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>在内部， Solidity 会执行恢复操作（指令 <code class="docutils literal notranslate"><span class="pre">0xfd</span></code> ）。
+这会导致 EVM 恢复对状态所做的所有更改。恢复的原因是不能继续安全地执行，
+因为没有实现预期的效果，还因为我们想保留交易的原子性，
+所以最安全的做法是恢复所有更改并使整个交易（或至少是调用）不产生效果。</p>
+<p>在这两种情况下，调用者可以使用 <code class="docutils literal notranslate"><span class="pre">try</span></code>/ <code class="docutils literal notranslate"><span class="pre">catch</span></code> 对这种失败做出处理，
+但被调用者的变化将总是被恢复。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在Solidity 0.8.0之前，Panic异常曾使用 <code class="docutils literal notranslate"><span class="pre">invalid</span></code> 操作码，
+它消耗了所有可用于调用的气体。在Metropolis发布之前，
+使用 <code class="docutils literal notranslate"><span class="pre">require</span></code> 的异常会消耗所有气体。</p>
+</div>
+</section>
+<section id="revert">
+<span id="revert-statement"></span><h3><code class="docutils literal notranslate"><span class="pre">revert</span></code><a class="headerlink" href="#revert" title="Permalink to this heading"></a></h3>
+<p>可以使用 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 语句和 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 函数来触发直接恢复。</p>
+<p><code class="docutils literal notranslate"><span class="pre">revert</span></code> 语句将一个自定义的错误作为直接参数，没有括号：</p>
+<blockquote>
+<div><p>revert CustomError(arg1, arg2);</p>
+</div></blockquote>
+<p>出于向后兼容的原因，还有一个 <code class="docutils literal notranslate"><span class="pre">revert()</span></code> 函数，
+它使用圆括号并接受一个字符串：</p>
+<blockquote>
+<div><p>revert();
+revert(“description”);</p>
+</div></blockquote>
+<p>错误数据将被传回给调用者，可以在那里捕获。
+使用 <code class="docutils literal notranslate"><span class="pre">revert()</span></code> 会导致没有任何错误数据的还原，
+而 <code class="docutils literal notranslate"><span class="pre">revert(&quot;description&quot;)</span></code> 将创建一个 <code class="docutils literal notranslate"><span class="pre">Error(string)</span></code> 错误。</p>
+<p>使用一个自定义的错误实例通常会比字符串描述便宜得多，
+因为您可以使用错误的名称来描述它，它的编码只有四个字节。
+可以通过NatSpec提供更长的描述，这不会产生任何费用。</p>
+<p>下面的例子显示了如何将一个错误字符串和一个自定义的错误实例
+与 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 和相应的 <code class="docutils literal notranslate"><span class="pre">require</span></code> 一起使用。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IFZlbmRpbmdNYWNoaW5lIHsKICAgIGFkZHJlc3Mgb3duZXI7CiAgICBlcnJvciBVbmF1dGhvcml6ZWQoKTsKICAgIGZ1bmN0aW9uIGJ1eSh1aW50IGFtb3VudCkgcHVibGljIHBheWFibGUgewogICAgICAgIGlmIChhbW91bnQgPiBtc2cudmFsdWUgLyAyIGV0aGVyKQogICAgICAgICAgICByZXZlcnQoIk5vdCBlbm91Z2ggRXRoZXIgcHJvdmlkZWQuIik7CiAgICAgICAgLy8g5Y+m5LiA56eN5pa55rOV77yaCiAgICAgICAgcmVxdWlyZSgKICAgICAgICAgICAgYW1vdW50IDw9IG1zZy52YWx1ZSAvIDIgZXRoZXIsCiAgICAgICAgICAgICJOb3QgZW5vdWdoIEV0aGVyIHByb3ZpZGVkLiIKICAgICAgICApOwogICAgICAgIC8vIOaJp+ihjOi0reS5sOOAggogICAgfQogICAgZnVuY3Rpb24gd2l0aGRyYXcoKSBwdWJsaWMgewogICAgICAgIGlmIChtc2cuc2VuZGVyICE9IG93bmVyKQogICAgICAgICAgICByZXZlcnQgVW5hdXRob3JpemVkKCk7CgogICAgICAgIHBheWFibGUobXNnLnNlbmRlcikudHJhbnNmZXIoYWRkcmVzcyh0aGlzKS5iYWxhbmNlKTsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">VendingMachine</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span>error<span class="w"> </span>Unauthorized<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">buy</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>amount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="k">msg.value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="w"> </span>ether<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="p">(</span><span class="s2">&quot;Not enough Ether provided.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 另一种方法：</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span>amount<span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">msg.value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="w"> </span>ether<span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Not enough Ether provided.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 执行购买。</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span>owner<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>Unauthorized<span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">).</span>balance<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(!condition)</span> <span class="pre">revert(...);</span></code> 和 <code class="docutils literal notranslate"><span class="pre">require(condition,</span> <span class="pre">...);</span></code> 这两种方式是等价的，
+只要 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 和 <code class="docutils literal notranslate"><span class="pre">require</span></code> 的参数没有副作用，比如说它们只是字符串。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">require</span></code> 函数和其他函数一样。这意味着在执行函数本身之前，所有参数都会被评估。
+特别是，在 <code class="docutils literal notranslate"><span class="pre">require(condition,</span> <span class="pre">f())</span></code> 中，即使 <code class="docutils literal notranslate"><span class="pre">condition</span></code> 为真，
+函数 <code class="docutils literal notranslate"><span class="pre">f</span></code> 也被执行。</p>
+</div>
+<p>提供的字符串是 <a class="reference internal" href="abi-spec.html#abi"><span class="std std-ref">ABI编码</span></a> 之后的，就像调用一个函数 <code class="docutils literal notranslate"><span class="pre">Error(string)</span></code> 一样。
+在上面的例子中， <code class="docutils literal notranslate"><span class="pre">revert(&quot;Not</span> <span class="pre">enough</span> <span class="pre">Ether</span> <span class="pre">provided.&quot;);</span></code> 返回以下十六进制作为错误返回数据：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=MHgwOGMzNzlhMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8vIEVycm9yKHN0cmluZykg55qE5Ye95pWw6YCJ5oup5ZmoCjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyMCAvLyDmlbDmja7nmoTlgY/np7vph4/vvIgzMu+8iQoweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWEgLy8g5a2X56ym5Liy6ZW/5bqm77yIMjbvvIkKMHg0ZTZmNzQyMDY1NmU2Zjc1Njc2ODIwNDU3NDY4NjU3MjIwNzA3MjZmNzY2OTY0NjU2NDJlMDAwMDAwMDAwMDAwIC8vIOWtl+espuS4suaVsOaNru+8iCJOb3QgZW5vdWdoIEV0aGVyIHByb3ZpZGVkLiIg55qEIEFTQ0lJIOe8luegge+8jDI25a2X6IqC77yJ"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="mh">0x08c379a0</span>                                                         <span class="c1">// Error(string) 的函数选择器</span>
+<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000020</span> <span class="c1">// 数据的偏移量（32）</span>
+<span class="mh">0x000000000000000000000000000000000000000000000000000000000000001a</span> <span class="c1">// 字符串长度（26）</span>
+<span class="mh">0x4e6f7420656e6f7567682045746865722070726f76696465642e000000000000</span> <span class="c1">// 字符串数据（&quot;Not enough Ether provided.&quot; 的 ASCII 编码，26字节）</span>
+</pre></div>
+</div>
+<p>调用者可以使用 <code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">catch</span></code> 检索所提供的消息，如下所示。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>以前有一个叫 <code class="docutils literal notranslate"><span class="pre">throw</span></code> 的关键字，其语义与 <code class="docutils literal notranslate"><span class="pre">revert()</span></code> 相同，
+在0.4.13版本中被弃用，在0.5.0版本中被删除。</p>
+</div>
+</section>
+<section id="try-catch">
+<span id="id14"></span><h3><code class="docutils literal notranslate"><span class="pre">try</span></code> / <code class="docutils literal notranslate"><span class="pre">catch</span></code><a class="headerlink" href="#try-catch" title="Permalink to this heading"></a></h3>
+<p>外部调用的失败可以用 try/catch 语句来捕获，如下所示：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjE7CgppbnRlcmZhY2UgRGF0YUZlZWQgeyBmdW5jdGlvbiBnZXREYXRhKGFkZHJlc3MgdG9rZW4pIGV4dGVybmFsIHJldHVybnMgKHVpbnQgdmFsdWUpOyB9Cgpjb250cmFjdCBGZWVkQ29uc3VtZXIgewogICAgRGF0YUZlZWQgZmVlZDsKICAgIHVpbnQgZXJyb3JDb3VudDsKICAgIGZ1bmN0aW9uIHJhdGUoYWRkcmVzcyB0b2tlbikgcHVibGljIHJldHVybnMgKHVpbnQgdmFsdWUsIGJvb2wgc3VjY2VzcykgewogICAgICAgIC8vIOWmguaenOaciTEw5Liq5Lul5LiK55qE6ZSZ6K+v77yM5bCx5rC45LmF5YGc55So6K+l5py65Yi244CCCiAgICAgICAgcmVxdWlyZShlcnJvckNvdW50IDwgMTApOwogICAgICAgIHRyeSBmZWVkLmdldERhdGEodG9rZW4pIHJldHVybnMgKHVpbnQgdikgewogICAgICAgICAgICByZXR1cm4gKHYsIHRydWUpOwogICAgICAgIH0gY2F0Y2ggRXJyb3Ioc3RyaW5nIG1lbW9yeSAvKnJlYXNvbiovKSB7CiAgICAgICAgICAgIC8vIOWmguaenOWcqGdldERhdGHkuK3osIPnlKhyZXZlcnTvvIwKICAgICAgICAgICAgLy8g5bm25LiU5o+Q5L6b5LqG5LiA5Liq5Y6f5Zug5a2X56ym5Liy77yMCiAgICAgICAgICAgIC8vIOWImeaJp+ihjOivpeWRveS7pOOAggogICAgICAgICAgICBlcnJvckNvdW50Kys7CiAgICAgICAgICAgIHJldHVybiAoMCwgZmFsc2UpOwogICAgICAgIH0gY2F0Y2ggUGFuaWModWludCAvKmVycm9yQ29kZSovKSB7CiAgICAgICAgICAgIC8vIOWcqOWPkeeUn1Bhbmlj5byC5bi455qE5oOF5Ya15LiL5omn6KGM77yMCiAgICAgICAgICAgIC8vIOWNs+WHuueOsOS4pemHjeeahOmUmeivr++8jOWmgumZpOS7pembtuaIlua6ouWHuuOAggogICAgICAgICAgICAvLyDplJnor6/ku6PnoIHlj6/ku6XnlKjmnaXnoa7lrprplJnor6/nmoTnp43nsbvjgIIKICAgICAgICAgICAgZXJyb3JDb3VudCsrOwogICAgICAgICAgICByZXR1cm4gKDAsIGZhbHNlKTsKICAgICAgICB9IGNhdGNoIChieXRlcyBtZW1vcnkgLypsb3dMZXZlbERhdGEqLykgewogICAgICAgICAgICAvLyDlnKjkvb/nlKhyZXZlcnQoKeeahOaDheWGteS4i++8jOS8muaJp+ihjOi/meS4quWRveS7pOOAggogICAgICAgICAgICBlcnJvckNvdW50Kys7CiAgICAgICAgICAgIHJldHVybiAoMCwgZmFsc2UpOwogICAgICAgIH0KICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.8.1</span><span class="p">;</span><span class="w"></span>
+
+interface<span class="w"> </span>DataFeed<span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">function</span><span class="w"> </span><span class="nv">getData</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">token</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">value</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">FeedConsumer</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span>DataFeed<span class="w"> </span>feed<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">errorCount</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">rate</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">token</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">value</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 如果有10个以上的错误，就永久停用该机制。</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>errorCount<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m m-Decimal">10</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>try<span class="w"> </span>feed<span class="p">.</span>getData<span class="p">(</span>token<span class="p">)</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span>v<span class="p">,</span><span class="w"> </span><span class="kt">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span>catch<span class="w"> </span>Error<span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span><span class="cm">/*reason*/</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 如果在getData中调用revert，</span>
+<span class="w">            </span><span class="c1">// 并且提供了一个原因字符串，</span>
+<span class="w">            </span><span class="c1">// 则执行该命令。</span>
+<span class="w">            </span>errorCount<span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="kt">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span>catch<span class="w"> </span>Panic<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="cm">/*errorCode*/</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 在发生Panic异常的情况下执行，</span>
+<span class="w">            </span><span class="c1">// 即出现严重的错误，如除以零或溢出。</span>
+<span class="w">            </span><span class="c1">// 错误代码可以用来确定错误的种类。</span>
+<span class="w">            </span>errorCount<span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="kt">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span>catch<span class="w"> </span><span class="p">(</span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span><span class="cm">/*lowLevelData*/</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 在使用revert()的情况下，会执行这个命令。</span>
+<span class="w">            </span>errorCount<span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="kt">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">try</span></code> 关键字后面必须有一个表达式，代表外部函数调用或合约建（ <code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">ContractName()</span></code> ）。
+表达式中的错误不会被捕获（例如，如果它是一个复杂的表达式，也涉及到内部函数调用），
+只有外部调用本身发生恢复。
+接下来的 <code class="docutils literal notranslate"><span class="pre">returns</span></code> 部分（是可选的）声明了与外部调用返回的类型相匹配的返回变量。
+如果没有错误，这些变量将被分配，合约执行将在第一个成功代码块内继续。
+如果到达成功代码块的末端，则在 <code class="docutils literal notranslate"><span class="pre">catch</span></code> 块之后继续执行。</p>
+<p>Solidity 根据错误的类型，支持不同种类的捕获块：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">Error(string</span> <span class="pre">memory</span> <span class="pre">reason)</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>： 这个catch子句会被执行，
+如果错误是由 <code class="docutils literal notranslate"><span class="pre">revert(&quot;reasonString&quot;)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">require(false,</span> <span class="pre">&quot;reasonString&quot;)</span></code> 造成的
+（或内部错误造成的）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">Panic(uint</span> <span class="pre">errorCode)</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>： 如果错误是由Panic异常引起的，
+例如由失败的 <code class="docutils literal notranslate"><span class="pre">assert</span></code>、除以0、无效的数组访问、算术溢出和其他原因引起的，这个catch子句将被运行。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">(bytes</span> <span class="pre">memory</span> <span class="pre">lowLevelData)</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>： 如果错误签名与其他子句不匹配，
+或者在解码错误信息时出现了错误，或者没有与异常一起提供错误数据，
+那么这个子句就会被执行。在这种情况下，声明的变量提供了对低级错误数据的访问。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code>： 如果您对错误数据不感兴趣，您可以直接使用
+<code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> （甚至作为唯一的catch子句）来代替前面的子句。</p></li>
+</ul>
+<p>计划在未来支持其他类型的错误数据。字符串 <code class="docutils literal notranslate"><span class="pre">Error</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Panic</span></code> 目前是按原样解析的，不作为标识符处理。</p>
+<p>为了捕捉所有的错误情况，您至少要有 <code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">{</span> <span class="pre">...}</span></code> 或 <code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">(bytes</span> <span class="pre">memory</span> <span class="pre">lowLevelData)</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code> 子句。</p>
+<p>在 <code class="docutils literal notranslate"><span class="pre">returns</span></code> 和 <code class="docutils literal notranslate"><span class="pre">catch</span></code> 子句中声明的变量只在后面的代码块中有作用域。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果在 try/catch 语句内部的返回数据解码过程中发生错误，
+这将导致当前执行的合约出现异常，正因为如此，它不会在catch子句中被捕获。
+如果在 <code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">Error(string</span> <span class="pre">memory</span> <span class="pre">reason)</span></code> 的解码过程中出现错误，
+并且有一个低级的catch子句，那么这个错误就会在那里被捕获。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果执行到一个catch代码块，那么外部调用的状态改变效果已经被恢复。
+如果执行到了成功代码块，那么这些影响就没有被还原。
+如果影响已经被还原，那么执行要么在catch代码块中继续，
+要么try/catch语句的执行本身被还原（例如由于上面提到的解码失败或者由于没有提供低级别的catch子句）。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>调用失败背后的原因可能是多方面的。不要认为错误信息是直接来自被调用的合约：
+错误可能发生在调用链的更深处，被调用的合约只是转发了它。
+另外，这可能是由于消耗完气体值的情况，而不是故意的错误状况。
+调用方总是保留调用中至少1/64的气体值，
+因此，即使被调用合约没有气体了，调用方仍然有一些气体。</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="units-and-global-variables.html" class="btn btn-neutral float-left" title="单位和全局变量" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contracts.html" class="btn btn-neutral float-right" title="合约" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

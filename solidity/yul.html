@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yul &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="风格指南" href="style-guide.html" />
+    <link rel="prev" title="Import Path Resolution" href="path-resolution.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Yul</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">动机和高级别描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">简单的例子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">单独使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">对Yul的非正式描述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">字面量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">函数调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">变量声明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">赋值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if">If</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#switch">Switch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">循环</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">函数声明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">Yul形式规范</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">语法层面的限制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">作用域规则</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">形式规范</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evm">EVM语言</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#datasize-dataoffset-datacopy">datasize, dataoffset, datacopy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setimmutable-loadimmutable">setimmutable, loadimmutable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linkersymbol">linkersymbol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#memoryguard">memoryguard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#verbatim">verbatim</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#yul-object">Yul对象的规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id18">Yul 优化器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id19">优化步骤顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#complete-erc20-example">Complete ERC20 Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Yul</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/yul.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="yul">
+<span id="id1"></span><h1>Yul<a class="headerlink" href="#yul" title="Permalink to this heading"></a></h1>
+<p id="index-0">Yul（先前被也被称为 JULIA 或 IULIA）是一种可以编译到各种不同后端的中间语言。</p>
+<p>计划支持EVM 1.0，EVM 1.5和Ewasm，它被设计为这三个平台的可用的共同标准。
+它已经可以在独立模式下使用，也可以在Solidity内部用于 “内联汇编”，
+并且有一个Solidity编译器的实验性实现，将Yul作为一种中间语言。
+Yul是高级优化阶段的一个很好的目标，可以使所有的目标平台同样受益。</p>
+<section id="id2">
+<h2>动机和高级别描述<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>Yul 的设计试图实现几个目标：</p>
+<ol class="arabic simple">
+<li><p>用Yul编写的程序应该是可读的，即使代码是由Solidity或其他高级语言的编译器生成的。</p></li>
+<li><p>控制流应易于理解，以帮助人工检查、形式化验证和优化。</p></li>
+<li><p>从Yul到字节码的翻译应该尽可能的简单明了。</p></li>
+<li><p>Yul应该适用于整个程序的优化。</p></li>
+</ol>
+<p>为了实现第一个和第二个目标，Yul提供了高级别的结构，如 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环， <code class="docutils literal notranslate"><span class="pre">if</span></code> 和 <code class="docutils literal notranslate"><span class="pre">switch</span></code> 语句和函数调用。
+这些应该足以充分代表汇编程序的控制流。
+因此，没有提供 <code class="docutils literal notranslate"><span class="pre">SWAP</span></code>， <code class="docutils literal notranslate"><span class="pre">DUP</span></code>， <code class="docutils literal notranslate"><span class="pre">JUMPDEST</span></code>， <code class="docutils literal notranslate"><span class="pre">JUMP</span></code> 和 <code class="docutils literal notranslate"><span class="pre">JUMPI</span></code> 的明确语句，
+因为前两者混淆了数据流，后两者混淆了控制流。此外，
+<code class="docutils literal notranslate"><span class="pre">mul(add(x,</span> <span class="pre">y),</span> <span class="pre">7)</span></code> 形式的函数语句比 <code class="docutils literal notranslate"><span class="pre">7</span> <span class="pre">y</span> <span class="pre">x</span> <span class="pre">add</span> <span class="pre">mul</span></code> 这样的纯操作码语句更受欢迎，
+因为在第一种形式中，更容易看到哪个操作数用于哪个操作码。</p>
+<p>尽管它是为堆栈机设计的，但Yul并没有暴露堆栈本身的复杂性。
+程序员或审计师不应该担心堆栈的问题。</p>
+<p>第三个目标是通过以一种非常有规律的方式将高层结构编译成字节码来实现的。
+汇编器执行的唯一非本地操作是用户定义的标识符（函数、变量……）的名称查找和清理堆栈中的本地变量。</p>
+<p>为了避免值和引用等概念之间的混淆，
+Yul是静态类型的。同时，
+有一个默认的类型（通常是目标机的整数字），
+可以随时省略以帮助增加可读性。</p>
+<p>为了保持语言的简单和灵活，
+Yul在其纯粹的形式下没有任何内置的操作，函数或类型。
+在指定Yul的语言时，这些操作和语义被添加到一起，
+这使得Yul可以根据不同的目标平台和功能集的要求进行专业化。</p>
+<p>目前，只有一种指定的Yul语言。这个语言使用EVM的操作码作为内建函数（见下文），
+并且只定义了 <code class="docutils literal notranslate"><span class="pre">u256</span></code> 类型，这是EVM的本地256位类型。正因为如此，我们将不在下面的例子中提供类型。</p>
+</section>
+<section id="id3">
+<h2>简单的例子<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>下面的例子程序是用EVM语言编写的，用来计算指数。
+它可以用 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--strict-assembly</span></code> 指令编译。
+内置函数 <code class="docutils literal notranslate"><span class="pre">mul</span></code> 和 <code class="docutils literal notranslate"><span class="pre">div</span></code> 分别计算乘法和除法。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgZnVuY3Rpb24gcG93ZXIoYmFzZSwgZXhwb25lbnQpIC0+IHJlc3VsdAogICAgewogICAgICAgIHN3aXRjaCBleHBvbmVudAogICAgICAgIGNhc2UgMCB7IHJlc3VsdCA6PSAxIH0KICAgICAgICBjYXNlIDEgeyByZXN1bHQgOj0gYmFzZSB9CiAgICAgICAgZGVmYXVsdAogICAgICAgIHsKICAgICAgICAgICAgcmVzdWx0IDo9IHBvd2VyKG11bChiYXNlLCBiYXNlKSwgZGl2KGV4cG9uZW50LCAyKSkKICAgICAgICAgICAgc3dpdGNoIG1vZChleHBvbmVudCwgMikKICAgICAgICAgICAgICAgIGNhc2UgMSB7IHJlc3VsdCA6PSBtdWwoYmFzZSwgcmVzdWx0KSB9CiAgICAgICAgfQogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="k">function</span> <span class="n">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">result</span>
+    <span class="p">{</span>
+        <span class="k">switch</span> <span class="n">exponent</span>
+        <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="n">result</span> <span class="o">:=</span> <span class="mi">1</span> <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">1</span> <span class="p">{</span> <span class="n">result</span> <span class="o">:=</span> <span class="n">base</span> <span class="p">}</span>
+        <span class="k">default</span>
+        <span class="p">{</span>
+            <span class="n">result</span> <span class="o">:=</span> <span class="n">power</span><span class="p">(</span><span class="nf">mul</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base</span><span class="p">),</span> <span class="nf">div</span><span class="p">(</span><span class="n">exponent</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="k">switch</span> <span class="nf">mod</span><span class="p">(</span><span class="n">exponent</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">case</span> <span class="mi">1</span> <span class="p">{</span> <span class="n">result</span> <span class="o">:=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>也可以用for-loop而不是递归来实现同样的函数。
+这里， <code class="docutils literal notranslate"><span class="pre">lt(a,</span> <span class="pre">b)</span></code> 计算 <code class="docutils literal notranslate"><span class="pre">a</span></code> 是否小于 <code class="docutils literal notranslate"><span class="pre">b</span></code>。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgZnVuY3Rpb24gcG93ZXIoYmFzZSwgZXhwb25lbnQpIC0+IHJlc3VsdAogICAgewogICAgICAgIHJlc3VsdCA6PSAxCiAgICAgICAgZm9yIHsgbGV0IGkgOj0gMCB9IGx0KGksIGV4cG9uZW50KSB7IGkgOj0gYWRkKGksIDEpIH0KICAgICAgICB7CiAgICAgICAgICAgIHJlc3VsdCA6PSBtdWwocmVzdWx0LCBiYXNlKQogICAgICAgIH0KICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="k">function</span> <span class="n">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">result</span>
+    <span class="p">{</span>
+        <span class="n">result</span> <span class="o">:=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="p">{</span> <span class="ow">let</span> <span class="nv">i</span> <span class="o">:=</span> <span class="mi">0</span> <span class="p">}</span> <span class="nf">lt</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">exponent</span><span class="p">)</span> <span class="p">{</span> <span class="n">i</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+        <span class="p">{</span>
+            <span class="n">result</span> <span class="o">:=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>在 <a class="reference internal" href="#erc20yul"><span class="std std-ref">本节的末尾</span></a> ，可以找到ERC-20标准的完整实现。</p>
+</section>
+<section id="id4">
+<h2>单独使用<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>您可以使用Solidity编译器在EVM语言中以独立的形式使用Yul。
+这将使用 <a class="reference internal" href="#yul-object"><span class="std std-ref">Yul 对象符号</span></a>，这样就有可能将代码作为数据引用到部署合约中。
+这种Yul模式可用于命令行编译器（使用 <code class="docutils literal notranslate"><span class="pre">--strict-assembly</span></code>）和 <a class="reference internal" href="using-the-compiler.html#compiler-api"><span class="std std-ref">标准-json接口</span></a>。</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yul&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;sources&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;input.yul&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{ sstore(0, 1) }&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;outputSelection&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;*&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;*&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;details&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;yul&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Yul正在积极开发中，只有以EVM 1.0为目标，Yul的EVM语言才能完全实现字节码生成。</p>
+</div>
+</section>
+<section id="id5">
+<h2>对Yul的非正式描述<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>在下文中，我们将谈论Yul语言的每个单独方面。在例子中，我们将使用默认的EVM语言。</p>
+<section id="id6">
+<h3>语法<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<p>Yul使用与Solidity相同的方式解析注释，字词和标识符，
+所以您可以使用 <code class="docutils literal notranslate"><span class="pre">//</span></code> 和 <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">*/</span></code> 来表示注释。
+但是有一个例外，Yul中的标识符可以包含圆点： <code class="docutils literal notranslate"><span class="pre">.</span></code>。</p>
+<p>Yul可以指定由代码，数据和子对象组成的 “对象”。
+请参阅 <a class="reference internal" href="#yul-object"><span class="std std-ref">Yul 对象</span></a> 以了解这方面的详情。
+在本节中，我们只关注这样一个对象的代码部分。
+这个代码部分总是由一个大括号限定的块组成。
+大多数工具都支持只指定一个预期对象的代码块。</p>
+<p>在一个代码块内，可以使用以下元素（更多细节见后面章节）：</p>
+<ul class="simple">
+<li><p>字母，即 <code class="docutils literal notranslate"><span class="pre">0x123</span></code>， <code class="docutils literal notranslate"><span class="pre">42</span></code> 或 <code class="docutils literal notranslate"><span class="pre">&quot;abc&quot;</span></code> （32个字符以内的字符串）。</p></li>
+<li><p>对内置函数的调用，例如 <code class="docutils literal notranslate"><span class="pre">add(1,</span> <span class="pre">mload(0))</span></code></p></li>
+<li><p>变量声明，例如 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">7</span></code>， <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">add(y,</span> <span class="pre">3)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span></code> （初始值为0）</p></li>
+<li><p>标识符（变量），例如： <code class="docutils literal notranslate"><span class="pre">add(3,</span> <span class="pre">x)</span></code></p></li>
+<li><p>赋值，例如： <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:=</span> <span class="pre">add(y,</span> <span class="pre">3)</span></code></p></li>
+<li><p>局部变量的作用域所在的代码块，例如 <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">let</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">3</span> <span class="pre">{</span> <span class="pre">let</span> <span class="pre">y</span> <span class="pre">:=</span> <span class="pre">add(x,</span> <span class="pre">1)</span> <span class="pre">}</span> <span class="pre">}</span></code></p></li>
+<li><p>if 语句，例如 <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">lt(a,</span> <span class="pre">b)</span> <span class="pre">{</span> <span class="pre">sstore(0,</span> <span class="pre">1)</span> <span class="pre">}</span></code></p></li>
+<li><p>switch语句，例如 <code class="docutils literal notranslate"><span class="pre">switch</span> <span class="pre">mload(0)</span> <span class="pre">case</span> <span class="pre">0</span> <span class="pre">{</span> <span class="pre">revert()</span> <span class="pre">}</span> <span class="pre">default</span> <span class="pre">{</span> <span class="pre">mstore(0,</span> <span class="pre">1)</span> <span class="pre">}</span></code></p></li>
+<li><p>for 循环，例如 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">{</span> <span class="pre">let</span> <span class="pre">i</span> <span class="pre">:=</span> <span class="pre">0}</span> <span class="pre">lt(i,</span> <span class="pre">10)</span> <span class="pre">{</span> <span class="pre">i</span> <span class="pre">:=</span> <span class="pre">add(i,</span> <span class="pre">1)</span> <span class="pre">}</span> <span class="pre">{</span> <span class="pre">mstore(i,</span> <span class="pre">7)</span> <span class="pre">}</span></code></p></li>
+<li><p>函数的定义，例如 <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(a,</span> <span class="pre">b)</span> <span class="pre">-&gt;</span> <span class="pre">c</span> <span class="pre">{</span> <span class="pre">c</span> <span class="pre">:=</span> <span class="pre">add(a,</span> <span class="pre">b)</span> <span class="pre">}</span></code></p></li>
+</ul>
+<p>多个语法元素之间可以简单地用空格隔开，即不需要结尾的 <code class="docutils literal notranslate"><span class="pre">;</span></code> 或换行。</p>
+</section>
+<section id="id7">
+<h3>字面量<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>作为字面量，您可以使用。</p>
+<ul class="simple">
+<li><p>以十进制或十六进制符号表示的整数常数。</p></li>
+<li><p>ASCII字符串（例如 <code class="docutils literal notranslate"><span class="pre">&quot;abc&quot;</span></code>），可能包含十六进制转义 <code class="docutils literal notranslate"><span class="pre">\xNN</span></code> 和 Unicode转义 <code class="docutils literal notranslate"><span class="pre">\uNNNN</span></code>，其中 <code class="docutils literal notranslate"><span class="pre">N</span></code> 是十六进制数字。</p></li>
+<li><p>十六进制字符串（例如： <code class="docutils literal notranslate"><span class="pre">hex&quot;616263&quot;</span></code>）。</p></li>
+</ul>
+<p>在Yul的EVM语言中，字面量表示256位的单词，如下所示：</p>
+<ul class="simple">
+<li><p>十进制或十六进制的常量必须小于 <code class="docutils literal notranslate"><span class="pre">2**256</span></code>。
+它们以大端编码的无符号整数形式表示具有该值的256位字。</p></li>
+<li><p>一个ASCII字符串首先被看作是一个字节序列，
+通过将非转义ASCII字符看作是一个单字节，其值是ASCII代码，
+转义 <code class="docutils literal notranslate"><span class="pre">\xNN</span></code> 是具有该值的单字节，
+转义 <code class="docutils literal notranslate"><span class="pre">\uNNNN</span></code> 是该代码点的UTF-8字节序列。
+字节序列不得超过32字节。
+字节序列在右边用零填充，以达到32个字节的长度；
+换句话说，字符串是以左对齐的方式存储。
+填充后的字节序列代表一个256位的字，其最有意义的8位是第一个字节的1，
+也就是说，字节被解释为大端形式。</p></li>
+<li><p>十六进制字符串首先被视为一个字节序列，
+将每一对连续的十六进制数字视为一个字节。
+字节序列不得超过32个字节（即64个十六进制数字），并按上述方法处理。</p></li>
+</ul>
+<p>当为EVM编译时，这将被翻译成一个适当的 <code class="docutils literal notranslate"><span class="pre">PUSHi</span></code> 指令。
+在下面的例子中， <code class="docutils literal notranslate"><span class="pre">3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">2</span></code> 相加的结果是 5，
+然后计算与字符串 “abc” 的按位 <code class="docutils literal notranslate"><span class="pre">与（and）</span></code>。
+最后的数值被分配到一个叫做 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的局部变量。</p>
+<p>上述32字节的限制并不适用于传递给需要字面参数的内置函数的字符串（例如， <code class="docutils literal notranslate"><span class="pre">setimmutable</span></code> 或 <code class="docutils literal notranslate"><span class="pre">loadimmutable</span></code>）。
+这些字符串最终不会出现在生成的字节码中。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IHggOj0gYW5kKCJhYmMiLCBhZGQoMywgMikp"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="nf">and</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>除非是默认类型，否则字面的类型必须在冒号后指定：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=Ly8g6L+Z5bCG5LiN5Lya6KKr57yW6K+R77yIdTMy5ZKMdTI1Nuexu+Wei+WwmuacquWunueOsO+8ieOAggpsZXQgeCA6PSBhbmQoImFiYyI6dTMyLCBhZGQoMzp1MjU2LCAyOnUyNTYpKQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="c1">// 这将不会被编译（u32和u256类型尚未实现）。</span>
+<span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="nf">and</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">:</span><span class="n">u32</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">:</span><span class="n">u256</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">u256</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3>函数调用<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>内置函数和用户定义的函数（见下文）都可以用前面例子中的相同方式调用。
+如果函数返回一个单一的值，它可以直接在一个表达式中再次使用。
+如果它返回多个值，则必须将它们分配给局部变量。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ZnVuY3Rpb24gZih4LCB5KSAtPiBhLCBiIHsgLyogLi4uICovIH0KbXN0b3JlKDB4ODAsIGFkZChtbG9hZCgweDgwKSwgMykpCi8vIOatpOWkhO+8jOeUqOaIt+WumuS5ieeahOWHveaVsCBgZmAg6L+U5Zue5Lik5Liq5YC844CCCmxldCB4LCB5IDo9IGYoMSwgbWxvYWQoMCkp"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="mh">0x80</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="nf">mload</span><span class="p">(</span><span class="mh">0x80</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="c1">// 此处，用户定义的函数 `f` 返回两个值。</span>
+<span class="ow">let</span> <span class="nv">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">:=</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nf">mload</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>对于EVM的内置函数，函数表达式可以直接转换为操作码流：
+您只需从右到左读取表达式，就可以得到操作码。
+在例子中的第一行，是 <code class="docutils literal notranslate"><span class="pre">PUSH1</span> <span class="pre">3</span> <span class="pre">PUSH1</span> <span class="pre">0x80</span> <span class="pre">MLOAD</span> <span class="pre">ADD</span> <span class="pre">PUSH1</span> <span class="pre">0x80</span> <span class="pre">MSTORE</span></code>。</p>
+<p>对于调用用户定义的函数，参数也从右到左放在堆栈中，这是参数列表被评估的顺序。
+然而，返回值是在堆栈中从左到右，即在这个例子中， <code class="docutils literal notranslate"><span class="pre">y</span></code> 在堆栈的顶部， <code class="docutils literal notranslate"><span class="pre">x</span></code> 在其下方。</p>
+</section>
+<section id="id9">
+<h3>变量声明<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<p>您可以使用 <code class="docutils literal notranslate"><span class="pre">let</span></code> 关键字来声明变量。变量只在它所定义的 <code class="docutils literal notranslate"><span class="pre">{...}</span></code> 块内可见。
+当编译到EVM时，会创建一个新的堆栈槽，为该变量保留，并在到达块的末端时自动移除。
+您可以为该变量提供一个初始值。如果您不提供一个值，该变量将被初始化为零。</p>
+<p>由于变量存储在堆栈中，它们不直接影响内存或存储，
+但它们可以在内置函数 <code class="docutils literal notranslate"><span class="pre">mstore</span></code>， <code class="docutils literal notranslate"><span class="pre">mload</span></code>， <code class="docutils literal notranslate"><span class="pre">sstore</span></code> 和 <code class="docutils literal notranslate"><span class="pre">sload</span></code> 中作为内存或存储位置的指针使用。
+未来的语言可能会为这种指针引入特定的类型。</p>
+<p>当一个变量被引用时，其当前值被复制。
+对于EVM来说，这相当于一个 <code class="docutils literal notranslate"><span class="pre">DUP</span></code> 指令。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IHplcm8gOj0gMAogICAgbGV0IHYgOj0gY2FsbGRhdGFsb2FkKHplcm8pCiAgICB7CiAgICAgICAgbGV0IHkgOj0gYWRkKHNsb2FkKHYpLCAxKQogICAgICAgIHYgOj0geQogICAgfSAvLyB55Zyo6L+Z6YeM6KKrIOKAnOWIoOmZpOKAnSDkuoYKICAgIHNzdG9yZSh2LCB6ZXJvKQp9IC8vIHblkox6ZXJv5Zyo6L+Z6YeM6KKrIOKAnOWIoOmZpOKAneOAgg=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">zero</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="ow">let</span> <span class="nv">v</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="n">zero</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="ow">let</span> <span class="nv">y</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="nf">sload</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">:=</span> <span class="n">y</span>
+    <span class="p">}</span> <span class="c1">// y在这里被 “删除” 了</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">zero</span><span class="p">)</span>
+<span class="p">}</span> <span class="c1">// v和zero在这里被 “删除”。</span>
+</pre></div>
+</div>
+<p>如果声明的变量应该有一个与默认类型不同的类型，您可以用冒号表示。
+当您从一个返回多个值的函数调用中赋值时，您也可以在一条语句中声明多个变量。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=Ly8g6L+Z5bCG5LiN5Lya6KKr57yW6K+R77yIdTMy5ZKMdTI1Nuexu+Wei+WwmuacquWunueOsO+8ieOAggp7CiAgICBsZXQgemVybzp1MzIgOj0gMDp1MzIKICAgIGxldCB2OnUyNTYsIHQ6dTMyIDo9IGYoKQogICAgbGV0IHgsIHkgOj0gZygpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="c1">// 这将不会被编译（u32和u256类型尚未实现）。</span>
+<span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">zero</span><span class="p">:</span><span class="n">u32</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">:</span><span class="n">u32</span>
+    <span class="ow">let</span> <span class="nv">v</span><span class="p">:</span><span class="n">u256</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span><span class="n">u32</span> <span class="o">:=</span> <span class="n">f</span><span class="p">()</span>
+    <span class="ow">let</span> <span class="nv">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">:=</span> <span class="n">g</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>根据优化器的设置，编译器可以在变量被最后一次使用后释放堆栈槽，即使它仍然在范围内。</p>
+</section>
+<section id="id10">
+<h3>赋值<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<p>变量可以在其定义后使用 <code class="docutils literal notranslate"><span class="pre">:=</span></code> 操作符进行赋值。可以在同一时间对多个变量进行赋值。
+为此，数值的数量和类型必须匹配。如果您想对一个有多个返回参数的函数进行赋值，
+您必须提供多个变量。同一变量不能多次出现在赋值的左侧，例如： <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">f()</span></code> 是无效的。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IHYgOj0gMAovLyDph43mlrDlr7l26LWL5YC8CnYgOj0gMgpsZXQgdCA6PSBhZGQodiwgMikKZnVuY3Rpb24gZigpIC0+IGEsIGIgeyB9Ci8vIOi1i+S6iOWkmuS4quWAvAp2LCB0IDo9IGYoKQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">v</span> <span class="o">:=</span> <span class="mi">0</span>
+<span class="c1">// 重新对v赋值</span>
+<span class="n">v</span> <span class="o">:=</span> <span class="mi">2</span>
+<span class="ow">let</span> <span class="nv">t</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">function</span> <span class="n">f</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="p">{</span> <span class="p">}</span>
+<span class="c1">// 赋予多个值</span>
+<span class="n">v</span><span class="p">,</span> <span class="n">t</span> <span class="o">:=</span> <span class="n">f</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="if">
+<h3>If<a class="headerlink" href="#if" title="Permalink to this heading"></a></h3>
+<p>if语句可用于有条件地执行代码。不能定义 “else” 块。
+如果您需要多种选择条件，可以考虑使用 “switch” 来代替（见下文）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=aWYgbHQoY2FsbGRhdGFzaXplKCksIDQpIHsgcmV2ZXJ0KDAsIDApIH0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nf">lt</span><span class="p">(</span><span class="nf">calldatasize</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span> <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>代码块的大括号是必需的。</p>
+</section>
+<section id="switch">
+<h3>Switch<a class="headerlink" href="#switch" title="Permalink to this heading"></a></h3>
+<p>您可以使用switch语句作为if语句的扩展版本。
+它获取一个表达式的值，并将其与几个字面常量进行比较，与匹配的常量相对应的分支被选中。
+与其他编程语言不同的是，出于安全考虑，控制流不会从一个条件延续到下一个条件。
+可以有一个叫 <code class="docutils literal notranslate"><span class="pre">default</span></code> 的回退或默认情况，如果没有一个字面常数匹配，就会采取这种情况。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IHggOj0gMAogICAgc3dpdGNoIGNhbGxkYXRhbG9hZCg0KQogICAgY2FzZSAwIHsKICAgICAgICB4IDo9IGNhbGxkYXRhbG9hZCgweDI0KQogICAgfQogICAgZGVmYXVsdCB7CiAgICAgICAgeCA6PSBjYWxsZGF0YWxvYWQoMHg0NCkKICAgIH0KICAgIHNzdG9yZSgwLCBkaXYoeCwgMikpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">switch</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mh">0x24</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">default</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mh">0x44</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">div</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>条件的列表没有用大括号括起来，但条件的主体确实需要大括号。</p>
+</section>
+<section id="id11">
+<h3>循环<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<p>Yul支持for循环，它由一个包含初始化部分的头，一个条件，一个后迭代部分和一个主体组成。
+条件必须是一个表达式，而其他三个是代码块。
+如果初始化部分在顶层声明了任何变量，这些变量的范围将延伸到循环的所有其他部分。</p>
+<p><code class="docutils literal notranslate"><span class="pre">break</span></code> 和 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 语句可以在主体中使用，分别用于退出循环或跳到后部分。</p>
+<p>下面的例子是计算内存中一个代码区域的总和。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IHggOj0gMAogICAgZm9yIHsgbGV0IGkgOj0gMCB9IGx0KGksIDB4MTAwKSB7IGkgOj0gYWRkKGksIDB4MjApIH0gewogICAgICAgIHggOj0gYWRkKHgsIG1sb2FkKGkpKQogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="p">{</span> <span class="ow">let</span> <span class="nv">i</span> <span class="o">:=</span> <span class="mi">0</span> <span class="p">}</span> <span class="nf">lt</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x100</span><span class="p">)</span> <span class="p">{</span> <span class="n">i</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span> <span class="p">}</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">mload</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For循环也可以作为while循环的替代：
+只需将初始化和后迭代部分留为空即可。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IHggOj0gMAogICAgbGV0IGkgOj0gMAogICAgZm9yIHsgfSBsdChpLCAweDEwMCkgeyB9IHsgICAgIC8vIHdoaWxlKGkgPCAweDEwMCkKICAgICAgICB4IDo9IGFkZCh4LCBtbG9hZChpKSkKICAgICAgICBpIDo9IGFkZChpLCAweDIwKQogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="ow">let</span> <span class="nv">i</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="p">{</span> <span class="p">}</span> <span class="nf">lt</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x100</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span> <span class="p">{</span>     <span class="c1">// while(i &lt; 0x100)</span>
+        <span class="n">x</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nf">mload</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3>函数声明<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<p>Yul允许定义函数。这些不应该与 Solidity 中的函数相混淆，因为它们从来不是一个合约的外部接口的一部分，
+而是一个独立于 Solidity 函数的命名空间的一部分。</p>
+<p>对于EVM来说，Yul函数从堆栈中获取它们的参数（和一个返回的PC），
+同时也将结果放到堆栈中。用户定义的函数和内置函数的调用方式完全相同。</p>
+<p>函数可以在任何地方定义，并且在它们所声明的块中是可见的。
+在一个函数中，您不能访问在该函数之外定义的局部变量。</p>
+<p>函数声明参数和返回变量，与Solidity类似。
+为了返回一个值，您可以把它分配给返回变量。</p>
+<p>如果您调用一个返回多个值的函数，
+您必须用 <code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span> <span class="pre">:=</span> <span class="pre">f(x)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">a,</span> <span class="pre">b</span> <span class="pre">:=</span> <span class="pre">f(x)</span></code> 将它们分配给多个变量。</p>
+<p><code class="docutils literal notranslate"><span class="pre">leave</span></code> 语句可以用来退出当前函数。它的工作原理类似于其他语言中的 <code class="docutils literal notranslate"><span class="pre">return</span></code> 语句，
+只是它不需要返回值，它只是退出函数，
+函数将返回当前分配给返回变量的任何值。</p>
+<p>注意，EVM语言有一个内置的函数叫 <code class="docutils literal notranslate"><span class="pre">return</span></code>，
+它可以退出整个执行环境（内部消息调用），而不仅仅是当前的yul函数。</p>
+<p>下面的例子通过平方和乘法实现了幂函数。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgZnVuY3Rpb24gcG93ZXIoYmFzZSwgZXhwb25lbnQpIC0+IHJlc3VsdCB7CiAgICAgICAgc3dpdGNoIGV4cG9uZW50CiAgICAgICAgY2FzZSAwIHsgcmVzdWx0IDo9IDEgfQogICAgICAgIGNhc2UgMSB7IHJlc3VsdCA6PSBiYXNlIH0KICAgICAgICBkZWZhdWx0IHsKICAgICAgICAgICAgcmVzdWx0IDo9IHBvd2VyKG11bChiYXNlLCBiYXNlKSwgZGl2KGV4cG9uZW50LCAyKSkKICAgICAgICAgICAgc3dpdGNoIG1vZChleHBvbmVudCwgMikKICAgICAgICAgICAgICAgIGNhc2UgMSB7IHJlc3VsdCA6PSBtdWwoYmFzZSwgcmVzdWx0KSB9CiAgICAgICAgfQogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="k">function</span> <span class="n">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">result</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="n">exponent</span>
+        <span class="k">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="n">result</span> <span class="o">:=</span> <span class="mi">1</span> <span class="p">}</span>
+        <span class="k">case</span> <span class="mi">1</span> <span class="p">{</span> <span class="n">result</span> <span class="o">:=</span> <span class="n">base</span> <span class="p">}</span>
+        <span class="k">default</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="o">:=</span> <span class="n">power</span><span class="p">(</span><span class="nf">mul</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base</span><span class="p">),</span> <span class="nf">div</span><span class="p">(</span><span class="n">exponent</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="k">switch</span> <span class="nf">mod</span><span class="p">(</span><span class="n">exponent</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="k">case</span> <span class="mi">1</span> <span class="p">{</span> <span class="n">result</span> <span class="o">:=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id13">
+<h2>Yul形式规范<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<p>本章正式描述Yul代码。Yul代码通常放置在Yul对象内，
+Yul对象将在它们自己的章节中解释。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>代码块 = &#39;{&#39; 语句* &#39;}&#39;
+语句 =
+    代码块 |
+    函数定义 |
+    变量声明 |
+    赋值 |
+    If |
+    表达式 |
+    Switch |
+    For 循环 |
+    循环中断 |
+    退出
+函数定义 =
+    &#39;function&#39; 标识符 &#39;(&#39; 带类型的标识符列表? &#39;)&#39;
+    ( &#39;-&gt;&#39; 带类型的标识符列表 )? 代码块
+变量声明 =
+    &#39;let&#39; 带类型的标识符列表 ( &#39;:=&#39; 表达式 )?
+赋值 =
+    标识符列表 &#39;:=&#39; 表达式
+表达式 =
+    函数调用 | 标识符 | 字面量
+If 条件语句 =
+    &#39;if&#39; 表达式 代码块
+Switch 条件语句 =
+    &#39;switch&#39; 表达式 ( Case+ Default? | Default )
+Case =
+    &#39;case&#39; 字面量 代码块
+Default =
+    &#39;default&#39; 代码块
+For 循环 =
+    &#39;for&#39; 代码块 表达式 代码块 代码块
+循环中断 =
+    &#39;break&#39; | &#39;continue&#39;
+退出 = &#39;leave&#39;
+函数调用 =
+    标识符 &#39;(&#39; ( 表达式 ( &#39;,&#39; 表达式 )* )? &#39;)&#39;
+标识符 = [a-zA-Z_$] [a-zA-Z_$0-9.]*
+标识符列表 = 标识符 ( &#39;,&#39; 标识符)*
+类型名 = 标识符
+带类型的标识符列表 = 标识符 ( &#39;:&#39; 类型名 )? ( &#39;,&#39; 标识符 ( &#39;:&#39; 类型名 )? )*
+字面量 =
+    (数字字面量 | 字符串字面量 | True字面量 | False字面量) ( &#39;:&#39; 类型名 )?
+数字字面量 = 十六进制数字 | 十进制数字
+字符串字面量 = &#39;&quot;&#39; ([^&quot;\r\n\\] | &#39;\\&#39; .)* &#39;&quot;&#39;
+True字面量 = &#39;true&#39;
+False字面量 = &#39;false&#39;
+十六进制数字 = &#39;0x&#39; [0-9a-fA-F]+
+十进制数字 = [0-9]+
+</pre></div>
+</div>
+<section id="id14">
+<h3>语法层面的限制<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<p>除语法直接规定的限制外，还适用以下限制：</p>
+<p>Switch 语句必须至少有一个判断条件（包括默认条件）。
+所有情况下的值都需要有相同的类型和不同的值。
+如果表达式类型的所有可能值都被覆盖，则不允许有默认情况
+（例如，一个带有 <code class="docutils literal notranslate"><span class="pre">bool</span></code> 表达式的Switch 语句，如果有一个真和一个假的情况，则不允许有默认情况）。</p>
+<p>每个表达式都评估为零或多个值。
+标识符和字面量精确地评估为一个值，
+而函数调用求值为所调用函数的返回值。</p>
+<p>在变量声明和赋值中，右边的表达式（如果存在的话）必须求值到与左边的变量数量相等的数值。
+这是唯一允许对一个以上的值进行评估的表达式的情况。
+在赋值或变量声明的左侧，同一个变量名称不能出现多次。</p>
+<p>也是语句的表达式（即在块级）必须评估为零值。</p>
+<p>在所有其他情况下，表达式必须精确评估为一个值。</p>
+<p><code class="docutils literal notranslate"><span class="pre">continue</span></code> 或 <code class="docutils literal notranslate"><span class="pre">break</span></code> 语句只能在for循环的主体内使用，如下所示。
+考虑包含该语句的最内部循环。循环和语句必须在同一个函数中，或者两者必须在最高层。
+该语句必须在循环的主体块中；不能在循环的初始化块或更新块中。
+值得强调的是，这个限制只适用于包含 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 或 <code class="docutils literal notranslate"><span class="pre">break</span></code> 语句的最内层循环：
+这个最内层循环，以及 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 或 <code class="docutils literal notranslate"><span class="pre">break</span></code> 语句，
+可以出现在外层循环的任何地方，可能是外层循环的初始化块或更新块中。
+例如，下面的例子是合法的，因为 <code class="docutils literal notranslate"><span class="pre">break</span></code> 出现在内循环的主体块中，尽管也出现在外循环的更新块中。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=Zm9yIHt9IHRydWUgeyBmb3Ige30gdHJ1ZSB7fSB7IGJyZWFrIH0gfQp7Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">{}</span> <span class="n">true</span> <span class="p">{</span> <span class="k">for</span> <span class="p">{}</span> <span class="n">true</span> <span class="p">{}</span> <span class="p">{</span> <span class="n">break</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>for循环的条件部分必须精确评估为一个值。</p>
+<p><code class="docutils literal notranslate"><span class="pre">leave</span></code> 语句只能在一个函数内使用。</p>
+<p>函数不能在for循环初始化块的任何地方定义。</p>
+<p>字面量不可以大于它们本身的类型。已定义的最大类型宽度为 256 比特。</p>
+<p>在赋值和函数调用过程中，各个值的类型必须匹配。
+没有隐式的类型转换。一般来说，只有当EVM语言提供一个适当的内置函数，
+接收一个类型的值并返回一个不同类型的值时，才能实现类型转换。</p>
+</section>
+<section id="id15">
+<h3>作用域规则<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<p>Yul中的作用域是与块联系在一起的（函数和for循环是例外，下面会解释），
+所有的声明（ <code class="docutils literal notranslate"><span class="pre">函数定义（FunctionDefinition）</span></code>，  <code class="docutils literal notranslate"><span class="pre">变量声明（VariableDeclaration）</span></code>）
+都将新的标识符引入这些作用域。</p>
+<p>标识符在其定义的块中是可见的（包括所有子节点和子块）。
+函数在整个块中是可见的（甚至在其定义之前），
+而变量只在 <code class="docutils literal notranslate"><span class="pre">变量声明</span></code> 之后的语句中可见。</p>
+<p>特别是，变量不能在其自身变量声明的右侧被引用。
+函数可以在其声明之前就被引用（如果它们是可见的）。</p>
+<p>作为一般范围规则的一个例外，for 循环的 “init” 部分（第一个块）的范围延伸到for 循环的所有其他部分。
+这意味着在init部分声明的变量（和函数）（但不在init部分的块内）在for循环的所有其他部分都是可见的。</p>
+<p>在for循环的其他部分声明的标识符要遵守常规的句法范围规则。</p>
+<p>这意味着一个for循环的形式 <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">{</span> <span class="pre">I...</span> <span class="pre">}</span> <span class="pre">C</span> <span class="pre">{</span> <span class="pre">P...</span> <span class="pre">}</span> <span class="pre">{</span> <span class="pre">B...</span> <span class="pre">}</span></code> 等同于
+<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">I...</span> <span class="pre">for</span> <span class="pre">{}.</span> <span class="pre">C</span> <span class="pre">{</span> <span class="pre">P...</span> <span class="pre">}</span> <span class="pre">{</span> <span class="pre">B...</span>&#160; <span class="pre">}</span></code>.</p>
+<p>函数的参数和返回参数在函数体中是可见的，其名称必须是不同的。</p>
+<p>在函数内部，不可能引用一个在该函数之外声明的变量。</p>
+<p>影子变量是不允许的，也就是说，您不能在另一个同名的标识符也可见的地方声明一个标识符，
+即使因为它是在当前函数之外声明的而不可能引用它。</p>
+</section>
+<section id="id16">
+<h3>形式规范<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<p>我们通过提供一个在AST的各个节点上重载的评估函数E来正式指定Yul。
+由于内置函数可能有副作用，E接收两个状态对象和AST节点，并返回两个新的状态对象和数量不定的其他值。
+这两个状态对象是全局状态对象（在EVM的背景下，它是区块链的内存、存储和状态）
+和本地状态对象（本地变量的状态，即EVM中堆栈的一段）。</p>
+<p>如果AST节点是一个语句，E返回两个状态对象和一个 “mode”，
+该mode用于 <code class="docutils literal notranslate"><span class="pre">break</span></code>， <code class="docutils literal notranslate"><span class="pre">continue</span></code> 和 <code class="docutils literal notranslate"><span class="pre">leave</span></code> 语句。
+如果AST节点是一个表达式，E返回两个状态对象和表达式所评估的数值。</p>
+<p>全局状态的确切性质在这个高层次的描述中没有明确说明。
+本地状态 <code class="docutils literal notranslate"><span class="pre">L</span></code> 是标识符 <code class="docutils literal notranslate"><span class="pre">i</span></code> 到值 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的映射，表示为 <code class="docutils literal notranslate"><span class="pre">L[i]</span> <span class="pre">=</span> <span class="pre">v</span></code>。</p>
+<p>对于标识符 <code class="docutils literal notranslate"><span class="pre">v</span></code>, 我们用 <code class="docutils literal notranslate"><span class="pre">$v</span></code> 作为标识符的名字。</p>
+<p>我们将为 AST 节点使用解构符号。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>E(G, L, &lt;{St1, ..., Stn}&gt;: Block) =
+    let G1, L1, mode = E(G, L, St1, ..., Stn)
+    let L2 be a restriction of L1 to the identifiers of L
+    G1, L2, mode
+E(G, L, St1, ..., Stn: Statement) =
+    if n is zero:
+        G, L, regular
+    else:
+        let G1, L1, mode = E(G, L, St1)
+        if mode is regular then
+            E(G1, L1, St2, ..., Stn)
+        otherwise
+            G1, L1, mode
+E(G, L, FunctionDefinition) =
+    G, L, regular
+E(G, L, &lt;let var_1, ..., var_n := rhs&gt;: VariableDeclaration) =
+    E(G, L, &lt;var_1, ..., var_n := rhs&gt;: Assignment)
+E(G, L, &lt;let var_1, ..., var_n&gt;: VariableDeclaration) =
+    let L1 be a copy of L where L1[$var_i] = 0 for i = 1, ..., n
+    G, L1, regular
+E(G, L, &lt;var_1, ..., var_n := rhs&gt;: Assignment) =
+    let G1, L1, v1, ..., vn = E(G, L, rhs)
+    let L2 be a copy of L1 where L2[$var_i] = vi for i = 1, ..., n
+    G, L2, regular
+E(G, L, &lt;for { i1, ..., in } condition post body&gt;: ForLoop) =
+    if n &gt;= 1:
+        let G1, L, mode = E(G, L, i1, ..., in)
+        // 由于语法限制，mode 必须是规则的
+        if mode is leave then
+            G1, L1 restricted to variables of L, leave
+        otherwise
+            let G2, L2, mode = E(G1, L1, for {} condition post body)
+            G2, L2 restricted to variables of L, mode
+    else:
+        let G1, L1, v = E(G, L, condition)
+        if v is false:
+            G1, L1, regular
+        else:
+            let G2, L2, mode = E(G1, L, body)
+            if mode is break:
+                G2, L2, regular
+            otherwise if mode is leave:
+                G2, L2, leave
+            else:
+                G3, L3, mode = E(G2, L2, post)
+                if mode is leave:
+                    G2, L3, leave
+                otherwise
+                    E(G3, L3, for {} condition post body)
+E(G, L, break: BreakContinue) =
+    G, L, break
+E(G, L, continue: BreakContinue) =
+    G, L, continue
+E(G, L, leave: Leave) =
+    G, L, leave
+E(G, L, &lt;if condition body&gt;: If) =
+    let G0, L0, v = E(G, L, condition)
+    if v is true:
+        E(G0, L0, body)
+    else:
+        G0, L0, regular
+E(G, L, &lt;switch condition case l1:t1 st1 ... case ln:tn stn&gt;: Switch) =
+    E(G, L, switch condition case l1:t1 st1 ... case ln:tn stn default {})
+E(G, L, &lt;switch condition case l1:t1 st1 ... case ln:tn stn default st&#39;&gt;: Switch) =
+    let G0, L0, v = E(G, L, condition)
+    // i = 1 .. n
+    // 对字面量求值，上下文无关
+    let _, _, v1 = E(G0, L0, l1)
+    ...
+    let _, _, vn = E(G0, L0, ln)
+    if there exists smallest i such that vi = v:
+        E(G0, L0, sti)
+    else:
+        E(G0, L0, st&#39;)
+
+E(G, L, &lt;name&gt;: Identifier) =
+    G, L, L[$name]
+E(G, L, &lt;fname(arg1, ..., argn)&gt;: FunctionCall) =
+    G1, L1, vn = E(G, L, argn)
+    ...
+    G(n-1), L(n-1), v2 = E(G(n-2), L(n-2), arg2)
+    Gn, Ln, v1 = E(G(n-1), L(n-1), arg1)
+    Let &lt;function fname (param1, ..., paramn) -&gt; ret1, ..., retm block&gt;
+    be the function of name $fname visible at the point of the call.
+    Let L&#39; be a new local state such that
+    L&#39;[$parami] = vi and L&#39;[$reti] = 0 for all i.
+    Let G&#39;&#39;, L&#39;&#39;, mode = E(Gn, L&#39;, block)
+    G&#39;&#39;, Ln, L&#39;&#39;[$ret1], ..., L&#39;&#39;[$retm]
+E(G, L, l: StringLiteral) = G, L, str(l),
+    where str is the string evaluation function,
+    which for the EVM dialect is defined in the section &#39;Literals&#39; above
+E(G, L, n: HexNumber) = G, L, hex(n)
+    where hex is the hexadecimal evaluation function,
+    which turns a sequence of hexadecimal digits into their big endian value
+E(G, L, n: DecimalNumber) = G, L, dec(n),
+    where dec is the decimal evaluation function,
+    which turns a sequence of decimal digits into their big endian value
+</pre></div>
+</div>
+</section>
+<section id="evm">
+<span id="opcodes"></span><h3>EVM语言<a class="headerlink" href="#evm" title="Permalink to this heading"></a></h3>
+<p>目前Yul的默认语言是当前选择的EVM版本的EVM语言，与EVM的一个版本。
+该语言中唯一可用的类型是 <code class="docutils literal notranslate"><span class="pre">u256</span></code>，即Ethereum虚拟机的256位本地类型。
+因为它是该语言的默认类型，所以可以省略。</p>
+<p>下表列出了所有内置函数（取决于EVM版本），并提供了函数/操作码的语义的简短描述。
+本文件并不想成为以太坊虚拟机的完整描述。如果您对精确的语义感兴趣，请参考另一份文件。</p>
+<p>标有 <code class="docutils literal notranslate"><span class="pre">-</span></code> 的操作码不返回结果，所有其他操作码正好返回一个值。
+标有 <code class="docutils literal notranslate"><span class="pre">F</span></code>， <code class="docutils literal notranslate"><span class="pre">H</span></code>， <code class="docutils literal notranslate"><span class="pre">B</span></code>， <code class="docutils literal notranslate"><span class="pre">C</span></code>， <code class="docutils literal notranslate"><span class="pre">I</span></code> 和 <code class="docutils literal notranslate"><span class="pre">L</span></code> 的操作码分别
+是从Frontier，Homestead，Byzantium，Constantinople，Istanbul或London版本出现的。</p>
+<p>在下文中， <code class="docutils literal notranslate"><span class="pre">mem[a...b)</span></code> 表示从位置 <code class="docutils literal notranslate"><span class="pre">a</span></code> 开始到不包括位置 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的内存字节，
+<code class="docutils literal notranslate"><span class="pre">storage[p]</span></code> 表示插槽 <code class="docutils literal notranslate"><span class="pre">p</span></code> 的存储内容。</p>
+<p>由于Yul管理着局部变量和控制流，所以不能使用干扰这些功能的操作码。
+这包括 <code class="docutils literal notranslate"><span class="pre">dup</span></code> 和 <code class="docutils literal notranslate"><span class="pre">swap</span></code> 指令，以及 <code class="docutils literal notranslate"><span class="pre">jump</span></code> 指令，标签和 <code class="docutils literal notranslate"><span class="pre">push</span></code> 指令。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 69%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>指令</p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>stop()</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>停止执行，与return(0, 0)相同</p></td>
+</tr>
+<tr class="row-odd"><td><p>add(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x + y</p></td>
+</tr>
+<tr class="row-even"><td><p>sub(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x - y</p></td>
+</tr>
+<tr class="row-odd"><td><p>mul(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x * y</p></td>
+</tr>
+<tr class="row-even"><td><p>div(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x / y 或 如果 y == 0，则为 0</p></td>
+</tr>
+<tr class="row-odd"><td><p>sdiv(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x / y，对于有符号的二进制补数，如果 y == 0，则为 0</p></td>
+</tr>
+<tr class="row-even"><td><p>mod(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x % y, 如果 y == 0，则为 0</p></td>
+</tr>
+<tr class="row-odd"><td><p>smod(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x % y, 对于有符号的二进制补数, 如果 y == 0，则为 0</p></td>
+</tr>
+<tr class="row-even"><td><p>exp(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x的y次方</p></td>
+</tr>
+<tr class="row-odd"><td><p>not(x)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x的位 “非”（x的每一个位都被否定）</p></td>
+</tr>
+<tr class="row-even"><td><p>lt(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>如果 x &lt; y，则为1，否则为0</p></td>
+</tr>
+<tr class="row-odd"><td><p>gt(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>如果 x &gt; y，则为1，否则为0</p></td>
+</tr>
+<tr class="row-even"><td><p>slt(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>如果 x &lt; y，则为1，否则为0，适用于有符号的二进制数</p></td>
+</tr>
+<tr class="row-odd"><td><p>sgt(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>如果 x &gt; y，则为1，否则为0，适用于有符号的二进制补数</p></td>
+</tr>
+<tr class="row-even"><td><p>eq(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>如果 x == y，则为1，否则为0</p></td>
+</tr>
+<tr class="row-odd"><td><p>iszero(x)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>如果 x == 0，则为1，否则为0</p></td>
+</tr>
+<tr class="row-even"><td><p>and(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x 和 y 的按位 “与”</p></td>
+</tr>
+<tr class="row-odd"><td><p>or(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x 和 y 的按位 “或”</p></td>
+</tr>
+<tr class="row-even"><td><p>xor(x, y)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x 和 y 的按位 “异或”</p></td>
+</tr>
+<tr class="row-odd"><td><p>byte(n, x)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>x的第n个字节，其中最重要的字节是第0个字节</p></td>
+</tr>
+<tr class="row-even"><td><p>shl(x, y)</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>将 y 逻辑左移 x 位</p></td>
+</tr>
+<tr class="row-odd"><td><p>shr(x, y)</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>将 y 逻辑右移 x 位</p></td>
+</tr>
+<tr class="row-even"><td><p>sar(x, y)</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>将 y 算术右移 x 位</p></td>
+</tr>
+<tr class="row-odd"><td><p>addmod(x, y, m)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>(x + y) % m，采用任意精度算术，如果m == 0则为0</p></td>
+</tr>
+<tr class="row-even"><td><p>mulmod(x, y, m)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>(x * y) % m，采用任意精度算术，如果m == 0则为0</p></td>
+</tr>
+<tr class="row-odd"><td><p>signextend(i, x)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>从第 (i*8+7) 位开始进行符号扩展，从最低符号位开始计算</p></td>
+</tr>
+<tr class="row-even"><td><p>keccak256(p, n)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>keccak(mem[p…(p+n)))</p></td>
+</tr>
+<tr class="row-odd"><td><p>pc()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>代码中的当前位置</p></td>
+</tr>
+<tr class="row-even"><td><p>pop(x)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>丢弃值 x</p></td>
+</tr>
+<tr class="row-odd"><td><p>mload(p)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>mem[p…(p+32))</p></td>
+</tr>
+<tr class="row-even"><td><p>mstore(p, v)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>mem[p…(p+32)) := v</p></td>
+</tr>
+<tr class="row-odd"><td><p>mstore8(p, v)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>mem[p] := v &amp; 0xff （(只修改了一个字节)）</p></td>
+</tr>
+<tr class="row-even"><td><p>sload(p)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>storage[p]</p></td>
+</tr>
+<tr class="row-odd"><td><p>sstore(p, v)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>storage[p] := v</p></td>
+</tr>
+<tr class="row-even"><td><p>msize()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>内存的大小，即最大的访问内存索引</p></td>
+</tr>
+<tr class="row-odd"><td><p>gas()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>仍可以执行的气体值</p></td>
+</tr>
+<tr class="row-even"><td><p>address()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>当前合约/执行环境的地址</p></td>
+</tr>
+<tr class="row-odd"><td><p>balance(a)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>地址为A的余额，以wei为单位</p></td>
+</tr>
+<tr class="row-even"><td><p>selfbalance()</p></td>
+<td></td>
+<td><p>I</p></td>
+<td><p>相当于balance(address())，但更便宜</p></td>
+</tr>
+<tr class="row-odd"><td><p>caller()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>消息调用者（不包括 <code class="docutils literal notranslate"><span class="pre">delegatecall</span></code> 调用）。</p></td>
+</tr>
+<tr class="row-even"><td><p>callvalue()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>与当前调用一起发送的wei的数量</p></td>
+</tr>
+<tr class="row-odd"><td><p>calldataload(p)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>从位置p开始的调用数据（32字节）</p></td>
+</tr>
+<tr class="row-even"><td><p>calldatasize()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>调用数据的大小，以字节为单位</p></td>
+</tr>
+<tr class="row-odd"><td><p>calldatacopy(t, f, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>从位置f的calldata复制s字节到位置t的内存中</p></td>
+</tr>
+<tr class="row-even"><td><p>codesize()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>当前合约/执行环境的代码大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>codecopy(t, f, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>从位置f的code中复制s字节到位置t的内存中</p></td>
+</tr>
+<tr class="row-even"><td><p>extcodesize(a)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>地址为a的代码的大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>extcodecopy(a, t, f, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>像codecopy(t, f, s)一样，但在地址a处取代码</p></td>
+</tr>
+<tr class="row-even"><td><p>returndatasize()</p></td>
+<td></td>
+<td><p>B</p></td>
+<td><p>最后返回数据的大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>returndatacopy(t, f, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>B</p></td>
+<td><p>从位置f的returndata复制s字节到位置t的内存中</p></td>
+</tr>
+<tr class="row-even"><td><p>extcodehash(a)</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>地址a的代码哈希值</p></td>
+</tr>
+<tr class="row-odd"><td><p>create(v, p, n)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>用代码mem[p…(p+n))创建新的合约，发送v数量的wei并返回新地址；
+错误时返回0</p></td>
+</tr>
+<tr class="row-even"><td><p>create2(v, p, n, s)</p></td>
+<td></td>
+<td><p>C</p></td>
+<td><p>在keccak256(0xff . this . s . keccak256(mem[p…(p+n)))地址处
+创建代码为mem[p…(p+n)]的新合约
+并发送v 数量个wei和返回新地址， 其中 <code class="docutils literal notranslate"><span class="pre">0xff</span></code> 是一个1字节的值，
+<code class="docutils literal notranslate"><span class="pre">this</span></code> 是当前合约的地址，
+是一个20字节的值， <code class="docutils literal notranslate"><span class="pre">s</span></code> 是一个256位的大端的值;
+错误时返回0</p></td>
+</tr>
+<tr class="row-odd"><td><p>call(g, a, v, in,
+insize, out, outsize)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>调用地址 a 上的合约，以 mem[in..(in+insize)) 作为输入
+一并发送 g 数量的 gas 和 v 数量的 wei，
+以 mem[out..(out+outsize)) 作为输出空间。 若错误，返回 0 （比如，gas 用光）
+若成功，返回 1
+<a class="reference internal" href="#yul-call-return-area"><span class="std std-ref">查看更多</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>callcode(g, a, v, in,
+insize, out, outsize)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>相当于 <code class="docutils literal notranslate"><span class="pre">call</span></code>  但仅仅使用地址 a 上的代码，
+执行时留在当前合约的上下文当中
+<a class="reference internal" href="#yul-call-return-area"><span class="std std-ref">查看更多</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>delegatecall(g, a, in,
+insize, out, outsize)</p></td>
+<td></td>
+<td><p>H</p></td>
+<td><p>相当于 <code class="docutils literal notranslate"><span class="pre">callcode</span></code>, 但同时保留 <code class="docutils literal notranslate"><span class="pre">caller</span></code>
+和 <code class="docutils literal notranslate"><span class="pre">callvalue</span></code>
+<a class="reference internal" href="#yul-call-return-area"><span class="std std-ref">查看更多</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>staticcall(g, a, in,
+insize, out, outsize)</p></td>
+<td></td>
+<td><p>B</p></td>
+<td><p>相当于 <code class="docutils literal notranslate"><span class="pre">call(g,</span> <span class="pre">a,</span> <span class="pre">0,</span> <span class="pre">in,</span> <span class="pre">insize,</span> <span class="pre">out,</span> <span class="pre">outsize)</span></code>
+但不允许状态变量的修改
+<a class="reference internal" href="#yul-call-return-area"><span class="std std-ref">查看更多</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>return(p, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>终止执行，返回 mem[p..(p+s)) 上的数据</p></td>
+</tr>
+<tr class="row-even"><td><p>revert(p, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>B</p></td>
+<td><p>终止执行，恢复状态变更，返回 mem[p..(p+s)) 上的数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>selfdestruct(a)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>终止执行，销毁当前合约，并且将余额发送到地址 a</p></td>
+</tr>
+<tr class="row-even"><td><p>invalid()</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>以无效指令终止执行</p></td>
+</tr>
+<tr class="row-odd"><td><p>log0(p, s)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>用 mem[p..(p+s)] 上的数据产生日志，但没有 topic</p></td>
+</tr>
+<tr class="row-even"><td><p>log1(p, s, t1)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>用 mem[p..(p+s)] 上的数据和 topic t1 产生日志</p></td>
+</tr>
+<tr class="row-odd"><td><p>log2(p, s, t1, t2)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>用 mem[p..(p+s)] 上的数据和 topic t1，t2 产生日志</p></td>
+</tr>
+<tr class="row-even"><td><p>log3(p, s, t1, t2, t3)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>用 mem[p..(p+s)] 上的数据和 topic t1，t2，t3 产生日志</p></td>
+</tr>
+<tr class="row-odd"><td><p>log4(p, s, t1, t2, t3,
+t4)</p></td>
+<td><p><cite>-</cite></p></td>
+<td><p>F</p></td>
+<td><p>用 mem[p..(p+s)] 上的数据和 topic t1，t2，t3，t4 产生日志</p></td>
+</tr>
+<tr class="row-even"><td><p>chainid()</p></td>
+<td></td>
+<td><p>I</p></td>
+<td><p>执行链的ID（EIP-1344）</p></td>
+</tr>
+<tr class="row-odd"><td><p>basefee()</p></td>
+<td></td>
+<td><p>L</p></td>
+<td><p>当前区块的基本费用（EIP-3198和EIP-1559）</p></td>
+</tr>
+<tr class="row-even"><td><p>origin()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>交易发送者</p></td>
+</tr>
+<tr class="row-odd"><td><p>gasprice()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>交易的气体价格n</p></td>
+</tr>
+<tr class="row-even"><td><p>blockhash(b)</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>区块编号b的哈希值–只针对最近的256个区块，不包括当前区块。</p></td>
+</tr>
+<tr class="row-odd"><td><p>coinbase()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>目前的挖矿的受益者</p></td>
+</tr>
+<tr class="row-even"><td><p>timestamp()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>自 epoch 开始的，当前块的时间戳，以秒为单位</p></td>
+</tr>
+<tr class="row-odd"><td><p>number()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>当前区块号</p></td>
+</tr>
+<tr class="row-even"><td><p>difficulty()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>当前区块的难度</p></td>
+</tr>
+<tr class="row-odd"><td><p>gaslimit()</p></td>
+<td></td>
+<td><p>F</p></td>
+<td><p>当前区块的区块 gas 限制</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note" id="yul-call-return-area">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">call*</span></code> 指令使用 <code class="docutils literal notranslate"><span class="pre">out</span></code> 和 <code class="docutils literal notranslate"><span class="pre">outsize</span></code> 参数来在内存中定义的一个区域，
+用于放置返回或失败数据。这个区域的写入取决于被调用的合约返回多少字节。
+如果它返回更多的数据，只有第一个 <code class="docutils literal notranslate"><span class="pre">outsize</span></code> 字节被写入。您可以使用 <code class="docutils literal notranslate"><span class="pre">returndatacopy</span></code> 操作码访问其余的数据。
+如果它返回较少的数据，那么剩下的字节根本不被触及。
+您需要使用 <code class="docutils literal notranslate"><span class="pre">returndatacopy</span></code> 操作码来检查这个内存区域的哪一部分包含返回数据。
+剩下的字节将保留调用前的值。</p>
+</div>
+<p>在一些内部语言中，还有一些额外的函数：</p>
+<section id="datasize-dataoffset-datacopy">
+<h4>datasize, dataoffset, datacopy<a class="headerlink" href="#datasize-dataoffset-datacopy" title="Permalink to this heading"></a></h4>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">datasize(x)</span></code>， <code class="docutils literal notranslate"><span class="pre">dataoffset(x)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">datacopy(t,</span> <span class="pre">f,</span> <span class="pre">l)</span></code> 用来访问Yul对象的其他部分。</p>
+<p><code class="docutils literal notranslate"><span class="pre">datasize</span></code> 和 <code class="docutils literal notranslate"><span class="pre">dataoffset</span></code> 只能接受字符串字面量（其他对象的名称）作为参数，
+并分别返回数据区的大小和偏移量。
+对于EVM， <code class="docutils literal notranslate"><span class="pre">datacopy</span></code> 函数等同于 <code class="docutils literal notranslate"><span class="pre">codecopy</span></code>。</p>
+</section>
+<section id="setimmutable-loadimmutable">
+<h4>setimmutable, loadimmutable<a class="headerlink" href="#setimmutable-loadimmutable" title="Permalink to this heading"></a></h4>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">setimmutable(offset,</span> <span class="pre">&quot;name&quot;,</span> <span class="pre">value)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">loadimmutable(&quot;name&quot;)</span></code> 用于Solidity中的不可变机制，
+不能很好地映射到纯Yul。
+对 <code class="docutils literal notranslate"><span class="pre">setimmutable(offset,</span> <span class="pre">&quot;name&quot;,</span> <span class="pre">value)</span></code> 的调用假定包含给定不可变的命名的合约的运行时代码
+在偏移量 <code class="docutils literal notranslate"><span class="pre">offset</span></code> 处被复制到内存中，并将把 <code class="docutils literal notranslate"><span class="pre">value</span></code> 写到内存中的所有位置（相对于 <code class="docutils literal notranslate"><span class="pre">offset</span></code>），
+这些位置包含在运行时代码中为调用 <code class="docutils literal notranslate"><span class="pre">loadimmutable(&quot;name&quot;)</span></code> 产生的占位符。</p>
+</section>
+<section id="linkersymbol">
+<h4>linkersymbol<a class="headerlink" href="#linkersymbol" title="Permalink to this heading"></a></h4>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">linkersymbol(&quot;library_id&quot;)</span></code> 是一个占位符，用来表示被链接器替换的地址字头。
+它的第一个也是唯一的参数必须是一个字符串字面量，并且唯一地代表要插入的地址。
+标识符可以是任意的，但是当编译器从Solidity源产生Yul代码时，它使用一个库名，
+并以定义该库的源单元的名称作为限定。
+要用一个特定的库地址链接代码，必须在命令行上的 <code class="docutils literal notranslate"><span class="pre">--libraries</span></code> 选项中提供相同的标识符。</p>
+<p>例如，这段代码</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IGEgOj0gbGlua2Vyc3ltYm9sKCJmaWxlLnNvbDpNYXRoIik="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="n">linkersymbol</span><span class="p">(</span><span class="s">&quot;file.sol:Math&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>相当于</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IGEgOj0gMHgxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkw"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="mh">0x1234567890123456789012345678901234567890</span>
+</pre></div>
+</div>
+<p>当使用 <code class="docutils literal notranslate"><span class="pre">--libraries</span> <span class="pre">&quot;file.sol:Math=0x1234567890123456789012345678901234567890</span></code> 选项调用链接器时。</p>
+<p>请参阅 <a class="reference internal" href="using-the-compiler.html#commandline-compiler"><span class="std std-ref">使用命令行编译器</span></a> 以了解有关 Solidity 链接器的详情。</p>
+</section>
+<section id="memoryguard">
+<h4>memoryguard<a class="headerlink" href="#memoryguard" title="Permalink to this heading"></a></h4>
+<p>调用 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">ptr</span> <span class="pre">:=</span> <span class="pre">memoryguard(size)</span></code> 的调用者（其中 <code class="docutils literal notranslate"><span class="pre">size</span></code> 必须是一个数字字面量）
+承诺他们只使用 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">size]</span></code> 范围内的内存，或者从 <code class="docutils literal notranslate"><span class="pre">ptr</span></code> 开始的无界范围。</p>
+<p>由于 <code class="docutils literal notranslate"><span class="pre">memoryguard</span></code> 调用的存在表明所有的内存访问都遵守这一限制，
+它允许优化器执行额外的优化步骤，
+例如堆栈限制规避器，它试图将原本无法到达的堆栈变量转移到内存中。</p>
+<p>Yul优化器承诺只使用内存范围 <code class="docutils literal notranslate"><span class="pre">[size,</span> <span class="pre">ptr)</span></code> 来实现其目的。
+如果优化器不需要保留任何内存，它认为 <code class="docutils literal notranslate"><span class="pre">ptr</span> <span class="pre">==</span> <span class="pre">size</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">memoryguard</span></code> 可以被多次调用，但是需要在一个Yul子对象内有相同的字样作为参数。
+如果在一个子对象中发现至少一个 <code class="docutils literal notranslate"><span class="pre">memoryguard</span></code> 的调用，额外的优化步骤将在它身上运行。</p>
+</section>
+<section id="verbatim">
+<span id="yul-verbatim"></span><h4>verbatim<a class="headerlink" href="#verbatim" title="Permalink to this heading"></a></h4>
+<p>一组 <code class="docutils literal notranslate"><span class="pre">verbatim...</span></code> 内置函数可以让您为Yul编译器不知道的操作码创建字节码。
+它还允许您创建不会被优化器修改的字节码序列。</p>
+<p>这些函数是 <code class="docutils literal notranslate"><span class="pre">verbatim_&lt;n&gt;i_&lt;m&gt;o(&quot;&lt;data&gt;&quot;,</span> <span class="pre">...)</span></code>，其中</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> 是一个介于0和99之间的小数，指定输入栈槽/变量的数量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code> 是一个介于0和99之间的小数，指定输出栈槽/变量的数量</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code> 是一个字符串字面量，包含字节的序列</p></li>
+</ul>
+<p>例如，如果您想定义一个函数，将输入值乘以2，而不需要优化器触及常数2，您可以使用</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IHggOj0gY2FsbGRhdGFsb2FkKDApCmxldCBkb3VibGUgOj0gdmVyYmF0aW1fMWlfMW8oaGV4IjYwMDIwMiIsIHgp"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="ow">let</span> <span class="nv">double</span> <span class="o">:=</span> <span class="n">verbatim_1i_1o</span><span class="p">(</span><span class="s">hex&quot;600202&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这段代码将产生一个 <code class="docutils literal notranslate"><span class="pre">dup1</span></code> 操作码来检索 <code class="docutils literal notranslate"><span class="pre">x</span></code>
+（尽管优化器可能直接重新使用 <code class="docutils literal notranslate"><span class="pre">calldataload</span></code> 操作码的结果），
+后面直接是 <code class="docutils literal notranslate"><span class="pre">600202</span></code>。该代码被假定为消耗 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的复制值，并在堆栈顶部产生结果。
+然后编译器生成代码，为 <code class="docutils literal notranslate"><span class="pre">double</span></code> 分配一个堆栈槽，并将结果存储在那里。</p>
+<p>与所有的操作码一样，参数被安排在堆栈中，最左边的参数在最上面，
+而返回值则被假定是以最右边的变量在栈顶的方式排列的。</p>
+<p>由于 <code class="docutils literal notranslate"><span class="pre">verbatim</span></code> 可以用来生成任意的操作码，甚至是Solidity编译器不知道的操作码，
+在与优化器一起使用 <code class="docutils literal notranslate"><span class="pre">verbatim</span></code> 时，必须小心。
+即使优化器被关闭，代码生成器也必须确定堆栈布局，这意味着，例如，
+使用 <code class="docutils literal notranslate"><span class="pre">verbatim</span></code> 来修改堆栈高度会导致未定义行为。</p>
+<p>下面是一个不完全的列表，列出了对逐字字节码的限制，
+这些限制不被编译器检查。违反这些限制会导致未定义的行为。</p>
+<ul class="simple">
+<li><p>控制流不应该跳入或跳出 verbatim 块，但它可以在同一个 verbatim 块内跳入。</p></li>
+<li><p>除了输入和输出参数外，堆栈内容不应该被访问。</p></li>
+<li><p>堆栈的高度差应该正好是 <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">-</span> <span class="pre">n</span></code> （输出槽减去输入槽）。</p></li>
+<li><p>Verbatim字节码不能对周围的字节码做任何假设。
+所有需要的参数都必须作为堆栈变量传入。</p></li>
+</ul>
+<p>优化器不分析 verbatim 字节码，总是假设它修改了状态的所有方面，
+因此只能在 <code class="docutils literal notranslate"><span class="pre">verbatim</span></code> 函数调用中做很少的优化。</p>
+<p>优化器将 verbatim 字节码视为一个不透明的代码块。它不会分割它，
+但可能会移动、重复或与相同的 verbatim 字节码块结合。
+如果一个 verbatim 的字节码块不能被控制流所触及。
+它可以被删除。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>在讨论EVM的改进是否会破坏现有的智能合约时，
+<code class="docutils literal notranslate"><span class="pre">verbatim</span></code> 内部的功能不能得到与Solidity编译器本身使用的功能一样的考虑。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>为了避免混淆，所有以字符串 <code class="docutils literal notranslate"><span class="pre">verbatim</span></code> 开头的标识符都被保留，
+不能用于用户定义的标识符。</p>
+</div>
+</section>
+</section>
+</section>
+<section id="yul-object">
+<span id="id17"></span><h2>Yul对象的规范<a class="headerlink" href="#yul-object" title="Permalink to this heading"></a></h2>
+<p>Yul对象被用来分组命名代码和数据部分。
+函数 <code class="docutils literal notranslate"><span class="pre">datasize</span></code>， <code class="docutils literal notranslate"><span class="pre">dataoffset</span></code> 和 <code class="docutils literal notranslate"><span class="pre">datacopy</span></code> 可以用来从代码中访问这些部分。
+十六进制字符串可用于指定十六进制编码的数据，
+普通字符串为本地编码。对于代码，
+<code class="docutils literal notranslate"><span class="pre">datacopy</span></code> 将访问其组装的二进制所表示的数据。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>对象 = &#39;object&#39; 字面量 &#39;{&#39; 代码 ( 对象 | 数据 )* &#39;}&#39;
+代码 = &#39;code&#39; 块
+数据 = &#39;data&#39; 字面量 ( 十六进制字面量 | 字面量 )
+十六进制字面量 = &#39;hex&#39; (&#39;&quot;&#39; ([0-9a-fA-F]{2})* &#39;&quot;&#39; | &#39;\&#39;&#39; ([0-9a-fA-F]{2})* &#39;\&#39;&#39;)
+字面量 = &#39;&quot;&#39; ([^&quot;\r\n\\] | &#39;\\&#39; .)* &#39;&quot;&#39;
+</pre></div>
+</div>
+<p>对于上面的 <code class="docutils literal notranslate"><span class="pre">Block</span></code>，指的是前一章解释的Yul代码语法中的 <code class="docutils literal notranslate"><span class="pre">Block</span></code>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>可以定义名称中包含 <code class="docutils literal notranslate"><span class="pre">.</span></code> 的数据对象或子对象，
+但不可能通过 <code class="docutils literal notranslate"><span class="pre">datasize</span></code>， <code class="docutils literal notranslate"><span class="pre">dataoffset</span></code> 或 <code class="docutils literal notranslate"><span class="pre">datacopy</span></code> 访问它们，
+因为 <code class="docutils literal notranslate"><span class="pre">.</span></code> 是作为分隔符用来访问另一个对象内的对象。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>被称为 <code class="docutils literal notranslate"><span class="pre">&quot;.metadata&quot;</span></code> 的数据对象有特殊意义：
+它不能从代码中访问，并且总是被附加到字节码的最末端，
+无论它在对象中的位置如何。</p>
+<p>其他具有特殊意义的数据对象在未来可能会被添加，
+但它们的名字总是以 <code class="docutils literal notranslate"><span class="pre">.</span></code> 开头。</p>
+</div>
+<p>下面是一个Yul对象的例子：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=Ly8g5LiA5Liq5ZCI57qm55Sx5LiA5Liq5Y2V5LiA55qE5a+56LGh57uE5oiQ77yMCi8vIOWFtuWtkOWvueixoeS7o+ihqOimgemDqOe9sueahOS7o+eggeaIluWug+WPr+S7peWIm+W7uueahOWFtuS7luWQiOe6puOAggovLyDljZXkuKog4oCc5Luj56CB4oCdIOiKgueCueaYr+ivpeWvueixoeeahOWPr+aJp+ihjOS7o+eggeOAggovLyDmr4/kuIDkuKrvvIjlhbbku5bvvInlkb3lkI3nmoTlr7nosaHmiJbmlbDmja7pg6jliIbpg73ooqvluo/liJfljJbvvIwKLy8g5bm26KKr54m55q6K55qE5YaF572u5Ye95pWwIGRhdGFjb3B5IC8gZGF0YW9mZnNldCAvIGRhdGFzaXplIOaJgOiuv+mXrgovLyDlvZPliY3lr7nosaHjgIHlrZDlr7nosaHlkozlvZPliY3lr7nosaHlhoXnmoTmlbDmja7pobnpg73lnKjojIPlm7TlhoXjgIIKb2JqZWN0ICJDb250cmFjdDEiIHsKICAgIC8vIOi/meaYr+WQiOe6pueahOaehOmAoOWHveaVsOS7o+eggeOAggogICAgY29kZSB7CiAgICAgICAgZnVuY3Rpb24gYWxsb2NhdGUoc2l6ZSkgLT4gcHRyIHsKICAgICAgICAgICAgcHRyIDo9IG1sb2FkKDB4NDApCiAgICAgICAgICAgIGlmIGlzemVybyhwdHIpIHsgcHRyIDo9IDB4NjAgfQogICAgICAgICAgICBtc3RvcmUoMHg0MCwgYWRkKHB0ciwgc2l6ZSkpCiAgICAgICAgfQoKICAgICAgICAvLyDpppblhYjliJvlu7og4oCcQ29udHJhY3Qy4oCdCiAgICAgICAgbGV0IHNpemUgOj0gZGF0YXNpemUoIkNvbnRyYWN0MiIpCiAgICAgICAgbGV0IG9mZnNldCA6PSBhbGxvY2F0ZShzaXplKQogICAgICAgIC8vIOi/meWwhui9rOWMluS4ukVWTeeahOS7o+eggeaLt+i0neOAggogICAgICAgIGRhdGFjb3B5KG9mZnNldCwgZGF0YW9mZnNldCgiQ29udHJhY3QyIiksIHNpemUpCiAgICAgICAgLy8g5p6E6YCg5Ye95pWw5Y+C5pWw5piv5LiA5Liq5Y2V5LiA55qE5pWw5a2XIDB4MTIzNAogICAgICAgIG1zdG9yZShhZGQob2Zmc2V0LCBzaXplKSwgMHgxMjM0KQogICAgICAgIHBvcChjcmVhdGUob2Zmc2V0LCBhZGQoc2l6ZSwgMzIpLCAwKSkKCiAgICAgICAgLy8g546w5Zyo6L+U5Zue6L+Q6KGM5pe25a+56LGhCiAgICAgICAgLy/vvIjlvZPliY3miafooYznmoTku6PnoIHmmK/mnoTpgKDlh73mlbDku6PnoIHvvInjgIIKICAgICAgICBzaXplIDo9IGRhdGFzaXplKCJydW50aW1lIikKICAgICAgICBvZmZzZXQgOj0gYWxsb2NhdGUoc2l6ZSkKICAgICAgICAvLyDov5nlsIblj5jmiJAgRXdhc20g55qEIOWGheWtmC0+5YaF5a2YIOaLt+i0nQogICAgICAgIC8vIOWSjEVWTeeahOS7o+eggeaLt+i0neOAggogICAgICAgIGRhdGFjb3B5KG9mZnNldCwgZGF0YW9mZnNldCgicnVudGltZSIpLCBzaXplKQogICAgICAgIHJldHVybihvZmZzZXQsIHNpemUpCiAgICB9CgogICAgZGF0YSAiVGFibGUyIiBoZXgiNDEyMyIKCiAgICBvYmplY3QgInJ1bnRpbWUiIHsKICAgICAgICBjb2RlIHsKICAgICAgICAgICAgZnVuY3Rpb24gYWxsb2NhdGUoc2l6ZSkgLT4gcHRyIHsKICAgICAgICAgICAgICAgIHB0ciA6PSBtbG9hZCgweDQwKQogICAgICAgICAgICAgICAgaWYgaXN6ZXJvKHB0cikgeyBwdHIgOj0gMHg2MCB9CiAgICAgICAgICAgICAgICBtc3RvcmUoMHg0MCwgYWRkKHB0ciwgc2l6ZSkpCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIC8vIOi/kOihjOaXtuS7o+eggQoKICAgICAgICAgICAgbXN0b3JlKDAsICJIZWxsbywgV29ybGQhIikKICAgICAgICAgICAgcmV0dXJuKDAsIDB4MjApCiAgICAgICAgfQogICAgfQoKICAgIC8vIOW1jOWFpeWvueixoeOAguS9v+eUqOaDheWGteaYr++8jOWklumdouaYr+S4gOS4quW3peWOguWQiOe6pu+8jAogICAgLy8g6ICMIENvbnRyYWN0MiDmmK/nlLHlt6XljoLliJvlu7rnmoTku6PnoIHjgIIKICAgIG9iamVjdCAiQ29udHJhY3QyIiB7CiAgICAgICAgY29kZSB7CiAgICAgICAgICAgIC8vIOatpOWkhOaYr+S7o+eggSAuLi4KICAgICAgICB9CgogICAgICAgIG9iamVjdCAicnVudGltZSIgewogICAgICAgICAgICBjb2RlIHsKICAgICAgICAgICAgICAgIC8vIOatpOWkhOaYr+S7o+eggSAuLi4KICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgZGF0YSAiVGFibGUxIiBoZXgiNDEyMyIKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="c1">// 一个合约由一个单一的对象组成，</span>
+<span class="c1">// 其子对象代表要部署的代码或它可以创建的其他合约。</span>
+<span class="c1">// 单个 “代码” 节点是该对象的可执行代码。</span>
+<span class="c1">// 每一个（其他）命名的对象或数据部分都被序列化，</span>
+<span class="c1">// 并被特殊的内置函数 datacopy / dataoffset / datasize 所访问</span>
+<span class="c1">// 当前对象、子对象和当前对象内的数据项都在范围内。</span>
+<span class="k">object</span> <span class="s">&quot;Contract1&quot;</span> <span class="p">{</span>
+    <span class="c1">// 这是合约的构造函数代码。</span>
+    <span class="k">code</span> <span class="p">{</span>
+        <span class="k">function</span> <span class="n">allocate</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ptr</span> <span class="p">{</span>
+            <span class="n">ptr</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="mh">0x40</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nf">iszero</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span> <span class="n">ptr</span> <span class="o">:=</span> <span class="mh">0x60</span> <span class="p">}</span>
+            <span class="nf">mstore</span><span class="p">(</span><span class="mh">0x40</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 首先创建 “Contract2”</span>
+        <span class="ow">let</span> <span class="nv">size</span> <span class="o">:=</span> <span class="k k-Function">datasize</span><span class="p">(</span><span class="s">&quot;Contract2&quot;</span><span class="p">)</span>
+        <span class="ow">let</span> <span class="nv">offset</span> <span class="o">:=</span> <span class="n">allocate</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="c1">// 这将转化为EVM的代码拷贝。</span>
+        <span class="k k-Function">datacopy</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="k k-Function">dataoffset</span><span class="p">(</span><span class="s">&quot;Contract2&quot;</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
+        <span class="c1">// 构造函数参数是一个单一的数字 0x1234</span>
+        <span class="nf">mstore</span><span class="p">(</span><span class="nf">add</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="mh">0x1234</span><span class="p">)</span>
+        <span class="nf">pop</span><span class="p">(</span><span class="nf">create</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="c1">// 现在返回运行时对象</span>
+        <span class="c1">//（当前执行的代码是构造函数代码）。</span>
+        <span class="n">size</span> <span class="o">:=</span> <span class="k k-Function">datasize</span><span class="p">(</span><span class="s">&quot;runtime&quot;</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">:=</span> <span class="n">allocate</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="c1">// 这将变成 Ewasm 的 内存-&gt;内存 拷贝</span>
+        <span class="c1">// 和EVM的代码拷贝。</span>
+        <span class="k k-Function">datacopy</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="k k-Function">dataoffset</span><span class="p">(</span><span class="s">&quot;runtime&quot;</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
+        <span class="nf">return</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">data</span> <span class="s">&quot;Table2&quot;</span> <span class="s">hex&quot;4123&quot;</span>
+
+    <span class="k">object</span> <span class="s">&quot;runtime&quot;</span> <span class="p">{</span>
+        <span class="k">code</span> <span class="p">{</span>
+            <span class="k">function</span> <span class="n">allocate</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ptr</span> <span class="p">{</span>
+                <span class="n">ptr</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="mh">0x40</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nf">iszero</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span> <span class="n">ptr</span> <span class="o">:=</span> <span class="mh">0x60</span> <span class="p">}</span>
+                <span class="nf">mstore</span><span class="p">(</span><span class="mh">0x40</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 运行时代码</span>
+
+            <span class="nf">mstore</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Hello, World!&quot;</span><span class="p">)</span>
+            <span class="nf">return</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 嵌入对象。使用情况是，外面是一个工厂合约，</span>
+    <span class="c1">// 而 Contract2 是由工厂创建的代码。</span>
+    <span class="k">object</span> <span class="s">&quot;Contract2&quot;</span> <span class="p">{</span>
+        <span class="k">code</span> <span class="p">{</span>
+            <span class="c1">// 此处是代码 ...</span>
+        <span class="p">}</span>
+
+        <span class="k">object</span> <span class="s">&quot;runtime&quot;</span> <span class="p">{</span>
+            <span class="k">code</span> <span class="p">{</span>
+                <span class="c1">// 此处是代码 ...</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">data</span> <span class="s">&quot;Table1&quot;</span> <span class="s">hex&quot;4123&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h2>Yul 优化器<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h2>
+<p>Yul优化器对Yul代码进行操作，并对输入、输出和中间状态使用相同的语言。这使得优化器的调试和验证变得容易。</p>
+<p>请参考一般的 <a class="reference internal" href="internals/optimizer.html#optimizer"><span class="std std-ref">优化器文档</span></a>，以了解关于不同优化阶段和如何使用优化器的更多细节。</p>
+<p>如果您想在独立的Yul模式下使用Solidity，您可以用 <code class="docutils literal notranslate"><span class="pre">--optimize</span></code> 激活优化器，
+并可选择用 <code class="docutils literal notranslate"><span class="pre">--optimize-runs</span></code> 指定 <a class="reference internal" href="internals/optimizer.html#optimizer-parameter-runs"><span class="std std-ref">预期合约执行次数</span></a>：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>solc --strict-assembly --optimize --optimize-runs <span class="m">200</span>
+</pre></div>
+</div>
+<p>在Solidity模式下，Yul优化器与常规优化器一起被激活。</p>
+<section id="id19">
+<h3>优化步骤顺序<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h3>
+<p>默认情况下，Yul优化器将其预定义的优化步骤序列应用于生成的程序集。
+您可以使用 <code class="docutils literal notranslate"><span class="pre">--yul-optimizations</span></code> 选项覆盖这个序列，并提供您自己的序列：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>solc --optimize --ir-optimized --yul-optimizations <span class="s1">&#39;dhfoD[xarrscLMcCTU]uljmul&#39;</span>
+</pre></div>
+</div>
+<p>优化步骤的顺序很重要，会影响到输出的质量。
+此外，应用一个步骤可能为其他已经应用的步骤发现新的优化机会，所以重复步骤往往是有益的。
+通过用方括号（ <code class="docutils literal notranslate"><span class="pre">[]</span></code> ）包围序列的一部分，您告诉优化器重复应用该部分，
+直到它不再改善优化结果的大小。您可以在一个序列中多次使用方括号，但它们不能被嵌套。</p>
+<p>有以下优化步骤：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>缩写</p></th>
+<th class="head"><p>全称</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">f</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">块展平器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">循环引用程序</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">通用子表达式消除器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">条件简化器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">U</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">有条件的非对称性放大器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">控制流简化器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">D</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">死代码消除器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">v</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">等价的存储清除器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">e</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">表达式内联</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">j</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">表达式连接器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">表达式简化器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">表达式拆分器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">I</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">循环条件进入正文</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">O</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">体外循环条件</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">o</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">循环初始重写器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">i</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">完全内联</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">g</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">函数分组器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">h</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">函数提升器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">F</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">函数特殊化器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">字面量再物质化器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">L</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">负载解析器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">M</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">循环不变代码模式</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">冗余赋值消除器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">R</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">基于推理的简化器</span></code> - 高度实验性</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">再物质化</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">V</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SSA反转器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SSA转换</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">结构简化器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">u</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">未使用过的处理器</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">p</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">未使用的函数参数管理器</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">初始化程序</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>一些步骤依赖于 <code class="docutils literal notranslate"><span class="pre">块展平器</span></code>, <code class="docutils literal notranslate"><span class="pre">函数分组器</span></code>, <code class="docutils literal notranslate"><span class="pre">循环初始重写器</span></code> 所保证的属性。
+由于这个原因，Yul优化器总是在应用用户提供的任何步骤之前应用它们。</p>
+<p>基于推理的简化器 是一个优化器步骤，目前在默认步骤集中没有启用。
+它使用一个SMT解算器来简化算术表达式和布尔条件。
+它还没有得到彻底的测试或验证，可能会产生不可重现的结果，
+所以请谨慎使用!</p>
+</section>
+</section>
+<section id="complete-erc20-example">
+<span id="erc20yul"></span><h2>Complete ERC20 Example<a class="headerlink" href="#complete-erc20-example" title="Permalink to this heading"></a></h2>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=b2JqZWN0ICJUb2tlbiIgewogICAgY29kZSB7CiAgICAgICAgLy8g5bCG5Yib5bu66ICF5a2Y5YKo5Zyo6Zu25Y+35qe95Lit44CCCiAgICAgICAgc3N0b3JlKDAsIGNhbGxlcigpKQoKICAgICAgICAvLyDpg6jnvbLlkIjnuqYKICAgICAgICBkYXRhY29weSgwLCBkYXRhb2Zmc2V0KCJydW50aW1lIiksIGRhdGFzaXplKCJydW50aW1lIikpCiAgICAgICAgcmV0dXJuKDAsIGRhdGFzaXplKCJydW50aW1lIikpCiAgICB9CiAgICBvYmplY3QgInJ1bnRpbWUiIHsKICAgICAgICBjb2RlIHsKICAgICAgICAgICAgLy8g6Ziy5q2i5Y+R6YCB5Lul5aSq55qE5L+d5oqk5o6q5pa9CiAgICAgICAgICAgIHJlcXVpcmUoaXN6ZXJvKGNhbGx2YWx1ZSgpKSkKCiAgICAgICAgICAgIC8vIOiwg+W6puWZqAogICAgICAgICAgICBzd2l0Y2ggc2VsZWN0b3IoKQogICAgICAgICAgICBjYXNlIDB4NzBhMDgyMzEgLyogImJhbGFuY2VPZihhZGRyZXNzKSIgKi8gewogICAgICAgICAgICAgICAgcmV0dXJuVWludChiYWxhbmNlT2YoZGVjb2RlQXNBZGRyZXNzKDApKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBjYXNlIDB4MTgxNjBkZGQgLyogInRvdGFsU3VwcGx5KCkiICovIHsKICAgICAgICAgICAgICAgIHJldHVyblVpbnQodG90YWxTdXBwbHkoKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBjYXNlIDB4YTkwNTljYmIgLyogInRyYW5zZmVyKGFkZHJlc3MsdWludDI1NikiICovIHsKICAgICAgICAgICAgICAgIHRyYW5zZmVyKGRlY29kZUFzQWRkcmVzcygwKSwgZGVjb2RlQXNVaW50KDEpKQogICAgICAgICAgICAgICAgcmV0dXJuVHJ1ZSgpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgY2FzZSAweDIzYjg3MmRkIC8qICJ0cmFuc2ZlckZyb20oYWRkcmVzcyxhZGRyZXNzLHVpbnQyNTYpIiAqLyB7CiAgICAgICAgICAgICAgICB0cmFuc2ZlckZyb20oZGVjb2RlQXNBZGRyZXNzKDApLCBkZWNvZGVBc0FkZHJlc3MoMSksIGRlY29kZUFzVWludCgyKSkKICAgICAgICAgICAgICAgIHJldHVyblRydWUoKQogICAgICAgICAgICB9CiAgICAgICAgICAgIGNhc2UgMHgwOTVlYTdiMyAvKiAiYXBwcm92ZShhZGRyZXNzLHVpbnQyNTYpIiAqLyB7CiAgICAgICAgICAgICAgICBhcHByb3ZlKGRlY29kZUFzQWRkcmVzcygwKSwgZGVjb2RlQXNVaW50KDEpKQogICAgICAgICAgICAgICAgcmV0dXJuVHJ1ZSgpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgY2FzZSAweGRkNjJlZDNlIC8qICJhbGxvd2FuY2UoYWRkcmVzcyxhZGRyZXNzKSIgKi8gewogICAgICAgICAgICAgICAgcmV0dXJuVWludChhbGxvd2FuY2UoZGVjb2RlQXNBZGRyZXNzKDApLCBkZWNvZGVBc0FkZHJlc3MoMSkpKQogICAgICAgICAgICB9CiAgICAgICAgICAgIGNhc2UgMHg0MGMxMGYxOSAvKiAibWludChhZGRyZXNzLHVpbnQyNTYpIiAqLyB7CiAgICAgICAgICAgICAgICBtaW50KGRlY29kZUFzQWRkcmVzcygwKSwgZGVjb2RlQXNVaW50KDEpKQogICAgICAgICAgICAgICAgcmV0dXJuVHJ1ZSgpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZGVmYXVsdCB7CiAgICAgICAgICAgICAgICByZXZlcnQoMCwgMCkKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZnVuY3Rpb24gbWludChhY2NvdW50LCBhbW91bnQpIHsKICAgICAgICAgICAgICAgIHJlcXVpcmUoY2FsbGVkQnlPd25lcigpKQoKICAgICAgICAgICAgICAgIG1pbnRUb2tlbnMoYW1vdW50KQogICAgICAgICAgICAgICAgYWRkVG9CYWxhbmNlKGFjY291bnQsIGFtb3VudCkKICAgICAgICAgICAgICAgIGVtaXRUcmFuc2ZlcigwLCBhY2NvdW50LCBhbW91bnQpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZnVuY3Rpb24gdHJhbnNmZXIodG8sIGFtb3VudCkgewogICAgICAgICAgICAgICAgZXhlY3V0ZVRyYW5zZmVyKGNhbGxlcigpLCB0bywgYW1vdW50KQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGFwcHJvdmUoc3BlbmRlciwgYW1vdW50KSB7CiAgICAgICAgICAgICAgICByZXZlcnRJZlplcm9BZGRyZXNzKHNwZW5kZXIpCiAgICAgICAgICAgICAgICBzZXRBbGxvd2FuY2UoY2FsbGVyKCksIHNwZW5kZXIsIGFtb3VudCkKICAgICAgICAgICAgICAgIGVtaXRBcHByb3ZhbChjYWxsZXIoKSwgc3BlbmRlciwgYW1vdW50KQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIHRyYW5zZmVyRnJvbShmcm9tLCB0bywgYW1vdW50KSB7CiAgICAgICAgICAgICAgICBkZWNyZWFzZUFsbG93YW5jZUJ5KGZyb20sIGNhbGxlcigpLCBhbW91bnQpCiAgICAgICAgICAgICAgICBleGVjdXRlVHJhbnNmZXIoZnJvbSwgdG8sIGFtb3VudCkKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZnVuY3Rpb24gZXhlY3V0ZVRyYW5zZmVyKGZyb20sIHRvLCBhbW91bnQpIHsKICAgICAgICAgICAgICAgIHJldmVydElmWmVyb0FkZHJlc3ModG8pCiAgICAgICAgICAgICAgICBkZWR1Y3RGcm9tQmFsYW5jZShmcm9tLCBhbW91bnQpCiAgICAgICAgICAgICAgICBhZGRUb0JhbGFuY2UodG8sIGFtb3VudCkKICAgICAgICAgICAgICAgIGVtaXRUcmFuc2Zlcihmcm9tLCB0bywgYW1vdW50KQogICAgICAgICAgICB9CgoKICAgICAgICAgICAgLyogLS0tLS0tLS0tLSBjYWxsZGF0YSDop6PnoIHlh73mlbAgLS0tLS0tLS0tLS0gKi8KICAgICAgICAgICAgZnVuY3Rpb24gc2VsZWN0b3IoKSAtPiBzIHsKICAgICAgICAgICAgICAgIHMgOj0gZGl2KGNhbGxkYXRhbG9hZCgwKSwgMHgxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDApCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGZ1bmN0aW9uIGRlY29kZUFzQWRkcmVzcyhvZmZzZXQpIC0+IHYgewogICAgICAgICAgICAgICAgdiA6PSBkZWNvZGVBc1VpbnQob2Zmc2V0KQogICAgICAgICAgICAgICAgaWYgaXN6ZXJvKGlzemVybyhhbmQodiwgbm90KDB4ZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZikpKSkgewogICAgICAgICAgICAgICAgICAgIHJldmVydCgwLCAwKQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGRlY29kZUFzVWludChvZmZzZXQpIC0+IHYgewogICAgICAgICAgICAgICAgbGV0IHBvcyA6PSBhZGQoNCwgbXVsKG9mZnNldCwgMHgyMCkpCiAgICAgICAgICAgICAgICBpZiBsdChjYWxsZGF0YXNpemUoKSwgYWRkKHBvcywgMHgyMCkpIHsKICAgICAgICAgICAgICAgICAgICByZXZlcnQoMCwgMCkKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIHYgOj0gY2FsbGRhdGFsb2FkKHBvcykKICAgICAgICAgICAgfQogICAgICAgICAgICAvKiAtLS0tLS0tLS0tIGNhbGxkYXRhIOe8lueggeWHveaVsCAtLS0tLS0tLS0tICovCiAgICAgICAgICAgIGZ1bmN0aW9uIHJldHVyblVpbnQodikgewogICAgICAgICAgICAgICAgbXN0b3JlKDAsIHYpCiAgICAgICAgICAgICAgICByZXR1cm4oMCwgMHgyMCkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiByZXR1cm5UcnVlKCkgewogICAgICAgICAgICAgICAgcmV0dXJuVWludCgxKQogICAgICAgICAgICB9CgogICAgICAgICAgICAvKiAtLS0tLS0tLSDkuovku7YgLS0tLS0tLS0tLSAqLwogICAgICAgICAgICBmdW5jdGlvbiBlbWl0VHJhbnNmZXIoZnJvbSwgdG8sIGFtb3VudCkgewogICAgICAgICAgICAgICAgbGV0IHNpZ25hdHVyZUhhc2ggOj0gMHhkZGYyNTJhZDFiZTJjODliNjljMmIwNjhmYzM3OGRhYTk1MmJhN2YxNjNjNGExMTYyOGY1NWE0ZGY1MjNiM2VmCiAgICAgICAgICAgICAgICBlbWl0RXZlbnQoc2lnbmF0dXJlSGFzaCwgZnJvbSwgdG8sIGFtb3VudCkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiBlbWl0QXBwcm92YWwoZnJvbSwgc3BlbmRlciwgYW1vdW50KSB7CiAgICAgICAgICAgICAgICBsZXQgc2lnbmF0dXJlSGFzaCA6PSAweDhjNWJlMWU1ZWJlYzdkNWJkMTRmNzE0MjdkMWU4NGYzZGQwMzE0YzBmN2IyMjkxZTViMjAwYWM4YzdjM2I5MjUKICAgICAgICAgICAgICAgIGVtaXRFdmVudChzaWduYXR1cmVIYXNoLCBmcm9tLCBzcGVuZGVyLCBhbW91bnQpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZnVuY3Rpb24gZW1pdEV2ZW50KHNpZ25hdHVyZUhhc2gsIGluZGV4ZWQxLCBpbmRleGVkMiwgbm9uSW5kZXhlZCkgewogICAgICAgICAgICAgICAgbXN0b3JlKDAsIG5vbkluZGV4ZWQpCiAgICAgICAgICAgICAgICBsb2czKDAsIDB4MjAsIHNpZ25hdHVyZUhhc2gsIGluZGV4ZWQxLCBpbmRleGVkMikKICAgICAgICAgICAgfQoKICAgICAgICAgICAgLyogLS0tLS0tLS0g5a2Y5YKo5biD5bGAIC0tLS0tLS0tLS0gKi8KICAgICAgICAgICAgZnVuY3Rpb24gb3duZXJQb3MoKSAtPiBwIHsgcCA6PSAwIH0KICAgICAgICAgICAgZnVuY3Rpb24gdG90YWxTdXBwbHlQb3MoKSAtPiBwIHsgcCA6PSAxIH0KICAgICAgICAgICAgZnVuY3Rpb24gYWNjb3VudFRvU3RvcmFnZU9mZnNldChhY2NvdW50KSAtPiBvZmZzZXQgewogICAgICAgICAgICAgICAgb2Zmc2V0IDo9IGFkZCgweDEwMDAsIGFjY291bnQpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZnVuY3Rpb24gYWxsb3dhbmNlU3RvcmFnZU9mZnNldChhY2NvdW50LCBzcGVuZGVyKSAtPiBvZmZzZXQgewogICAgICAgICAgICAgICAgb2Zmc2V0IDo9IGFjY291bnRUb1N0b3JhZ2VPZmZzZXQoYWNjb3VudCkKICAgICAgICAgICAgICAgIG1zdG9yZSgwLCBvZmZzZXQpCiAgICAgICAgICAgICAgICBtc3RvcmUoMHgyMCwgc3BlbmRlcikKICAgICAgICAgICAgICAgIG9mZnNldCA6PSBrZWNjYWsyNTYoMCwgMHg0MCkKICAgICAgICAgICAgfQoKICAgICAgICAgICAgLyogLS0tLS0tLS0g5a2Y5YKo6K6/6ZeuIC0tLS0tLS0tLS0gKi8KICAgICAgICAgICAgZnVuY3Rpb24gb3duZXIoKSAtPiBvIHsKICAgICAgICAgICAgICAgIG8gOj0gc2xvYWQob3duZXJQb3MoKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiB0b3RhbFN1cHBseSgpIC0+IHN1cHBseSB7CiAgICAgICAgICAgICAgICBzdXBwbHkgOj0gc2xvYWQodG90YWxTdXBwbHlQb3MoKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiBtaW50VG9rZW5zKGFtb3VudCkgewogICAgICAgICAgICAgICAgc3N0b3JlKHRvdGFsU3VwcGx5UG9zKCksIHNhZmVBZGQodG90YWxTdXBwbHkoKSwgYW1vdW50KSkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiBiYWxhbmNlT2YoYWNjb3VudCkgLT4gYmFsIHsKICAgICAgICAgICAgICAgIGJhbCA6PSBzbG9hZChhY2NvdW50VG9TdG9yYWdlT2Zmc2V0KGFjY291bnQpKQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGFkZFRvQmFsYW5jZShhY2NvdW50LCBhbW91bnQpIHsKICAgICAgICAgICAgICAgIGxldCBvZmZzZXQgOj0gYWNjb3VudFRvU3RvcmFnZU9mZnNldChhY2NvdW50KQogICAgICAgICAgICAgICAgc3N0b3JlKG9mZnNldCwgc2FmZUFkZChzbG9hZChvZmZzZXQpLCBhbW91bnQpKQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGRlZHVjdEZyb21CYWxhbmNlKGFjY291bnQsIGFtb3VudCkgewogICAgICAgICAgICAgICAgbGV0IG9mZnNldCA6PSBhY2NvdW50VG9TdG9yYWdlT2Zmc2V0KGFjY291bnQpCiAgICAgICAgICAgICAgICBsZXQgYmFsIDo9IHNsb2FkKG9mZnNldCkKICAgICAgICAgICAgICAgIHJlcXVpcmUobHRlKGFtb3VudCwgYmFsKSkKICAgICAgICAgICAgICAgIHNzdG9yZShvZmZzZXQsIHN1YihiYWwsIGFtb3VudCkpCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZnVuY3Rpb24gYWxsb3dhbmNlKGFjY291bnQsIHNwZW5kZXIpIC0+IGFtb3VudCB7CiAgICAgICAgICAgICAgICBhbW91bnQgOj0gc2xvYWQoYWxsb3dhbmNlU3RvcmFnZU9mZnNldChhY2NvdW50LCBzcGVuZGVyKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiBzZXRBbGxvd2FuY2UoYWNjb3VudCwgc3BlbmRlciwgYW1vdW50KSB7CiAgICAgICAgICAgICAgICBzc3RvcmUoYWxsb3dhbmNlU3RvcmFnZU9mZnNldChhY2NvdW50LCBzcGVuZGVyKSwgYW1vdW50KQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGRlY3JlYXNlQWxsb3dhbmNlQnkoYWNjb3VudCwgc3BlbmRlciwgYW1vdW50KSB7CiAgICAgICAgICAgICAgICBsZXQgb2Zmc2V0IDo9IGFsbG93YW5jZVN0b3JhZ2VPZmZzZXQoYWNjb3VudCwgc3BlbmRlcikKICAgICAgICAgICAgICAgIGxldCBjdXJyZW50QWxsb3dhbmNlIDo9IHNsb2FkKG9mZnNldCkKICAgICAgICAgICAgICAgIHJlcXVpcmUobHRlKGFtb3VudCwgY3VycmVudEFsbG93YW5jZSkpCiAgICAgICAgICAgICAgICBzc3RvcmUob2Zmc2V0LCBzdWIoY3VycmVudEFsbG93YW5jZSwgYW1vdW50KSkKICAgICAgICAgICAgfQoKICAgICAgICAgICAgLyogLS0tLS0tLS0tLSDlt6Xlhbflh73mlbAgLS0tLS0tLS0tLSAqLwogICAgICAgICAgICBmdW5jdGlvbiBsdGUoYSwgYikgLT4gciB7CiAgICAgICAgICAgICAgICByIDo9IGlzemVybyhndChhLCBiKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiBndGUoYSwgYikgLT4gciB7CiAgICAgICAgICAgICAgICByIDo9IGlzemVybyhsdChhLCBiKSkKICAgICAgICAgICAgfQogICAgICAgICAgICBmdW5jdGlvbiBzYWZlQWRkKGEsIGIpIC0+IHIgewogICAgICAgICAgICAgICAgciA6PSBhZGQoYSwgYikKICAgICAgICAgICAgICAgIGlmIG9yKGx0KHIsIGEpLCBsdChyLCBiKSkgeyByZXZlcnQoMCwgMCkgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGNhbGxlZEJ5T3duZXIoKSAtPiBjYm8gewogICAgICAgICAgICAgICAgY2JvIDo9IGVxKG93bmVyKCksIGNhbGxlcigpKQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIHJldmVydElmWmVyb0FkZHJlc3MoYWRkcikgewogICAgICAgICAgICAgICAgcmVxdWlyZShhZGRyKQogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIHJlcXVpcmUoY29uZGl0aW9uKSB7CiAgICAgICAgICAgICAgICBpZiBpc3plcm8oY29uZGl0aW9uKSB7IHJldmVydCgwLCAwKSB9CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="k">object</span> <span class="s">&quot;Token&quot;</span> <span class="p">{</span>
+    <span class="k">code</span> <span class="p">{</span>
+        <span class="c1">// 将创建者存储在零号槽中。</span>
+        <span class="nf">sstore</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">caller</span><span class="p">())</span>
+
+        <span class="c1">// 部署合约</span>
+        <span class="k k-Function">datacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k k-Function">dataoffset</span><span class="p">(</span><span class="s">&quot;runtime&quot;</span><span class="p">),</span> <span class="k k-Function">datasize</span><span class="p">(</span><span class="s">&quot;runtime&quot;</span><span class="p">))</span>
+        <span class="nf">return</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k k-Function">datasize</span><span class="p">(</span><span class="s">&quot;runtime&quot;</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">object</span> <span class="s">&quot;runtime&quot;</span> <span class="p">{</span>
+        <span class="k">code</span> <span class="p">{</span>
+            <span class="c1">// 防止发送以太的保护措施</span>
+            <span class="n">require</span><span class="p">(</span><span class="nf">iszero</span><span class="p">(</span><span class="nf">callvalue</span><span class="p">()))</span>
+
+            <span class="c1">// 调度器</span>
+            <span class="k">switch</span> <span class="n">selector</span><span class="p">()</span>
+            <span class="k">case</span> <span class="mh">0x70a08231</span> <span class="cm">/* &quot;balanceOf(address)&quot; */</span> <span class="p">{</span>
+                <span class="n">returnUint</span><span class="p">(</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="mh">0x18160ddd</span> <span class="cm">/* &quot;totalSupply()&quot; */</span> <span class="p">{</span>
+                <span class="n">returnUint</span><span class="p">(</span><span class="n">totalSupply</span><span class="p">())</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="mh">0xa9059cbb</span> <span class="cm">/* &quot;transfer(address,uint256)&quot; */</span> <span class="p">{</span>
+                <span class="n">transfer</span><span class="p">(</span><span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">decodeAsUint</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">returnTrue</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="mh">0x23b872dd</span> <span class="cm">/* &quot;transferFrom(address,address,uint256)&quot; */</span> <span class="p">{</span>
+                <span class="n">transferFrom</span><span class="p">(</span><span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">decodeAsUint</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+                <span class="n">returnTrue</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="mh">0x095ea7b3</span> <span class="cm">/* &quot;approve(address,uint256)&quot; */</span> <span class="p">{</span>
+                <span class="n">approve</span><span class="p">(</span><span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">decodeAsUint</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">returnTrue</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="mh">0xdd62ed3e</span> <span class="cm">/* &quot;allowance(address,address)&quot; */</span> <span class="p">{</span>
+                <span class="n">returnUint</span><span class="p">(</span><span class="n">allowance</span><span class="p">(</span><span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="mh">0x40c10f19</span> <span class="cm">/* &quot;mint(address,uint256)&quot; */</span> <span class="p">{</span>
+                <span class="n">mint</span><span class="p">(</span><span class="n">decodeAsAddress</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">decodeAsUint</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">returnTrue</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">default</span> <span class="p">{</span>
+                <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="k">function</span> <span class="n">mint</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">require</span><span class="p">(</span><span class="n">calledByOwner</span><span class="p">())</span>
+
+                <span class="n">mintTokens</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+                <span class="n">addToBalance</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+                <span class="n">emitTransfer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">transfer</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">executeTransfer</span><span class="p">(</span><span class="nf">caller</span><span class="p">(),</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">approve</span><span class="p">(</span><span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">revertIfZeroAddress</span><span class="p">(</span><span class="n">spender</span><span class="p">)</span>
+                <span class="n">setAllowance</span><span class="p">(</span><span class="nf">caller</span><span class="p">(),</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+                <span class="n">emitApproval</span><span class="p">(</span><span class="nf">caller</span><span class="p">(),</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">transferFrom</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">decreaseAllowanceBy</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="nf">caller</span><span class="p">(),</span> <span class="n">amount</span><span class="p">)</span>
+                <span class="n">executeTransfer</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="k">function</span> <span class="n">executeTransfer</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">revertIfZeroAddress</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+                <span class="n">deductFromBalance</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+                <span class="n">addToBalance</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+                <span class="n">emitTransfer</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+
+
+            <span class="cm">/* ---------- calldata 解码函数 ----------- */</span>
+            <span class="k">function</span> <span class="n">selector</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">:=</span> <span class="nf">div</span><span class="p">(</span><span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mh">0x100000000000000000000000000000000000000000000000000000000</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="k">function</span> <span class="n">decodeAsAddress</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">v</span> <span class="p">{</span>
+                <span class="n">v</span> <span class="o">:=</span> <span class="n">decodeAsUint</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nf">iszero</span><span class="p">(</span><span class="nf">iszero</span><span class="p">(</span><span class="nf">and</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nf">not</span><span class="p">(</span><span class="mh">0xffffffffffffffffffffffffffffffffffffffff</span><span class="p">))))</span> <span class="p">{</span>
+                    <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">decodeAsUint</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">v</span> <span class="p">{</span>
+                <span class="ow">let</span> <span class="nv">pos</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nf">mul</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nf">lt</span><span class="p">(</span><span class="nf">calldatasize</span><span class="p">(),</span> <span class="nf">add</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">}</span>
+                <span class="n">v</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="cm">/* ---------- calldata 编码函数 ---------- */</span>
+            <span class="k">function</span> <span class="n">returnUint</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nf">mstore</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="nf">return</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">returnTrue</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">returnUint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="cm">/* -------- 事件 ---------- */</span>
+            <span class="k">function</span> <span class="n">emitTransfer</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="ow">let</span> <span class="nv">signatureHash</span> <span class="o">:=</span> <span class="mh">0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef</span>
+                <span class="n">emitEvent</span><span class="p">(</span><span class="n">signatureHash</span><span class="p">,</span> <span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">emitApproval</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="ow">let</span> <span class="nv">signatureHash</span> <span class="o">:=</span> <span class="mh">0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925</span>
+                <span class="n">emitEvent</span><span class="p">(</span><span class="n">signatureHash</span><span class="p">,</span> <span class="n">from</span><span class="p">,</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">emitEvent</span><span class="p">(</span><span class="n">signatureHash</span><span class="p">,</span> <span class="n">indexed1</span><span class="p">,</span> <span class="n">indexed2</span><span class="p">,</span> <span class="n">nonIndexed</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nf">mstore</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nonIndexed</span><span class="p">)</span>
+                <span class="nf">log3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="n">signatureHash</span><span class="p">,</span> <span class="n">indexed1</span><span class="p">,</span> <span class="n">indexed2</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="cm">/* -------- 存储布局 ---------- */</span>
+            <span class="k">function</span> <span class="n">ownerPos</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">p</span> <span class="p">{</span> <span class="n">p</span> <span class="o">:=</span> <span class="mi">0</span> <span class="p">}</span>
+            <span class="k">function</span> <span class="n">totalSupplyPos</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">p</span> <span class="p">{</span> <span class="n">p</span> <span class="o">:=</span> <span class="mi">1</span> <span class="p">}</span>
+            <span class="k">function</span> <span class="n">accountToStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">offset</span> <span class="p">{</span>
+                <span class="n">offset</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">allowanceStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">offset</span> <span class="p">{</span>
+                <span class="n">offset</span> <span class="o">:=</span> <span class="n">accountToStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+                <span class="nf">mstore</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+                <span class="nf">mstore</span><span class="p">(</span><span class="mh">0x20</span><span class="p">,</span> <span class="n">spender</span><span class="p">)</span>
+                <span class="n">offset</span> <span class="o">:=</span> <span class="nf">keccak256</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="cm">/* -------- 存储访问 ---------- */</span>
+            <span class="k">function</span> <span class="n">owner</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">o</span> <span class="p">{</span>
+                <span class="n">o</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">ownerPos</span><span class="p">())</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">totalSupply</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">supply</span> <span class="p">{</span>
+                <span class="n">supply</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">totalSupplyPos</span><span class="p">())</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">mintTokens</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nf">sstore</span><span class="p">(</span><span class="n">totalSupplyPos</span><span class="p">(),</span> <span class="n">safeAdd</span><span class="p">(</span><span class="n">totalSupply</span><span class="p">(),</span> <span class="n">amount</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">balanceOf</span><span class="p">(</span><span class="n">account</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">bal</span> <span class="p">{</span>
+                <span class="n">bal</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">accountToStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">addToBalance</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="ow">let</span> <span class="nv">offset</span> <span class="o">:=</span> <span class="n">accountToStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+                <span class="nf">sstore</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">safeAdd</span><span class="p">(</span><span class="nf">sload</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span> <span class="n">amount</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">deductFromBalance</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="ow">let</span> <span class="nv">offset</span> <span class="o">:=</span> <span class="n">accountToStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+                <span class="ow">let</span> <span class="nv">bal</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">require</span><span class="p">(</span><span class="n">lte</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">bal</span><span class="p">))</span>
+                <span class="nf">sstore</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="nf">sub</span><span class="p">(</span><span class="n">bal</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">allowance</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">amount</span> <span class="p">{</span>
+                <span class="n">amount</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">allowanceStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">setAllowance</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nf">sstore</span><span class="p">(</span><span class="n">allowanceStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">),</span> <span class="n">amount</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">decreaseAllowanceBy</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+                <span class="ow">let</span> <span class="nv">offset</span> <span class="o">:=</span> <span class="n">allowanceStorageOffset</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">spender</span><span class="p">)</span>
+                <span class="ow">let</span> <span class="nv">currentAllowance</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">require</span><span class="p">(</span><span class="n">lte</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">currentAllowance</span><span class="p">))</span>
+                <span class="nf">sstore</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="nf">sub</span><span class="p">(</span><span class="n">currentAllowance</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+            <span class="p">}</span>
+
+            <span class="cm">/* ---------- 工具函数 ---------- */</span>
+            <span class="k">function</span> <span class="n">lte</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">r</span> <span class="p">{</span>
+                <span class="n">r</span> <span class="o">:=</span> <span class="nf">iszero</span><span class="p">(</span><span class="nf">gt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">gte</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">r</span> <span class="p">{</span>
+                <span class="n">r</span> <span class="o">:=</span> <span class="nf">iszero</span><span class="p">(</span><span class="nf">lt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">safeAdd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">r</span> <span class="p">{</span>
+                <span class="n">r</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nf">or</span><span class="p">(</span><span class="nf">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> <span class="nf">lt</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span> <span class="p">{</span> <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">calledByOwner</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">cbo</span> <span class="p">{</span>
+                <span class="n">cbo</span> <span class="o">:=</span> <span class="nf">eq</span><span class="p">(</span><span class="n">owner</span><span class="p">(),</span> <span class="nf">caller</span><span class="p">())</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">revertIfZeroAddress</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">require</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">function</span> <span class="n">require</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="nf">iszero</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span> <span class="nf">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="path-resolution.html" class="btn btn-neutral float-left" title="Import Path Resolution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="style-guide.html" class="btn btn-neutral float-right" title="风格指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

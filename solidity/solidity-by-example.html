@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity 合约示例 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solidity 源文件结构" href="layout-of-source-files.html" />
+    <link rel="prev" title="安装 Solidity 编译器" href="installing-solidity.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity 合约示例</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#voting">投票合约</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">可能的优化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#index-1">盲拍（秘密竞价）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-auction">简单的公开拍卖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">盲拍（秘密竞拍）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#index-2">安全的远程购买</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">微支付通道</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">创建和验证签名</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">创建签名</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">签署内容</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">组装参数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">在Solidity中恢复信息签名者</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">提取签名参数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">计算信息哈希值</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">完整的合约</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">编写一个简单的支付通道合约</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id17">什么是支付通道？</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">开通支付渠道</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">进行支付</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">关闭支付通道</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">通道到期</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">完整的合约</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id24">验证付款</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#index-3">模块化合约</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity 合约示例</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/solidity-by-example.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity">
+<h1>Solidity 合约示例<a class="headerlink" href="#solidity" title="Permalink to this heading"></a></h1>
+<section id="voting">
+<span id="index-0"></span><span id="id1"></span><h2>投票合约<a class="headerlink" href="#voting" title="Permalink to this heading"></a></h2>
+<p>下面的合约相当复杂，但展示了Solidity的很多特性。
+它实现了一个投票合约。当然，
+电子投票的主要问题是如何将投票权分配给正确的人以及如何防止人为操纵。
+我们不会在这里解决所有的问题，但至少我们会展示如何进行委托投票，
+与此同时，使计票是 <strong>自动且完全透明的。</strong></p>
+<p>我们的想法是为每张选票创建一份合约，
+为每个选项提供一个简称。
+然后，作为合约的创造者——即主席，
+将给予每个地址单独的投票权。</p>
+<p>地址后面的人可以选择自己投票，或者委托给他们信任的人来投票。</p>
+<p>在投票时间结束时， <code class="docutils literal notranslate"><span class="pre">winningProposal()</span></code> 将返回拥有最大票数的提案。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwovLy8gQHRpdGxlIOWnlOaJmOaKleelqApjb250cmFjdCBCYWxsb3QgewogICAgLy8g6L+Z5aOw5piO5LqG5LiA5Liq5paw55qE5aSN5p2C57G75Z6L77yM55So5LqO56iN5ZCO5Y+Y6YeP44CCCiAgICAvLyDlroPnlKjmnaXooajnpLrkuIDkuKrpgInmsJHjgIIKICAgIHN0cnVjdCBWb3RlciB7CiAgICAgICAgdWludCB3ZWlnaHQ7IC8vIOiuoeelqOeahOadg+mHjQogICAgICAgIGJvb2wgdm90ZWQ7ICAvLyDoi6XkuLrnnJ/vvIzku6Pooajor6Xkurrlt7LmipXnpagKICAgICAgICBhZGRyZXNzIGRlbGVnYXRlOyAvLyDooqvlp5TmiZjkuroKICAgICAgICB1aW50IHZvdGU7ICAgLy8g5oqV56Wo5o+Q5qGI55qE57Si5byVCiAgICB9CgogICAgLy8g5o+Q5qGI55qE57G75Z6LCiAgICBzdHJ1Y3QgUHJvcG9zYWwgewogICAgICAgIGJ5dGVzMzIgbmFtZTsgICAvLyDnroDnp7DvvIjmnIDplb8zMuS4quWtl+iKgu+8iQogICAgICAgIHVpbnQgdm90ZUNvdW50OyAvLyDlvpfnpajmlbAKICAgIH0KCiAgICBhZGRyZXNzIHB1YmxpYyBjaGFpcnBlcnNvbjsKICAgIC8vIOi/meWjsOaYjuS6huS4gOS4queKtuaAgeWPmOmHj++8jOS4uuavj+S4quWPr+iDveeahOWcsOWdgOWtmOWCqOS4gOS4qiBgVm90ZXJg44CCCiAgICBtYXBwaW5nKGFkZHJlc3MgPT4gVm90ZXIpIHB1YmxpYyB2b3RlcnM7CgogICAgLy8g5LiA5LiqIGBQcm9wb3NhbGAg57uT5p6E57G75Z6L55qE5Yqo5oCB5pWw57uE44CCCiAgICBQcm9wb3NhbFtdIHB1YmxpYyBwcm9wb3NhbHM7CgogICAgLy8vIOS4uiBgcHJvcG9zYWxOYW1lc2Ag5Lit55qE5q+P5Liq5o+Q5qGI77yM5Yib5bu65LiA5Liq5paw55qE77yI5oqV56Wo77yJ6KGo5YazCiAgICBjb25zdHJ1Y3RvcihieXRlczMyW10gbWVtb3J5IHByb3Bvc2FsTmFtZXMpIHsKICAgICAgICBjaGFpcnBlcnNvbiA9IG1zZy5zZW5kZXI7CiAgICAgICAgdm90ZXJzW2NoYWlycGVyc29uXS53ZWlnaHQgPSAxOwoKICAgICAgICAvLyDlr7nkuo7mj5DkvpvnmoTmr4/kuKrmj5DmoYjlkI3np7DvvIwKICAgICAgICAvLyDliJvlu7rkuIDkuKrmlrDnmoQgUHJvcG9zYWwg5a+56LGh5bm25oqK5a6D5re75Yqg5Yiw5pWw57uE55qE5pyr5bC+44CCCiAgICAgICAgZm9yICh1aW50IGkgPSAwOyBpIDwgcHJvcG9zYWxOYW1lcy5sZW5ndGg7IGkrKykgewogICAgICAgICAgICAvLyBgUHJvcG9zYWwoey4uLn0pYCDliJvlu7rkuIDkuKrkuLTml7YgUHJvcG9zYWwg5a+56LGhCiAgICAgICAgICAgIC8vIGBwcm9wb3NhbHMucHVzaCguLi4pYCDlsIblhbbmt7vliqDliLAgYHByb3Bvc2Fsc2Ag55qE5pyr5bC+CiAgICAgICAgICAgIHByb3Bvc2Fscy5wdXNoKFByb3Bvc2FsKHsKICAgICAgICAgICAgICAgIG5hbWU6IHByb3Bvc2FsTmFtZXNbaV0sCiAgICAgICAgICAgICAgICB2b3RlQ291bnQ6IDAKICAgICAgICAgICAgfSkpOwogICAgICAgIH0KICAgIH0KCiAgICAvLyDnu5nkuoggYHZvdGVyYCDlnKjov5nlvKDpgInnpajkuIrmipXnpajnmoTmnYPliKnjgIIKICAgIC8vIOWPquaciSBgY2hhaXJwZXJzb25gIOWPr+S7peiwg+eUqOivpeWHveaVsOOAggogICAgZnVuY3Rpb24gZ2l2ZVJpZ2h0VG9Wb3RlKGFkZHJlc3Mgdm90ZXIpIGV4dGVybmFsIHsKICAgICAgICAvLyDoi6UgYHJlcXVpcmVgIOeahOesrOS4gOS4quWPguaVsOeahOiuoeeul+e7k+aenOS4uiBgZmFsc2Vg77yMCiAgICAgICAgLy8g5YiZ57uI5q2i5omn6KGM77yM5pKk6ZSA5omA5pyJ5a+554q25oCB5ZKM5Lul5aSq5biB5L2Z6aKd55qE5pS55Yqo44CCCiAgICAgICAgLy8g5Zyo5pen54mI55qEIEVWTSDkuK3ov5nmm77nu4/kvJrmtojogJfmiYDmnIkgZ2Fz77yM5L2G546w5Zyo5LiN5Lya5LqG44CCCiAgICAgICAgLy8g5L2/55SoIGByZXF1aXJlYCDmnaXmo4Dmn6Xlh73mlbDmmK/lkKbooqvmraPnoa7lnLDosIPnlKjvvIzpgJrluLjmmK/kuKrlpb3kuLvmhI/jgIIKICAgICAgICAvLyDmgqjkuZ/lj6/ku6XlnKggYHJlcXVpcmVgIOeahOesrOS6jOS4quWPguaVsOS4reaPkOS+m+S4gOS4quWvuemUmeivr+aDheWGteeahOino+mHiuOAggogICAgICAgIHJlcXVpcmUoCiAgICAgICAgICAgIG1zZy5zZW5kZXIgPT0gY2hhaXJwZXJzb24sCiAgICAgICAgICAgICJPbmx5IGNoYWlycGVyc29uIGNhbiBnaXZlIHJpZ2h0IHRvIHZvdGUuIgogICAgICAgICk7CiAgICAgICAgcmVxdWlyZSgKICAgICAgICAgICAgIXZvdGVyc1t2b3Rlcl0udm90ZWQsCiAgICAgICAgICAgICJUaGUgdm90ZXIgYWxyZWFkeSB2b3RlZC4iCiAgICAgICAgKTsKICAgICAgICByZXF1aXJlKHZvdGVyc1t2b3Rlcl0ud2VpZ2h0ID09IDApOwogICAgICAgIHZvdGVyc1t2b3Rlcl0ud2VpZ2h0ID0gMTsKICAgIH0KCiAgICAvLy8g5oqK5oKo55qE5oqV56Wo5aeU5omY57uZ5oqV56Wo6ICFIGB0b2DjgIIKICAgIGZ1bmN0aW9uIGRlbGVnYXRlKGFkZHJlc3MgdG8pIGV4dGVybmFsIHsKICAgICAgICAvLyDmjIflrprlvJXnlKgKICAgICAgICBWb3RlciBzdG9yYWdlIHNlbmRlciA9IHZvdGVyc1ttc2cuc2VuZGVyXTsKICAgICAgICByZXF1aXJlKCFzZW5kZXIudm90ZWQsICJZb3UgYWxyZWFkeSB2b3RlZC4iKTsKCiAgICAgICAgcmVxdWlyZSh0byAhPSBtc2cuc2VuZGVyLCAiU2VsZi1kZWxlZ2F0aW9uIGlzIGRpc2FsbG93ZWQuIik7CgogICAgICAgIC8vIOWnlOaJmOaYr+WPr+S7peS8oOmAkueahO+8jOWPquimgeiiq+WnlOaJmOiAhSBgdG9gIOS5n+iuvue9ruS6huWnlOaJmOOAggogICAgICAgIC8vIOS4gOiIrOadpeivtO+8jOi/meagt+eahOW+queOr+WnlOaJmOaYr+mdnuW4uOWNsemZqeeahO+8jOWboOS4uuWmguaenOS8oOmAkueahOmTvuadoeWkqumVv++8jAogICAgICAgIC8vIOWPr+iDvemcgOimgea2iOiAl+eahGdhc+WwseS8mui2hei/h+S4gOS4quWMuuWdl+S4reeahOWPr+eUqOaVsOmHj+OAggogICAgICAgIC8vIOi/meenjeaDheWGteS4i++8jOWnlOaJmOS4jeS8muiiq+aJp+ihjOOAggogICAgICAgIC8vIOS9huWcqOWFtuS7luaDheWGteS4i++8jOWmguaenOW9ouaIkOmXreeOr++8jOWImeS8muWvvOiHtOWQiOe6puWujOWFqOiiqyAi5Y2h5L2PIuOAggogICAgICAgIHdoaWxlICh2b3RlcnNbdG9dLmRlbGVnYXRlICE9IGFkZHJlc3MoMCkpIHsKICAgICAgICAgICAgdG8gPSB2b3RlcnNbdG9dLmRlbGVnYXRlOwoKICAgICAgICAgICAgLy8g5LiN5YWB6K646Zet546v5aeU5omYCiAgICAgICAgICAgIHJlcXVpcmUodG8gIT0gbXNnLnNlbmRlciwgIkZvdW5kIGxvb3AgaW4gZGVsZWdhdGlvbi4iKTsKICAgICAgICB9CgogICAgICAgIC8vIGBzZW5kZXJgIOaYr+S4gOS4quW8leeUqCwg55u45b2T5LqO5a+5IGB2b3RlcnNbbXNnLnNlbmRlcl0udm90ZWRgIOi/m+ihjOS/ruaUuQogICAgICAgIFZvdGVyIHN0b3JhZ2UgZGVsZWdhdGVfID0gdm90ZXJzW3RvXTsKCiAgICAgICAgLy8g6YCJ5rCR5LiN6IO95aeU5omY57uZ5LiN6IO95oqV56Wo55qE6ZKx5YyF44CCCiAgICAgICAgcmVxdWlyZShkZWxlZ2F0ZV8ud2VpZ2h0ID49IDEpOwogICAgICAgIHNlbmRlci52b3RlZCA9IHRydWU7CiAgICAgICAgc2VuZGVyLmRlbGVnYXRlID0gdG87CiAgICAgICAgaWYgKGRlbGVnYXRlXy52b3RlZCkgewogICAgICAgICAgICAvLyDoi6Xooqvlp5TmiZjogIXlt7Lnu4/mipXov4fnpajkuobvvIznm7TmjqXlop7liqDlvpfnpajmlbDjgIIKICAgICAgICAgICAgcHJvcG9zYWxzW2RlbGVnYXRlXy52b3RlXS52b3RlQ291bnQgKz0gc2VuZGVyLndlaWdodDsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAvLyDoi6Xooqvlp5TmiZjogIXov5jmsqHmipXnpajvvIzlop7liqDlp5TmiZjogIXnmoTmnYPph43jgIIKICAgICAgICAgICAgZGVsZWdhdGVfLndlaWdodCArPSBzZW5kZXIud2VpZ2h0OwogICAgICAgIH0KICAgIH0KCiAgICAvLy8g5oqK5oKo55qE56WoKOWMheaLrOWnlOaJmOe7meaCqOeahOelqCnvvIwKICAgIC8vLyDmipXnu5nmj5DmoYggYHByb3Bvc2Fsc1twcm9wb3NhbF0ubmFtZWDjgIIKICAgIGZ1bmN0aW9uIHZvdGUodWludCBwcm9wb3NhbCkgZXh0ZXJuYWwgewogICAgICAgIFZvdGVyIHN0b3JhZ2Ugc2VuZGVyID0gdm90ZXJzW21zZy5zZW5kZXJdOwogICAgICAgIHJlcXVpcmUoc2VuZGVyLndlaWdodCAhPSAwLCAiSGFzIG5vIHJpZ2h0IHRvIHZvdGUiKTsKICAgICAgICByZXF1aXJlKCFzZW5kZXIudm90ZWQsICJBbHJlYWR5IHZvdGVkLiIpOwogICAgICAgIHNlbmRlci52b3RlZCA9IHRydWU7CiAgICAgICAgc2VuZGVyLnZvdGUgPSBwcm9wb3NhbDsKCiAgICAgICAgLy8g5aaC5p6cIGBwcm9wb3NhbGAg6LaF6L+H5LqG5pWw57uE55qE6IyD5Zu077yMCiAgICAgICAgLy8g5YiZ5Lya6Ieq5Yqo5oqb5Ye65byC5bi477yM5bm25oGi5aSN5omA5pyJ55qE5pS55Yqo44CCCiAgICAgICAgcHJvcG9zYWxzW3Byb3Bvc2FsXS52b3RlQ291bnQgKz0gc2VuZGVyLndlaWdodDsKICAgIH0KCiAgICAvLy8gQGRldiDnu5PlkIjkuYvliY3miYDmnInmipXnpajnmoTmg4XlhrXkuIvvvIzorqHnrpflh7rojrfog5znmoTmj5DmoYjjgIIKICAgIGZ1bmN0aW9uIHdpbm5pbmdQcm9wb3NhbCgpIHB1YmxpYyB2aWV3CiAgICAgICAgICAgIHJldHVybnMgKHVpbnQgd2lubmluZ1Byb3Bvc2FsXykKICAgIHsKICAgICAgICB1aW50IHdpbm5pbmdWb3RlQ291bnQgPSAwOwogICAgICAgIGZvciAodWludCBwID0gMDsgcCA8IHByb3Bvc2Fscy5sZW5ndGg7IHArKykgewogICAgICAgICAgICBpZiAocHJvcG9zYWxzW3BdLnZvdGVDb3VudCA+IHdpbm5pbmdWb3RlQ291bnQpIHsKICAgICAgICAgICAgICAgIHdpbm5pbmdWb3RlQ291bnQgPSBwcm9wb3NhbHNbcF0udm90ZUNvdW50OwogICAgICAgICAgICAgICAgd2lubmluZ1Byb3Bvc2FsXyA9IHA7CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9CgogICAgLy8g6LCD55SoIGB3aW5uaW5nUHJvcG9zYWwoKWAg5Ye95pWw5Lul6I635Y+W5o+Q5qGI5pWw57uE5Lit6I636IOc6ICF55qE57Si5byV77yMCiAgICAvLyDlubbku6XmraTov5Tlm57ojrfog5zogIXnmoTlkI3np7DjgIIKICAgIGZ1bmN0aW9uIHdpbm5lck5hbWUoKSBleHRlcm5hbCB2aWV3CiAgICAgICAgICAgIHJldHVybnMgKGJ5dGVzMzIgd2lubmVyTmFtZV8pCiAgICB7CiAgICAgICAgd2lubmVyTmFtZV8gPSBwcm9wb3NhbHNbd2lubmluZ1Byb3Bvc2FsKCldLm5hbWU7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="c1">/// @title 委托投票</span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">Ballot</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 这声明了一个新的复杂类型，用于稍后变量。</span>
+<span class="w">    </span><span class="c1">// 它用来表示一个选民。</span>
+<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">Voter</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">weight</span><span class="p">;</span><span class="w"> </span><span class="c1">// 计票的权重</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="nv">voted</span><span class="p">;</span><span class="w">  </span><span class="c1">// 若为真，代表该人已投票</span>
+<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">delegate</span><span class="p">;</span><span class="w"> </span><span class="c1">// 被委托人</span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">vote</span><span class="p">;</span><span class="w">   </span><span class="c1">// 投票提案的索引</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 提案的类型</span>
+<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">Proposal</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">name</span><span class="p">;</span><span class="w">   </span><span class="c1">// 简称（最长32个字节）</span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">voteCount</span><span class="p">;</span><span class="w"> </span><span class="c1">// 得票数</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">chairperson</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 这声明了一个状态变量，为每个可能的地址存储一个 `Voter`。</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>Voter<span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>voters<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 一个 `Proposal` 结构类型的动态数组。</span>
+<span class="w">    </span>Proposal<span class="p">[]</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>proposals<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 为 `proposalNames` 中的每个提案，创建一个新的（投票）表决</span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="kt">bytes32</span><span class="p">[]</span><span class="w"> </span><span class="kt">memory</span><span class="w"> </span>proposalNames<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>chairperson<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>voters<span class="p">[</span>chairperson<span class="p">].</span>weight<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 对于提供的每个提案名称，</span>
+<span class="w">        </span><span class="c1">// 创建一个新的 Proposal 对象并把它添加到数组的末尾。</span>
+<span class="w">        </span><span class="kt">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"> </span>i<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>proposalNames<span class="p">.</span>length<span class="p">;</span><span class="w"> </span>i<span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// `Proposal({...})` 创建一个临时 Proposal 对象</span>
+<span class="w">            </span><span class="c1">// `proposals.push(...)` 将其添加到 `proposals` 的末尾</span>
+<span class="w">            </span>proposals<span class="p">.</span>push<span class="p">(</span>Proposal<span class="p">({</span><span class="w"></span>
+<span class="w">                </span>name<span class="p">:</span><span class="w"> </span>proposalNames<span class="p">[</span>i<span class="p">],</span><span class="w"></span>
+<span class="w">                </span>voteCount<span class="p">:</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="w"></span>
+<span class="w">            </span><span class="p">}));</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 给予 `voter` 在这张选票上投票的权利。</span>
+<span class="w">    </span><span class="c1">// 只有 `chairperson` 可以调用该函数。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">giveRightToVote</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">voter</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 若 `require` 的第一个参数的计算结果为 `false`，</span>
+<span class="w">        </span><span class="c1">// 则终止执行，撤销所有对状态和以太币余额的改动。</span>
+<span class="w">        </span><span class="c1">// 在旧版的 EVM 中这曾经会消耗所有 gas，但现在不会了。</span>
+<span class="w">        </span><span class="c1">// 使用 `require` 来检查函数是否被正确地调用，通常是个好主意。</span>
+<span class="w">        </span><span class="c1">// 您也可以在 `require` 的第二个参数中提供一个对错误情况的解释。</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>chairperson<span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Only chairperson can give right to vote.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="o">!</span>voters<span class="p">[</span>voter<span class="p">].</span>voted<span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;The voter already voted.&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>voters<span class="p">[</span>voter<span class="p">].</span>weight<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>voters<span class="p">[</span>voter<span class="p">].</span>weight<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 把您的投票委托给投票者 `to`。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">delegate</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 指定引用</span>
+<span class="w">        </span>Voter<span class="w"> </span>storage<span class="w"> </span>sender<span class="w"> </span><span class="o">=</span><span class="w"> </span>voters<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="o">!</span>sender<span class="p">.</span>voted<span class="p">,</span><span class="w"> </span><span class="s2">&quot;You already voted.&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>to<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Self-delegation is disallowed.&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 委托是可以传递的，只要被委托者 `to` 也设置了委托。</span>
+<span class="w">        </span><span class="c1">// 一般来说，这样的循环委托是非常危险的，因为如果传递的链条太长，</span>
+<span class="w">        </span><span class="c1">// 可能需要消耗的gas就会超过一个区块中的可用数量。</span>
+<span class="w">        </span><span class="c1">// 这种情况下，委托不会被执行。</span>
+<span class="w">        </span><span class="c1">// 但在其他情况下，如果形成闭环，则会导致合约完全被 &quot;卡住&quot;。</span>
+<span class="w">        </span><span class="kt">while</span><span class="w"> </span><span class="p">(</span>voters<span class="p">[</span>to<span class="p">].</span>delegate<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>to<span class="w"> </span><span class="o">=</span><span class="w"> </span>voters<span class="p">[</span>to<span class="p">].</span>delegate<span class="p">;</span><span class="w"></span>
+
+<span class="w">            </span><span class="c1">// 不允许闭环委托</span>
+<span class="w">            </span><span class="kt">require</span><span class="p">(</span>to<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Found loop in delegation.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// `sender` 是一个引用, 相当于对 `voters[msg.sender].voted` 进行修改</span>
+<span class="w">        </span>Voter<span class="w"> </span>storage<span class="w"> </span>delegate_<span class="w"> </span><span class="o">=</span><span class="w"> </span>voters<span class="p">[</span>to<span class="p">];</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 选民不能委托给不能投票的钱包。</span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>delegate_<span class="p">.</span>weight<span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>sender<span class="p">.</span>voted<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>sender<span class="p">.</span>delegate<span class="w"> </span><span class="o">=</span><span class="w"> </span>to<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>delegate_<span class="p">.</span>voted<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 若被委托者已经投过票了，直接增加得票数。</span>
+<span class="w">            </span>proposals<span class="p">[</span>delegate_<span class="p">.</span>vote<span class="p">].</span>voteCount<span class="w"> </span><span class="o">+=</span><span class="w"> </span>sender<span class="p">.</span>weight<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="kt">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 若被委托者还没投票，增加委托者的权重。</span>
+<span class="w">            </span>delegate_<span class="p">.</span>weight<span class="w"> </span><span class="o">+=</span><span class="w"> </span>sender<span class="p">.</span>weight<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 把您的票(包括委托给您的票)，</span>
+<span class="w">    </span><span class="c1">/// 投给提案 `proposals[proposal].name`。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">vote</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">proposal</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>Voter<span class="w"> </span>storage<span class="w"> </span>sender<span class="w"> </span><span class="o">=</span><span class="w"> </span>voters<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>sender<span class="p">.</span>weight<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Has no right to vote&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="o">!</span>sender<span class="p">.</span>voted<span class="p">,</span><span class="w"> </span><span class="s2">&quot;Already voted.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>sender<span class="p">.</span>voted<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>sender<span class="p">.</span>vote<span class="w"> </span><span class="o">=</span><span class="w"> </span>proposal<span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 如果 `proposal` 超过了数组的范围，</span>
+<span class="w">        </span><span class="c1">// 则会自动抛出异常，并恢复所有的改动。</span>
+<span class="w">        </span>proposals<span class="p">[</span>proposal<span class="p">].</span>voteCount<span class="w"> </span><span class="o">+=</span><span class="w"> </span>sender<span class="p">.</span>weight<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// @dev 结合之前所有投票的情况下，计算出获胜的提案。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">winningProposal</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"></span>
+<span class="w">            </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">winningProposal_</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">winningVoteCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"> </span>p<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>proposals<span class="p">.</span>length<span class="p">;</span><span class="w"> </span>p<span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>proposals<span class="p">[</span>p<span class="p">].</span>voteCount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>winningVoteCount<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span>winningVoteCount<span class="w"> </span><span class="o">=</span><span class="w"> </span>proposals<span class="p">[</span>p<span class="p">].</span>voteCount<span class="p">;</span><span class="w"></span>
+<span class="w">                </span>winningProposal_<span class="w"> </span><span class="o">=</span><span class="w"> </span>p<span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 调用 `winningProposal()` 函数以获取提案数组中获胜者的索引，</span>
+<span class="w">    </span><span class="c1">// 并以此返回获胜者的名称。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">winnerName</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span>view<span class="w"></span>
+<span class="w">            </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">winnerName_</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>winnerName_<span class="w"> </span><span class="o">=</span><span class="w"> </span>proposals<span class="p">[</span>winningProposal<span class="p">()].</span>name<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id2">
+<h3>可能的优化<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<p>当前，为了把投票权分配给所有参与者，需要执行很多交易。
+您有没有更好的主意？</p>
+</section>
+</section>
+<section id="index-1">
+<span id="id3"></span><h2>盲拍（秘密竞价）<a class="headerlink" href="#index-1" title="Permalink to this heading"></a></h2>
+<p>在本节中，我们将展示如何轻松地在以太坊上创建一个盲拍的合约。
+我们将从一个公开拍卖开始，每个人都可以看到出价，
+然后将此合约扩展到盲拍合约， 在竞标期结束之前无法看到实际出价。</p>
+<section id="simple-auction">
+<span id="id4"></span><h3>简单的公开拍卖<a class="headerlink" href="#simple-auction" title="Permalink to this heading"></a></h3>
+<p>下面这个简单的拍卖合约的总体思路是，每个人都可以在竞标期间发送他们的竞标。
+竞标已经包括发送资金/以太币，以便将竞标者与他们的竞标绑定。
+如果最高出价被提高，之前的最高出价者就会拿回他们的钱。
+竞价期结束后，受益人需要手动调用合约，才能收到他们的钱 - 合约不能自己激活接收。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKY29udHJhY3QgU2ltcGxlQXVjdGlvbiB7CiAgICAvLyDmi43ljZbnmoTlj4LmlbDjgIIKICAgIC8vIOaXtumXtOaYryB1bml4IOeahOe7neWvueaXtumXtOaIs++8iOiHqjE5NzAtMDEtMDHku6XmnaXnmoTnp5LmlbDvvIkKICAgIC8vIOaIluS7peenkuS4uuWNleS9jeeahOaXtumXtOauteOAggogICAgYWRkcmVzcyBwYXlhYmxlIHB1YmxpYyBiZW5lZmljaWFyeTsKICAgIHVpbnQgcHVibGljIGF1Y3Rpb25FbmRUaW1lOwoKICAgIC8vIOaLjeWNlueahOW9k+WJjeeKtuaAgeOAggogICAgYWRkcmVzcyBwdWJsaWMgaGlnaGVzdEJpZGRlcjsKICAgIHVpbnQgcHVibGljIGhpZ2hlc3RCaWQ7CgogICAgLy8g5YWB6K645Y+W5Zue5Lul5YmN55qE56ue5qCH44CCCiAgICBtYXBwaW5nKGFkZHJlc3MgPT4gdWludCkgcGVuZGluZ1JldHVybnM7CgogICAgLy8g5ouN5Y2W57uT5p2f5ZCO6K6+5Li6IGB0cnVlYO+8jOWwhuemgeatouaJgOacieeahOWPmOabtAogICAgLy8g6buY6K6k5Yid5aeL5YyW5Li6IGBmYWxzZWDjgIIKICAgIGJvb2wgZW5kZWQ7CgogICAgLy8g5Y+Y5YyW5pe25bCG5Lya5Y+R5Ye655qE5LqL5Lu244CCCiAgICBldmVudCBIaWdoZXN0QmlkSW5jcmVhc2VkKGFkZHJlc3MgYmlkZGVyLCB1aW50IGFtb3VudCk7CiAgICBldmVudCBBdWN0aW9uRW5kZWQoYWRkcmVzcyB3aW5uZXIsIHVpbnQgYW1vdW50KTsKCiAgICAvLyDmj4/ov7DlpLHotKXnmoTplJnor6/kv6Hmga/jgIIKCiAgICAvLyDkuInmlpznur/nmoTms6jph4rmmK/miYDosJPnmoQgbmF0c3BlYyDms6jph4rjgIIKICAgIC8vIOW9k+eUqOaIt+iiq+imgeaxguehruiupOS4gOS4quS6pOaYk+aIluaYvuekuuS4gOS4qumUmeivr+aXtu+8jOWug+S7rOWwhuiiq+aYvuekuuOAggoKICAgIC8vLyDnq57mi43lt7Lnu4/nu5PmnZ/jgIIKICAgIGVycm9yIEF1Y3Rpb25BbHJlYWR5RW5kZWQoKTsKICAgIC8vLyDlt7Lnu4/mnInkuIDkuKrmm7Tpq5jnmoTmiJbnm7jnrYnnmoTlh7rku7fjgIIKICAgIGVycm9yIEJpZE5vdEhpZ2hFbm91Z2godWludCBoaWdoZXN0QmlkKTsKICAgIC8vLyDnq57mi43ov5jmsqHmnInnu5PmnZ/jgIIKICAgIGVycm9yIEF1Y3Rpb25Ob3RZZXRFbmRlZCgpOwogICAgLy8vIOWHveaVsCBhdWN0aW9uRW5kIOW3sue7j+iiq+iwg+eUqOOAggogICAgZXJyb3IgQXVjdGlvbkVuZEFscmVhZHlDYWxsZWQoKTsKCiAgICAvLy8g5Lul5Y+X55uK6ICF5Zyw5Z2AIGBiZW5lZmljaWFyeUFkZHJlc3NgIOWIm+W7uuS4gOS4queugOWNleeahOaLjeWNlu+8jAogICAgLy8vIOaLjeWNluaXtumVv+S4uiBgX2JpZGRpbmdUaW1lYOOAggogICAgY29uc3RydWN0b3IoCiAgICAgICAgdWludCBiaWRkaW5nVGltZSwKICAgICAgICBhZGRyZXNzIHBheWFibGUgYmVuZWZpY2lhcnlBZGRyZXNzCiAgICApIHsKICAgICAgICBiZW5lZmljaWFyeSA9IGJlbmVmaWNpYXJ5QWRkcmVzczsKICAgICAgICBhdWN0aW9uRW5kVGltZSA9IGJsb2NrLnRpbWVzdGFtcCArIGJpZGRpbmdUaW1lOwogICAgfQoKICAgIC8vLyDlr7nmi43ljZbov5vooYzlh7rku7fvvIzlhbfkvZPnmoTlh7rku7fpmo/kuqTmmJPkuIDotbflj5HpgIHjgIIKICAgIC8vLyDlpoLmnpzmsqHmnInlnKjmi43ljZbkuK3og5zlh7rvvIzliJnov5Tov5jlh7rku7fjgIIKICAgIGZ1bmN0aW9uIGJpZCgpIGV4dGVybmFsIHBheWFibGUgewogICAgICAgIC8vIOWPguaVsOS4jeaYr+W/heimgeeahOOAguWboOS4uuaJgOacieeahOS/oeaBr+W3sue7j+WMheWQq+WcqOS6huS6pOaYk+S4reOAggogICAgICAgIC8vIOWFs+mUruWtlyBgcGF5YWJsZWAg5piv5Ye95pWw6IO95aSf5o6l5pS25Lul5aSq5biB55qE5b+F6KaB5p2h5Lu244CCCgogICAgICAgIC8vIOWmguaenOaLjeWNluW3sue7k+adn++8jOaSpOmUgOWHveaVsOeahOiwg+eUqOOAggogICAgICAgIGlmIChibG9jay50aW1lc3RhbXAgPiBhdWN0aW9uRW5kVGltZSkKICAgICAgICAgICAgcmV2ZXJ0IEF1Y3Rpb25BbHJlYWR5RW5kZWQoKTsKCiAgICAgICAgLy8g5aaC5p6c5Ye65Lu35LiN6auY77yM5bCx5oqK6ZKx6YCB5Zue5Y67CiAgICAgICAgLy/vvIhyZXZlcnTor63lj6XlsIbmgaLlpI3ov5nkuKrlh73mlbDmiafooYzkuK3nmoTmiYDmnInlj5jljJbvvIwKICAgICAgICAvLyDljIXmi6zlroPlt7Lnu4/mlLbliLDpkrHvvInjgIIKICAgICAgICBpZiAobXNnLnZhbHVlIDw9IGhpZ2hlc3RCaWQpCiAgICAgICAgICAgIHJldmVydCBCaWROb3RIaWdoRW5vdWdoKGhpZ2hlc3RCaWQpOwoKICAgICAgICBpZiAoaGlnaGVzdEJpZCAhPSAwKSB7CiAgICAgICAgICAgIC8vIOeugOWNleWcsOS9v+eUqCBoaWdoZXN0QmlkZGVyLnNlbmQoaGlnaGVzdEJpZCkKICAgICAgICAgICAgLy8g6L+U6L+Y5Ye65Lu35pe277yM5piv5pyJ5a6J5YWo6aOO6Zmp55qE77yMCiAgICAgICAgICAgIC8vIOWboOS4uuWug+WPr+iDveaJp+ihjOS4gOS4quS4jeWPl+S/oeS7u+eahOWQiOe6puOAggogICAgICAgICAgICAvLyDorqnmjqXmlLbmlrnoh6rlt7Hlj5bpkrHmgLvmmK/mr5TovoPlronlhajnmoTjgIIKICAgICAgICAgICAgcGVuZGluZ1JldHVybnNbaGlnaGVzdEJpZGRlcl0gKz0gaGlnaGVzdEJpZDsKICAgICAgICB9CiAgICAgICAgaGlnaGVzdEJpZGRlciA9IG1zZy5zZW5kZXI7CiAgICAgICAgaGlnaGVzdEJpZCA9IG1zZy52YWx1ZTsKICAgICAgICBlbWl0IEhpZ2hlc3RCaWRJbmNyZWFzZWQobXNnLnNlbmRlciwgbXNnLnZhbHVlKTsKICAgIH0KCiAgICAvLy8g5pKk5Zue5Ye65Lu36L+H6auY55qE56ue5qCH44CCCiAgICBmdW5jdGlvbiB3aXRoZHJhdygpIGV4dGVybmFsIHJldHVybnMgKGJvb2wpIHsKICAgICAgICB1aW50IGFtb3VudCA9IHBlbmRpbmdSZXR1cm5zW21zZy5zZW5kZXJdOwogICAgICAgIGlmIChhbW91bnQgPiAwKSB7CiAgICAgICAgICAgIC8vIOWwhuWFtuiuvue9ruS4ujDmmK/lvojph43opoHnmoTvvIwKICAgICAgICAgICAgLy8g5Zug5Li65o6l5pS26ICF5Y+v5Lul5ZyoIGBzZW5kYCDov5Tlm57kuYvliY3lho3mrKHosIPnlKjov5nkuKrlh73mlbAKICAgICAgICAgICAgLy8g5L2c5Li65o6l5pS26LCD55So55qE5LiA6YOo5YiG44CCCiAgICAgICAgICAgIHBlbmRpbmdSZXR1cm5zW21zZy5zZW5kZXJdID0gMDsKCiAgICAgICAgICAgIC8vIG1zZy5zZW5kZXIg5LiN5bGe5LqOIGBhZGRyZXNzIHBheWFibGVgIOexu+Wei++8jAogICAgICAgICAgICAvLyDlv4Xpobvkvb/nlKggYHBheWFibGUobXNnLnNlbmRlcilgIOaYjuehrui9rOaNou+8jAogICAgICAgICAgICAvLyDku6Xkvr/kvb/nlKjmiJDlkZjlh73mlbAgYHNlbmQoKWDjgIIKICAgICAgICAgICAgaWYgKCFwYXlhYmxlKG1zZy5zZW5kZXIpLnNlbmQoYW1vdW50KSkgewogICAgICAgICAgICAgICAgLy8g6L+Z6YeM5LiN6ZyA5oqb5Ye65byC5bi477yM5Y+q6ZyA6YeN572u5pyq5LuY5qy+CiAgICAgICAgICAgICAgICBwZW5kaW5nUmV0dXJuc1ttc2cuc2VuZGVyXSA9IGFtb3VudDsKICAgICAgICAgICAgICAgIHJldHVybiBmYWxzZTsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICByZXR1cm4gdHJ1ZTsKICAgIH0KCiAgICAvLy8g57uT5p2f5ouN5Y2W77yM5bm25oqK5pyA6auY55qE5Ye65Lu35Y+R6YCB57uZ5Y+X55uK5Lq644CCCiAgICBmdW5jdGlvbiBhdWN0aW9uRW5kKCkgZXh0ZXJuYWwgewogICAgICAgIC8vIOWvueS6juWPr+S4juWFtuS7luWQiOe6puS6pOS6kueahOWHveaVsO+8iOaEj+WRs+edgOWug+S8muiwg+eUqOWFtuS7luWHveaVsOaIluWPkemAgeS7peWkquW4ge+8ie+8jAogICAgICAgIC8vIOS4gOS4quWlveeahOaMh+WvvOaWuemSiOaYr+WwhuWFtue7k+aehOWIhuS4uuS4ieS4qumYtuaute+8mgogICAgICAgIC8vIDEuIOajgOafpeadoeS7tgogICAgICAgIC8vIDIuIOaJp+ihjOWKqOS9nCAo5Y+v6IO95Lya5pS55Y+Y5p2h5Lu2KQogICAgICAgIC8vIDMuIOS4juWFtuS7luWQiOe6puS6pOS6kgogICAgICAgIC8vIOWmguaenOi/meS6m+mYtuauteebuOa3t+WQiO+8jOWFtuS7lueahOWQiOe6puWPr+iDveS8muWbnuiwg+W9k+WJjeWQiOe6puW5tuS/ruaUueeKtuaAge+8jAogICAgICAgIC8vIOaIluiAheWvvOiHtOafkOS6m+aViOaenO+8iOavlOWmguaUr+S7mOS7peWkquW4ge+8ieWkmuasoeeUn+aViOOAggogICAgICAgIC8vIOWmguaenOWQiOe6puWGheiwg+eUqOeahOWHveaVsOWMheWQq+S6huS4juWklumDqOWQiOe6pueahOS6pOS6ku+8jAogICAgICAgIC8vIOWImeWug+S5n+S8muiiq+iupOS4uuaYr+S4juWklumDqOWQiOe6puacieS6pOS6kueahOOAggoKICAgICAgICAvLyAxLiDmnaHku7YKICAgICAgICBpZiAoYmxvY2sudGltZXN0YW1wIDwgYXVjdGlvbkVuZFRpbWUpCiAgICAgICAgICAgIHJldmVydCBBdWN0aW9uTm90WWV0RW5kZWQoKTsKICAgICAgICBpZiAoZW5kZWQpCiAgICAgICAgICAgIHJldmVydCBBdWN0aW9uRW5kQWxyZWFkeUNhbGxlZCgpOwoKICAgICAgICAvLyAyLiDlvbHlk40KICAgICAgICBlbmRlZCA9IHRydWU7CiAgICAgICAgZW1pdCBBdWN0aW9uRW5kZWQoaGlnaGVzdEJpZGRlciwgaGlnaGVzdEJpZCk7CgogICAgICAgIC8vIDMuIOS6pOS6kgogICAgICAgIGJlbmVmaWNpYXJ5LnRyYW5zZmVyKGhpZ2hlc3RCaWQpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleAuction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 拍卖的参数。</span>
+<span class="w">    </span><span class="c1">// 时间是 unix 的绝对时间戳（自1970-01-01以来的秒数）</span>
+<span class="w">    </span><span class="c1">// 或以秒为单位的时间段。</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>beneficiary<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">auctionEndTime</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 拍卖的当前状态。</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBidder</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBid</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 允许取回以前的竞标。</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>pendingReturns<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 拍卖结束后设为 `true`，将禁止所有的变更</span>
+<span class="w">    </span><span class="c1">// 默认初始化为 `false`。</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nv">ended</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 变化时将会发出的事件。</span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">HighestBidIncreased</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">bidder</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">AuctionEnded</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">winner</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 描述失败的错误信息。</span>
+
+<span class="w">    </span><span class="c1">// 三斜线的注释是所谓的 natspec 注释。</span>
+<span class="w">    </span><span class="c1">// 当用户被要求确认一个交易或显示一个错误时，它们将被显示。</span>
+
+<span class="w">    </span><span class="c1">/// 竞拍已经结束。</span>
+<span class="w">    </span>error<span class="w"> </span>AuctionAlreadyEnded<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 已经有一个更高的或相等的出价。</span>
+<span class="w">    </span>error<span class="w"> </span>BidNotHighEnough<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">highestBid</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 竞拍还没有结束。</span>
+<span class="w">    </span>error<span class="w"> </span>AuctionNotYetEnded<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 函数 auctionEnd 已经被调用。</span>
+<span class="w">    </span>error<span class="w"> </span>AuctionEndAlreadyCalled<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 以受益者地址 `beneficiaryAddress` 创建一个简单的拍卖，</span>
+<span class="w">    </span><span class="c1">/// 拍卖时长为 `_biddingTime`。</span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">biddingTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>beneficiaryAddress<span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>beneficiary<span class="w"> </span><span class="o">=</span><span class="w"> </span>beneficiaryAddress<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>auctionEndTime<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>biddingTime<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 对拍卖进行出价，具体的出价随交易一起发送。</span>
+<span class="w">    </span><span class="c1">/// 如果没有在拍卖中胜出，则返还出价。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 参数不是必要的。因为所有的信息已经包含在了交易中。</span>
+<span class="w">        </span><span class="c1">// 关键字 `payable` 是函数能够接收以太币的必要条件。</span>
+
+<span class="w">        </span><span class="c1">// 如果拍卖已结束，撤销函数的调用。</span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>auctionEndTime<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>AuctionAlreadyEnded<span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 如果出价不高，就把钱送回去</span>
+<span class="w">        </span><span class="c1">//（revert语句将恢复这个函数执行中的所有变化，</span>
+<span class="w">        </span><span class="c1">// 包括它已经收到钱）。</span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>highestBid<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>BidNotHighEnough<span class="p">(</span>highestBid<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>highestBid<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 简单地使用 highestBidder.send(highestBid)</span>
+<span class="w">            </span><span class="c1">// 返还出价时，是有安全风险的，</span>
+<span class="w">            </span><span class="c1">// 因为它可能执行一个不受信任的合约。</span>
+<span class="w">            </span><span class="c1">// 让接收方自己取钱总是比较安全的。</span>
+<span class="w">            </span>pendingReturns<span class="p">[</span>highestBidder<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>highestBid<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span>highestBidder<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>highestBid<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>HighestBidIncreased<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span><span class="k">msg.value</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 撤回出价过高的竞标。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pendingReturns<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>amount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 将其设置为0是很重要的，</span>
+<span class="w">            </span><span class="c1">// 因为接收者可以在 `send` 返回之前再次调用这个函数</span>
+<span class="w">            </span><span class="c1">// 作为接收调用的一部分。</span>
+<span class="w">            </span>pendingReturns<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">            </span><span class="c1">// msg.sender 不属于 `address payable` 类型，</span>
+<span class="w">            </span><span class="c1">// 必须使用 `payable(msg.sender)` 明确转换，</span>
+<span class="w">            </span><span class="c1">// 以便使用成员函数 `send()`。</span>
+<span class="w">            </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>send<span class="p">(</span>amount<span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// 这里不需抛出异常，只需重置未付款</span>
+<span class="w">                </span>pendingReturns<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="kt">return</span><span class="w"> </span><span class="kt">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 结束拍卖，并把最高的出价发送给受益人。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">auctionEnd</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 对于可与其他合约交互的函数（意味着它会调用其他函数或发送以太币），</span>
+<span class="w">        </span><span class="c1">// 一个好的指导方针是将其结构分为三个阶段：</span>
+<span class="w">        </span><span class="c1">// 1. 检查条件</span>
+<span class="w">        </span><span class="c1">// 2. 执行动作 (可能会改变条件)</span>
+<span class="w">        </span><span class="c1">// 3. 与其他合约交互</span>
+<span class="w">        </span><span class="c1">// 如果这些阶段相混合，其他的合约可能会回调当前合约并修改状态，</span>
+<span class="w">        </span><span class="c1">// 或者导致某些效果（比如支付以太币）多次生效。</span>
+<span class="w">        </span><span class="c1">// 如果合约内调用的函数包含了与外部合约的交互，</span>
+<span class="w">        </span><span class="c1">// 则它也会被认为是与外部合约有交互的。</span>
+
+<span class="w">        </span><span class="c1">// 1. 条件</span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>auctionEndTime<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>AuctionNotYetEnded<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>ended<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>AuctionEndAlreadyCalled<span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 2. 影响</span>
+<span class="w">        </span>ended<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>AuctionEnded<span class="p">(</span>highestBidder<span class="p">,</span><span class="w"> </span>highestBid<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 3. 交互</span>
+<span class="w">        </span>beneficiary<span class="p">.</span>transfer<span class="p">(</span>highestBid<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>盲拍（秘密竞拍）<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<p>之前的公开拍卖接下来将被扩展为盲目拍卖。
+盲拍的好处是，在竞价期即将结束时没有时间压力。
+在一个透明的计算平台上创建一个盲拍可能听起来是一个矛盾，但加密技术可以实现它。</p>
+<p>在 <strong>竞标期间</strong>，竞标者实际上并没有发送他们的出价，
+而只是发送一个哈希版本的出价。 由于目前几乎不可能找到两个（足够长的）值，
+其哈希值是相等的，因此竞标者可通过该方式提交报价。 在竞标结束后，
+竞标者必须公开他们的出价：他们发送未加密的值，
+合约检查出价的哈希值是否与竞标期间提供的值相同。</p>
+<p>另一个挑战是如何使拍卖同时做到 <strong>绑定和秘密</strong> :
+唯一能阻止竞标者在赢得拍卖后不付款的方式是，让他们将钱和竞标一起发出。
+但由于资金转移在 以太坊 中不能被隐藏，因此任何人都可以看到转移的资金。</p>
+<p>下面的合约通过接受任何大于最高出价的值来解决这个问题。
+当然，因为这只能在揭示阶段进行检查，有些出价可能是 <strong>无效</strong> 的，
+甚至，这是故意的(与高出价一起，它甚至提供了一个明确的标志来标识无效的出价):
+竞标者可以通过设置几个或高或低的无效出价来迷惑竞争对手。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKY29udHJhY3QgQmxpbmRBdWN0aW9uIHsKICAgIHN0cnVjdCBCaWQgewogICAgICAgIGJ5dGVzMzIgYmxpbmRlZEJpZDsKICAgICAgICB1aW50IGRlcG9zaXQ7CiAgICB9CgogICAgYWRkcmVzcyBwYXlhYmxlIHB1YmxpYyBiZW5lZmljaWFyeTsKICAgIHVpbnQgcHVibGljIGJpZGRpbmdFbmQ7CiAgICB1aW50IHB1YmxpYyByZXZlYWxFbmQ7CiAgICBib29sIHB1YmxpYyBlbmRlZDsKCiAgICBtYXBwaW5nKGFkZHJlc3MgPT4gQmlkW10pIHB1YmxpYyBiaWRzOwoKICAgIGFkZHJlc3MgcHVibGljIGhpZ2hlc3RCaWRkZXI7CiAgICB1aW50IHB1YmxpYyBoaWdoZXN0QmlkOwoKICAgIC8vIOWFgeiuuOWPluWbnuS7peWJjeeahOernuagh+OAggogICAgbWFwcGluZyhhZGRyZXNzID0+IHVpbnQpIHBlbmRpbmdSZXR1cm5zOwoKICAgIGV2ZW50IEF1Y3Rpb25FbmRlZChhZGRyZXNzIHdpbm5lciwgdWludCBoaWdoZXN0QmlkKTsKCiAgICAvLyDmj4/ov7DlpLHotKXnmoTplJnor6/kv6Hmga/jgIIKCiAgICAvLy8g6K+l5Ye95pWw6KKr6L+H5pep6LCD55So44CCCiAgICAvLy8g5ZyoIGB0aW1lYCDml7bpl7Tlho3or5XkuIDmrKHjgIIKICAgIGVycm9yIFRvb0Vhcmx5KHVpbnQgdGltZSk7CiAgICAvLy8g6K+l5Ye95pWw6KKr6L+H5pma6LCD55So44CCCiAgICAvLy8g5a6D5LiN6IO95ZyoIGB0aW1lYCDml7bpl7TkuYvlkI7ooqvosIPnlKjjgIIKICAgIGVycm9yIFRvb0xhdGUodWludCB0aW1lKTsKICAgIC8vLyDlh73mlbAgYXVjdGlvbkVuZCDlt7Lnu4/ooqvosIPnlKjjgIIKICAgIGVycm9yIEF1Y3Rpb25FbmRBbHJlYWR5Q2FsbGVkKCk7CgogICAgLy8g5L2/55SoIOS/rumlsOespu+8iG1vZGlmaWVy77yJIOWPr+S7peabtOS+v+aNt+eahOagoemqjOWHveaVsOeahOWFpeWPguOAggogICAgLy8gYG9ubHlCZWZvcmVgIOS8muiiq+eUqOS6juWQjumdoueahCBgYmlkYCDlh73mlbDvvJoKICAgIC8vIOaWsOeahOWHveaVsOS9k+aYr+eUsSBtb2RpZmllciDmnKzouqvnmoTlh73mlbDkvZPvvIzlhbbkuK1gX2Dooqvml6fnmoTlh73mlbDkvZPmiYDlj5bku6PjgIIKICAgIG1vZGlmaWVyIG9ubHlCZWZvcmUodWludCB0aW1lKSB7CiAgICAgICAgaWYgKGJsb2NrLnRpbWVzdGFtcCA+PSB0aW1lKSByZXZlcnQgVG9vTGF0ZSh0aW1lKTsKICAgICAgICBfOwogICAgfQogICAgbW9kaWZpZXIgb25seUFmdGVyKHVpbnQgdGltZSkgewogICAgICAgIGlmIChibG9jay50aW1lc3RhbXAgPD0gdGltZSkgcmV2ZXJ0IFRvb0Vhcmx5KHRpbWUpOwogICAgICAgIF87CiAgICB9CgogICAgY29uc3RydWN0b3IoCiAgICAgICAgdWludCBiaWRkaW5nVGltZSwKICAgICAgICB1aW50IHJldmVhbFRpbWUsCiAgICAgICAgYWRkcmVzcyBwYXlhYmxlIGJlbmVmaWNpYXJ5QWRkcmVzcwogICAgKSB7CiAgICAgICAgYmVuZWZpY2lhcnkgPSBiZW5lZmljaWFyeUFkZHJlc3M7CiAgICAgICAgYmlkZGluZ0VuZCA9IGJsb2NrLnRpbWVzdGFtcCArIGJpZGRpbmdUaW1lOwogICAgICAgIHJldmVhbEVuZCA9IGJpZGRpbmdFbmQgKyByZXZlYWxUaW1lOwogICAgfQoKICAgIC8vLyDlj6/ku6XpgJrov4cgYF9ibGluZGVkQmlkYCA9IGtlY2NhazI1Nih2YWx1ZSwgZmFrZSwgc2VjcmV0KQogICAgLy8vIOiuvue9ruS4gOS4quebsuaLjeOAggogICAgLy8vIOWPquacieWcqOWHuuS7t+aKq+mcsumYtuauteiiq+ato+ehruaKq+mcsu+8jOW3suWPkemAgeeahOS7peWkquW4geaJjeS8muiiq+mAgOi/mOOAggogICAgLy8vIOWmguaenOS4juWHuuS7t+S4gOi1t+WPkemAgeeahOS7peWkquW4geiHs+WwkeS4uiAidmFsdWUiIOS4lCAiZmFrZSIg5LiN5Li655yf77yM5YiZ5Ye65Lu35pyJ5pWI44CCCiAgICAvLy8g5bCGICJmYWtlIiDorr7nva7kuLogdHJ1ZSDvvIwKICAgIC8vLyDnhLblkI7lj5HpgIHmu6HotrPorqLph5Hph5Hpop3kvYblj4jkuI3kuI7lh7rku7fnm7jlkIznmoTph5Hpop3mmK/pmpDol4/lrp7pmYXlh7rku7fnmoTmlrnms5XjgIIKICAgIC8vLyDlkIzkuIDkuKrlnLDlnYDlj6/ku6XmlL7nva7lpJrkuKrlh7rku7fjgIIKICAgIGZ1bmN0aW9uIGJpZChieXRlczMyIGJsaW5kZWRCaWQpCiAgICAgICAgZXh0ZXJuYWwKICAgICAgICBwYXlhYmxlCiAgICAgICAgb25seUJlZm9yZShiaWRkaW5nRW5kKQogICAgewogICAgICAgIGJpZHNbbXNnLnNlbmRlcl0ucHVzaChCaWQoewogICAgICAgICAgICBibGluZGVkQmlkOiBibGluZGVkQmlkLAogICAgICAgICAgICBkZXBvc2l0OiBtc2cudmFsdWUKICAgICAgICB9KSk7CiAgICB9CgogICAgLy8vIOaKq+mcsuS9oOeahOebsuaLjeWHuuS7t+OAggogICAgLy8vIOWvueS6juaJgOacieato+ehruaKq+mcsueahOaXoOaViOWHuuS7t+S7peWPiumZpOacgOmrmOWHuuS7t+S7peWklueahOaJgOacieWHuuS7t++8jOaCqOmDveWwhuiOt+W+l+mAgOasvuOAggogICAgZnVuY3Rpb24gcmV2ZWFsKAogICAgICAgIHVpbnRbXSBjYWxsZGF0YSB2YWx1ZXMsCiAgICAgICAgYm9vbFtdIGNhbGxkYXRhIGZha2VzLAogICAgICAgIGJ5dGVzMzJbXSBjYWxsZGF0YSBzZWNyZXRzCiAgICApCiAgICAgICAgZXh0ZXJuYWwKICAgICAgICBvbmx5QWZ0ZXIoYmlkZGluZ0VuZCkKICAgICAgICBvbmx5QmVmb3JlKHJldmVhbEVuZCkKICAgIHsKICAgICAgICB1aW50IGxlbmd0aCA9IGJpZHNbbXNnLnNlbmRlcl0ubGVuZ3RoOwogICAgICAgIHJlcXVpcmUodmFsdWVzLmxlbmd0aCA9PSBsZW5ndGgpOwogICAgICAgIHJlcXVpcmUoZmFrZXMubGVuZ3RoID09IGxlbmd0aCk7CiAgICAgICAgcmVxdWlyZShzZWNyZXRzLmxlbmd0aCA9PSBsZW5ndGgpOwoKICAgICAgICB1aW50IHJlZnVuZDsKICAgICAgICBmb3IgKHVpbnQgaSA9IDA7IGkgPCBsZW5ndGg7IGkrKykgewogICAgICAgICAgICBCaWQgc3RvcmFnZSBiaWRUb0NoZWNrID0gYmlkc1ttc2cuc2VuZGVyXVtpXTsKICAgICAgICAgICAgKHVpbnQgdmFsdWUsIGJvb2wgZmFrZSwgYnl0ZXMzMiBzZWNyZXQpID0KICAgICAgICAgICAgICAgICAgICAodmFsdWVzW2ldLCBmYWtlc1tpXSwgc2VjcmV0c1tpXSk7CiAgICAgICAgICAgIGlmIChiaWRUb0NoZWNrLmJsaW5kZWRCaWQgIT0ga2VjY2FrMjU2KGFiaS5lbmNvZGVQYWNrZWQodmFsdWUsIGZha2UsIHNlY3JldCkpKSB7CiAgICAgICAgICAgICAgICAvLyDlh7rku7fmnKrog73mraPnoa7miqvpnLLjgIIKICAgICAgICAgICAgICAgIC8vIOS4jei/lOi/mOiuoumHkeOAggogICAgICAgICAgICAgICAgY29udGludWU7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmVmdW5kICs9IGJpZFRvQ2hlY2suZGVwb3NpdDsKICAgICAgICAgICAgaWYgKCFmYWtlICYmIGJpZFRvQ2hlY2suZGVwb3NpdCA+PSB2YWx1ZSkgewogICAgICAgICAgICAgICAgaWYgKHBsYWNlQmlkKG1zZy5zZW5kZXIsIHZhbHVlKSkKICAgICAgICAgICAgICAgICAgICByZWZ1bmQgLT0gdmFsdWU7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgLy8g5L2/5Y+R6YCB6ICF5LiN5Y+v6IO95YaN5qyh6K6k6aKG5ZCM5LiA56yU6K6i6YeR44CCCiAgICAgICAgICAgIGJpZFRvQ2hlY2suYmxpbmRlZEJpZCA9IGJ5dGVzMzIoMCk7CiAgICAgICAgfQogICAgICAgIHBheWFibGUobXNnLnNlbmRlcikudHJhbnNmZXIocmVmdW5kKTsKICAgIH0KCiAgICAvLy8g5pKk5Zue5Ye65Lu36L+H6auY55qE56ue5qCH44CCCiAgICBmdW5jdGlvbiB3aXRoZHJhdygpIGV4dGVybmFsIHsKICAgICAgICB1aW50IGFtb3VudCA9IHBlbmRpbmdSZXR1cm5zW21zZy5zZW5kZXJdOwogICAgICAgIGlmIChhbW91bnQgPiAwKSB7CiAgICAgICAgICAgIC8vIOi/memHjOW+iOmHjeimge+8jOmmluWFiOimgeiuvumbtuWAvOOAggogICAgICAgICAgICAvLyDlm6DkuLrvvIzkvZzkuLrmjqXmlLbosIPnlKjnmoTkuIDpg6jliIbvvIwKICAgICAgICAgICAgLy8g5o6l5pS26ICF5Y+v5Lul5ZyoIGB0cmFuc2ZlcmAg6L+U5Zue5LmL5YmN6YeN5paw6LCD55So6K+l5Ye95pWw44CCCiAgICAgICAgICAgIC8v77yI5Y+v5p+l55yL5LiK6Z2i5YWz5LqOIOadoeS7tiAtPiDlvbHlk40gLT4g5Lqk5LqSIOeahOagh+azqO+8iQogICAgICAgICAgICBwZW5kaW5nUmV0dXJuc1ttc2cuc2VuZGVyXSA9IDA7CgogICAgICAgICAgICBwYXlhYmxlKG1zZy5zZW5kZXIpLnRyYW5zZmVyKGFtb3VudCk7CiAgICAgICAgfQogICAgfQoKICAgIC8vLyDnu5PmnZ/mi43ljZbvvIzlubbmiormnIDpq5jnmoTlh7rku7flj5HpgIHnu5nlj5fnm4rkurrjgIIKICAgIGZ1bmN0aW9uIGF1Y3Rpb25FbmQoKQogICAgICAgIGV4dGVybmFsCiAgICAgICAgb25seUFmdGVyKHJldmVhbEVuZCkKICAgIHsKICAgICAgICBpZiAoZW5kZWQpIHJldmVydCBBdWN0aW9uRW5kQWxyZWFkeUNhbGxlZCgpOwogICAgICAgIGVtaXQgQXVjdGlvbkVuZGVkKGhpZ2hlc3RCaWRkZXIsIGhpZ2hlc3RCaWQpOwogICAgICAgIGVuZGVkID0gdHJ1ZTsKICAgICAgICBiZW5lZmljaWFyeS50cmFuc2ZlcihoaWdoZXN0QmlkKTsKICAgIH0KCiAgICAvLyDov5nmmK/kuIDkuKogImludGVybmFsIiDlh73mlbDvvIwKICAgIC8vIOaEj+WRs+edgOWug+WPquiDveWcqOacrOWQiOe6pu+8iOaIlue7p+aJv+WQiOe6pu+8ieWGheiiq+iwg+eUqOOAggogICAgZnVuY3Rpb24gcGxhY2VCaWQoYWRkcmVzcyBiaWRkZXIsIHVpbnQgdmFsdWUpIGludGVybmFsCiAgICAgICAgICAgIHJldHVybnMgKGJvb2wgc3VjY2VzcykKICAgIHsKICAgICAgICBpZiAodmFsdWUgPD0gaGlnaGVzdEJpZCkgewogICAgICAgICAgICByZXR1cm4gZmFsc2U7CiAgICAgICAgfQogICAgICAgIGlmIChoaWdoZXN0QmlkZGVyICE9IGFkZHJlc3MoMCkpIHsKICAgICAgICAgICAgLy8g6L+U6L+Y5LmL5YmN55qE5pyA6auY5Ye65Lu3CiAgICAgICAgICAgIHBlbmRpbmdSZXR1cm5zW2hpZ2hlc3RCaWRkZXJdICs9IGhpZ2hlc3RCaWQ7CiAgICAgICAgfQogICAgICAgIGhpZ2hlc3RCaWQgPSB2YWx1ZTsKICAgICAgICBoaWdoZXN0QmlkZGVyID0gYmlkZGVyOwogICAgICAgIHJldHVybiB0cnVlOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">BlindAuction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">Bid</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">blindedBid</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">deposit</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>beneficiary<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">biddingEnd</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">revealEnd</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">public </span><span class="nv">ended</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>Bid<span class="p">[])</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>bids<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBidder</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">highestBid</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 允许取回以前的竞标。</span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>pendingReturns<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">AuctionEnded</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">winner</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">highestBid</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 描述失败的错误信息。</span>
+
+<span class="w">    </span><span class="c1">/// 该函数被过早调用。</span>
+<span class="w">    </span><span class="c1">/// 在 `time` 时间再试一次。</span>
+<span class="w">    </span>error<span class="w"> </span>TooEarly<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">time</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 该函数被过晚调用。</span>
+<span class="w">    </span><span class="c1">/// 它不能在 `time` 时间之后被调用。</span>
+<span class="w">    </span>error<span class="w"> </span>TooLate<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">time</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 函数 auctionEnd 已经被调用。</span>
+<span class="w">    </span>error<span class="w"> </span>AuctionEndAlreadyCalled<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 使用 修饰符（modifier） 可以更便捷的校验函数的入参。</span>
+<span class="w">    </span><span class="c1">// `onlyBefore` 会被用于后面的 `bid` 函数：</span>
+<span class="w">    </span><span class="c1">// 新的函数体是由 modifier 本身的函数体，其中`_`被旧的函数体所取代。</span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>onlyBefore<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>time<span class="p">)</span><span class="w"> </span>revert<span class="w"> </span>TooLate<span class="p">(</span>time<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>onlyAfter<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>time<span class="p">)</span><span class="w"> </span>revert<span class="w"> </span>TooEarly<span class="p">(</span>time<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">biddingTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">revealTime</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>beneficiaryAddress<span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>beneficiary<span class="w"> </span><span class="o">=</span><span class="w"> </span>beneficiaryAddress<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>biddingEnd<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>biddingTime<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>revealEnd<span class="w"> </span><span class="o">=</span><span class="w"> </span>biddingEnd<span class="w"> </span><span class="o">+</span><span class="w"> </span>revealTime<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 可以通过 `_blindedBid` = keccak256(value, fake, secret)</span>
+<span class="w">    </span><span class="c1">/// 设置一个盲拍。</span>
+<span class="w">    </span><span class="c1">/// 只有在出价披露阶段被正确披露，已发送的以太币才会被退还。</span>
+<span class="w">    </span><span class="c1">/// 如果与出价一起发送的以太币至少为 &quot;value&quot; 且 &quot;fake&quot; 不为真，则出价有效。</span>
+<span class="w">    </span><span class="c1">/// 将 &quot;fake&quot; 设置为 true ，</span>
+<span class="w">    </span><span class="c1">/// 然后发送满足订金金额但又不与出价相同的金额是隐藏实际出价的方法。</span>
+<span class="w">    </span><span class="c1">/// 同一个地址可以放置多个出价。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">blindedBid</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="w"></span>
+<span class="w">        </span>onlyBefore<span class="p">(</span>biddingEnd<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>bids<span class="p">[</span><span class="k">msg.sender</span><span class="p">].</span>push<span class="p">(</span>Bid<span class="p">({</span><span class="w"></span>
+<span class="w">            </span>blindedBid<span class="p">:</span><span class="w"> </span>blindedBid<span class="p">,</span><span class="w"></span>
+<span class="w">            </span>deposit<span class="p">:</span><span class="w"> </span><span class="k">msg.value</span><span class="w"></span>
+<span class="w">        </span><span class="p">}));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 披露你的盲拍出价。</span>
+<span class="w">    </span><span class="c1">/// 对于所有正确披露的无效出价以及除最高出价以外的所有出价，您都将获得退款。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">reveal</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="p">[]</span><span class="w"> </span>calldata<span class="w"> </span>values<span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bool</span><span class="p">[]</span><span class="w"> </span>calldata<span class="w"> </span>fakes<span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bytes32</span><span class="p">[]</span><span class="w"> </span>calldata<span class="w"> </span>secrets<span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span>onlyAfter<span class="p">(</span>biddingEnd<span class="p">)</span><span class="w"></span>
+<span class="w">        </span>onlyBefore<span class="p">(</span>revealEnd<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>bids<span class="p">[</span><span class="k">msg.sender</span><span class="p">].</span>length<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>values<span class="p">.</span>length<span class="w"> </span><span class="o">==</span><span class="w"> </span>length<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>fakes<span class="p">.</span>length<span class="w"> </span><span class="o">==</span><span class="w"> </span>length<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>secrets<span class="p">.</span>length<span class="w"> </span><span class="o">==</span><span class="w"> </span>length<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">refund</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"> </span>i<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>length<span class="p">;</span><span class="w"> </span>i<span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>Bid<span class="w"> </span>storage<span class="w"> </span>bidToCheck<span class="w"> </span><span class="o">=</span><span class="w"> </span>bids<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>i<span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">value</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nv">fake</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">secret</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">                    </span><span class="p">(</span>values<span class="p">[</span>i<span class="p">],</span><span class="w"> </span>fakes<span class="p">[</span>i<span class="p">],</span><span class="w"> </span>secrets<span class="p">[</span>i<span class="p">]);</span><span class="w"></span>
+<span class="w">            </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>bidToCheck<span class="p">.</span>blindedBid<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span>value<span class="p">,</span><span class="w"> </span>fake<span class="p">,</span><span class="w"> </span>secret<span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// 出价未能正确披露。</span>
+<span class="w">                </span><span class="c1">// 不返还订金。</span>
+<span class="w">                </span><span class="kt">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span>refund<span class="w"> </span><span class="o">+=</span><span class="w"> </span>bidToCheck<span class="p">.</span>deposit<span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span>fake<span class="w"> </span><span class="err">&amp;&amp;</span><span class="w"> </span>bidToCheck<span class="p">.</span>deposit<span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>value<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>placeBid<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>value<span class="p">))</span><span class="w"></span>
+<span class="w">                    </span>refund<span class="w"> </span><span class="o">-=</span><span class="w"> </span>value<span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 使发送者不可能再次认领同一笔订金。</span>
+<span class="w">            </span>bidToCheck<span class="p">.</span>blindedBid<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">bytes32</span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>refund<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 撤回出价过高的竞标。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pendingReturns<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>amount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 这里很重要，首先要设零值。</span>
+<span class="w">            </span><span class="c1">// 因为，作为接收调用的一部分，</span>
+<span class="w">            </span><span class="c1">// 接收者可以在 `transfer` 返回之前重新调用该函数。</span>
+<span class="w">            </span><span class="c1">//（可查看上面关于 条件 -&gt; 影响 -&gt; 交互 的标注）</span>
+<span class="w">            </span>pendingReturns<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">            </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 结束拍卖，并把最高的出价发送给受益人。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">auctionEnd</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span>onlyAfter<span class="p">(</span>revealEnd<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>ended<span class="p">)</span><span class="w"> </span>revert<span class="w"> </span>AuctionEndAlreadyCalled<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>AuctionEnded<span class="p">(</span>highestBidder<span class="p">,</span><span class="w"> </span>highestBid<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>ended<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>beneficiary<span class="p">.</span>transfer<span class="p">(</span>highestBid<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 这是一个 &quot;internal&quot; 函数，</span>
+<span class="w">    </span><span class="c1">// 意味着它只能在本合约（或继承合约）内被调用。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">placeBid</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">bidder</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"></span>
+<span class="w">            </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>value<span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>highestBid<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">return</span><span class="w"> </span><span class="kt">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>highestBidder<span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kt">address</span><span class="p">(</span><span class="m m-Decimal">0</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 返还之前的最高出价</span>
+<span class="w">            </span>pendingReturns<span class="p">[</span>highestBidder<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>highestBid<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span>highestBid<span class="w"> </span><span class="o">=</span><span class="w"> </span>value<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>highestBidder<span class="w"> </span><span class="o">=</span><span class="w"> </span>bidder<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="index-2">
+<span id="id6"></span><h2>安全的远程购买<a class="headerlink" href="#index-2" title="Permalink to this heading"></a></h2>
+<p>目前，远程购买商品需要多方相互信任。最简单的关系涉及一个卖家和一个买家。
+买方希望从卖方那里收到一件物品，卖方希望得到金钱（或等价物）作为回报。
+这里面有问题的部分是的运输。没有办法确定物品是否到达买方手中。</p>
+<p>有多种方法来解决这个问题，但都有这样或那样的不足之处。
+在下面的例子中，双方都要把两倍价值于物品的资金放入合约中作为托管。
+只要发生这种情况，钱就会一直锁在合同里面，直到买方确认收到物品。
+之后，买方会得到退回的资金（他们押金的一半），卖方得到三倍的资金（他们的押金加上物品的价值）。
+这背后的想法是，双方都有动力去解决这个问题，否则他们的钱就会被永远锁定。</p>
+<p>这个合约当然不能解决问题，但它概述了如何在合约内使用类似状态机的构造。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKY29udHJhY3QgUHVyY2hhc2UgewogICAgdWludCBwdWJsaWMgdmFsdWU7CiAgICBhZGRyZXNzIHBheWFibGUgcHVibGljIHNlbGxlcjsKICAgIGFkZHJlc3MgcGF5YWJsZSBwdWJsaWMgYnV5ZXI7CgogICAgZW51bSBTdGF0ZSB7IENyZWF0ZWQsIExvY2tlZCwgUmVsZWFzZSwgSW5hY3RpdmUgfQogICAgLy8g54q25oCB5Y+Y6YeP55qE6buY6K6k5YC85piv56ys5LiA5Liq5oiQ5ZGY77yMYFN0YXRlLmNyZWF0ZWRg44CCCiAgICBTdGF0ZSBwdWJsaWMgc3RhdGU7CgogICAgbW9kaWZpZXIgY29uZGl0aW9uKGJvb2wgY29uZGl0aW9uXykgewogICAgICAgIHJlcXVpcmUoY29uZGl0aW9uXyk7CiAgICAgICAgXzsKICAgIH0KCiAgICAvLy8g5Y+q5pyJ5Lmw5pa55Y+v5Lul6LCD55So6L+Z5Liq5Ye95pWw44CCCiAgICBlcnJvciBPbmx5QnV5ZXIoKTsKICAgIC8vLyDlj6rmnInljZbmlrnlj6/ku6XosIPnlKjov5nkuKrlh73mlbDjgIIKICAgIGVycm9yIE9ubHlTZWxsZXIoKTsKICAgIC8vLyDlnKjlvZPliY3nirbmgIHkuIvkuI3og73osIPnlKjor6Xlh73mlbDjgIIKICAgIGVycm9yIEludmFsaWRTdGF0ZSgpOwogICAgLy8vIOaPkOS+m+eahOWAvOW/hemhu+aYr+WBtuaVsOOAggogICAgZXJyb3IgVmFsdWVOb3RFdmVuKCk7CgogICAgbW9kaWZpZXIgb25seUJ1eWVyKCkgewogICAgICAgIGlmIChtc2cuc2VuZGVyICE9IGJ1eWVyKQogICAgICAgICAgICByZXZlcnQgT25seUJ1eWVyKCk7CiAgICAgICAgXzsKICAgIH0KCiAgICBtb2RpZmllciBvbmx5U2VsbGVyKCkgewogICAgICAgIGlmIChtc2cuc2VuZGVyICE9IHNlbGxlcikKICAgICAgICAgICAgcmV2ZXJ0IE9ubHlTZWxsZXIoKTsKICAgICAgICBfOwogICAgfQoKICAgIG1vZGlmaWVyIGluU3RhdGUoU3RhdGUgc3RhdGVfKSB7CiAgICAgICAgaWYgKHN0YXRlICE9IHN0YXRlXykKICAgICAgICAgICAgcmV2ZXJ0IEludmFsaWRTdGF0ZSgpOwogICAgICAgIF87CiAgICB9CgogICAgZXZlbnQgQWJvcnRlZCgpOwogICAgZXZlbnQgUHVyY2hhc2VDb25maXJtZWQoKTsKICAgIGV2ZW50IEl0ZW1SZWNlaXZlZCgpOwogICAgZXZlbnQgU2VsbGVyUmVmdW5kZWQoKTsKCiAgICAvLyDnoa7kv50gYG1zZy52YWx1ZWAg5piv5LiA5Liq5YG25pWw44CCCiAgICAvLyDlpoLmnpzmmK/lpYfmlbDvvIzpmaTms5XkvJrmiKrmlq3jgIIKICAgIC8vIOmAmui/h+S5mOazleajgOafpeWug+S4jeaYr+S4gOS4quWlh+aVsOOAggogICAgY29uc3RydWN0b3IoKSBwYXlhYmxlIHsKICAgICAgICBzZWxsZXIgPSBwYXlhYmxlKG1zZy5zZW5kZXIpOwogICAgICAgIHZhbHVlID0gbXNnLnZhbHVlIC8gMjsKICAgICAgICBpZiAoKDIgKiB2YWx1ZSkgIT0gbXNnLnZhbHVlKQogICAgICAgICAgICByZXZlcnQgVmFsdWVOb3RFdmVuKCk7CiAgICB9CgogICAgLy8vIOe7iOatoui0reS5sOW5tuaUtuWbniBldGhlcuOAggogICAgLy8vIOWPquiDveeUseWNluaWueWcqOWQiOWQjOmUgeWumuWJjeiDveiwg+eUqOOAggogICAgZnVuY3Rpb24gYWJvcnQoKQogICAgICAgIGV4dGVybmFsCiAgICAgICAgb25seVNlbGxlcgogICAgICAgIGluU3RhdGUoU3RhdGUuQ3JlYXRlZCkKICAgIHsKICAgICAgICBlbWl0IEFib3J0ZWQoKTsKICAgICAgICBzdGF0ZSA9IFN0YXRlLkluYWN0aXZlOwogICAgICAgIC8vIOaIkeS7rOWcqOi/memHjOebtOaOpeS9v+eUqCBgdHJhbnNmZXJg44CCCiAgICAgICAgLy8g5a6D5Y+v5Lul5a6J5YWo5Zyw6YeN5YWl44CCCiAgICAgICAgLy8g5Zug5Li65a6D5piv6L+Z5Liq5Ye95pWw5Lit55qE5pyA5ZCO5LiA5qyh6LCD55So77yMCiAgICAgICAgLy8g6ICM5LiU5oiR5Lus5bey57uP5pS55Y+Y5LqG54q25oCB44CCCiAgICAgICAgc2VsbGVyLnRyYW5zZmVyKGFkZHJlc3ModGhpcykuYmFsYW5jZSk7CiAgICB9CgogICAgLy8vIOS5sOaWueehruiupOi0reS5sOOAggogICAgLy8vIOS6pOaYk+W/hemhu+WMheaLrCBgMiAqIHZhbHVlYCBldGhlcuOAggogICAgLy8vIEV0aGVyIOWwhuiiq+mUgeS9j++8jOebtOWIsOiwg+eUqCBjb25maXJtUmVjZWl2ZWTjgIIKICAgIGZ1bmN0aW9uIGNvbmZpcm1QdXJjaGFzZSgpCiAgICAgICAgZXh0ZXJuYWwKICAgICAgICBpblN0YXRlKFN0YXRlLkNyZWF0ZWQpCiAgICAgICAgY29uZGl0aW9uKG1zZy52YWx1ZSA9PSAoMiAqIHZhbHVlKSkKICAgICAgICBwYXlhYmxlCiAgICB7CiAgICAgICAgZW1pdCBQdXJjaGFzZUNvbmZpcm1lZCgpOwogICAgICAgIGJ1eWVyID0gcGF5YWJsZShtc2cuc2VuZGVyKTsKICAgICAgICBzdGF0ZSA9IFN0YXRlLkxvY2tlZDsKICAgIH0KCiAgICAvLy8g56Gu6K6k5oKo77yI5Lmw5pa577yJ5bey57uP5pS25Yiw5LqG6K+l54mp5ZOB44CCCiAgICAvLy8g6L+Z5bCG6YeK5pS+6ZSB5a6a55qEIGV0aGVy44CCCiAgICBmdW5jdGlvbiBjb25maXJtUmVjZWl2ZWQoKQogICAgICAgIGV4dGVybmFsCiAgICAgICAgb25seUJ1eWVyCiAgICAgICAgaW5TdGF0ZShTdGF0ZS5Mb2NrZWQpCiAgICB7CiAgICAgICAgZW1pdCBJdGVtUmVjZWl2ZWQoKTsKICAgICAgICAvLyDpppblhYjmlLnlj5jnirbmgIHmmK/lvojph43opoHnmoTvvIzlkKbliJnnmoTor53vvIwKICAgICAgICAvLyDkuIvpnaLkvb/nlKggYHNlbmRgIOiwg+eUqOeahOWQiOe6puWPr+S7peWcqOi/memHjOWGjeasoeiwg+eUqOOAggogICAgICAgIHN0YXRlID0gU3RhdGUuUmVsZWFzZTsKCiAgICAgICAgYnV5ZXIudHJhbnNmZXIodmFsdWUpOwogICAgfQoKICAgIC8vLyDor6Xlip/og73kuLrljZblrrbpgIDmrL7vvIwKICAgIC8vLyDljbPpgIDov5jljZblrrbplIHlrprnmoTotYTph5HjgIIKICAgIGZ1bmN0aW9uIHJlZnVuZFNlbGxlcigpCiAgICAgICAgZXh0ZXJuYWwKICAgICAgICBvbmx5U2VsbGVyCiAgICAgICAgaW5TdGF0ZShTdGF0ZS5SZWxlYXNlKQogICAgewogICAgICAgIGVtaXQgU2VsbGVyUmVmdW5kZWQoKTsKICAgICAgICAvLyDpppblhYjmlLnlj5jnirbmgIHmmK/lvojph43opoHnmoTvvIzlkKbliJnnmoTor53vvIwKICAgICAgICAvLyDkuIvpnaLkvb/nlKggYHNlbmRgIOiwg+eUqOeahOWQiOe6puWPr+S7peWcqOi/memHjOWGjeasoeiwg+eUqOOAggogICAgICAgIHN0YXRlID0gU3RhdGUuSW5hY3RpdmU7CgogICAgICAgIHNlbGxlci50cmFuc2ZlcigzICogdmFsdWUpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">Purchase</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>seller<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>buyer<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">enum</span><span class="w"> </span><span class="nv">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>Created<span class="p">,</span><span class="w"> </span>Locked<span class="p">,</span><span class="w"> </span>Release<span class="p">,</span><span class="w"> </span>Inactive<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 状态变量的默认值是第一个成员，`State.created`。</span>
+<span class="w">    </span>State<span class="w"> </span><span class="kt">public</span><span class="w"> </span>state<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>condition<span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">condition_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>condition_<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 只有买方可以调用这个函数。</span>
+<span class="w">    </span>error<span class="w"> </span>OnlyBuyer<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 只有卖方可以调用这个函数。</span>
+<span class="w">    </span>error<span class="w"> </span>OnlySeller<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 在当前状态下不能调用该函数。</span>
+<span class="w">    </span>error<span class="w"> </span>InvalidState<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 提供的值必须是偶数。</span>
+<span class="w">    </span>error<span class="w"> </span>ValueNotEven<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>onlyBuyer<span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span>buyer<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>OnlyBuyer<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>onlySeller<span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span>seller<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>OnlySeller<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>inState<span class="p">(</span>State<span class="w"> </span>state_<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>state<span class="w"> </span><span class="o">!=</span><span class="w"> </span>state_<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>InvalidState<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">Aborted</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">PurchaseConfirmed</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">ItemReceived</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">SellerRefunded</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 确保 `msg.value` 是一个偶数。</span>
+<span class="w">    </span><span class="c1">// 如果是奇数，除法会截断。</span>
+<span class="w">    </span><span class="c1">// 通过乘法检查它不是一个奇数。</span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>seller<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>value<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">((</span><span class="m m-Decimal">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>value<span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>ValueNotEven<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 终止购买并收回 ether。</span>
+<span class="w">    </span><span class="c1">/// 只能由卖方在合同锁定前能调用。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">abort</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span>onlySeller<span class="w"></span>
+<span class="w">        </span>inState<span class="p">(</span>State<span class="p">.</span>Created<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>Aborted<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>state<span class="w"> </span><span class="o">=</span><span class="w"> </span>State<span class="p">.</span>Inactive<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 我们在这里直接使用 `transfer`。</span>
+<span class="w">        </span><span class="c1">// 它可以安全地重入。</span>
+<span class="w">        </span><span class="c1">// 因为它是这个函数中的最后一次调用，</span>
+<span class="w">        </span><span class="c1">// 而且我们已经改变了状态。</span>
+<span class="w">        </span>seller<span class="p">.</span>transfer<span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">).</span>balance<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 买方确认购买。</span>
+<span class="w">    </span><span class="c1">/// 交易必须包括 `2 * value` ether。</span>
+<span class="w">    </span><span class="c1">/// Ether 将被锁住，直到调用 confirmReceived。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">confirmPurchase</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span>inState<span class="p">(</span>State<span class="p">.</span>Created<span class="p">)</span><span class="w"></span>
+<span class="w">        </span>condition<span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="m m-Decimal">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>value<span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>PurchaseConfirmed<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>buyer<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>state<span class="w"> </span><span class="o">=</span><span class="w"> </span>State<span class="p">.</span>Locked<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 确认您（买方）已经收到了该物品。</span>
+<span class="w">    </span><span class="c1">/// 这将释放锁定的 ether。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">confirmReceived</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span>onlyBuyer<span class="w"></span>
+<span class="w">        </span>inState<span class="p">(</span>State<span class="p">.</span>Locked<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>ItemReceived<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 首先改变状态是很重要的，否则的话，</span>
+<span class="w">        </span><span class="c1">// 下面使用 `send` 调用的合约可以在这里再次调用。</span>
+<span class="w">        </span>state<span class="w"> </span><span class="o">=</span><span class="w"> </span>State<span class="p">.</span>Release<span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span>buyer<span class="p">.</span>transfer<span class="p">(</span>value<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 该功能为卖家退款，</span>
+<span class="w">    </span><span class="c1">/// 即退还卖家锁定的资金。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">refundSeller</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">external</span><span class="w"></span>
+<span class="w">        </span>onlySeller<span class="w"></span>
+<span class="w">        </span>inState<span class="p">(</span>State<span class="p">.</span>Release<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>SellerRefunded<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 首先改变状态是很重要的，否则的话，</span>
+<span class="w">        </span><span class="c1">// 下面使用 `send` 调用的合约可以在这里再次调用。</span>
+<span class="w">        </span>state<span class="w"> </span><span class="o">=</span><span class="w"> </span>State<span class="p">.</span>Inactive<span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span>seller<span class="p">.</span>transfer<span class="p">(</span><span class="m m-Decimal">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>value<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>微支付通道<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<p>在这一节中，我们将学习如何建立一个支付通道的实施实例。
+它使用加密签名，使以太币在同一当事人之间的重复转移变得安全、即时，并且没有交易费用。
+对于这个例子，我们需要了解如何签名和验证签名，并设置支付通道。</p>
+<section id="id8">
+<h3>创建和验证签名<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>想象一下，Alice想发送一些以太给Bob，
+即Alice是发送方，Bob是接收方。</p>
+<p>Alice 只需要在链下发送经过加密签名的信息
+(例如通过电子邮件)给Bob，它类似于写支票。</p>
+<p>Alice和Bob使用签名来授权交易，这在以太坊的智能合约中是可以实现的。
+Alice将建立一个简单的智能合约，让她传输以太币，但她不会自己调用一个函数来启动付款，
+而是让Bob来做，从而支付交易费用。</p>
+<p>该合约将按以下方式运作：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Alice部署了 <code class="docutils literal notranslate"><span class="pre">ReceiverPays</span></code> 合约，附加了足够的以太币来支付将要进行的付款。</p></li>
+<li><p>Alice通过用她的私钥签署一个消息来授权付款。</p></li>
+<li><p>Alice将经过加密签名的信息发送给Bob。该信息不需要保密（后面会解释），而且发送机制也不重要。</p></li>
+<li><p>Bob通过向智能合约发送签名的信息来索取他的付款，合约验证了信息的真实性，然后释放资金。</p></li>
+</ol>
+</div></blockquote>
+<section id="id9">
+<h4>创建签名<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h4>
+<p>Alice不需要与以太坊网络交互来签署交易，这个过程是完全离线的。
+在本教程中，我们将使用 <a class="reference external" href="https://github.com/ethereum/web3.js">web3.js</a> 和
+<a class="reference external" href="https://metamask.io">MetaMask</a> 在浏览器中签署信息。
+使用 <a class="reference external" href="https://github.com/ethereum/EIPs/pull/712">EIP-712</a> 中描述的方法，
+因为它提供了许多其他安全优势。</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">/// 先进行哈希运算使事情变得更容易</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">sha3</span><span class="p">(</span><span class="s2">&quot;message to sign&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">personal</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hash</span><span class="p">,</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">defaultAccount</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Signed&quot;</span><span class="p">);</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">web3.eth.personal.sign</span></code> 把信息的长度加到签名数据中。
+由于我们先进行哈希运算，消息的长度总是正好是32字节，
+因此这个长度前缀总是相同的。</p>
+</div>
+</section>
+<section id="id10">
+<h4>签署内容<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<p>对于履行付款的合同，签署的信息必须包括：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>收件人的钱包地址。</p></li>
+<li><p>要转移的金额。</p></li>
+<li><p>重放攻击的保护。</p></li>
+</ol>
+</div></blockquote>
+<p>重放攻击是指一个已签署的信息被重复使用，以获得对第二次交易的授权。
+为了避免重放攻击，我们使用与以太坊交易本身相同的技术，
+即所谓的nonce，它是一个账户发送的交易数量。
+智能合约会检查一个nonce是否被多次使用。</p>
+<p>另一种类型的重放攻击可能发生在所有者部署 <code class="docutils literal notranslate"><span class="pre">ReceiverPays</span></code> 合约时，
+先进行了一些支付，然后销毁该合约。后来，
+他们决定再次部署 <code class="docutils literal notranslate"><span class="pre">RecipientPays</span></code> 合约，
+但新的合约不知道以前合约中使用的nonces，所以攻击者可以再次使用旧的信息。</p>
+<p>Alice可以通过在消息中包含合约的地址来防止这种攻击，
+并且只有包含合约地址本身的消息才会被接受。
+您可以在本节末尾的完整合约的 <code class="docutils literal notranslate"><span class="pre">claimPayment()</span></code> 函数的前两行找到这个例子。</p>
+</section>
+<section id="id11">
+<h4>组装参数<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<p>既然我们已经确定了要在签名信息中包含哪些信息，
+我们准备把信息放在一起，进行哈希运算，然后签名。
+简单起见，我们把数据连接起来。
+<a class="reference external" href="https://github.com/ethereumjs/ethereumjs-abi">ethereumjs-abi</a> 库提供了一个名为 <code class="docutils literal notranslate"><span class="pre">soliditySHA3</span></code> 的函数，
+模仿Solidity的 <code class="docutils literal notranslate"><span class="pre">keccak256</span></code> 函数应用于使用 <code class="docutils literal notranslate"><span class="pre">abi.encodePacked</span></code> 编码的参数的行为。
+这里有一个JavaScript函数，为 <code class="docutils literal notranslate"><span class="pre">ReceiverPays</span></code> 的例子创建了适当的签名。</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// recipient， 是应该被支付的地址。</span><span class="w"></span>
+<span class="c1">// amount，单位是 wei, 指定应该发送多少ether。</span><span class="w"></span>
+<span class="c1">// nonce， 可以是任何唯一的数字，以防止重放攻击。</span><span class="w"></span>
+<span class="c1">// contractAddress， 用于防止跨合约的重放攻击。</span><span class="w"></span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">signPayment</span><span class="p">(</span><span class="nx">recipient</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">,</span><span class="w"> </span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0x&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">abi</span><span class="p">.</span><span class="nx">soliditySHA3</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;address&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="nx">recipient</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">,</span><span class="w"> </span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">contractAddress</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;hex&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">personal</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hash</span><span class="p">,</span><span class="w"> </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">defaultAccount</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h4>在Solidity中恢复信息签名者<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h4>
+<p>一般来说，ECDSA的签名由两个参数组成， <code class="docutils literal notranslate"><span class="pre">r</span></code> 和 <code class="docutils literal notranslate"><span class="pre">s</span></code>。
+以太坊的签名包括第三个参数 <code class="docutils literal notranslate"><span class="pre">v</span></code> ，您可以用它来验证是哪个账户的私钥被用来签署信息，
+以及作为交易的发送者。Solidity 提供了一个内置函数
+<a class="reference internal" href="units-and-global-variables.html#mathematical-and-cryptographic-functions"><span class="std std-ref">ecrecover</span></a>，
+它接受一个消息以及 <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">s</span></code> 和 <code class="docutils literal notranslate"><span class="pre">v</span></code> 参数，然后返回用于签署该消息的地址。</p>
+</section>
+<section id="id13">
+<h4>提取签名参数<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h4>
+<p>web3.js 产生的签名是 <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">s</span></code> 和 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的拼接的，
+所以第一步是把这些参数分开。您可以在客户端这样做，
+但在智能合约内这样做意味着你只需要发送一个签名参数而不是三个。
+将一个字节数组分割成它的组成部分是很麻烦的，
+所以我们在 <code class="docutils literal notranslate"><span class="pre">splitSignature</span></code> 函数中使用
+<a class="reference internal" href="assembly.html"><span class="doc">inline assembly</span></a> 完成这项工作（本节末尾的完整合约中的第三个函数）。</p>
+</section>
+<section id="id14">
+<h4>计算信息哈希值<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<p>智能合约需要确切地知道哪些参数用于签名，
+因此它必须通过参数重新创建消息，并使用该消息进行签名验证。
+在 <code class="docutils literal notranslate"><span class="pre">claimPayment</span></code> 函数中，函数 <code class="docutils literal notranslate"><span class="pre">prefixed</span></code> 和 <code class="docutils literal notranslate"><span class="pre">recoverSigner</span></code> 做了这件事。</p>
+</section>
+<section id="id15">
+<h4>完整的合约<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h4>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwpjb250cmFjdCBSZWNlaXZlclBheXMgewogICAgYWRkcmVzcyBvd25lciA9IG1zZy5zZW5kZXI7CgogICAgbWFwcGluZyh1aW50MjU2ID0+IGJvb2wpIHVzZWROb25jZXM7CgogICAgY29uc3RydWN0b3IoKSBwYXlhYmxlIHt9CgogICAgZnVuY3Rpb24gY2xhaW1QYXltZW50KHVpbnQyNTYgYW1vdW50LCB1aW50MjU2IG5vbmNlLCBieXRlcyBtZW1vcnkgc2lnbmF0dXJlKSBleHRlcm5hbCB7CiAgICAgICAgcmVxdWlyZSghdXNlZE5vbmNlc1tub25jZV0pOwogICAgICAgIHVzZWROb25jZXNbbm9uY2VdID0gdHJ1ZTsKCiAgICAgICAgLy8g6L+Z5bCG6YeN5paw5Yib5bu65Zyo5a6i5oi356uv5LiK562+5ZCN55qE5L+h5oGv44CCCiAgICAgICAgYnl0ZXMzMiBtZXNzYWdlID0gcHJlZml4ZWQoa2VjY2FrMjU2KGFiaS5lbmNvZGVQYWNrZWQobXNnLnNlbmRlciwgYW1vdW50LCBub25jZSwgdGhpcykpKTsKCiAgICAgICAgcmVxdWlyZShyZWNvdmVyU2lnbmVyKG1lc3NhZ2UsIHNpZ25hdHVyZSkgPT0gb3duZXIpOwoKICAgICAgICBwYXlhYmxlKG1zZy5zZW5kZXIpLnRyYW5zZmVyKGFtb3VudCk7CiAgICB9CgogICAgLy8vIOmUgOavgeWQiOe6puW5tuaUtuWbnuWJqeS9meeahOi1hOmHkeOAggogICAgZnVuY3Rpb24gc2h1dGRvd24oKSBleHRlcm5hbCB7CiAgICAgICAgcmVxdWlyZShtc2cuc2VuZGVyID09IG93bmVyKTsKICAgICAgICBzZWxmZGVzdHJ1Y3QocGF5YWJsZShtc2cuc2VuZGVyKSk7CiAgICB9CgogICAgLy8vIOetvuWQjeaWueazleOAggogICAgZnVuY3Rpb24gc3BsaXRTaWduYXR1cmUoYnl0ZXMgbWVtb3J5IHNpZykKICAgICAgICBpbnRlcm5hbAogICAgICAgIHB1cmUKICAgICAgICByZXR1cm5zICh1aW50OCB2LCBieXRlczMyIHIsIGJ5dGVzMzIgcykKICAgIHsKICAgICAgICByZXF1aXJlKHNpZy5sZW5ndGggPT0gNjUpOwoKICAgICAgICBhc3NlbWJseSB7CiAgICAgICAgICAgIC8vIOWJjTMy5Liq5a2X6IqC77yM5Zyo6ZW/5bqm5YmN57yA5LmL5ZCO44CCCiAgICAgICAgICAgIHIgOj0gbWxvYWQoYWRkKHNpZywgMzIpKQogICAgICAgICAgICAvLyDnrKzkuozkuKozMuWtl+iKguOAggogICAgICAgICAgICBzIDo9IG1sb2FkKGFkZChzaWcsIDY0KSkKICAgICAgICAgICAgLy8g5pyA5ZCO5LiA5Liq5a2X6IqC77yI5LiL5LiA5LiqMzLlrZfoioLnmoTnrKzkuIDkuKrlrZfoioLvvInjgIIKICAgICAgICAgICAgdiA6PSBieXRlKDAsIG1sb2FkKGFkZChzaWcsIDk2KSkpCiAgICAgICAgfQoKICAgICAgICByZXR1cm4gKHYsIHIsIHMpOwogICAgfQoKICAgIGZ1bmN0aW9uIHJlY292ZXJTaWduZXIoYnl0ZXMzMiBtZXNzYWdlLCBieXRlcyBtZW1vcnkgc2lnKQogICAgICAgIGludGVybmFsCiAgICAgICAgcHVyZQogICAgICAgIHJldHVybnMgKGFkZHJlc3MpCiAgICB7CiAgICAgICAgKHVpbnQ4IHYsIGJ5dGVzMzIgciwgYnl0ZXMzMiBzKSA9IHNwbGl0U2lnbmF0dXJlKHNpZyk7CgogICAgICAgIHJldHVybiBlY3JlY292ZXIobWVzc2FnZSwgdiwgciwgcyk7CiAgICB9CgogICAgLy8vIOaehOW7uuS4gOS4quWJjee8gOWTiOW4jOWAvO+8jOS7peaooeS7vyBldGhfc2lnbiDnmoTooYzkuLrjgIIKICAgIGZ1bmN0aW9uIHByZWZpeGVkKGJ5dGVzMzIgaGFzaCkgaW50ZXJuYWwgcHVyZSByZXR1cm5zIChieXRlczMyKSB7CiAgICAgICAgcmV0dXJuIGtlY2NhazI1NihhYmkuZW5jb2RlUGFja2VkKCJceDE5RXRoZXJldW0gU2lnbmVkIE1lc3NhZ2U6XG4zMiIsIGhhc2gpKTsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">ReceiverPays</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span>usedNonces<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">claimPayment</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">amount</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">nonce</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>signature<span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="o">!</span>usedNonces<span class="p">[</span>nonce<span class="p">]);</span><span class="w"></span>
+<span class="w">        </span>usedNonces<span class="p">[</span>nonce<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 这将重新创建在客户端上签名的信息。</span>
+<span class="w">        </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>prefixed<span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>amount<span class="p">,</span><span class="w"> </span>nonce<span class="p">,</span><span class="w"> </span><span class="kt">this</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>recoverSigner<span class="p">(</span>message<span class="p">,</span><span class="w"> </span>signature<span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 销毁合约并收回剩余的资金。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">shutdown</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>selfdestruct<span class="p">(</span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 签名方法。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">splitSignature</span><span class="p">(</span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>sig<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">internal</span><span class="w"></span>
+<span class="w">        </span>pure<span class="w"></span>
+<span class="w">        </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">v</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">r</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>sig<span class="p">.</span>length<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">65</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span>assembly<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 前32个字节，在长度前缀之后。</span>
+<span class="w">            </span>r<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>mload<span class="p">(</span>add<span class="p">(</span>sig<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">32</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 第二个32字节。</span>
+<span class="w">            </span>s<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>mload<span class="p">(</span>add<span class="p">(</span>sig<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">64</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 最后一个字节（下一个32字节的第一个字节）。</span>
+<span class="w">            </span>v<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>byte<span class="p">(</span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span>mload<span class="p">(</span>add<span class="p">(</span>sig<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">96</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span>v<span class="p">,</span><span class="w"> </span>r<span class="p">,</span><span class="w"> </span>s<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">recoverSigner</span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">message</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>sig<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">internal</span><span class="w"></span>
+<span class="w">        </span>pure<span class="w"></span>
+<span class="w">        </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">v</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">r</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>splitSignature<span class="p">(</span>sig<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>ecrecover<span class="p">(</span>message<span class="p">,</span><span class="w"> </span>v<span class="p">,</span><span class="w"> </span>r<span class="p">,</span><span class="w"> </span>s<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 构建一个前缀哈希值，以模仿 eth_sign 的行为。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">prefixed</span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">hash</span><span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bytes32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span><span class="s2">&quot;\x19Ethereum Signed Message:\n32&quot;</span><span class="p">,</span><span class="w"> </span><span class="kt">hash</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h3>编写一个简单的支付通道合约<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<p>Alice现在建立了一个简单但完整的支付通道的实现。
+支付通道使用加密签名来安全、即时地重复转移以太币，
+并且没有交易费用。</p>
+<section id="id17">
+<h4>什么是支付通道？<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h4>
+<p>支付通道允许参与者在不使用交易的情况下重复转移以太币。
+这意味着，你可以避免与交易相关的延迟和费用。
+我们将探讨两方（Alice和Bob）之间一个简单的单向支付通道。它涉及三个步骤：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Alice用以太币为智能合约提供资金。这就 “打开” 了支付通道。</p></li>
+<li><p>Alice签署信息，说明欠接收者多少以太币。这个步骤对每一笔付款都要重复进行。</p></li>
+<li><p>Bob “关闭” 支付通道，取出他的那部分以太币，并将剩余部分发回给发送方。</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>只有步骤1和3需要以太坊交易，意味着步骤2中发送方可以通过链下方法（如电子邮件）
+向接收方发送加密签名的信息。这意味着只需要两个交易就可以支持任何数量的转移。</p>
+</div>
+<p>Bob保证会收到他的资金，因为智能合约托管了以太币，
+并兑现了一个有效的签名信息。智能合约也强制执行超时，
+所以即使接收者拒绝关闭通道，Alice也能保证最终收回她的资金。
+由支付通道的参与者决定保持通道的开放时间。对于一个短暂的交易，
+如向网吧支付每分钟的网络访问费，支付通道可以保持有限的开放时间。
+另一方面，对于经常性的支付，如向雇员支付每小时的工资，
+支付渠道可能会保持开放几个月或几年。</p>
+</section>
+<section id="id18">
+<h4>开通支付渠道<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h4>
+<p>为了开通支付通道，Alice部署了智能合约，
+添加了要托管的以太币，并指定了预期接收者和通道存在的最长时间。
+这就是本节末尾合同中的函数 <code class="docutils literal notranslate"><span class="pre">SimplePaymentChannel</span></code>。</p>
+</section>
+<section id="id19">
+<h4>进行支付<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h4>
+<p>Alice通过向Bob发送签名信息进行支付。
+这一步骤完全在以太坊网络之外进行。
+消息由发送方加密签名，然后直接传送给接收方。</p>
+<p>每条信息包括以下信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>智能合约的地址，用于防止跨合约重放攻击。</p></li>
+<li><p>到目前为止，欠接收方的以太币的总金额。</p></li>
+</ul>
+</div></blockquote>
+<p>一个支付通道只关闭一次，就是在一系列转账结束后。
+正因为如此，所发送的签名信息中只有一个能被赎回。
+这就是为什么每条签名信息都指定了一个累计的以太币欠款总额，
+而不是单个小额支付的金额。接收方自然会选择最新的签名信息来赎回，
+因为那是总额最高的签名信息。每个签名信息的nonce不再需要了，
+因为智能合约只兑现一个签名信息。
+智能合约的地址仍然被用来防止一个支付渠道的签名信息被用于另一个渠道。</p>
+<p>下面是经过修改的JavaScript代码，用于对上一节中的信息进行加密签名：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">constructPaymentMessage</span><span class="p">(</span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">abi</span><span class="p">.</span><span class="nx">soliditySHA3</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;address&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;uint256&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">signMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">personal</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;0x&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">message</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;hex&quot;</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="nx">web3</span><span class="p">.</span><span class="nx">eth</span><span class="p">.</span><span class="nx">defaultAccount</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nx">callback</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// contractAddress， 是用来防止跨合同的重放攻击。</span><span class="w"></span>
+<span class="c1">// amount，单位是wei，指定了应该发送多少以太。</span><span class="w"></span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">signPayment</span><span class="p">(</span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">constructPaymentMessage</span><span class="p">(</span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">signMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id20">
+<h4>关闭支付通道<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h4>
+<p>当Bob准备好接收他的资金时，
+是时候通过调用智能合约上的 <code class="docutils literal notranslate"><span class="pre">close</span></code> 函数关闭支付通道了。
+关闭通道会向接收者支付欠他们的以太币，并销毁合约，
+将任何剩余的以太币送回给Alice。
+为了关闭通道，Bob需要提供一个由Alice签名的信息。</p>
+<p>智能合约必须验证该消息是否包含发送者的有效签名。
+进行这种验证的过程与接收者使用签名的过程相同。
+Solidity函数 <code class="docutils literal notranslate"><span class="pre">isValidSignature</span></code> 和 <code class="docutils literal notranslate"><span class="pre">recoverSigner</span></code> 的工作方式
+与上一节中的JavaScript对应函数一样，而后者的函数是从 <code class="docutils literal notranslate"><span class="pre">ReceiverPays</span></code> 合约中借用的。</p>
+<p>只有支付通道的接收者可以调用 <code class="docutils literal notranslate"><span class="pre">close</span></code> 函数，
+他们自然会传递最新的支付信息，因为该信息带有最高的欠款总额。
+如果允许发送者调用这个函数，他们可以提供一个金额较低的签名消息，
+骗取接收者的欠款。</p>
+<p>该函数会验证签名的信息与给定的参数是否相符。
+如果一切正常，接收者就会收到他们的那部分以太币，
+而剩下的以太币将通过 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code> 发送给发送者。
+您可以在完整的合约中看到 <code class="docutils literal notranslate"><span class="pre">close</span></code> 函数。</p>
+</section>
+<section id="id21">
+<h4>通道到期<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h4>
+<p>Bob可以在任何时候关闭支付通道，但如果他们没有这样做，
+Alice需要一个方法来收回她的托管资金。在合同部署的时候，设置了一个 <em>到期时间</em>。
+一旦达到这个时间，Alice可以调用 <code class="docutils literal notranslate"><span class="pre">claimTimeout</span></code> 来收回她的资金。
+您可以在完整的合约中看到 <code class="docutils literal notranslate"><span class="pre">claimTimeout</span></code> 函数。</p>
+<p>在这个函数被调用后，Bob不能再接收任何以太。
+所以Bob必须在过期前关闭通道，这一点很重要。</p>
+</section>
+<section id="id22">
+<h4>完整的合约<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h4>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwpjb250cmFjdCBTaW1wbGVQYXltZW50Q2hhbm5lbCB7CiAgICBhZGRyZXNzIHBheWFibGUgcHVibGljIHNlbmRlcjsgICAgICAvLyDlj5HpgIHku5jmrL7nmoTotKbmiLfjgIIKICAgIGFkZHJlc3MgcGF5YWJsZSBwdWJsaWMgcmVjaXBpZW50OyAgIC8vIOaOpeaUtuS7mOasvueahOi0puaIt+OAggogICAgdWludDI1NiBwdWJsaWMgZXhwaXJhdGlvbjsgIC8vIOi2heaXtuaXtumXtO+8jOS7pemYsuaOpeaUtuiAheawuOS4jeWFs+mXreaUr+S7mOmAmumBk+OAggoKICAgIGNvbnN0cnVjdG9yIChhZGRyZXNzIHBheWFibGUgcmVjaXBpZW50QWRkcmVzcywgdWludDI1NiBkdXJhdGlvbikKICAgICAgICBwYXlhYmxlCiAgICB7CiAgICAgICAgc2VuZGVyID0gcGF5YWJsZShtc2cuc2VuZGVyKTsKICAgICAgICByZWNpcGllbnQgPSByZWNpcGllbnRBZGRyZXNzOwogICAgICAgIGV4cGlyYXRpb24gPSBibG9jay50aW1lc3RhbXAgKyBkdXJhdGlvbjsKICAgIH0KCiAgICAvLy8g5o6l5pS26ICF5Y+v5Lul5Zyo5Lu75L2V5pe25YCZ6YCa6L+H5o+Q5L6b5Y+R6YCB6ICF562+5ZCN55qE6YeR6aKd5p2l5YWz6Zet6YCa6YGT77yMCiAgICAvLy8g5o6l5pS26ICF5bCG6I635b6X6K+l6YeR6aKd77yM5YW25L2Z6YOo5YiG5bCG6L+U5Zue5Y+R6YCB6ICF44CCCiAgICBmdW5jdGlvbiBjbG9zZSh1aW50MjU2IGFtb3VudCwgYnl0ZXMgbWVtb3J5IHNpZ25hdHVyZSkgZXh0ZXJuYWwgewogICAgICAgIHJlcXVpcmUobXNnLnNlbmRlciA9PSByZWNpcGllbnQpOwogICAgICAgIHJlcXVpcmUoaXNWYWxpZFNpZ25hdHVyZShhbW91bnQsIHNpZ25hdHVyZSkpOwoKICAgICAgICByZWNpcGllbnQudHJhbnNmZXIoYW1vdW50KTsKICAgICAgICBzZWxmZGVzdHJ1Y3Qoc2VuZGVyKTsKICAgIH0KCiAgICAvLy8g5Y+R6YCB6ICF5Y+v5Lul5Zyo5Lu75L2V5pe25YCZ5bu26ZW/5Yiw5pyf5pe26Ze044CCCiAgICBmdW5jdGlvbiBleHRlbmQodWludDI1NiBuZXdFeHBpcmF0aW9uKSBleHRlcm5hbCB7CiAgICAgICAgcmVxdWlyZShtc2cuc2VuZGVyID09IHNlbmRlcik7CiAgICAgICAgcmVxdWlyZShuZXdFeHBpcmF0aW9uID4gZXhwaXJhdGlvbik7CgogICAgICAgIGV4cGlyYXRpb24gPSBuZXdFeHBpcmF0aW9uOwogICAgfQoKICAgIC8vLyDlpoLmnpzovr7liLDotoXml7bml7bpl7TogIzmjqXmlLbogIXmsqHmnInlhbPpl63pgJrpgZPvvIwKICAgIC8vLyDpgqPkuYjku6XlpKrlsLHkvJrooqvph4rmlL7lm57nu5nlj5HpgIHogIXjgIIKICAgIGZ1bmN0aW9uIGNsYWltVGltZW91dCgpIGV4dGVybmFsIHsKICAgICAgICByZXF1aXJlKGJsb2NrLnRpbWVzdGFtcCA+PSBleHBpcmF0aW9uKTsKICAgICAgICBzZWxmZGVzdHJ1Y3Qoc2VuZGVyKTsKICAgIH0KCiAgICBmdW5jdGlvbiBpc1ZhbGlkU2lnbmF0dXJlKHVpbnQyNTYgYW1vdW50LCBieXRlcyBtZW1vcnkgc2lnbmF0dXJlKQogICAgICAgIGludGVybmFsCiAgICAgICAgdmlldwogICAgICAgIHJldHVybnMgKGJvb2wpCiAgICB7CiAgICAgICAgYnl0ZXMzMiBtZXNzYWdlID0gcHJlZml4ZWQoa2VjY2FrMjU2KGFiaS5lbmNvZGVQYWNrZWQodGhpcywgYW1vdW50KSkpOwoKICAgICAgICAvLyDmo4Dmn6Xnrb7lkI3mmK/lkKbmnaXoh6rku5jmrL7mlrnjgIIKICAgICAgICByZXR1cm4gcmVjb3ZlclNpZ25lcihtZXNzYWdlLCBzaWduYXR1cmUpID09IHNlbmRlcjsKICAgIH0KCiAgICAvLy8g5LiL6Z2i55qE5omA5pyJ5Yqf6IO95piv5Y+W6IeqICfliJvlu7rlkozpqozor4Hnrb7lkI0nIOeahOeroOiKguOAggoKICAgIGZ1bmN0aW9uIHNwbGl0U2lnbmF0dXJlKGJ5dGVzIG1lbW9yeSBzaWcpCiAgICAgICAgaW50ZXJuYWwKICAgICAgICBwdXJlCiAgICAgICAgcmV0dXJucyAodWludDggdiwgYnl0ZXMzMiByLCBieXRlczMyIHMpCiAgICB7CiAgICAgICAgcmVxdWlyZShzaWcubGVuZ3RoID09IDY1KTsKCiAgICAgICAgYXNzZW1ibHkgewogICAgICAgICAgICAvLyDliY0zMuS4quWtl+iKgu+8jOWcqOmVv+W6puWJjee8gOS5i+WQjuOAggogICAgICAgICAgICByIDo9IG1sb2FkKGFkZChzaWcsIDMyKSkKICAgICAgICAgICAgLy8g56ys5LqM5LiqMzLlrZfoioLjgIIKICAgICAgICAgICAgcyA6PSBtbG9hZChhZGQoc2lnLCA2NCkpCiAgICAgICAgICAgIC8vIOacgOWQjuS4gOS4quWtl+iKgu+8iOS4i+S4gOS4qjMy5a2X6IqC55qE56ys5LiA5Liq5a2X6IqC77yJ44CCCiAgICAgICAgICAgIHYgOj0gYnl0ZSgwLCBtbG9hZChhZGQoc2lnLCA5NikpKQogICAgICAgIH0KCiAgICAgICAgcmV0dXJuICh2LCByLCBzKTsKICAgIH0KCiAgICBmdW5jdGlvbiByZWNvdmVyU2lnbmVyKGJ5dGVzMzIgbWVzc2FnZSwgYnl0ZXMgbWVtb3J5IHNpZykKICAgICAgICBpbnRlcm5hbAogICAgICAgIHB1cmUKICAgICAgICByZXR1cm5zIChhZGRyZXNzKQogICAgewogICAgICAgICh1aW50OCB2LCBieXRlczMyIHIsIGJ5dGVzMzIgcykgPSBzcGxpdFNpZ25hdHVyZShzaWcpOwoKICAgICAgICByZXR1cm4gZWNyZWNvdmVyKG1lc3NhZ2UsIHYsIHIsIHMpOwogICAgfQoKICAgIC8vLyDmnoTlu7rkuIDkuKrliY3nvIDlk4jluIzlgLzvvIzku6XmqKHku79ldGhfc2lnbueahOihjOS4uuOAggogICAgZnVuY3Rpb24gcHJlZml4ZWQoYnl0ZXMzMiBoYXNoKSBpbnRlcm5hbCBwdXJlIHJldHVybnMgKGJ5dGVzMzIpIHsKICAgICAgICByZXR1cm4ga2VjY2FrMjU2KGFiaS5lbmNvZGVQYWNrZWQoIlx4MTlFdGhlcmV1bSBTaWduZWQgTWVzc2FnZTpcbjMyIiwgaGFzaCkpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimplePaymentChannel</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>sender<span class="p">;</span><span class="w">      </span><span class="c1">// 发送付款的账户。</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>recipient<span class="p">;</span><span class="w">   </span><span class="c1">// 接收付款的账户。</span>
+<span class="w">    </span><span class="kt">uint256</span><span class="w"> </span><span class="k">public </span><span class="nv">expiration</span><span class="p">;</span><span class="w">  </span><span class="c1">// 超时时间，以防接收者永不关闭支付通道。</span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span>recipientAddress<span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">duration</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>sender<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>recipient<span class="w"> </span><span class="o">=</span><span class="w"> </span>recipientAddress<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>expiration<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>duration<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 接收者可以在任何时候通过提供发送者签名的金额来关闭通道，</span>
+<span class="w">    </span><span class="c1">/// 接收者将获得该金额，其余部分将返回发送者。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">close</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">amount</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>signature<span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>recipient<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>isValidSignature<span class="p">(</span>amount<span class="p">,</span><span class="w"> </span>signature<span class="p">));</span><span class="w"></span>
+
+<span class="w">        </span>recipient<span class="p">.</span>transfer<span class="p">(</span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>selfdestruct<span class="p">(</span>sender<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 发送者可以在任何时候延长到期时间。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">extend</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">newExpiration</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>sender<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>newExpiration<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>expiration<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span>expiration<span class="w"> </span><span class="o">=</span><span class="w"> </span>newExpiration<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 如果达到超时时间而接收者没有关闭通道，</span>
+<span class="w">    </span><span class="c1">/// 那么以太就会被释放回给发送者。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">claimTimeout</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>expiration<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>selfdestruct<span class="p">(</span>sender<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">isValidSignature</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">amount</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>signature<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">internal</span><span class="w"></span>
+<span class="w">        </span>view<span class="w"></span>
+<span class="w">        </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>prefixed<span class="p">(</span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span><span class="kt">this</span><span class="p">,</span><span class="w"> </span>amount<span class="p">)));</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1">// 检查签名是否来自付款方。</span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>recoverSigner<span class="p">(</span>message<span class="p">,</span><span class="w"> </span>signature<span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>sender<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 下面的所有功能是取自 &#39;创建和验证签名&#39; 的章节。</span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">splitSignature</span><span class="p">(</span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>sig<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">internal</span><span class="w"></span>
+<span class="w">        </span>pure<span class="w"></span>
+<span class="w">        </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">v</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">r</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">s</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>sig<span class="p">.</span>length<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">65</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span>assembly<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 前32个字节，在长度前缀之后。</span>
+<span class="w">            </span>r<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>mload<span class="p">(</span>add<span class="p">(</span>sig<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">32</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 第二个32字节。</span>
+<span class="w">            </span>s<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>mload<span class="p">(</span>add<span class="p">(</span>sig<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">64</span><span class="p">))</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 最后一个字节（下一个32字节的第一个字节）。</span>
+<span class="w">            </span>v<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>byte<span class="p">(</span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span>mload<span class="p">(</span>add<span class="p">(</span>sig<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">96</span><span class="p">)))</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="p">(</span>v<span class="p">,</span><span class="w"> </span>r<span class="p">,</span><span class="w"> </span>s<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">recoverSigner</span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">message</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>sig<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">internal</span><span class="w"></span>
+<span class="w">        </span>pure<span class="w"></span>
+<span class="w">        </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">v</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">r</span><span class="p">,</span><span class="w"> </span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>splitSignature<span class="p">(</span>sig<span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>ecrecover<span class="p">(</span>message<span class="p">,</span><span class="w"> </span>v<span class="p">,</span><span class="w"> </span>r<span class="p">,</span><span class="w"> </span>s<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 构建一个前缀哈希值，以模仿eth_sign的行为。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">prefixed</span><span class="p">(</span><span class="kt">bytes32</span><span class="w"> </span><span class="nv">hash</span><span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bytes32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="nb">keccak256</span><span class="p">(</span>abi<span class="p">.</span>encodePacked<span class="p">(</span><span class="s2">&quot;\x19Ethereum Signed Message:\n32&quot;</span><span class="p">,</span><span class="w"> </span><span class="kt">hash</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">splitSignature</span></code> 并没有使用所有的安全检查。
+真正的实现应该使用更严格的测试库，例如openzepplin的
+<a class="reference external" href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol">这个版本</a>
+的这个代码。</p>
+</div>
+</section>
+<section id="id24">
+<h4>验证付款<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h4>
+<p>不同与上一节，支付通道中的信息不会马上被兑换。
+接收者会跟踪最新的信息，并在关闭支付通道的时候赎回它。
+这意味着接收者对每条信息进行自行验证是至关重要的。
+否则就不能保证接收者最终能够得到付款。</p>
+<p>接收者应使用以下程序验证每条信息：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>验证签名信息中的合约地址是否与支付通道相符。</p></li>
+<li><p>验证新的总额是否为预期的数额。</p></li>
+<li><p>确认新的总额不超过代管的以太币数额。</p></li>
+<li><p>验证签名是否有效，是否来自于支付通道的发送方。</p></li>
+</ol>
+</div></blockquote>
+<p>我们将使用 <a class="reference external" href="https://github.com/ethereumjs/ethereumjs-util">ethereumjs-util</a>
+库来编写这个验证。最后一步可以用多种方式完成，我们使用JavaScript。
+下面的代码借用了上面 <strong>JavaScript代码</strong> 中加密签名的 <code class="docutils literal notranslate"><span class="pre">constructPaymentMessage</span></code> 函数。</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// 这模拟了eth_sign 的JSON-RPC构建前缀的方法。</span><span class="w"></span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">prefixed</span><span class="p">(</span><span class="nx">hash</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ethereumjs</span><span class="p">.</span><span class="nx">ABI</span><span class="p">.</span><span class="nx">soliditySHA3</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;bytes32&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;\x19Ethereum Signed Message:\n32&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">recoverSigner</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">signature</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ethereumjs</span><span class="p">.</span><span class="nx">Util</span><span class="p">.</span><span class="nx">fromRpcSig</span><span class="p">(</span><span class="nx">signature</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">publicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ethereumjs</span><span class="p">.</span><span class="nx">Util</span><span class="p">.</span><span class="nx">ecrecover</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">split</span><span class="p">.</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">split</span><span class="p">.</span><span class="nx">r</span><span class="p">,</span><span class="w"> </span><span class="nx">split</span><span class="p">.</span><span class="nx">s</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">signer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ethereumjs</span><span class="p">.</span><span class="nx">Util</span><span class="p">.</span><span class="nx">pubToAddress</span><span class="p">(</span><span class="nx">publicKey</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;hex&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">signer</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">isValidSignature</span><span class="p">(</span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">,</span><span class="w"> </span><span class="nx">signature</span><span class="p">,</span><span class="w"> </span><span class="nx">expectedSigner</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">prefixed</span><span class="p">(</span><span class="nx">constructPaymentMessage</span><span class="p">(</span><span class="nx">contractAddress</span><span class="p">,</span><span class="w"> </span><span class="nx">amount</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">signer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">recoverSigner</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">signature</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">signer</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"></span>
+<span class="w">        </span><span class="nx">ethereumjs</span><span class="p">.</span><span class="nx">Util</span><span class="p">.</span><span class="nx">stripHexPrefix</span><span class="p">(</span><span class="nx">expectedSigner</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="index-3">
+<span id="id25"></span><h2>模块化合约<a class="headerlink" href="#index-3" title="Permalink to this heading"></a></h2>
+<p>用模块化的方法来构建您的合约，可以帮助减少复杂性，提高可读性，
+这将有助于在开发和代码审查中发现错误和漏洞。
+如果您单独指定且控制每个模块的行为，您必须考虑的相互作用只是模块之间的相互作用，
+而不是合约的其他每个灵活模块函数。
+在下面的例子中，合约使用 <code class="docutils literal notranslate"><span class="pre">Balances</span></code> <a class="reference internal" href="contracts.html#libraries"><span class="std std-ref">库</span></a> 的 <code class="docutils literal notranslate"><span class="pre">move</span></code> 方法
+来检查地址之间发送的余额是否符合您的期望。通过这种方式， <code class="docutils literal notranslate"><span class="pre">Balances</span></code> 库提供了一个独立的组件，
+可以正确地跟踪账户的余额。
+很容易验证 <code class="docutils literal notranslate"><span class="pre">Balances</span></code> 库永远不会产生负的余额或溢出，
+所有余额的总和在合约的有效期内是一个不变的量。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC41LjAgPDAuOS4wOwoKbGlicmFyeSBCYWxhbmNlcyB7CiAgICBmdW5jdGlvbiBtb3ZlKG1hcHBpbmcoYWRkcmVzcyA9PiB1aW50MjU2KSBzdG9yYWdlIGJhbGFuY2VzLCBhZGRyZXNzIGZyb20sIGFkZHJlc3MgdG8sIHVpbnQgYW1vdW50KSBpbnRlcm5hbCB7CiAgICAgICAgcmVxdWlyZShiYWxhbmNlc1tmcm9tXSA+PSBhbW91bnQpOwogICAgICAgIHJlcXVpcmUoYmFsYW5jZXNbdG9dICsgYW1vdW50ID49IGJhbGFuY2VzW3RvXSk7CiAgICAgICAgYmFsYW5jZXNbZnJvbV0gLT0gYW1vdW50OwogICAgICAgIGJhbGFuY2VzW3RvXSArPSBhbW91bnQ7CiAgICB9Cn0KCmNvbnRyYWN0IFRva2VuIHsKICAgIG1hcHBpbmcoYWRkcmVzcyA9PiB1aW50MjU2KSBiYWxhbmNlczsKICAgIHVzaW5nIEJhbGFuY2VzIGZvciAqOwogICAgbWFwcGluZyhhZGRyZXNzID0+IG1hcHBpbmcgKGFkZHJlc3MgPT4gdWludDI1NikpIGFsbG93ZWQ7CgogICAgZXZlbnQgVHJhbnNmZXIoYWRkcmVzcyBmcm9tLCBhZGRyZXNzIHRvLCB1aW50IGFtb3VudCk7CiAgICBldmVudCBBcHByb3ZhbChhZGRyZXNzIG93bmVyLCBhZGRyZXNzIHNwZW5kZXIsIHVpbnQgYW1vdW50KTsKCiAgICBmdW5jdGlvbiB0cmFuc2ZlcihhZGRyZXNzIHRvLCB1aW50IGFtb3VudCkgZXh0ZXJuYWwgcmV0dXJucyAoYm9vbCBzdWNjZXNzKSB7CiAgICAgICAgYmFsYW5jZXMubW92ZShtc2cuc2VuZGVyLCB0bywgYW1vdW50KTsKICAgICAgICBlbWl0IFRyYW5zZmVyKG1zZy5zZW5kZXIsIHRvLCBhbW91bnQpOwogICAgICAgIHJldHVybiB0cnVlOwoKICAgIH0KCiAgICBmdW5jdGlvbiB0cmFuc2ZlckZyb20oYWRkcmVzcyBmcm9tLCBhZGRyZXNzIHRvLCB1aW50IGFtb3VudCkgZXh0ZXJuYWwgcmV0dXJucyAoYm9vbCBzdWNjZXNzKSB7CiAgICAgICAgcmVxdWlyZShhbGxvd2VkW2Zyb21dW21zZy5zZW5kZXJdID49IGFtb3VudCk7CiAgICAgICAgYWxsb3dlZFtmcm9tXVttc2cuc2VuZGVyXSAtPSBhbW91bnQ7CiAgICAgICAgYmFsYW5jZXMubW92ZShmcm9tLCB0bywgYW1vdW50KTsKICAgICAgICBlbWl0IFRyYW5zZmVyKGZyb20sIHRvLCBhbW91bnQpOwogICAgICAgIHJldHVybiB0cnVlOwogICAgfQoKICAgIGZ1bmN0aW9uIGFwcHJvdmUoYWRkcmVzcyBzcGVuZGVyLCB1aW50IHRva2VucykgZXh0ZXJuYWwgcmV0dXJucyAoYm9vbCBzdWNjZXNzKSB7CiAgICAgICAgcmVxdWlyZShhbGxvd2VkW21zZy5zZW5kZXJdW3NwZW5kZXJdID09IDAsICIiKTsKICAgICAgICBhbGxvd2VkW21zZy5zZW5kZXJdW3NwZW5kZXJdID0gdG9rZW5zOwogICAgICAgIGVtaXQgQXBwcm92YWwobXNnLnNlbmRlciwgc3BlbmRlciwgdG9rZW5zKTsKICAgICAgICByZXR1cm4gdHJ1ZTsKICAgIH0KCiAgICBmdW5jdGlvbiBiYWxhbmNlT2YoYWRkcmVzcyB0b2tlbk93bmVyKSBleHRlcm5hbCB2aWV3IHJldHVybnMgKHVpbnQgYmFsYW5jZSkgewogICAgICAgIHJldHVybiBiYWxhbmNlc1t0b2tlbk93bmVyXTsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.5.0</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="kt">library</span><span class="w"> </span>Balances<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">move</span><span class="p">(</span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span>storage<span class="w"> </span>balances<span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">from</span><span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span>from<span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span>to<span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>amount<span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>balances<span class="p">[</span>to<span class="p">]);</span><span class="w"></span>
+<span class="w">        </span>balances<span class="p">[</span>from<span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>balances<span class="p">[</span>to<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Token</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span>balances<span class="p">;</span><span class="w"></span>
+<span class="w">    </span>using<span class="w"> </span>Balances<span class="w"> </span><span class="kt">for</span><span class="w"> </span><span class="o">*</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">))</span><span class="w"> </span>allowed<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">Transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">from</span><span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">Approval</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">owner</span><span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">spender</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>balances<span class="p">.</span>move<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>to<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>Transfer<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>to<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">transferFrom</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">from</span><span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>allowed<span class="p">[</span>from<span class="p">][</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>allowed<span class="p">[</span>from<span class="p">][</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>balances<span class="p">.</span>move<span class="p">(</span>from<span class="p">,</span><span class="w"> </span>to<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>Transfer<span class="p">(</span>from<span class="p">,</span><span class="w"> </span>to<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">approve</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">spender</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">tokens</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span>allowed<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>spender<span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>allowed<span class="p">[</span><span class="k">msg.sender</span><span class="p">][</span>spender<span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>tokens<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>Approval<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>spender<span class="p">,</span><span class="w"> </span>tokens<span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">tokenOwner</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">balance</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>balances<span class="p">[</span>tokenOwner<span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installing-solidity.html" class="btn btn-neutral float-left" title="安装 Solidity 编译器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="layout-of-source-files.html" class="btn btn-neutral float-right" title="Solidity 源文件结构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

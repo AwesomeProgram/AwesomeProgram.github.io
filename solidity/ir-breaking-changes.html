@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基于Solidity中间表征的Codegen变化 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="存储中的状态变量储存结构" href="internals/layout_in_storage.html" />
+    <link rel="prev" title="分析编译器的输出结果" href="analysing-compilation-output.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">基于Solidity中间表征的Codegen变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">仅有语义上的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">内部结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">内部函数指针</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">清理</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>基于Solidity中间表征的Codegen变化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ir-breaking-changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="soliditycodegen">
+<h1>基于Solidity中间表征的Codegen变化<a class="headerlink" href="#soliditycodegen" title="Permalink to this heading"></a></h1>
+<p>Solidity可以通过两种不同的方式生成EVM字节码：
+要么直接从Solidity到EVM操作码（“旧编码”），
+要么通过在Yul中的中间表示法（“IR”）（“新编码” 或 “基于IR的编码”）。</p>
+<p>引入基于IR的代码生成器的目的是，不仅使代码生成更加透明和可审计，
+而且能够实现更强大的跨函数的优化通道。</p>
+<p>目前，基于IR的代码生成器仍被标记为实验性的，
+但它支持所有的语言功能，并得到了大量的测试，
+所以我们认为它几乎可以用于生产。</p>
+<p>您可以在命令行中使用 <code class="docutils literal notranslate"><span class="pre">--experimental-via-ir</span></code>
+或在standard-json中使用 <code class="docutils literal notranslate"><span class="pre">{&quot;viaIR&quot;:</span> <span class="pre">true}</span></code> 选项来启用它，
+我们鼓励大家尝试一下！</p>
+<p>由于一些原因，旧的和基于IR的代码生成器之间存在着微小的语义差异，
+主要是在那些我们无论如何也不会期望人们依赖这种行为的领域。
+本节强调了旧的和基于IR的代码生成器之间的主要区别。</p>
+<section id="id1">
+<h2>仅有语义上的变化<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>本节列出了仅有语义的变化，从而有可能在现有的代码中隐藏新的和不同的行为。</p>
+<ul>
+<li><p>当存储结构被删除时，包含该结构成员的每个存储槽都被完全设置为零。
+以前，填充空间是不被触动的。
+因此，如果结构中的填充空间被用来存储数据（例如在合约升级的背景下），
+您必须注意， <code class="docutils literal notranslate"><span class="pre">delete</span></code> 现在也会清除添加的成员（而在过去不会被清除）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjE7Cgpjb250cmFjdCBDIHsKICAgIHN0cnVjdCBTIHsKICAgICAgICB1aW50NjQgeTsKICAgICAgICB1aW50NjQgejsKICAgIH0KICAgIFMgczsKICAgIGZ1bmN0aW9uIGYoKSBwdWJsaWMgewogICAgICAgIC8vIC4uLgogICAgICAgIGRlbGV0ZSBzOwogICAgICAgIC8vIHPlj6rljaDnlKjkuoYzMuS4quWtl+iKguanveeahOWJjTE25Liq5a2X6IqCCiAgICAgICAgLy8gZGVsZXRlIOWwhuaKiumbtuWGmeWIsOWujOaVtOeahOaPkuanveS4rQogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.1</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">struct</span><span class="w"> </span><span class="nv">S</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint64</span><span class="w"> </span><span class="nv">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint64</span><span class="w"> </span><span class="nv">z</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span>S<span class="w"> </span>s<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// ...</span>
+<span class="w">        </span>delete<span class="w"> </span>s<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// s只占用了32个字节槽的前16个字节</span>
+<span class="w">        </span><span class="c1">// delete 将把零写到完整的插槽中</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>我们对隐式删除也有同样的行为，例如当结构体的数组被缩短时。</p>
+</li>
+<li><p>关于函数参数和返回变量，函数修改器的实现方式略有不同。
+如果占位符 <code class="docutils literal notranslate"><span class="pre">_;</span></code> 在一个修饰符中被多次使用，这尤其有影响。
+在旧的代码生成器中，每个函数参数和返回变量在堆栈中都有一个固定的槽。
+如果因为多次使用 <code class="docutils literal notranslate"><span class="pre">_;</span></code> 而使函数运行多次，或者在一个循环中使用，
+那么函数参数或返回变量的值的变化在函数的下一次执行中是可见的。
+新的代码生成器使用实际的函数来实现修改器，并将函数参数传递下去。
+这意味着对一个函数主体的多次使用将得到相同的参数值，而对返回变量的影响是，
+它们在每次执行时都被重置为其默认值（零）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjA7CmNvbnRyYWN0IEMgewogICAgZnVuY3Rpb24gZih1aW50IF9hKSBwdWJsaWMgcHVyZSBtb2QoKSByZXR1cm5zICh1aW50IF9yKSB7CiAgICAgICAgX3IgPSBfYSsrOwogICAgfQogICAgbW9kaWZpZXIgbW9kKCkgeyBfOyBfOyB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span>mod<span class="p">()</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>_r<span class="w"> </span><span class="o">=</span><span class="w"> </span>_a<span class="o">++</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>mod<span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>_<span class="p">;</span><span class="w"> </span>_<span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>如果您在旧的代码生成器中执行 <code class="docutils literal notranslate"><span class="pre">f(0)</span></code>，它将返回 <code class="docutils literal notranslate"><span class="pre">2</span></code>，
+而在使用新的代码生成器时，它将返回 <code class="docutils literal notranslate"><span class="pre">1</span></code>。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjEgPDAuOS4wOwoKY29udHJhY3QgQyB7CiAgICBib29sIGFjdGl2ZSA9IHRydWU7CiAgICBtb2RpZmllciBtb2QoKQogICAgewogICAgICAgIF87CiAgICAgICAgYWN0aXZlID0gZmFsc2U7CiAgICAgICAgXzsKICAgIH0KICAgIGZ1bmN0aW9uIGZvbygpIGV4dGVybmFsIG1vZCgpIHJldHVybnMgKHVpbnQgcmV0KQogICAgewogICAgICAgIGlmIChhY3RpdmUpCiAgICAgICAgICAgIHJldCA9IDE7IC8vIOS4jiBgYHJldHVybiAxYGAg55u45ZCMCiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.1</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nv">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>mod<span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>active<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">foo</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span>mod<span class="p">()</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">ret</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>active<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>ret<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// 与 ``return 1`` 相同</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">C.foo()</span></code> 返回以下值：</p>
+<ul class="simple">
+<li><p>旧的代码生成器： <code class="docutils literal notranslate"><span class="pre">1</span></code> 作为返回变量在第一次 <code class="docutils literal notranslate"><span class="pre">_;</span></code> 使用前只被初始化为 <code class="docutils literal notranslate"><span class="pre">0</span></code>，
+然后被 <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">1;</span></code> 覆盖。在第二次 <code class="docutils literal notranslate"><span class="pre">_;</span></code> 使用时，它没有被再次初始化，
+而且 <code class="docutils literal notranslate"><span class="pre">foo()</span></code> 也没有明确地分配给它（由于 <code class="docutils literal notranslate"><span class="pre">active</span> <span class="pre">==</span> <span class="pre">false</span></code>），因此它保持了它的第一个值。</p></li>
+<li><p>新的代码生成器： <code class="docutils literal notranslate"><span class="pre">0</span></code> 作为所有参数，包括返回参数，将在每次 <code class="docutils literal notranslate"><span class="pre">_;</span></code> 使用前被重新初始化。</p></li>
+</ul>
+</li>
+<li><p>在继承的情况下，合约初始化的顺序已经改变。</p>
+<p>以前的顺序是：</p>
+<ul class="simple">
+<li><p>所有的状态变量在开始时都被零初始化。</p></li>
+<li><p>评估基础构造函数参数，从最终派生合约到最基础的合约。</p></li>
+<li><p>初始化整个继承层次中从最基础到最终派生的所有状态变量。</p></li>
+<li><p>运行构造函数（如果存在），用于线性化层次结构中从最基本到最终派生的所有合约。</p></li>
+</ul>
+<p>新的顺序：</p>
+<ul class="simple">
+<li><p>所有的状态变量在开始时都被零初始化。</p></li>
+<li><p>评估基础构造函数参数，从最终派生合约到最基础的合约。</p></li>
+<li><p>对于每一个合约，按照从最基础到最终派生的线性化层次结构的顺序执行：</p>
+<ol class="arabic simple">
+<li><p>如果在声明时存在，初始值将被分配给状态变量。</p></li>
+<li><p>运行构造函数，如果存在的话。</p></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>例如，这造成了一些合约的差异：</p>
+<blockquote>
+<div><p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjE7Cgpjb250cmFjdCBBIHsKICAgIHVpbnQgeDsKICAgIGNvbnN0cnVjdG9yKCkgewogICAgICAgIHggPSA0MjsKICAgIH0KICAgIGZ1bmN0aW9uIGYoKSBwdWJsaWMgdmlldyByZXR1cm5zKHVpbnQyNTYpIHsKICAgICAgICByZXR1cm4geDsKICAgIH0KfQpjb250cmFjdCBCIGlzIEEgewogICAgdWludCBwdWJsaWMgeSA9IGYoKTsKfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.7.1</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">A</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">42</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>x<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">B</span><span class="w"> </span><span class="kt">is</span><span class="w"> </span>A<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>f<span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>以前， <code class="docutils literal notranslate"><span class="pre">y</span></code> 会被设置为0。这是因为我们首先要初始化状态变量。首先， <code class="docutils literal notranslate"><span class="pre">x</span></code> 被设置为0，当初始化 <code class="docutils literal notranslate"><span class="pre">y</span></code> 时， <code class="docutils literal notranslate"><span class="pre">f()</span></code> 将返回0，导致 <code class="docutils literal notranslate"><span class="pre">y</span></code> 也是0。</p>
+<p>在新的规则下， <code class="docutils literal notranslate"><span class="pre">y</span></code> 将被设置为42。我们首先将 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化为0，然后调用A的构造函数，将 <code class="docutils literal notranslate"><span class="pre">x</span></code> 设置为42。最后，在初始化 <code class="docutils literal notranslate"><span class="pre">y</span></code> 时， <code class="docutils literal notranslate"><span class="pre">f()</span></code> 返回42，导致 <code class="docutils literal notranslate"><span class="pre">y</span></code> 为42。</p>
+<ul>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 数组从内存复制到存储空间的实现方式不同。
+旧的代码生成器总是复制完整的字，而新的代码生成器则在字节数组结束后切割它。
+旧的行为可能导致脏数据被复制到数组的末端之后（但仍在同一个存储槽中）。
+这导致了一些合约中的差异，例如：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjE7Cgpjb250cmFjdCBDIHsKICAgIGJ5dGVzIHg7CiAgICBmdW5jdGlvbiBmKCkgcHVibGljIHJldHVybnMgKHVpbnQgX3IpIHsKICAgICAgICBieXRlcyBtZW1vcnkgbSA9ICJ0bXAiOwogICAgICAgIGFzc2VtYmx5IHsKICAgICAgICAgICAgbXN0b3JlKG0sIDgpCiAgICAgICAgICAgIG1zdG9yZShhZGQobSwgMzIpLCAiZGVhZGJlZWYxNWRlYWQiKQogICAgICAgIH0KICAgICAgICB4ID0gbTsKICAgICAgICBhc3NlbWJseSB7CiAgICAgICAgICAgIF9yIDo9IHNsb2FkKHguc2xvdCkKICAgICAgICB9CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.8.1</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bytes</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span>m<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tmp&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>assembly<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>mstore<span class="p">(</span>m<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">8</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span>mstore<span class="p">(</span>add<span class="p">(</span>m<span class="p">,</span><span class="w"> </span><span class="m m-Decimal">32</span><span class="p">),</span><span class="w"> </span><span class="s2">&quot;deadbeef15dead&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span>x<span class="w"> </span><span class="o">=</span><span class="w"> </span>m<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>assembly<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>_r<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>sload<span class="p">(</span>x<span class="p">.</span>slot<span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>以前 <code class="docutils literal notranslate"><span class="pre">f()</span></code> 会返回 <code class="docutils literal notranslate"><span class="pre">0x64656164626565663135646561640000000000000000000000000010</span></code>
+（它有正确的长度，和正确的前8个元素，但随后它包含通过汇编设置的脏数据）。
+现在它返回 <code class="docutils literal notranslate"><span class="pre">0x6465616462656600000000000000000000000010</span></code>
+（它有正确的长度，和正确的元素，但不包含多余的数据）。</p>
+</li>
+<li id="index-0"><p>对于旧的代码生成器，表达式的评估顺序是没有规定的。
+对于新的代码生成器，我们试图按照源顺序（从左到右）进行评估，但并不保证这一点。
+这可能会导致语义上的差异。</p>
+<p>例如：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjE7CmNvbnRyYWN0IEMgewogICAgZnVuY3Rpb24gcHJlaW5jcl91OCh1aW50OCBfYSkgcHVibGljIHB1cmUgcmV0dXJucyAodWludDgpIHsKICAgICAgICByZXR1cm4gKytfYSArIF9hOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.8.1</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">preincr_u8</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">_a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span><span class="o">++</span>_a<span class="w"> </span><span class="o">+</span><span class="w"> </span>_a<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">preincr_u8(1)</span></code> 返回以下值：</p>
+<ul class="simple">
+<li><p>旧的代码生成器：3 ( <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span></code> )，但一般情况下返回值是不指定的</p></li>
+<li><p>新的代码生成器：4 ( <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">+</span> <span class="pre">2</span></code> )，但不能保证返回值</p></li>
+</ul>
+<p id="index-1">另一方面，除了全局函数 <code class="docutils literal notranslate"><span class="pre">addmod</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mulmod</span></code> 外，两个代码生成器对函数参数表达式的评估顺序是一样的。
+例如：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjE7CmNvbnRyYWN0IEMgewogICAgZnVuY3Rpb24gYWRkKHVpbnQ4IF9hLCB1aW50OCBfYikgcHVibGljIHB1cmUgcmV0dXJucyAodWludDgpIHsKICAgICAgICByZXR1cm4gX2EgKyBfYjsKICAgIH0KICAgIGZ1bmN0aW9uIGcodWludDggX2EsIHVpbnQ4IF9iKSBwdWJsaWMgcHVyZSByZXR1cm5zICh1aW50OCkgewogICAgICAgIHJldHVybiBhZGQoKytfYSArICsrX2IsIF9hICsgX2IpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.8.1</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">add</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">_a</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8</span><span class="w"> </span><span class="nv">_b</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>_a<span class="w"> </span><span class="o">+</span><span class="w"> </span>_b<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">_a</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8</span><span class="w"> </span><span class="nv">_b</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>add<span class="p">(</span><span class="o">++</span>_a<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">++</span>_b<span class="p">,</span><span class="w"> </span>_a<span class="w"> </span><span class="o">+</span><span class="w"> </span>_b<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">g(1,</span> <span class="pre">2)</span></code> 返回以下值：</p>
+<ul class="simple">
+<li><p>旧的代码生成器： <code class="docutils literal notranslate"><span class="pre">10</span></code> ( <code class="docutils literal notranslate"><span class="pre">add(2+3,</span> <span class="pre">2+3)</span></code> )，但返回值一般不指定。</p></li>
+<li><p>新的代码生成器： <code class="docutils literal notranslate"><span class="pre">10</span></code>，但不能保证返回值</p></li>
+</ul>
+<p>全局函数 <code class="docutils literal notranslate"><span class="pre">addmod</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mulmod</span></code> 的参数由旧代码生成器从右向左评估，新代码生成器从左向右评估。
+例如：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjE7CmNvbnRyYWN0IEMgewogICAgZnVuY3Rpb24gZigpIHB1YmxpYyBwdXJlIHJldHVybnMgKHVpbnQyNTYgYU1vZCwgdWludDI1NiBtTW9kKSB7CiAgICAgICAgdWludDI1NiB4ID0gMzsKICAgICAgICAvLyDml6fnmoTku6PnoIHnlJ/miJDlmajvvJogYWRkL211bG1vZCg1LCA0LCAzKQogICAgICAgIC8vIOaWsOeahOS7o+eggeeUn+aIkOWZqO+8miBhZGQvbXVsbW9kKDQsIDUsIDUpCiAgICAgICAgYU1vZCA9IGFkZG1vZCgrK3gsICsreCwgeCk7CiAgICAgICAgbU1vZCA9IG11bG1vZCgrK3gsICsreCwgeCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.8.1</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">aMod</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">mMod</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 旧的代码生成器： add/mulmod(5, 4, 3)</span>
+<span class="w">        </span><span class="c1">// 新的代码生成器： add/mulmod(4, 5, 5)</span>
+<span class="w">        </span>aMod<span class="w"> </span><span class="o">=</span><span class="w"> </span>addmod<span class="p">(</span><span class="o">++</span>x<span class="p">,</span><span class="w"> </span><span class="o">++</span>x<span class="p">,</span><span class="w"> </span>x<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>mMod<span class="w"> </span><span class="o">=</span><span class="w"> </span>mulmod<span class="p">(</span><span class="o">++</span>x<span class="p">,</span><span class="w"> </span><span class="o">++</span>x<span class="p">,</span><span class="w"> </span>x<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">f()</span></code> 返回以下值：</p>
+<ul class="simple">
+<li><p>旧的代码生成器： <code class="docutils literal notranslate"><span class="pre">aMod</span> <span class="pre">=</span> <span class="pre">0</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mMod</span> <span class="pre">=</span> <span class="pre">2</span></code></p></li>
+<li><p>新的代码生成器： <code class="docutils literal notranslate"><span class="pre">aMod</span> <span class="pre">=</span> <span class="pre">4</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mMod</span> <span class="pre">=</span> <span class="pre">0</span></code></p></li>
+</ul>
+</li>
+<li><p>新的代码生成器对自由内存指针施加了一个硬性限制 <code class="docutils literal notranslate"><span class="pre">type(uint64).max</span></code>
+（ <code class="docutils literal notranslate"><span class="pre">0xffffffffffffffff</span></code>）。其增加值超过这个限制的分配会被恢复。
+旧的代码生成器没有这个限制。</p>
+<p>例如：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID4wLjguMDsKY29udHJhY3QgQyB7CiAgICBmdW5jdGlvbiBmKCkgcHVibGljIHsKICAgICAgICB1aW50W10gbWVtb3J5IGFycjsKICAgICAgICAvLyDliIbphY3nqbrpl7TvvJogNTc2NDYwNzUyMzAzNDIzNDgxCiAgICAgICAgLy8g5YGH6K6+ZnJlZU1lbVB0cuacgOWIneaMh+WQkTB4ODAKICAgICAgICB1aW50IHNvbFl1bE1heEFsbG9jYXRpb25CZWZvcmVNZW1QdHJPdmVyZmxvdyA9ICh0eXBlKHVpbnQ2NCkubWF4IC0gMHg4MCAtIDMxKSAvIDMyOwogICAgICAgIC8vIGZyZWVNZW1QdHIg5ZugIFVJTlQ2NF9NQVgg6ZmQ5Yi25rqi5Ye6CiAgICAgICAgYXJyID0gbmV3IHVpbnRbXShzb2xZdWxNYXhBbGxvY2F0aW9uQmVmb3JlTWVtUHRyT3ZlcmZsb3cpOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="err">&gt;0.8.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="p">[]</span><span class="w"> </span><span class="kt">memory</span><span class="w"> </span>arr<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 分配空间： 576460752303423481</span>
+<span class="w">        </span><span class="c1">// 假设freeMemPtr最初指向0x80</span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">solYulMaxAllocationBeforeMemPtrOverflow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>type<span class="p">(</span><span class="kt">uint64</span><span class="p">).</span>max<span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">0x80</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m m-Decimal">31</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m m-Decimal">32</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// freeMemPtr 因 UINT64_MAX 限制溢出</span>
+<span class="w">        </span>arr<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">new</span><span class="w"> </span><span class="kt">uint</span><span class="p">[](</span>solYulMaxAllocationBeforeMemPtrOverflow<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>函数 <cite>f()</cite> 的作用如下：</p>
+<ul class="simple">
+<li><p>旧的代码生成器：在大内存分配后对数组内容进行清零时耗尽了gas</p></li>
+<li><p>新的代码生成器：由于自由内存指针溢出而还原（不会耗尽gas）。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>内部结构<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>内部函数指针<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<p id="index-2">旧的代码生成器对内部函数指针的值使用代码偏移量或标签。
+这一点特别复杂，因为这些偏移量在构造时和部署后是不同的，而且这些值可以通过存储跨越这个边界。
+正因为如此，这两个偏移量在构造时被编码为同一个值（进入不同的字节）。</p>
+<p>在新的代码生成器中，函数指针使用依次分配的内部ID。
+由于通过跳转的调用是不可能的，通过函数指针的调用总是要使用内部调度函数，
+使用 <code class="docutils literal notranslate"><span class="pre">switch</span></code> 语句来选择正确的函数。</p>
+<p>ID <code class="docutils literal notranslate"><span class="pre">0</span></code> 是为未初始化的函数指针保留的，这些指针在被调用时，会引起调度函数的panic错误。</p>
+<p>在旧的代码生成器中，内部函数指针是用一个特殊的函数初始化的，它总是引起panic错误。
+这导致在构造时对存储中的内部函数指针进行存储写入。</p>
+</section>
+<section id="id4">
+<h3>清理<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<p id="index-3">旧的代码生成器只在操作前执行清理，而操作的结果可能会受到脏位值的影响。
+新的代码生成器在任何可能导致脏位的操作之后执行清理。
+我们希望优化器能够强大到足以消除多余的清理操作。</p>
+<p>例如：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC44LjE7CmNvbnRyYWN0IEMgewogICAgZnVuY3Rpb24gZih1aW50OCBfYSkgcHVibGljIHB1cmUgcmV0dXJucyAodWludCBfcjEsIHVpbnQgX3IyKQogICAgewogICAgICAgIF9hID0gfl9hOwogICAgICAgIGFzc2VtYmx5IHsKICAgICAgICAgICAgX3IxIDo9IF9hCiAgICAgICAgfQogICAgICAgIF9yMiA9IF9hOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.8.1</span><span class="p">;</span><span class="w"></span>
+<span class="k">contract</span><span class="w"> </span><span class="ni">C</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">f</span><span class="p">(</span><span class="kt">uint8</span><span class="w"> </span><span class="nv">_a</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>pure<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_r1</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">_r2</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>_a<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">~</span>_a<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>assembly<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span>_r1<span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span>_a<span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span>_r2<span class="w"> </span><span class="o">=</span><span class="w"> </span>_a<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>函数 <code class="docutils literal notranslate"><span class="pre">f(1)</span></code> 返回以下值：</p>
+<ul class="simple">
+<li><p>旧的代码生成器：（ <code class="docutils literal notranslate"><span class="pre">fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe</span></code>, <code class="docutils literal notranslate"><span class="pre">00000000000000000000000000000000000000000000000000000000000000fe</span></code>）</p></li>
+<li><p>新的代码生成器：（ <code class="docutils literal notranslate"><span class="pre">00000000000000000000000000000000000000000000000000000000000000fe</span></code>, <code class="docutils literal notranslate"><span class="pre">00000000000000000000000000000000000000000000000000000000000000fe</span></code>）</p></li>
+</ul>
+<p>请注意，与新的代码生成器不同，旧的代码生成器在位取反赋值（ <code class="docutils literal notranslate"><span class="pre">_a</span> <span class="pre">=</span> <span class="pre">~_a</span></code> ）后没有进行清理。
+这导致新旧代码生成器之间对返回值 <code class="docutils literal notranslate"><span class="pre">_r1</span></code> 的赋值（在内联汇编块内）不同。
+然而，两个代码生成器在 <code class="docutils literal notranslate"><span class="pre">_a</span></code> 的新值被分配到 <code class="docutils literal notranslate"><span class="pre">_r2</span></code> 之前都进行了清理。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="analysing-compilation-output.html" class="btn btn-neutral float-left" title="分析编译器的输出结果" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="internals/layout_in_storage.html" class="btn btn-neutral float-right" title="存储中的状态变量储存结构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

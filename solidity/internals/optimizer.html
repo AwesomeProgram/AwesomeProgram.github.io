@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>优化器 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/toggle.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="合约的元数据" href="../metadata.html" />
+    <link rel="prev" title="源代码映射" href="source_mappings.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="../index.html">
+            <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">优化器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#solidity">优化Solidity代码的好处</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">优化和非优化代码之间的差异</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimizer-parameter-runs">优化器参数运行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">基于操作码的优化器模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">简单内联</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#yul">基于Yul的优化器模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">优化器的步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">选择优化方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">预处理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#disambiguator">消歧器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#function-hoister">函数提升器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#function-grouper">函数分组器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#for-loop-condition-into-body">循环条件进入正文</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#for-loop-init-rewriter">循环初始重写器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#var-decl-initializer">初始化程序</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ssa">伪SSA转换</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#expression-splitter">表达式拆分器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ssa-transform">SSA转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#redundant-assign-eliminator">冗余赋值消除器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">工具</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id21">可移动性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">数据流分析器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">表达式的简化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#common-subexpression-eliminator">通用子表达式消除器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expression-simplifier">表达式简化器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#literalrematerialiser">字面意义上的再物质化器（LiteralRematerialiser）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-resolver">负载解析器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reasoning-based-simplifier">基于推理的简化器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">声明规模的简化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#circular-reference-pruner">循环引用程序</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conditional-simplifier">条件简化器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conditional-unsimplifier">有条件的非对称性放大器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#control-flow-simplifier">控制流简化器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dead-code-eliminator">死代码消除器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equal-store-eliminator">等价的存储清除器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unused-pruner">未使用过的处理器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#structural-simplifier">结构简化器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-flattener">块展平器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loop-invariant-code-motion">循环不变代码模式</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id39">函数级的优化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#function-specializer">函数特殊化器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unused-function-parameter-pruner">未使用的函数参数管理器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#equivalent-function-combiner">等价函数组合器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id43">函数内联</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#expression-inliner">表达式内联</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#full-inliner">完全内联</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id46">清理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#expression-joiner">表达式连接器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ssa-reverser">SSA反转器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stack-compressor">堆栈压缩器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rematerialiser">再物质化</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#for-loop-condition-out-of-body">体外循环条件</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#webassembly">特定的WebAssembly</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id52">主要功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="../genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>优化器</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/internals/optimizer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimizer">
+<span id="index-0"></span><span id="id1"></span><h1>优化器<a class="headerlink" href="#optimizer" title="Permalink to this heading"></a></h1>
+<p>Solidity编译器使用两种不同的优化器模块。在操作码水平上操作的 “旧” 优化器
+和在 Yul IR 代码上操作的 “新” 优化器。</p>
+<p>基于操作码的优化器对操作码应用一套 <a class="reference external" href="https://github.com/ethereum/solidity/blob/develop/libevmasm/RuleList.h">简化规则</a>。
+它还结合了相等的代码集并删除了未使用的代码。</p>
+<p>基于Yul的优化器要强大得多，因为它可以跨函数调用工作。
+例如，任意跳转在Yul中是不可能的，
+所以有可能计算每个函数的副作用。假设有两个函数调用，
+其中第一个不修改存储，第二个修改存储。
+如果它们的参数和返回值不相互依赖，我们就可以对函数调用重新排序。
+同样地，如果一个函数是没有副作用的，而且其结果是乘以0的，就可以完全删除该函数调用。</p>
+<p>目前，参数 <code class="docutils literal notranslate"><span class="pre">--optimize</span></code> 为生成的字节码激活基于操作码的优化器，
+为内部生成的Yul代码激活Yul优化器，例如当使用ABI coder v2时。
+我们可以使用 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--ir</span> <span class="pre">optimized</span> <span class="pre">--optimize</span></code> 来为Solidity源码产生一个优化的实验性Yul IR。
+同样地，我们可以使用 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--strict-assembly</span> <span class="pre">--optimize</span></code> 来产生一个独立的Yul模式。</p>
+<p>您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。</p>
+<section id="solidity">
+<h2>优化Solidity代码的好处<a class="headerlink" href="#solidity" title="Permalink to this heading"></a></h2>
+<p>总的来说，优化器试图简化复杂的表达式，从而减少代码大小和执行成本，
+也就是说，它可以减少部署合约以及对合约进行外部调用所需的气体。
+它还会对函数进行专业化或内联化优化。特别是当函数内联一个可能导致更大的代码操作时，
+它经常这样做，因为这导致了更多简化的机会。</p>
+</section>
+<section id="id3">
+<h2>优化和非优化代码之间的差异<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>一般来说，最明显的区别是常量表达式在编译时被评估。
+当涉及到ASM输出时，人们也可以注意到等价或重复的代码块的减少（比较 <code class="docutils literal notranslate"><span class="pre">--asm</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--asm</span> <span class="pre">--optimize</span></code> 标志的输出）。
+然而，当涉及到Yul/中间代表时，可能会有明显的差异，
+例如，函数可能被内联，合并或重写以消除冗余等等（比较带有 <code class="docutils literal notranslate"><span class="pre">--ir</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--optimize</span> <span class="pre">--ir-optimized</span></code> 标志的输出）。</p>
+</section>
+<section id="optimizer-parameter-runs">
+<span id="id4"></span><h2>优化器参数运行<a class="headerlink" href="#optimizer-parameter-runs" title="Permalink to this heading"></a></h2>
+<p>运行次数（ <code class="docutils literal notranslate"><span class="pre">--optimize-runs</span></code> ）大致规定了在合约有效期内，
+所部署的代码的每个操作码被执行的频率。
+这意味着它是代码大小（部署成本）和代码执行成本（部署后的成本）之间的一个折衷参数。
+一个 “运行” 参数为 “1” 将产生简短的合约但昂贵的执行代码。相反，
+一个较大的 “运行” 参数将产生较大的合约但更省气体的执行代码。
+该参数的最大值为 <code class="docutils literal notranslate"><span class="pre">2**32-1</span></code>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>一个常见的误解是，这个参数指定了优化器的迭代次数。这是不正确的。
+优化器将始终运行尽可能多的次数来改进代码。</p>
+</div>
+</section>
+<section id="id5">
+<h2>基于操作码的优化器模块<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>基于操作码的优化器模块对汇编代码进行操作。
+它在 <code class="docutils literal notranslate"><span class="pre">JUMPs</span></code> 和 <code class="docutils literal notranslate"><span class="pre">JUMPDESTs</span></code> 之间将指令序列分成基本块。
+在这些块中，优化器分析指令，并将对堆栈、内存或存储的每一次修改记录为一个表达式，
+该表达式由一条指令和一列参数组成，这些参数是指向其他表达式的指针。</p>
+<p>此外，基于操作码的优化器使用了一个名为 “通用子表达式消除器” 的组件，
+它除其他任务外，还能找到总是相等的表达式（在每个输入上），
+并将它们合并为一个表达式类。它首先尝试在一个已经知道的表达式列表中找到每个新的表达式。
+如果没有找到这样的匹配，
+它就根据 <code class="docutils literal notranslate"><span class="pre">constant</span> <span class="pre">+</span> <span class="pre">constant</span> <span class="pre">=</span> <span class="pre">sum_of_constants</span></code> 或 <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">*</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">X</span></code> 这样的规则简化表达式。
+由于这是一个递归过程，如果第二个因素是一个更复杂的表达式，并且知道这个表达式的值总是为1，我们也可以应用后一个规则。</p>
+<p>某些优化器步骤象征性地跟踪存储和内存位置。例如，
+这些信息被用来计算Keccak-256哈希值，可以在编译时进行评估。
+考虑一下这个序列：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>PUSH 32
+PUSH 0
+CALLDATALOAD
+PUSH 100
+DUP2
+MSTORE
+KECCAK256
+</pre></div>
+</div>
+<p>或着等同于Yul为</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IHggOj0gY2FsbGRhdGFsb2FkKDApCm1zdG9yZSh4LCAxMDApCmxldCB2YWx1ZSA6PSBrZWNjYWsyNTYoeCwgMzIp"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="ow">let</span> <span class="nv">value</span> <span class="o">:=</span> <span class="nf">keccak256</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在这种情况下，优化器跟踪位于内存位置 <code class="docutils literal notranslate"><span class="pre">calldataload(0)</span></code> 的值，
+然后意识到Keccak-256哈希值可以在编译时被评估。
+这只有在 <code class="docutils literal notranslate"><span class="pre">mstore</span></code> 和 <code class="docutils literal notranslate"><span class="pre">keccak256</span></code> 之间没有其他指令修改内存时才有效。
+因此，如果有一条指令写到内存（或存储），那么我们需要擦除对当前内存（或存储）的记忆。
+然而，这种擦除有一个例外，当我们可以很容易地看到指令没有写到某个位置。</p>
+<p>示例，</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IHggOj0gY2FsbGRhdGFsb2FkKDApCm1zdG9yZSh4LCAxMDApCi8vIOW3suefpeW9k+WJjeWGheWtmOS9jee9rnggLT4gMTAwCmxldCB5IDo9IGFkZCh4LCAzMikKLy8g5rKh5pyJ5riF6ZmkIHggLT4gMTAwIOeahOiusOW/hu+8jOWboOS4unnlubbmsqHmnInlhpnliLBbeO+8jHgrMzLvvInjgIIKbXN0b3JlKHksIDIwMCkKLy8g546w5Zyo5Y+v5Lul5a+56L+Z5LiqS2VjY2FrLTI1Nui/m+ihjOiuoeeul+S6hgpsZXQgdmFsdWUgOj0ga2VjY2FrMjU2KHgsIDMyKQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="c1">// 已知当前内存位置x -&gt; 100</span>
+<span class="ow">let</span> <span class="nv">y</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="c1">// 没有清除 x -&gt; 100 的记忆，因为y并没有写到[x，x+32）。</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="c1">// 现在可以对这个Keccak-256进行计算了</span>
+<span class="ow">let</span> <span class="nv">value</span> <span class="o">:=</span> <span class="nf">keccak256</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>因此，对存储和内存位置的修改，比如说位置 <code class="docutils literal notranslate"><span class="pre">l</span></code>，
+必须擦除关于可能等于 <code class="docutils literal notranslate"><span class="pre">l</span></code> 的存储或内存位置的记忆。更具体地说，
+对于存储，优化器必须删除所有可能等于 <code class="docutils literal notranslate"><span class="pre">l</span></code> 的符号位置的记忆，
+对于内存，优化器必须删除所有可能不超过32字节的符号位置的记忆。
+如果 <code class="docutils literal notranslate"><span class="pre">m</span></code> 表示一个任意的位置，那么这个擦除的决定是通过计算 <code class="docutils literal notranslate"><span class="pre">sub(l,</span> <span class="pre">m)</span></code> 的值来完成。
+对于存储，如果这个值被评估为一个非零的值，那么关于 <code class="docutils literal notranslate"><span class="pre">m</span></code> 的记忆将被保留。
+对于内存，如果这个值被评估为一个介于 <code class="docutils literal notranslate"><span class="pre">32</span></code> 和 <code class="docutils literal notranslate"><span class="pre">2**256</span> <span class="pre">-</span> <span class="pre">32</span></code> 之间的值，那么关于 <code class="docutils literal notranslate"><span class="pre">m</span></code> 的记忆将被保留。
+在所有其他情况下，关于 <code class="docutils literal notranslate"><span class="pre">m</span></code> 的记忆将被删除。</p>
+<p>并且有一个对内存和存储的修改列表。
+这些信息与基本代码块一起存储并用来链接它们。此外，
+关于堆栈、存储和内存配置的记忆被转发给下一个（几个）块。</p>
+<p>如果我们知道所有 <code class="docutils literal notranslate"><span class="pre">JUMP</span></code> 和 <code class="docutils literal notranslate"><span class="pre">JUMPI</span></code> 指令的目标，
+我们就可以构建一个完整的程序流程图。
+如果只有一个我们不知道的目标（原则上可能发生，跳转目标可以基于输入来计算），
+我们必须消除关于代码块输入状态的所有信息，因为它可能是未知的 <code class="docutils literal notranslate"><span class="pre">JUMP</span></code> 目标。
+如果一个 <code class="docutils literal notranslate"><span class="pre">JUMPI</span></code> 的条件等于一个常量，它将被转换为无条件跳转。</p>
+<p>作为最后一步，每个块中的代码都会被完全重新生成。
+然后优化器会从代码块的结尾处在栈上的表达式开始创建依赖关系图，
+且不是该图组成部分的每个操作都会被丢弃。
+这样生成的代码将按照原始代码中的顺序对内存和存储进行修改（舍弃不需要的修改）。
+最后，它生成了所有需要在堆栈中的正确位置的值。</p>
+<p>这些步骤适用于每个基本代码块，如果代码块较小，则新生成的代码将用作替换。
+如果一个基本代码块在 <code class="docutils literal notranslate"><span class="pre">JUMPI</span></code> 处被分割，且在分析过程中被评估为一个常数，
+则会根据常量的值来替换 <code class="docutils literal notranslate"><span class="pre">JUMPI</span></code>，因此，类似于</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=dWludCB4ID0gNzsKZGF0YVs3XSA9IDk7CmlmIChkYXRhW3hdICE9IHggKyAyKSAvLyDov5nkuKrmnaHku7bmsLjov5zkuI3kvJrmmK/nnJ/nmoQKICByZXR1cm4gMjsKZWxzZQogIHJldHVybiAxOw=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">7</span><span class="p">;</span><span class="w"></span>
+data<span class="p">[</span><span class="m m-Decimal">7</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">9</span><span class="p">;</span><span class="w"></span>
+<span class="kt">if</span><span class="w"> </span><span class="p">(</span>data<span class="p">[</span>x<span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span>x<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">)</span><span class="w"> </span><span class="c1">// 这个条件永远不会是真的</span>
+<span class="w">  </span><span class="kt">return</span><span class="w"> </span><span class="m m-Decimal">2</span><span class="p">;</span><span class="w"></span>
+<span class="kt">else</span><span class="w"></span>
+<span class="w">  </span><span class="kt">return</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>简化为这样：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=ZGF0YVs3XSA9IDk7CnJldHVybiAxOw=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span>data<span class="p">[</span><span class="m m-Decimal">7</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">9</span><span class="p">;</span><span class="w"></span>
+<span class="kt">return</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id6">
+<h3>简单内联<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<p>从Solidity 0.8.2版本开始，有另一个优化步骤，
+它用这些指令的拷贝来替换某些包含以 “跳转” 结束的 “简单” 指令的块的跳转。
+这相当于对简单的、小的Solidity或Yul函数进行内联。特别是，
+<code class="docutils literal notranslate"><span class="pre">PUSHTAG(tag)</span> <span class="pre">JUMP</span></code> 序列可以被替换，只要 <code class="docutils literal notranslate"><span class="pre">JUMP</span></code> 被标记为 “进入” 一个函数的跳转，
+并且在 <code class="docutils literal notranslate"><span class="pre">tag</span></code> 后面有一个基本块（如上面描述的 “通用子表达式消除器”），
+它以另一个 <code class="docutils literal notranslate"><span class="pre">JUMP</span></code> 结束，被标记为 “离开” 一个函数的跳转。</p>
+<p>特别是，考虑以下为调用内部Solidity函数而生成的汇编的原型例子:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  tag_return
+  tag_f
+  jump      // 从此进入
+tag_return:
+  ...opcodes after call to f...
+
+tag_f:
+  ...body of function f...
+  jump      // 从此退出
+</pre></div>
+</div>
+<p>只要函数的主体是一个连续的基本块，“内联” 就可以用位于 <code class="docutils literal notranslate"><span class="pre">tag_f</span></code> 处的块来代替 <code class="docutils literal notranslate"><span class="pre">tag_f</span> <span class="pre">jump</span></code> ，结果是：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  tag_return
+  ...body of function f...
+  jump
+tag_return:
+  ...opcodes after call to f...
+
+tag_f:
+  ...body of function f...
+  jump      // 从此退出
+</pre></div>
+</div>
+<p>现在，理想情况下，上述的其他优化器步骤将导致返回标签的推送被移向剩余的跳转，从而导致：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  ...body of function f...
+  tag_return
+  jump
+tag_return:
+  ...opcodes after call to f...
+
+tag_f:
+  ...body of function f...
+  jump      // 从此退出
+</pre></div>
+</div>
+<p>在这种情况下，“窥视孔优化器（PeepholeOptimizer）” 将删除返回跳转。理想情况下，
+所有对 <code class="docutils literal notranslate"><span class="pre">tag_f</span></code> 的引用都可以这样做，而不使用它，特别处理的话，它也可以被移除：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...body of function f...
+...opcodes after call to f...
+</pre></div>
+</div>
+<p>因此，对函数 <code class="docutils literal notranslate"><span class="pre">f</span></code> 的调用是内联的，可以删除 <code class="docutils literal notranslate"><span class="pre">f</span></code> 的原始定义。</p>
+<p>无论何时，只要启发式算法表明，在合同的生命周期内，内联比不内联更便宜，就会尝试这样的内联。
+这种启发式方法取决于函数体的大小、对其标记的其他引用的数量（近似于函数调用的数量）
+以及合约的预期执行次数（全局优化器参数 “runs”）。</p>
+</section>
+</section>
+<section id="yul">
+<h2>基于Yul的优化器模块<a class="headerlink" href="#yul" title="Permalink to this heading"></a></h2>
+<p>基于Yul的优化器由几个阶段和组件组成，它们都以语义等效的方式转换AST。
+我们的目标是，最终的代码要么更短，要么至少略长，但允许进一步的优化步骤。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>由于优化器正在进行大量开发，这里的信息可能已经过时。
+如果您依赖某项功能，请直接联系团队。</p>
+</div>
+<p>优化器目前遵循的是一种纯粹的贪婪策略，不做任何回溯。</p>
+<p>下面将解释基于Yul的优化器模块的所有组件。
+以下的转换步骤是主要的组成部分：</p>
+<ul class="simple">
+<li><p>SSA转换</p></li>
+<li><p>通用子表达式消除器</p></li>
+<li><p>表达式简化器</p></li>
+<li><p>冗余赋值消除器</p></li>
+<li><p>完全内联</p></li>
+</ul>
+<section id="id7">
+<h3>优化器的步骤<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>这是按字母顺序排列的基于Yul的优化器的所有步骤的列表。
+您可以在下面找到更多关于各个步骤和它们的顺序的信息。</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#block-flattener"><span class="std std-ref">块展平器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#circular-reference-pruner"><span class="std std-ref">循环引用程序</span></a>.</p></li>
+<li><p><a class="reference internal" href="#common-subexpression-eliminator"><span class="std std-ref">通用子表达式消除器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#conditional-simplifier"><span class="std std-ref">条件简化器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#conditional-unsimplifier"><span class="std std-ref">有条件的非对称性放大器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#control-flow-simplifier"><span class="std std-ref">控制流简化器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#dead-code-eliminator"><span class="std std-ref">死代码消除器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#equal-store-eliminator"><span class="std std-ref">等价的存储清除器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#equivalent-function-combiner"><span class="std std-ref">等价函数组合器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#expression-joiner"><span class="std std-ref">表达式连接器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#expression-simplifier"><span class="std std-ref">表达式简化器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#expression-splitter"><span class="std std-ref">表达式拆分器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#for-loop-condition-into-body"><span class="std std-ref">循环条件进入正文</span></a>.</p></li>
+<li><p><a class="reference internal" href="#for-loop-condition-out-of-body"><span class="std std-ref">体外循环条件</span></a>.</p></li>
+<li><p><a class="reference internal" href="#for-loop-init-rewriter"><span class="std std-ref">循环初始重写器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#expression-inliner"><span class="std std-ref">表达式内联</span></a>.</p></li>
+<li><p><a class="reference internal" href="#full-inliner"><span class="std std-ref">完全内联</span></a>.</p></li>
+<li><p><a class="reference internal" href="#function-grouper"><span class="std std-ref">函数分组器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#function-hoister"><span class="std std-ref">函数提升器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#function-specializer"><span class="std std-ref">函数特殊化器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#literal-rematerialiser"><span class="std std-ref">字面意义上的再物质化器（LiteralRematerialiser）</span></a>.</p></li>
+<li><p><a class="reference internal" href="#load-resolver"><span class="std std-ref">负载解析器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#loop-invariant-code-motion"><span class="std std-ref">循环不变代码模式</span></a>.</p></li>
+<li><p><a class="reference internal" href="#redundant-assign-eliminator"><span class="std std-ref">冗余赋值消除器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#reasoning-based-simplifier"><span class="std std-ref">基于推理的简化器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#rematerialiser"><span class="std std-ref">再物质化</span></a>.</p></li>
+<li><p><a class="reference internal" href="#ssa-reverser"><span class="std std-ref">SSA反转器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#ssa-transform"><span class="std std-ref">SSA转换</span></a>.</p></li>
+<li><p><a class="reference internal" href="#structural-simplifier"><span class="std std-ref">结构简化器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#unused-function-parameter-pruner"><span class="std std-ref">未使用的函数参数管理器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#unused-pruner"><span class="std std-ref">未使用过的处理器</span></a>.</p></li>
+<li><p><a class="reference internal" href="#var-decl-initializer"><span class="std std-ref">初始化程序</span></a>.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>选择优化方案<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>默认情况下，优化器对生成的程序集应用其预定义的优化步骤序列。
+您可以使用 <code class="docutils literal notranslate"><span class="pre">yul-optimizations</span></code> 选项覆盖这个序列并提供您自己的序列：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>solc --optimize --ir-optimized --yul-optimizations <span class="s1">&#39;dhfoD[xarrscLMcCTU]uljmul&#39;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">[...]</span></code> 里面的序列将被循环应用多次，直到Yul代码保持不变或达到最大轮数（目前为12）。</p>
+<p>可用的缩写列在 <a class="reference external" href="yul.rst#optimization-step-sequence">Yul优化器文档</a>。</p>
+</section>
+<section id="id10">
+<h3>预处理<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<p>预处理组件进行转换，使程序变成某种更容易操作的正常形式。
+这种正常形式在剩下的优化过程中被保留。</p>
+<section id="disambiguator">
+<span id="id11"></span><h4>消歧器<a class="headerlink" href="#disambiguator" title="Permalink to this heading"></a></h4>
+<p>消歧器获取AST并返回一个新拷贝，其中所有标识符在输入AST中都有唯一的名称。
+这是所有其他优化器阶段的先决条件。
+其中一个好处是，标识符查找不需要考虑作用域，
+这简化了其他步骤所需的分析。</p>
+<p>所有后续阶段都有一个属性，即所有的名字都保持唯一。
+这意味着如果需要引入一个新的标识符，就会产生一个新的唯一名称。</p>
+</section>
+<section id="function-hoister">
+<span id="id12"></span><h4>函数提升器<a class="headerlink" href="#function-hoister" title="Permalink to this heading"></a></h4>
+<p>函数提升器将所有的函数定义移到最上面的块的末尾。
+只要在消歧义阶段之后进行，这就是一个语义上的等价转换。
+原因是，将一个定义移到更高层次的块中不能降低其可见性，
+而且不可能引用在不同函数中定义的变量。</p>
+<p>这个阶段的好处是，可以更容易地查找函数定义，
+并且可以孤立地优化函数，而不必完全遍历AST。</p>
+</section>
+<section id="function-grouper">
+<span id="id13"></span><h4>函数分组器<a class="headerlink" href="#function-grouper" title="Permalink to this heading"></a></h4>
+<p>函数分组器必须在消歧义器和函数提升器之后应用。
+它的作用是将所有不是函数定义的最上面的元素移到一个单一的块中，
+这个块是根块的第一个语句。</p>
+<p>在这一步之后，一个程序具有以下正常形式：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{ I F... }
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">I</span></code> 是一个（可能是空的）区块，不包含任何函数定义（甚至是递归的），
+<code class="docutils literal notranslate"><span class="pre">F</span></code> 是一个函数定义的列表，使得没有一个函数包含函数定义。</p>
+<p>这个阶段的好处是，我们总是知道功能列表的开始位置。</p>
+</section>
+<section id="for-loop-condition-into-body">
+<span id="id14"></span><h4>循环条件进入正文<a class="headerlink" href="#for-loop-condition-into-body" title="Permalink to this heading"></a></h4>
+<p>这种转换将for循环的循环迭代条件移动到循环体中。
+我们需要这种转换，因为 <a class="reference internal" href="#expression-splitter"><span class="std std-ref">表达式拆分器</span></a> 将不适用于迭代条件表达式（以下示例中的 <code class="docutils literal notranslate"><span class="pre">C</span></code>）。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>for { Init... } C { Post... } {
+    Body...
+}
+</pre></div>
+</div>
+<p>被转化为</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>for { Init... } 1 { Post... } {
+    if iszero(C) { break }
+    Body...
+}
+</pre></div>
+</div>
+<p>当与 <code class="docutils literal notranslate"><span class="pre">循环不变代码模式</span></code> 搭配时，这种转换也是有用的，因为循环不变条件中的不变量可以在循环之外进行。</p>
+</section>
+<section id="for-loop-init-rewriter">
+<span id="id15"></span><h4>循环初始重写器<a class="headerlink" href="#for-loop-init-rewriter" title="Permalink to this heading"></a></h4>
+<p>这种转换将for-loop的初始化部分移到循环之前：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>for { Init... } C { Post... } {
+    Body...
+}
+</pre></div>
+</div>
+<p>被转化为</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Init...
+for {} C { Post... } {
+    Body...
+}
+</pre></div>
+</div>
+<p>这简化了其余的优化过程，
+因为我们可以忽略for循环初始化块的复杂范围规则。</p>
+</section>
+<section id="var-decl-initializer">
+<span id="id16"></span><h4>初始化程序<a class="headerlink" href="#var-decl-initializer" title="Permalink to this heading"></a></h4>
+<p>这一步重写了变量声明，使所有的变量都被初始化。
+像 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x,</span> <span class="pre">y</span></code> 这样的声明被分割成多个声明语句。</p>
+<p>目前只支持用零值初始化。</p>
+</section>
+</section>
+<section id="ssa">
+<h3>伪SSA转换<a class="headerlink" href="#ssa" title="Permalink to this heading"></a></h3>
+<p>这个组件的目的是让程序变成一个较长的形式，
+以便其他组件能够更容易地与之配合。
+最终的表现形式将类似于静态单一赋值（SSA）的形式，不同的是，
+它不使用明确的 “phi” 函数来合并来自控制流不同分支的值，
+因为Yul语言中不存在这样的功能。相反，当控制流合并时，
+如果一个变量在其中一个分支中被重新赋值，就会声明一个新的SSA变量来保持它的当前值，
+这样，下面的表达式仍然只需要引用SSA变量。</p>
+<p>下面是一个转换的例子：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IGEgOj0gY2FsbGRhdGFsb2FkKDApCiAgICBsZXQgYiA6PSBjYWxsZGF0YWxvYWQoMHgyMCkKICAgIGlmIGd0KGEsIDApIHsKICAgICAgICBiIDo9IG11bChiLCAweDIwKQogICAgfQogICAgYSA6PSBhZGQoYSwgMSkKICAgIHNzdG9yZShhLCBhZGQoYiwgMHgyMCkpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">b</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nf">gt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">b</span> <span class="o">:=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nf">add</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>应用以下所有转换步骤后，程序将如下所示：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IF8xIDo9IDAKICAgIGxldCBhXzkgOj0gY2FsbGRhdGFsb2FkKF8xKQogICAgbGV0IGEgOj0gYV85CiAgICBsZXQgXzIgOj0gMHgyMAogICAgbGV0IGJfMTAgOj0gY2FsbGRhdGFsb2FkKF8yKQogICAgbGV0IGIgOj0gYl8xMAogICAgbGV0IF8zIDo9IDAKICAgIGxldCBfNCA6PSBndChhXzksIF8zKQogICAgaWYgXzQKICAgIHsKICAgICAgICBsZXQgXzUgOj0gMHgyMAogICAgICAgIGxldCBiXzExIDo9IG11bChiXzEwLCBfNSkKICAgICAgICBiIDo9IGJfMTEKICAgIH0KICAgIGxldCBiXzEyIDo9IGIKICAgIGxldCBfNiA6PSAxCiAgICBsZXQgYV8xMyA6PSBhZGQoYV85LCBfNikKICAgIGxldCBfNyA6PSAweDIwCiAgICBsZXQgXzggOj0gYWRkKGJfMTIsIF83KQogICAgc3N0b3JlKGFfMTMsIF84KQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">_1</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="ow">let</span> <span class="nv">a_9</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="n">_1</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="n">a_9</span>
+    <span class="ow">let</span> <span class="nv">_2</span> <span class="o">:=</span> <span class="mh">0x20</span>
+    <span class="ow">let</span> <span class="nv">b_10</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">b</span> <span class="o">:=</span> <span class="n">b_10</span>
+    <span class="ow">let</span> <span class="nv">_3</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="ow">let</span> <span class="nv">_4</span> <span class="o">:=</span> <span class="nf">gt</span><span class="p">(</span><span class="n">a_9</span><span class="p">,</span> <span class="n">_3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_4</span>
+    <span class="p">{</span>
+        <span class="ow">let</span> <span class="nv">_5</span> <span class="o">:=</span> <span class="mh">0x20</span>
+        <span class="ow">let</span> <span class="nv">b_11</span> <span class="o">:=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">b_10</span><span class="p">,</span> <span class="n">_5</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">:=</span> <span class="n">b_11</span>
+    <span class="p">}</span>
+    <span class="ow">let</span> <span class="nv">b_12</span> <span class="o">:=</span> <span class="n">b</span>
+    <span class="ow">let</span> <span class="nv">_6</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="ow">let</span> <span class="nv">a_13</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">a_9</span><span class="p">,</span> <span class="n">_6</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">_7</span> <span class="o">:=</span> <span class="mh">0x20</span>
+    <span class="ow">let</span> <span class="nv">_8</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">b_12</span><span class="p">,</span> <span class="n">_7</span><span class="p">)</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">a_13</span><span class="p">,</span> <span class="n">_8</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>请注意，此代码段中唯一重新分配的变量是 <code class="docutils literal notranslate"><span class="pre">b</span></code>。
+无法避免这种重新分配，因为根据控制流， <code class="docutils literal notranslate"><span class="pre">b</span></code> 具有不同的值。
+所有其他变量在定义后都不会改变其值。
+该属性的优点是，变量可以自由移动，
+对它们的引用可以通过它们的初始值进行交换（反之亦然），
+只要这些值在新上下文中仍然有效。</p>
+<p>当然，这里的代码远远没有得到优化。相反，它要长得多。
+我们希望这段代码更容易使用，此外，还有一些优化器步骤可以撤销这些更改，
+并在最后使代码更加紧凑。</p>
+<section id="expression-splitter">
+<span id="id17"></span><h4>表达式拆分器<a class="headerlink" href="#expression-splitter" title="Permalink to this heading"></a></h4>
+<p>表达式拆分器将诸如 <code class="docutils literal notranslate"><span class="pre">add(mload(0x123),</span> <span class="pre">mul(mload(0x456),</span> <span class="pre">0x20))</span></code>
+这样的表达式变成一连串独特变量的声明，这些变量被分配给该表达式的子表达式，
+这样每个函数调用只有变量作为参数。</p>
+<p>上述内容将被转化为</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IF8xIDo9IDB4MjAKICAgIGxldCBfMiA6PSAweDQ1NgogICAgbGV0IF8zIDo9IG1sb2FkKF8yKQogICAgbGV0IF80IDo9IG11bChfMywgXzEpCiAgICBsZXQgXzUgOj0gMHgxMjMKICAgIGxldCBfNiA6PSBtbG9hZChfNSkKICAgIGxldCB6IDo9IGFkZChfNiwgXzQpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">_1</span> <span class="o">:=</span> <span class="mh">0x20</span>
+    <span class="ow">let</span> <span class="nv">_2</span> <span class="o">:=</span> <span class="mh">0x456</span>
+    <span class="ow">let</span> <span class="nv">_3</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="n">_2</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">_4</span> <span class="o">:=</span> <span class="nf">mul</span><span class="p">(</span><span class="n">_3</span><span class="p">,</span> <span class="n">_1</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">_5</span> <span class="o">:=</span> <span class="mh">0x123</span>
+    <span class="ow">let</span> <span class="nv">_6</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="n">_5</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">z</span> <span class="o">:=</span> <span class="nf">add</span><span class="p">(</span><span class="n">_6</span><span class="p">,</span> <span class="n">_4</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>请注意，这种转换并不改变操作码或函数调用的顺序。</p>
+<p>它不适用于循环迭代条件，因为循环控制流不允许在所有情况下 “概述” 内部表达式。
+我们可以通过应用 <a class="reference internal" href="#for-loop-condition-into-body"><span class="std std-ref">循环条件进入正文</span></a> 将迭代条件移动到循环体中，从而避开这个限制。</p>
+<p>最后一个程序的形式应确保（循环条件除外）函数调用不会嵌套在表达式中，
+所有函数调用参数都必须是变量。</p>
+<p>这种形式的好处是，更容易重新排列操作码序列，
+也更容易执行函数调用内联。此外，
+也更简单地替换表达式的各个部分或重新组织 “表达式树”。
+缺点是这样的代码对我们来说更难阅读。</p>
+</section>
+<section id="ssa-transform">
+<span id="id18"></span><h4>SSA转换<a class="headerlink" href="#ssa-transform" title="Permalink to this heading"></a></h4>
+<p>这个阶段尽可能地用新变量的声明来取代对现有变量的重复赋值。
+重新赋值仍然存在，但是所有对重新赋值的变量的引用都被新声明的变量所取代。</p>
+<p>示例：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IGEgOj0gMQogICAgbXN0b3JlKGEsIDIpCiAgICBhIDo9IDMKfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="nf">mstore</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="mi">3</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>被转化为</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IGFfMSA6PSAxCiAgICBsZXQgYSA6PSBhXzEKICAgIG1zdG9yZShhXzEsIDIpCiAgICBsZXQgYV8zIDo9IDMKICAgIGEgOj0gYV8zCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">a_1</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="n">a_1</span>
+    <span class="nf">mstore</span><span class="p">(</span><span class="n">a_1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">a_3</span> <span class="o">:=</span> <span class="mi">3</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="n">a_3</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>精确语义：</p>
+<p>对于任何在代码中被分配到某处的变量 <code class="docutils literal notranslate"><span class="pre">a</span></code>
+（带值声明且从未重新分配的变量不被修改），执行以下转换:</p>
+<ul class="simple">
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">a</span> <span class="pre">:=</span> <span class="pre">v</span></code> 替换为 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">a_i</span> <span class="pre">:=</span> <span class="pre">v</span>&#160;&#160; <span class="pre">let</span> <span class="pre">a</span> <span class="pre">:=</span> <span class="pre">a_i</span></code></p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:=</span> <span class="pre">v</span></code> 替换为 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">a_i</span> <span class="pre">:=</span> <span class="pre">v</span>&#160;&#160; <span class="pre">a</span> <span class="pre">:=</span> <span class="pre">a_i</span></code>, 其中 <code class="docutils literal notranslate"><span class="pre">i</span></code> 是一个数字，使得 <code class="docutils literal notranslate"><span class="pre">a_i</span></code> 尚未使用。</p></li>
+</ul>
+<p>此外，总是记录用于 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的 <code class="docutils literal notranslate"><span class="pre">i</span></code> 的当前值，并用 <code class="docutils literal notranslate"><span class="pre">a_i</span></code> 替换对 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的每次引用。
+变量 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的当前值映射在每个分配给它的块结束时被清除，
+如果它被分配在for循环体或post块内，则在for循环初始块结束时被清除。
+如果一个变量的值根据上面的规则被清除，并且该变量被声明在块之外，
+一个新的SSA变量将在控制流加入的位置被创建，这包括循环后/体块的开始和If/Switch/ForLoop/Block语句之后的位置。</p>
+<p>在此阶段之后，建议使用冗余赋值消除器删除不必要的中间分配。</p>
+<p>如果在这个阶段之前运行表达式拆分器和通用子表达式消除器，
+那么这个阶段会提供最好的结果，因为这样就不会产生过多的变量。
+另一方面，如果在SSA转换之后运行通用子表达式消除器，则效率更高。</p>
+</section>
+<section id="redundant-assign-eliminator">
+<span id="id19"></span><h4>冗余赋值消除器<a class="headerlink" href="#redundant-assign-eliminator" title="Permalink to this heading"></a></h4>
+<p>SSA转换总是生成 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">:=</span> <span class="pre">a_i</span></code> 形式的赋值，
+尽管这些赋值在许多情况下可能是不必要的，比如下面的例子：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IGEgOj0gMQogICAgYSA6PSBtbG9hZChhKQogICAgYSA6PSBzbG9hZChhKQogICAgc3N0b3JlKGEsIDEpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>SSA转换将这个片段转换为以下内容:</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IGFfMSA6PSAxCiAgICBsZXQgYSA6PSBhXzEKICAgIGxldCBhXzIgOj0gbWxvYWQoYV8xKQogICAgYSA6PSBhXzIKICAgIGxldCBhXzMgOj0gc2xvYWQoYV8yKQogICAgYSA6PSBhXzMKICAgIHNzdG9yZShhXzMsIDEpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">a_1</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="n">a_1</span>
+    <span class="ow">let</span> <span class="nv">a_2</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="n">a_1</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="n">a_2</span>
+    <span class="ow">let</span> <span class="nv">a_3</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">a_2</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">:=</span> <span class="n">a_3</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">a_3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>冗余赋值消除器将删除对 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的所有三个赋值，因为未使用 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的值，
+因此将此代码段转换为严格的SSA形式为：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgbGV0IGFfMSA6PSAxCiAgICBsZXQgYV8yIDo9IG1sb2FkKGFfMSkKICAgIGxldCBhXzMgOj0gc2xvYWQoYV8yKQogICAgc3N0b3JlKGFfMywgMSkKfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">a_1</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="ow">let</span> <span class="nv">a_2</span> <span class="o">:=</span> <span class="nf">mload</span><span class="p">(</span><span class="n">a_1</span><span class="p">)</span>
+    <span class="ow">let</span> <span class="nv">a_3</span> <span class="o">:=</span> <span class="nf">sload</span><span class="p">(</span><span class="n">a_2</span><span class="p">)</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">a_3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>当然，确定分配是否多余的错综复杂的部分与加入控制流有关。</p>
+<p>该组件的详细工作情况如下：</p>
+<p>AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中。
+在信息收集过程中，我们维护了一个从赋值语句到 “未使用（unused）”，“未决定（undecided）” 和 “已使用（used）” 三种状态的映射，
+这标志着分配的值是否会在以后被变量的引用使用。</p>
+<p>当一个赋值被访问时，它被添加到处于 “未决定” 状态的映射中
+（见下面关于for循环的注释），而其他每个仍处于 “未决定” 状态的对同一变量的赋值被改为 “未使用”。
+当一个变量被引用时，任何对该变量的赋值仍处于 “未决定” 状态，其状态被改变为 “已使用”。</p>
+<p>在控制流分叉的地方，映射的拷贝被移交给每个分支。
+在控制流汇合的地方，来自两个分支的两个映射以下列方式合并：
+只在一个映射中的语句或具有相同状态的语句不作改动地使用。
+冲突的值以如下方式解决：</p>
+<ul class="simple">
+<li><p>“未使用”， “未决定” -&gt; “未决定”</p></li>
+<li><p>“未使用”， “已使用” -&gt; “已使用”</p></li>
+<li><p>“未决定”， “已使用” -&gt; “已使用”</p></li>
+</ul>
+<p>对于For循环，考虑到条件下的连接控制流，将对条件、主体和后部进行两次访问。
+换句话说，我们创建了三条控制流路径：循环的零次运行、一次运行和两次运行，然后在最后合并它们。</p>
+<p>不需要模拟第三次甚至更多的运行，这可以如下所示：</p>
+<p>迭代开始时的赋值状态将决定性地导致该赋值在迭代结束时的状态。
+假如这个状态映射函数被称为 <code class="docutils literal notranslate"><span class="pre">f</span></code>。如上所述，
+三种不同状态 <code class="docutils literal notranslate"><span class="pre">unused（未使用）</span></code>， <code class="docutils literal notranslate"><span class="pre">undecided（未决定）</span></code> 和 <code class="docutils literal notranslate"><span class="pre">used（已使用）</span></code> 的组合是 <code class="docutils literal notranslate"><span class="pre">最多（max）</span></code> 操作，
+其中 <code class="docutils literal notranslate"><span class="pre">unused</span> <span class="pre">=</span> <span class="pre">0</span></code>， <code class="docutils literal notranslate"><span class="pre">undecided</span> <span class="pre">=</span> <span class="pre">1</span></code>， <code class="docutils literal notranslate"><span class="pre">used</span> <span class="pre">=</span> <span class="pre">2</span></code>。</p>
+<p>正确的方法是计算</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>max(s, f(s), f(f(s)), f(f(f(s))), ...)
+</pre></div>
+</div>
+<p>作为循环后的状态。因为 <code class="docutils literal notranslate"><span class="pre">f</span></code> 只是有三个不同的值的范围，
+迭代它必须在最多三个迭代后达到一个循环，
+因此 <code class="docutils literal notranslate"><span class="pre">f(f(f(s)))</span></code> 必须等于 <code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">f(s)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">f(f(s))</span></code> 其中之一，
+因此</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>max(s, f(s), f(f(s))) = max(s, f(s), f(f(s)), f(f(f(s))), ...).
+</pre></div>
+</div>
+<p>总之，最多运行两次循环就足够了，因为只有三种不同的状态。</p>
+<p>对于有 “默认” 情况的switch语句，没有跳过switch的控制流部分。</p>
+<p>当一个变量超出范围时，所有仍处于 “未决定” 状态的语句都被改为 “未使用”，
+除非该变量是一个函数的返回参数–如何是这样，状态变为 “已使用”。</p>
+<p>在第二次遍历中，所有处于 “未使用” 状态的赋值都被删除。</p>
+<p>这一步通常是在SSA转换之后立即运行，以完成伪SSA的生成。</p>
+</section>
+</section>
+<section id="id20">
+<h3>工具<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
+<section id="id21">
+<h4>可移动性<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h4>
+<p>可移动性是表达式的一个属性。它大致上意味着表达式是没有副作用的，
+它的评估只取决于变量的值和环境的调用常数状态。
+大多数表达式都是可移动的。以下部分使表达式不可移动:</p>
+<ul class="simple">
+<li><p>函数调用（如果函数中的所有语句都是可移动的，未来可能会放宽）</p></li>
+<li><p>有副作用的操作码（如 <code class="docutils literal notranslate"><span class="pre">call</span></code> 或 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code>）</p></li>
+<li><p>读取或写入内存, 存储或外部状态信息的操作码</p></li>
+<li><p>取决于当前PC、内存大小或返回数据大小的操作码</p></li>
+</ul>
+</section>
+<section id="id22">
+<h4>数据流分析器<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h4>
+<p>数据流分析器本身不是一个优化步骤，而是被其他组件作为工具使用。
+在遍历AST时，它跟踪每个变量的当前值，
+只要该值是一个可移动的表达式。
+它记录了作为表达式一部分的变量，
+这些表达式目前被分配给其他每个变量。在每次对变量 <code class="docutils literal notranslate"><span class="pre">a</span></code> 的赋值时，
+<code class="docutils literal notranslate"><span class="pre">a</span></code> 的当前存储值被更新，只要 <code class="docutils literal notranslate"><span class="pre">a</span></code> 是 <code class="docutils literal notranslate"><span class="pre">b</span></code> 当前存储表达式的一部分，
+变量 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的所有存储值都被清除。</p>
+<p>在控制流连接处，如果变量在任何控制流路径中已经或将要被分配，
+那么关于这些变量的记忆就会被清除。例如，在进入for循环时，所有将在主体或后块中分配的变量都被清除。</p>
+</section>
+</section>
+<section id="id23">
+<h3>表达式的简化<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h3>
+<p>这些简化过程会改变表达式，并用等效的、希望更简单的表达式替换它们。</p>
+<section id="common-subexpression-eliminator">
+<span id="id24"></span><h4>通用子表达式消除器<a class="headerlink" href="#common-subexpression-eliminator" title="Permalink to this heading"></a></h4>
+<p>这一步使用数据流分析器，用对某一变量的引用来替换语法上与该变量当前值相匹配的子表达式。
+这是一个等价转换，因为这种子表达式必须是可移动的。</p>
+<p>如果值是一个标识符，所有本身是标识符的子表达式都被其当前值替换。</p>
+<p>上述两条规则的结合允许计算出一个局部值的编号，
+这意味着如果两个变量有相同的值，其中一个将永远是未使用的。
+然后，未使用过的处理器或冗余赋值消除器将能够完全消除此类变量。</p>
+<p>如果之前运行过表达式拆分器，则此步骤尤其有效。
+如果代码是伪SSA形式，那么变量值的可用时间更长，因此我们有更高的机会替换表达式。</p>
+<p>如果通用子表达式消除器在它之前运行，
+表达式简化器将能够进行更好的替换。</p>
+</section>
+<section id="expression-simplifier">
+<span id="id25"></span><h4>表达式简化器<a class="headerlink" href="#expression-simplifier" title="Permalink to this heading"></a></h4>
+<p>表达式简化器使用数据流分析器，
+并利用表达式的等价变换列表，如 <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">+</span> <span class="pre">0</span> <span class="pre">-&gt;</span> <span class="pre">X</span></code> 来简化代码。</p>
+<p>它试图在每个子表达式上匹配诸如 <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">+</span> <span class="pre">0</span></code> 的模式。
+在匹配过程中，它将变量解析为当前分配的表达式，
+以便能够匹配更深入的嵌套模式，
+即使代码是伪SSA形式。</p>
+<p>一些模式如 <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">-</span> <span class="pre">X</span> <span class="pre">-&gt;</span> <span class="pre">0</span></code> 只能在表达式 <code class="docutils literal notranslate"><span class="pre">X</span></code> 是可移动的情况下应用，
+否则会删除其潜在的副作用。
+由于变量引用总是可移动的，即使它们的当前值可能不是，
+表达式简化器在拆分或伪SSA形式下又更加强大。</p>
+</section>
+<section id="literalrematerialiser">
+<span id="literal-rematerialiser"></span><h4>字面意义上的再物质化器（LiteralRematerialiser）<a class="headerlink" href="#literalrematerialiser" title="Permalink to this heading"></a></h4>
+<p>有待记录。</p>
+</section>
+<section id="load-resolver">
+<span id="id26"></span><h4>负载解析器<a class="headerlink" href="#load-resolver" title="Permalink to this heading"></a></h4>
+<p>优化阶段，分别将 <code class="docutils literal notranslate"><span class="pre">sload(x)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mload(x)</span></code> 类型的表达式替换为当前存储和内存中的值，如果已知的话。</p>
+<p>如果代码是SSA形式的，效果最好。</p>
+<p>先决条件：消歧器，循环初始重写器。</p>
+</section>
+<section id="reasoning-based-simplifier">
+<span id="id27"></span><h4>基于推理的简化器<a class="headerlink" href="#reasoning-based-simplifier" title="Permalink to this heading"></a></h4>
+<p>这个优化器使用SMT求解器来检查 <code class="docutils literal notranslate"><span class="pre">if</span></code> 条件是否为常数。</p>
+<ul class="simple">
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">限制条件和条件</span></code> 是不满足的（UNSAT），那么条件永远不会是真的，整个主体可以被删除。</p></li>
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">限制条件和非限制条件</span></code> 是不满足的（UNSAT），那么条件永远是真的，可以用 <code class="docutils literal notranslate"><span class="pre">1</span></code> 代替。</p></li>
+</ul>
+<p>只有在条件是可移动的情况下，上面的简化才能适用。</p>
+<p>它只对EVM语言有效，但在其他语言上使用是安全的。</p>
+<p>先决条件：消歧器，SSA转换。</p>
+</section>
+</section>
+<section id="id28">
+<h3>声明规模的简化<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h3>
+<section id="circular-reference-pruner">
+<span id="id29"></span><h4>循环引用程序<a class="headerlink" href="#circular-reference-pruner" title="Permalink to this heading"></a></h4>
+<p>这个阶段删除了那些互相调用但既没有外部引用也没有从最外层上下文中引用的函数。</p>
+</section>
+<section id="conditional-simplifier">
+<span id="id30"></span><h4>条件简化器<a class="headerlink" href="#conditional-simplifier" title="Permalink to this heading"></a></h4>
+<p>如果可以从控制流中确定数值，条件简化器就会插入对条件变量的赋值。</p>
+<p>销毁SSA表格。</p>
+<p>目前，这个工具是非常有限的，主要是因为我们还没有支持布尔类型。
+由于条件只检查表达式是否为非零，我们不能指定一个特定的值。</p>
+<p>当前的特性：</p>
+<ul class="simple">
+<li><p>切换条件：插入 “&lt;条件&gt; := &lt;条件标签&gt;”</p></li>
+<li><p>在带有终止控制流的if语句后，插入“&lt;条件&gt; : =0”</p></li>
+</ul>
+<p>未来的特性：</p>
+<ul class="simple">
+<li><p>允许用 “1” 替换</p></li>
+<li><p>考虑到用户定义的终止函数</p></li>
+</ul>
+<p>如果之前已经运行过死代码的删除，那么使用SSA表单效果最好。</p>
+<p>先决条件：消歧器。</p>
+</section>
+<section id="conditional-unsimplifier">
+<span id="id31"></span><h4>有条件的非对称性放大器<a class="headerlink" href="#conditional-unsimplifier" title="Permalink to this heading"></a></h4>
+<p>条件简化器的反面。</p>
+</section>
+<section id="control-flow-simplifier">
+<span id="id32"></span><h4>控制流简化器<a class="headerlink" href="#control-flow-simplifier" title="Permalink to this heading"></a></h4>
+<p>简化了几个控制流结构：</p>
+<ul class="simple">
+<li><p>用pop（条件）代替if，用空的程序体代替if</p></li>
+<li><p>移除空的默认switch情况</p></li>
+<li><p>如果不存在默认情况，则删除空的switch情况</p></li>
+<li><p>用pop（表达式）代替没有条件的switch</p></li>
+<li><p>把单例的switch变成if</p></li>
+<li><p>用pop（表达式）和程序体代替switch，只用默认情况</p></li>
+<li><p>用匹配的条件程序体的常量表达式替换switch</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">for</span></code> 替换为终止控制流，在没有其他 break/continue 的情况下替换为 <code class="docutils literal notranslate"><span class="pre">if</span></code></p></li>
+<li><p>移除函数末尾的 <code class="docutils literal notranslate"><span class="pre">leave</span></code></p></li>
+</ul>
+<p>这些操作都不依赖于数据流。然而结构简化器执行类似的任务，确实依赖于数据流。</p>
+<p>控制流简化器在其遍历过程中确实记录了是否存在 <code class="docutils literal notranslate"><span class="pre">break</span></code> 和 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 语句。</p>
+<p>先决条件：消歧器，函数提升器， 循环初始重写器。
+重要提示：引入了EVM操作代码，因此目前只能用于EVM代码。</p>
+</section>
+<section id="dead-code-eliminator">
+<span id="id33"></span><h4>死代码消除器<a class="headerlink" href="#dead-code-eliminator" title="Permalink to this heading"></a></h4>
+<p>这个优化阶段删除了不可到达的代码。</p>
+<p>无法访问代码可以是一个块中的任何代码，
+其前面有leave，return，invalid，break，continue，selfdestruct 或 revert。</p>
+<p>函数定义被保留下来，因为它们可能被早期的代码调用，因此被认为是可访问的。</p>
+<p>因为在for循环的init块中声明的变量，其范围会扩展到循环体，
+所以我们要求 循环初始重写器 在此步骤之前运行。</p>
+<p>先决条件： 循环初始重写器, 函数提升器, 函数分组器</p>
+</section>
+<section id="equal-store-eliminator">
+<span id="id34"></span><h4>等价的存储清除器<a class="headerlink" href="#equal-store-eliminator" title="Permalink to this heading"></a></h4>
+<p>如果之前有对 <code class="docutils literal notranslate"><span class="pre">mstore(k,</span> <span class="pre">v)</span></code> / <code class="docutils literal notranslate"><span class="pre">sstore(k,</span> <span class="pre">v)</span></code> 的调用，
+但中间没有其他存储，并且 <code class="docutils literal notranslate"><span class="pre">k</span></code> 和 <code class="docutils literal notranslate"><span class="pre">v</span></code> 的值没有变化，
+则该步骤将删除 <code class="docutils literal notranslate"><span class="pre">mstore(k,</span> <span class="pre">v)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">sstore(k,</span> <span class="pre">v)</span></code> 的调用。</p>
+<p>如果在SSA转换和通用子表达式消除器之后运行，这个简单的步骤是有效的，
+因为SSA将确保变量不会改变，而通用子表达式消除器在已知值相同的情况下会重新使用完全相同的变量。</p>
+<p>先决条件： 消歧器, 循环初始重写器</p>
+</section>
+<section id="unused-pruner">
+<span id="id35"></span><h4>未使用过的处理器<a class="headerlink" href="#unused-pruner" title="Permalink to this heading"></a></h4>
+<p>这一步删除了所有从未被引用的函数的定义。</p>
+<p>它还删除了从未被引用的变量的声明。如果声明指定了一个不可移动的值，
+表达式将被保留，但其值将被丢弃。</p>
+<p>所有可移动的表达式语句（未被赋值的表达式）都被删除。</p>
+</section>
+<section id="structural-simplifier">
+<span id="id36"></span><h4>结构简化器<a class="headerlink" href="#structural-simplifier" title="Permalink to this heading"></a></h4>
+<p>这是一个一般的步骤，在结构层面上进行各种简化：</p>
+<ul class="simple">
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">pop(条件)</span></code> 代替 if 语句的空程序体。</p></li>
+<li><p>用其主体替换带有真实条件的if语句</p></li>
+<li><p>删除带有错误条件的if语句</p></li>
+<li><p>把单例的switch变成if</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">pop(表达式)</span></code> 和程序体代替switch，只用默认情况</p></li>
+<li><p>通过匹配的条件程序体，用字面表达式替换switch</p></li>
+<li><p>用其初始化部分取代带有错误条件的for循环</p></li>
+</ul>
+<p>该组件使用数据流分析器。</p>
+</section>
+<section id="block-flattener">
+<span id="id37"></span><h4>块展平器<a class="headerlink" href="#block-flattener" title="Permalink to this heading"></a></h4>
+<p>这个阶段通过在外部块的适当位置插入内部块的语句来消除嵌套块。
+它依赖于函数分组器，并不对最外层的块进行展平，以保持函数分组器产生的形式。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgewogICAgICAgIGxldCB4IDo9IDIKICAgICAgICB7CiAgICAgICAgICAgIGxldCB5IDo9IDMKICAgICAgICAgICAgbXN0b3JlKHgsIHkpCiAgICAgICAgfQogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="p">{</span>
+        <span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="mi">2</span>
+        <span class="p">{</span>
+            <span class="ow">let</span> <span class="nv">y</span> <span class="o">:=</span> <span class="mi">3</span>
+            <span class="nf">mstore</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>被转化为</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ewogICAgewogICAgICAgIGxldCB4IDo9IDIKICAgICAgICBsZXQgeSA6PSAzCiAgICAgICAgbXN0b3JlKHgsIHkpCiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="p">{</span>
+        <span class="ow">let</span> <span class="nv">x</span> <span class="o">:=</span> <span class="mi">2</span>
+        <span class="ow">let</span> <span class="nv">y</span> <span class="o">:=</span> <span class="mi">3</span>
+        <span class="nf">mstore</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>只要代码没有歧义，这就不会造成问题，因为变量的作用域只能增长。</p>
+</section>
+<section id="loop-invariant-code-motion">
+<span id="id38"></span><h4>循环不变代码模式<a class="headerlink" href="#loop-invariant-code-motion" title="Permalink to this heading"></a></h4>
+<p>这种优化将可移动的SSA变量声明移到循环之外。</p>
+<p>只有在循环体或后块中的最高级别的语句被考虑，
+即条件分支内的变量声明不会被移出循环。</p>
+<p>要求：</p>
+<ul class="simple">
+<li><p>消歧器, 循环初始重写器和函数提升器必须提前运行。</p></li>
+<li><p>表达式拆分器和SSA转换应在前期运行以获得更好的结果。</p></li>
+</ul>
+</section>
+</section>
+<section id="id39">
+<h3>函数级的优化<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h3>
+<section id="function-specializer">
+<span id="id40"></span><h4>函数特殊化器<a class="headerlink" href="#function-specializer" title="Permalink to this heading"></a></h4>
+<p>这一步是用字面参数来实现函数的专业化。</p>
+<p>如果一个函数，例如， <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(a,</span> <span class="pre">b)</span> <span class="pre">{</span> <span class="pre">sstore</span> <span class="pre">(a,</span> <span class="pre">b)</span> <span class="pre">}</span></code>，被调用时有字面参数，
+例如， <code class="docutils literal notranslate"><span class="pre">f(x,</span> <span class="pre">5)</span></code>，其中 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一个标识符，可以通过创建一个新函数 <code class="docutils literal notranslate"><span class="pre">f_1</span></code> 来专门化，
+该函数只需要一个参数，即：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ZnVuY3Rpb24gZl8xKGFfMSkgewogICAgbGV0IGJfMSA6PSA1CiAgICBzc3RvcmUoYV8xLCBiXzEpCn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">f_1</span><span class="p">(</span><span class="n">a_1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="ow">let</span> <span class="nv">b_1</span> <span class="o">:=</span> <span class="mi">5</span>
+    <span class="nf">sstore</span><span class="p">(</span><span class="n">a_1</span><span class="p">,</span> <span class="n">b_1</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>其他优化步骤将能够对函数进行更多的简化。
+优化步骤主要对那些不会被内联的函数有用。</p>
+<p>先决条件： 消歧器， 函数提升器</p>
+<p>建议将字面意义上的再物质化器（LiteralRematerialiser）作为先决条件，尽管它不是正确性的必要条件。</p>
+</section>
+<section id="unused-function-parameter-pruner">
+<span id="id41"></span><h4>未使用的函数参数管理器<a class="headerlink" href="#unused-function-parameter-pruner" title="Permalink to this heading"></a></h4>
+<p>这一步是删除一个函数中未使用的参数。</p>
+<p>如果一个参数没有使用，
+比如在 <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(a,b,c)</span> <span class="pre">-&gt;</span> <span class="pre">x,</span> <span class="pre">y</span> <span class="pre">{</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">div(a,b)</span> <span class="pre">}</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">c</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code>，
+我们删除该参数并创建一个新的 “连接” 函数，如下所示：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=ZnVuY3Rpb24gZihhLGIpIC0+IHggeyB4IDo9IGRpdihhLGIpIH0KZnVuY3Rpb24gZjIoYSxiLGMpIC0+IHgsIHkgeyB4IDo9IGYoYSxiKSB9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="p">{</span> <span class="n">x</span> <span class="o">:=</span> <span class="nf">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">function</span> <span class="n">f2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">{</span> <span class="n">x</span> <span class="o">:=</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>并将所有对 <code class="docutils literal notranslate"><span class="pre">f</span></code> 的引用替换为 <code class="docutils literal notranslate"><span class="pre">f2</span></code>。
+之后应该运行内联，以确保所有对 <code class="docutils literal notranslate"><span class="pre">f2</span></code> 的引用都被 <code class="docutils literal notranslate"><span class="pre">f</span></code> 替换。</p>
+<p>先决条件： 消歧器， 函数提升器， 字面意义上的再物质化器</p>
+<p>字面意义上的再物质化器这个步骤对于正确性来说不是必需的。
+它有助于处理诸如以下情况：
+<code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(x)</span> <span class="pre">-&gt;</span> <span class="pre">y</span> <span class="pre">{</span> <span class="pre">revert(y,</span> <span class="pre">y}</span> <span class="pre">}</span></code> 其中字面意思 <code class="docutils literal notranslate"><span class="pre">y</span></code>  将被其值 <code class="docutils literal notranslate"><span class="pre">0</span></code> 取代，
+使我们能够重写该函数。</p>
+</section>
+<section id="equivalent-function-combiner">
+<span id="id42"></span><h4>等价函数组合器<a class="headerlink" href="#equivalent-function-combiner" title="Permalink to this heading"></a></h4>
+<p>如果两个函数在语法上是等价的，
+同时允许变量重命名，但不允许任何重新排序，
+那么对其中一个函数的任何引用都会被另一个函数取代。</p>
+<p>实际删除的功能是由未使用过的处理器执行的。</p>
+</section>
+</section>
+<section id="id43">
+<h3>函数内联<a class="headerlink" href="#id43" title="Permalink to this heading"></a></h3>
+<section id="expression-inliner">
+<span id="id44"></span><h4>表达式内联<a class="headerlink" href="#expression-inliner" title="Permalink to this heading"></a></h4>
+<p>优化器的这个组件通过内联可以在函数表达式中内联的函数来执行限制性的函数内联，函数为：</p>
+<ul class="simple">
+<li><p>返回一个单一的值。</p></li>
+<li><p>有一个像 <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">:=</span> <span class="pre">&lt;函数表达式&gt;</span></code> 的主体。</p></li>
+<li><p>既没有提到自己，也没有提到右边的 <code class="docutils literal notranslate"><span class="pre">r</span></code>。</p></li>
+</ul>
+<p>此外，对于所有的参数，以下各项都需要为真：</p>
+<ul class="simple">
+<li><p>参数是可移动的。</p></li>
+<li><p>该参数在函数体中被引用不到两次，或者该参数相当便宜
+（ “成本” 最多为1，就像一个0xff以下的常数）。</p></li>
+</ul>
+<p>例如：要被内联的函数的形式是： <code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(...)</span> <span class="pre">-&gt;</span> <span class="pre">r</span> <span class="pre">{</span> <span class="pre">r</span> <span class="pre">:=</span> <span class="pre">E</span> <span class="pre">}</span></code>
+其中 <code class="docutils literal notranslate"><span class="pre">E</span></code> 是一个不引用 <code class="docutils literal notranslate"><span class="pre">r</span></code> 的表达式，函数调用中的所有参数都是可移动表达式。</p>
+<p>这种内联的结果总是一个单一的表达式。</p>
+<p>该组件只能用于具有唯一名称的源码。</p>
+</section>
+<section id="full-inliner">
+<span id="id45"></span><h4>完全内联<a class="headerlink" href="#full-inliner" title="Permalink to this heading"></a></h4>
+<p>完全内联用函数的主体取代了某些函数的调用。
+这在大多数情况下是没有什么帮助的，因为它只是增加了代码的大小，但并没有什么好处。
+此外，代码通常是非常昂贵的，我们往往宁愿要更短的代码而不是更有效的代码。
+不过，在相同的情况下，内联一个函数可以对后续的优化步骤产生积极的影响。
+例如，如果一个函数参数是一个常数，就会出现这种情况。</p>
+<p>在内联过程中，一个启发式方法被用来判断函数调用是否应该被内联。
+目前的启发式方法是不内联到 “大” 函数，除非被调用的函数很小。
+只使用一次的函数以及中等大小的函数被内联，而带有常数参数的函数调用允许稍大的函数。</p>
+<p>在未来，我们可能会加入一个回溯组件，
+它不会立即对一个函数进行内联，而只是对其进行专业化处理，
+这意味着会生成一个函数的拷贝，其中某个参数总是被一个常数取代。
+之后，我们可以在这个专用函数上运行优化器。
+如果结果有很大的收益，那么这个专门化的函数就被保留下来，否则就用原来的函数代替。</p>
+</section>
+</section>
+<section id="id46">
+<h3>清理<a class="headerlink" href="#id46" title="Permalink to this heading"></a></h3>
+<p>清理工作是在优化器运行结束时进行的。
+它试图将分割的表达式再次组合成深度嵌套的表达式，
+并且通过尽可能地消除变量来提高堆栈机的 “可编译性”。</p>
+<section id="expression-joiner">
+<span id="id47"></span><h4>表达式连接器<a class="headerlink" href="#expression-joiner" title="Permalink to this heading"></a></h4>
+<p>这是与表达式分割器相反的操作。它把正好有一个引用的变量声明序列变成一个复杂的表达式。
+这个阶段完全保留了函数调用和操作码执行的顺序。它不使用任何关于操作码的互换性的信息；
+如果将一个变量的值移到它的使用位置会改变任何函数调用或操作码执行的顺序，则不执行转换。</p>
+<p>注意，组件不会移动变量赋值或被多次引用的变量的赋值。</p>
+<p>片段 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">add(0,</span> <span class="pre">2)</span> <span class="pre">let</span> <span class="pre">y</span> <span class="pre">:=</span> <span class="pre">mul(x,</span> <span class="pre">mload(2))</span></code> 不能转换，
+因为它将导致调用操作码 <code class="docutils literal notranslate"><span class="pre">add</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mload</span></code> 的顺序被调换–尽管这不会有什么影响，
+因为 <code class="docutils literal notranslate"><span class="pre">add</span></code> 是可移动的。</p>
+<p>当像这样重排操作码时，变量引用和字面意义被忽略了。
+因此，片段 <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">:=</span> <span class="pre">add(0,</span> <span class="pre">2)</span> <span class="pre">let</span> <span class="pre">y</span> <span class="pre">:=</span> <span class="pre">mul(x,</span> <span class="pre">3)</span></code> 被转换为
+<code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">y</span> <span class="pre">:=</span> <span class="pre">mul(add(0,</span> <span class="pre">2),</span> <span class="pre">3)</span></code>，尽管 <code class="docutils literal notranslate"><span class="pre">add</span></code> 操作码将在计算字面意义 <code class="docutils literal notranslate"><span class="pre">3</span></code> 后执行。</p>
+</section>
+<section id="ssa-reverser">
+<span id="id48"></span><h4>SSA反转器<a class="headerlink" href="#ssa-reverser" title="Permalink to this heading"></a></h4>
+<p>这是一个微小的步骤，如果它与通用子表达式消除器和未使用过的处理器相结合，
+则有助于扭转SSA转换的影响。</p>
+<p>我们生成的SSA形式对EVM和WebAssembly的代码生成是不利的，
+因为它生成了许多局部变量。最好的办法是用赋值重新使用现有的变量，
+而不是用新的变量声明。</p>
+<p>SSA转换改写</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IGEgOj0gY2FsbGRhdGFsb2FkKDApCm1zdG9yZShhLCAxKQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>为</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IGFfMSA6PSBjYWxsZGF0YWxvYWQoMCkKbGV0IGEgOj0gYV8xCm1zdG9yZShhXzEsIDEpCmxldCBhXzIgOj0gY2FsbGRhdGFsb2FkKDB4MjApCmEgOj0gYV8y"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">a_1</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="n">a_1</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="n">a_1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="ow">let</span> <span class="nv">a_2</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">:=</span> <span class="n">a_2</span>
+</pre></div>
+</div>
+<p>问题是在引用 <code class="docutils literal notranslate"><span class="pre">a</span></code> 时使用了变量 <code class="docutils literal notranslate"><span class="pre">a_1</span></code>，而不是 <code class="docutils literal notranslate"><span class="pre">a</span></code>。
+SSA转换改变了这种形式的语句，只需将声明和赋值互换。
+上面的片段被转化为</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=yul&amp;version=0.8.13&amp;code=bGV0IGEgOj0gY2FsbGRhdGFsb2FkKDApCmxldCBhXzEgOj0gYQptc3RvcmUoYV8xLCAxKQphIDo9IGNhbGxkYXRhbG9hZCgweDIwKQpsZXQgYV8yIDo9IGE="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-yul notranslate"><div class="highlight"><pre><span></span><span class="ow">let</span> <span class="nv">a</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="ow">let</span> <span class="nv">a_1</span> <span class="o">:=</span> <span class="n">a</span>
+<span class="nf">mstore</span><span class="p">(</span><span class="n">a_1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">:=</span> <span class="nf">calldataload</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span>
+<span class="ow">let</span> <span class="nv">a_2</span> <span class="o">:=</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>这是一个非常简单的等价转换，但是当我们现在运行通用子表达式消除器时，
+它将用 <code class="docutils literal notranslate"><span class="pre">a</span></code> 替换所有出现的 <code class="docutils literal notranslate"><span class="pre">a_1</span></code> （直到 <code class="docutils literal notranslate"><span class="pre">a</span></code> 被重新赋值）。
+然后，未使用过的处理器将完全消除变量 <code class="docutils literal notranslate"><span class="pre">a_1</span></code>，从而完全逆转SSA的转换。</p>
+</section>
+<section id="stack-compressor">
+<span id="id49"></span><h4>堆栈压缩器<a class="headerlink" href="#stack-compressor" title="Permalink to this heading"></a></h4>
+<p>让以太坊虚拟机的代码生成变得困难的一个问题是，
+在表达式堆栈中，有16个插槽的硬性限制，可以向下延伸。
+这或多或少转化为16个局部变量的限制。
+堆栈压缩器采用Yul代码并将其编译为EVM字节码。
+每当堆栈差异过大时，它就会记录发生在哪个函数中。</p>
+<p>对于每一个造成这种问题的函数，再物质化都会被调用，
+并提出特殊要求，以积极消除按其值的成本排序的特定变量。</p>
+<p>一旦失败，这个程序会重复多次。</p>
+</section>
+<section id="rematerialiser">
+<span id="id50"></span><h4>再物质化<a class="headerlink" href="#rematerialiser" title="Permalink to this heading"></a></h4>
+<p>再物质化阶段试图用最后分配给变量的表达式来替换变量引用。
+当然，这只有在这个表达式的评估费用相对较低的情况下才是有益的。
+此外，只有当表达式的值在赋值点和使用点之间没有变化时，
+它才具有语义上的等同性。这个阶段的主要好处是，
+如果它导致一个变量被完全消除，它可以节省堆栈槽（见下文），
+但是如果表达式非常便宜，它也可以在EVM上节省一个DUP操作码。</p>
+<p>再物质化使用数据流分析器来跟踪变量的当前值，
+这些变量总是可移动的。
+如果数值非常便宜或者变量被明确要求消除，
+那么变量的引用就会被其当前值所取代。</p>
+</section>
+<section id="for-loop-condition-out-of-body">
+<span id="id51"></span><h4>体外循环条件<a class="headerlink" href="#for-loop-condition-out-of-body" title="Permalink to this heading"></a></h4>
+<p>逆转体外循环条件的转换。</p>
+<p>对于任何可移动的 <code class="docutils literal notranslate"><span class="pre">c</span></code>，它转换</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for { ... } 1 { ... } {
+if iszero(c) { break }
+...
+}
+</pre></div>
+</div>
+<p>为</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for { ... } c { ... } {
+...
+}
+</pre></div>
+</div>
+<p>而它又转换</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for { ... } 1 { ... } {
+if c { break }
+...
+}
+</pre></div>
+</div>
+<p>为</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for { ... } iszero(c) { ... } {
+...
+}
+</pre></div>
+</div>
+<p>字面意义上的再物质化器应在此步骤之前运行。</p>
+</section>
+</section>
+<section id="webassembly">
+<h3>特定的WebAssembly<a class="headerlink" href="#webassembly" title="Permalink to this heading"></a></h3>
+<section id="id52">
+<h4>主要功能<a class="headerlink" href="#id52" title="Permalink to this heading"></a></h4>
+<p>将最上面的块改变为一个具有特定名称（“main”）的函数，它没有输入和输出。</p>
+<p>取决于函数分组器。</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="source_mappings.html" class="btn btn-neutral float-left" title="源代码映射" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../metadata.html" class="btn btn-neutral float-right" title="合约的元数据" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="../credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

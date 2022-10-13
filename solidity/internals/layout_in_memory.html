@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内存中的存储结构 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/toggle.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="调用数据的存储结构" href="layout_in_calldata.html" />
+    <link rel="prev" title="存储中的状态变量储存结构" href="layout_in_storage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="../index.html">
+            <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">内存中的存储结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">与存储结构的区别</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">在数组中的差异的例子</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">在结构体中存储结构差异的例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="../genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>内存中的存储结构</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/internals/layout_in_memory.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>内存中的存储结构<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<p>Solidity保留了四个32字节的插槽，具体的字节范围（包括端点）使用如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0x00</span></code> - <code class="docutils literal notranslate"><span class="pre">0x3f</span></code> （64字节）： 用于哈希方法的临时空间</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x40</span></code> - <code class="docutils literal notranslate"><span class="pre">0x5f</span></code> （32字节）： 当前分配的内存大小（又称空闲内存指针）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0x60</span></code> - <code class="docutils literal notranslate"><span class="pre">0x7f</span></code> （32字节）： 0 值插槽</p></li>
+</ul>
+<p>临时空间可以在语句之间使用（即在内联汇编之中）。
+0 值插槽则用来对动态内存数组进行初始化，且永远不会写入数据
+（因而可用的初始内存指针为 <code class="docutils literal notranslate"><span class="pre">0x80</span></code>）。</p>
+<p>Solidity 总会把新对象保存在空闲内存指针的位置，
+所以这段内存实际上从来不会空闲（在未来可能会修改这个机制）。</p>
+<p>Solidity中内存数组中的元素总是占据32字节的倍数
+（对于 <code class="docutils literal notranslate"><span class="pre">bytes1[]</span></code> 来说也是如此，但对于 <code class="docutils literal notranslate"><span class="pre">bytes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">string</span></code> 来说不是这样）。
+多维内存数组是指向内存数组的指针. 一个动态数组的长度被存储在数组的第一个槽里，后面是数组元素。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>在Solidity中，有一些操作需要一个大于64字节的临时内存区域，
+因此将不适合放在默认的临时空间中。它们将被放置在空闲内存指向的位置，
+但由于这种数据的生命周期较短，这个指针不会即时更新。
+这部分内存可能会被清零也可能不会。
+所以我们不应该期望这些所谓的空闲内存总会被清零。</p>
+<p>虽然使用 <code class="docutils literal notranslate"><span class="pre">msize</span></code> 来到达一个绝对清零的内存区域似乎是个好主意，
+但在不更新空闲内存指针的情况下，非临时性地使用这样的指针会产生意想不到的结果。</p>
+</div>
+<section id="id2">
+<h2>与存储结构的区别<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>如上所述，内存中的存储结构与 <a class="reference internal" href="layout_in_storage.html#storage-inplace-encoding"><span class="std std-ref">存储（storage）</span></a> 中的存储结构是不同的。
+下面是一些例子。</p>
+<section id="id3">
+<h3>在数组中的差异的例子<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<p>下面的数组在存储中占用32字节（1个槽），但在内存中占用128字节（4项，每个32字节）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=dWludDhbNF0gYTs="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8</span><span class="p">[</span><span class="m m-Decimal">4</span><span class="p">]</span><span class="w"> </span>a<span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>在结构体中存储结构差异的例子<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<p>以下结构体在存储中占用96字节（3个32字节的槽），
+但在内存中占用128字节（4项，每个32字节）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=c3RydWN0IFMgewogICAgdWludCBhOwogICAgdWludCBiOwogICAgdWludDggYzsKICAgIHVpbnQ4IGQ7Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">struct</span><span class="w"> </span><span class="nv">S</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">a</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint8</span><span class="w"> </span><span class="nv">c</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint8</span><span class="w"> </span><span class="nv">d</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="layout_in_storage.html" class="btn btn-neutral float-left" title="存储中的状态变量储存结构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="layout_in_calldata.html" class="btn btn-neutral float-right" title="调用数据的存储结构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="../credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

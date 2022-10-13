@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="智能合约概述" href="introduction-to-smart-contracts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="#">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity">
+<h1>Solidity<a class="headerlink" href="#solidity" title="Permalink to this heading"></a></h1>
+<p>Solidity是一门为实现智能合约而创建的面向对象的高级编程语言。 智能合约是管理以太坊中账户行为的程序。</p>
+<p>Solidity是一种 <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages">带花括号的语言</a>.
+这门语言受到了 C++，Python 和 Javascript 的影响，并且旨在针对以太坊虚拟机（EVM）。
+您可以在 <a class="reference internal" href="language-influences.html"><span class="doc">语言的影响</span></a> 这一章节中找到更多关于 Solidity 受到哪些语言启发的细节。</p>
+<p>Solidity 是静态类型语言，支持继承，库和复杂的用户自定义的类型以及其他特性。</p>
+<p>下面您将会看到，使用 Solidity，您可以创建用于投票、众筹、秘密竞价（盲拍）以及多重签名钱包等用途的合约。</p>
+<p>当开发智能合约时，您应该使用最新版本的Solidity。除某些特殊情况之外，只有最新版本才会收到
+<a class="reference external" href="https://github.com/ethereum/solidity/security/policy#supported-versions">安全修复</a>。
+此外，重大的变化以及新功能会定期引入。
+目前，我们使用 0.y.z 版本号 <a class="reference external" href="https://semver.org/#spec-item-4">来表明这种快速的变化</a>。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Solidity最近发布了0.8.x版本，该版本引入了许多重大更新。 清务必阅读 <a class="reference internal" href="080-breaking-changes.html"><span class="doc">完整列表</span></a>。</p>
+</div>
+<p>始终欢迎改进 Solidity 或此文档的想法,
+请阅读我们的 <a class="reference internal" href="contributing.html"><span class="doc">贡献者指南</span></a> 以了解更多细节。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>您可以通过点击左下角的版本号弹出的菜单来选择首选的下载格式来下载该文档的 PDF、HTML 或 Epub 格式。</p>
+</div>
+<section id="id4">
+<h2>开始入门<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p><strong>1. 理解合约基础概念</strong></p>
+<p>如果您不熟悉智能合约的概念，我们建议您从探索 “智能合约简介“ 部分开始，其中包括：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="introduction-to-smart-contracts.html#simple-smart-contract"><span class="std std-ref">一个用Solidity编写的简单的智能合约实例</span></a> 。</p></li>
+<li><p><a class="reference internal" href="introduction-to-smart-contracts.html#blockchain-basics"><span class="std std-ref">区块链基础</span></a>。</p></li>
+<li><p><a class="reference internal" href="introduction-to-smart-contracts.html#the-ethereum-virtual-machine"><span class="std std-ref">以太坊虚拟机</span></a>。</p></li>
+</ul>
+<p><strong>2. 开始了解Solidity</strong></p>
+<p>一旦熟悉了基础概念，
+我们推荐您阅读 <a class="reference internal" href="solidity-by-example.html"><span class="doc">“Solidity实例”</span></a> 和 “语言描述“ 部分来了解该语言的核心概念。</p>
+<p><strong>3. 安装Solidity编译器</strong></p>
+<p>有多种方式来安装Solidity编译器,
+只需选择您喜欢的方式，并按照 <a class="reference internal" href="installing-solidity.html#installing-solidity"><span class="std std-ref">安装手册</span></a> 上的步骤进行安装。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>您可以使用 <a class="reference external" href="https://remix.ethereum.org">Remix IDE</a> 在浏览器中直接运行示例代码。
+Remix 是一个基于 Web 浏览器的 IDE，允许您编写，部署和管理 Solidity 智能合约，
+而无需在本地安装 Solidity。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>因为软件是人编写的，就会有bug。在编写智能合约时，您应该遵循既定的软件开发最佳实践。
+这包括代码审查，测试，审计和正确性证明。
+智能合约用户有时比他们的作者对代码更有信心，
+区块链和智能合约有自己独特的问题需要注意，
+所以在生产代码工作之前，确保您阅读 <a class="reference internal" href="security-considerations.html#security-considerations"><span class="std std-ref">安全考虑</span></a> 部分。</p>
+</div>
+<p><strong>4. 了解更多</strong></p>
+<p>如果您想了解更多关于在以太坊上构建去中心化应用程序的信息，
+<a class="reference external" href="https://ethereum.org/en/developers/">以太坊开发者资源</a> 可以帮助您进一步了解关于以太坊的一般文件，
+以及大量的教程，工具和开发框架的选择。</p>
+<p>如果您有任何问题，您可以尝试在 <a class="reference external" href="https://ethereum.stackexchange.com/">Ethereum StackExchange</a>，
+或我们的 <a class="reference external" href="https://gitter.im/ethereum/solidity/">Gitter频道</a> 上搜索答案或提问。</p>
+</section>
+<section id="translations">
+<span id="id6"></span><h2>翻译<a class="headerlink" href="#translations" title="Permalink to this heading"></a></h2>
+<p>社区志愿者帮助将这些文件翻译成各种语言。
+它们有不同程度的完整性和最新性。但英文版本作为主要参考。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>我们最近建立了一个新的GitHub组织和翻译工作流程，以帮助简化社区工作。
+请参考 <a class="reference external" href="https://github.com/solidity-docs/translation-guide">翻译指南</a>，
+了解如何为社区的翻译工作做出贡献。</p>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://solidity-fr.readthedocs.io">法语</a> （正在进行）</p></li>
+<li><p><a class="reference external" href="https://github.com/damianoazzolini/solidity">意大利语</a> （正在进行）</p></li>
+<li><p><a class="reference external" href="https://solidity-jp.readthedocs.io">日语</a></p></li>
+<li><p><a class="reference external" href="https://solidity-kr.readthedocs.io">韩语</a> （正在进行）</p></li>
+<li><p><a class="reference external" href="https://github.com/ethereum/wiki/wiki/%5BRussian%5D-%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-Solidity">俄语</a> (已过时)</p></li>
+<li><p><a class="reference external" href="https://learnblockchain.cn/docs/solidity/">简体中文</a> （正在进行）</p></li>
+<li><p><a class="reference external" href="https://solidity-es.readthedocs.io">西班牙语</a></p></li>
+<li><p><a class="reference external" href="https://github.com/denizozzgur/Solidity_TR/blob/master/README.md">土耳其语</a> (完成部分)</p></li>
+</ul>
+</section>
+</section>
+<section id="id16">
+<h1>目录<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h1>
+<p><a class="reference internal" href="genindex.html"><span class="std std-ref">Keyword Index</span></a>, <a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction-to-smart-contracts.html#simple-smart-contract">简单的智能合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction-to-smart-contracts.html#blockchain-basics">区块链基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction-to-smart-contracts.html#index-6">以太坊虚拟机</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#id1">版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#remix">Remix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#npm-node-js">npm / Node.js</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#docker">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#linux">Linux 包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#macos-packages">macOS Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#id7">静态二进制文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#building-from-source">从源代码编译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#id13">CMake 选项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#id14">版本号字符串详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-solidity.html#id15">关于版本管理的重要信息</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="solidity-by-example.html#voting">投票合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solidity-by-example.html#index-1">盲拍（秘密竞价）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solidity-by-example.html#index-2">安全的远程购买</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solidity-by-example.html#id7">微支付通道</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solidity-by-example.html#index-3">模块化合约</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="layout-of-source-files.html#spdx">SPDX 许可标识符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout-of-source-files.html#pragma">编译指示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout-of-source-files.html#import">导入其他源文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layout-of-source-files.html#index-6">注释</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-state-variables">状态变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-functions">函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-function-modifiers">函数修饰器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-events">事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-errors">错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-struct-types">结构类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure-of-a-contract.html#structure-enum-types">枚举类型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="types.html#value-types">值类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#reference-types">引用类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#mapping-types">映射类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#index-26">运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#types-conversion-elementary-types">基本类型之间的转换</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html#types-conversion-literals">字面常数和基本类型之间的转换</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units-and-global-variables.html#ether">以太币（Ether） 单位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units-and-global-variables.html#index-1">时间单位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units-and-global-variables.html#special-variables-functions">特殊变量和函数</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#index-1">控制结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#function-calls">函数调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#new">通过 <code class="docutils literal notranslate"><span class="pre">new</span></code> 创建合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#id8">表达式计算顺序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#index-4">赋值</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#default-value">作用域和声明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#unchecked">检查或不检查的算术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-structures.html#assert-require-revert-and-exceptions">错误处理：Assert, Require, Revert and Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#index-1">创建合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#getter">可见性和 getter 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#modifiers">函数修饰器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#constant-immutable">Constant 和 Immutable 状态变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#functions">函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#events">事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#errors">错误和恢复语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#index-16">继承</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#abstract-contract">抽象合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#interfaces">接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#libraries">库合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contracts.html#using-for">Using For</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#id2">例子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#id3">访问外部变量、函数和库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#id4">需要避免的事情</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#solidity">Solidity的的惯例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#order">操作符的优先顺序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#index-1">全局变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#index-2">函数可见性说明符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#index-3">修改器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#id6">保留字</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="using-the-compiler.html#commandline-compiler">使用命令行编译器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-the-compiler.html#evm">将EVM版本设置为目标版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-the-compiler.html#json">编译器输入和输出JSON说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-the-compiler.html#compiler-tools">编译器工具</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ir-breaking-changes.html#id1">仅有语义上的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ir-breaking-changes.html#id2">内部结构</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals/layout_in_storage.html#id2">映射和动态数组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals/layout_in_storage.html#json">JSON输出</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals/layout_in_memory.html#id2">与存储结构的区别</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals/optimizer.html#solidity">优化Solidity代码的好处</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals/optimizer.html#id3">优化和非优化代码之间的差异</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals/optimizer.html#optimizer-parameter-runs">优化器参数运行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals/optimizer.html#id5">基于操作码的优化器模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals/optimizer.html#yul">基于Yul的优化器模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#encoding-of-the-metadata-hash-in-the-bytecode">在字节码中对元数据哈希值进行编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#natspec">自动化接口生成和NatSpec 的使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#id3">源代码验证的用法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id2">基本设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#index-1">函数选择器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id4">参数编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id5">类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id6">编码的设计标准</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id7">编码的形式化规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id8">函数选择器和参数编码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id9">示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id10">动态类型的使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#abi-events">事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#abi-errors">错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#json">JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#abi-packed-mode">严格的编码模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#id15">非标准打包模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="abi-spec.html#indexed-event-encoding">索引事件参数的编码</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="050-breaking-changes.html#id2">仅有语义上的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-breaking-changes.html#id3">语义和语法的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-breaking-changes.html#id4">明确性要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-breaking-changes.html#id5">废弃的元素</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-breaking-changes.html#interoperability">与旧合约的互操作性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-breaking-changes.html#id13">示例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060-breaking-changes.html#id2">编译器可能不会发出警告的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-breaking-changes.html#id3">显性要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-breaking-changes.html#id4">语义和语法变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-breaking-changes.html#id5">新功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-breaking-changes.html#id6">接口变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-breaking-changes.html#id9">如何更新您的代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="070-breaking-changes.html#id2">语义的微小变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-breaking-changes.html#id3">语法的变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-breaking-changes.html#id5">移除未使用或不安全的功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-breaking-changes.html#id10">接口变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-breaking-changes.html#id11">如何更新您的代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="080-breaking-changes.html#id2">语义的微小变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080-breaking-changes.html#id3">新的限制条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080-breaking-changes.html#id4">接口变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080-breaking-changes.html#id5">如何更新您的代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="natspec-format.html#header-doc-example">文档示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="natspec-format.html#header-tags">标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="natspec-format.html#header-output">文件输出</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="security-considerations.html#id2">陷阱</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security-considerations.html#id13">推荐做法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="smtchecker.html#id1">教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smtchecker.html#smtchecker-options">SMT检查器选项和调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smtchecker.html#id15">抽象和假阳性结果</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smtchecker.html#id20">现实世界的假设</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#id2">一般资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#id9">集成（以太坊）开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#id10">编辑器集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#id11">Solidity 工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#id13">第三方Solidity解析器和语法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="path-resolution.html#virtual-filesystem">Virtual Filesystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path-resolution.html#imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path-resolution.html#base-path-and-include-paths">Base Path and Include Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path-resolution.html#allowed-paths">Allowed Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path-resolution.html#import-remapping">Import Remapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path-resolution.html#using-urls-in-imports">Using URLs in imports</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#id2">动机和高级别描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#id3">简单的例子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#id4">单独使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#id5">对Yul的非正式描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#id13">Yul形式规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#yul-object">Yul对象的规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#id18">Yul 优化器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="yul.html#complete-erc20-example">Complete ERC20 Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#id4">代码结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#id17">布局顺序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#id18">命名规范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#natspec">NatSpec</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common-patterns.html#withdrawal-pattern">从合约中提款</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common-patterns.html#index-1">限制访问</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common-patterns.html#index-3">状态机</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#id4">团队电话会议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#id5">如何报告问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request">Pull Request 的工作流</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#id7">运行编译器测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#afl-fuzzer">通过 AFL 运行 Fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#whiskers">Whiskers 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#documentation-style">文档风格指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#id28">Solidity语言设计</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="brand-guide.html#id1">Solidity品牌</a></li>
+<li class="toctree-l2"><a class="reference internal" href="brand-guide.html#id3">Solidity 品牌名称</a></li>
+<li class="toctree-l2"><a class="reference internal" href="brand-guide.html#id4">Solidity标志许可</a></li>
+<li class="toctree-l2"><a class="reference internal" href="brand-guide.html#id6">Solidity标志指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="brand-guide.html#id7">信用</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction-to-smart-contracts.html" class="btn btn-neutral float-right" title="智能合约概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

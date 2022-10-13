@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>使用编译器 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="分析编译器的输出结果" href="analysing-compilation-output.html" />
+    <link rel="prev" title="语法" href="grammar.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">使用编译器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#commandline-compiler">使用命令行编译器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">基本用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">优化器选项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-1">基本路径和导入重映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#library-linking">库链接</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#evm">将EVM版本设置为目标版本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">EVM版本选项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#json">编译器输入和输出JSON说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">输入说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">输出描述</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">错误类型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compiler-tools">编译器工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solidity">Solidity-升级</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">它是如何工作的</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade-modules">可用的升级模块</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">错误报告/功能请求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>使用编译器</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/using-the-compiler.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>使用编译器<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<section id="commandline-compiler">
+<span id="index-0"></span><span id="id2"></span><h2>使用命令行编译器<a class="headerlink" href="#commandline-compiler" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这一节并不适用于 <a class="reference internal" href="installing-solidity.html#solcjs"><span class="std std-ref">solcjs</span></a>， 即使在命令行模式下使用也不行。</p>
+</div>
+<section id="id3">
+<h3>基本用法<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">solc</span></code> 是 Solidity 仓库的构建目标之一, 它是 solidity 命令行编译器。
+使用 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--help</span></code> 可以为您提供所有选项的解释。编译器可以产生各种输出，
+从简单的二进制文件和抽象语法树(解析树)上的汇编到气体使用量的估计。
+如果您只想编译一个文件，您可以运行 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--bin</span> <span class="pre">sourceFile.sol</span></code> 来生成二进制文件。
+如果您想通过 <code class="docutils literal notranslate"><span class="pre">solc</span></code> 获得一些更高级的输出信息，
+可以通过 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">-o</span> <span class="pre">outputDirectory</span> <span class="pre">--bin</span> <span class="pre">--ast-compact-json</span> <span class="pre">--asm</span> <span class="pre">sourceFile.sol</span></code> 命令
+将所有的输出都保存到单独的文件中。</p>
+</section>
+<section id="id4">
+<h3>优化器选项<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<p>在您部署合约之前，在编译时使用 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--optimize</span> <span class="pre">--bin</span> <span class="pre">sourceFile.sol</span></code> 激活优化器。
+默认情况下，优化器将假设合约在其生命周期内被调用200次（更确切地说，它假设每个操作码被执行200次左右）。
+如果您想让最初的合约部署更便宜，而后来的函数执行更昂贵，请设置为 <code class="docutils literal notranslate"><span class="pre">--optimize-runs=1</span></code>。
+如果您期望有很多交易，并且不在乎更高的部署成本和输出大小，那么把 <code class="docutils literal notranslate"><span class="pre">--optimize-runs</span></code> 设置成一个高的数字。
+这个参数对以下方面有影响（将来可能会改变）：</p>
+<ul class="simple">
+<li><p>函数调度程序中二进制搜索的大小</p></li>
+<li><p>像大数字或字符串等常量的存储方式</p></li>
+</ul>
+</section>
+<section id="index-1">
+<span id="id5"></span><h3>基本路径和导入重映射<a class="headerlink" href="#index-1" title="Permalink to this heading"></a></h3>
+<p>命令行编译器将自动从文件系统中读取导入的文件，但同时，
+它也支持通过如下方式，用 <code class="docutils literal notranslate"><span class="pre">prefix=path</span></code> 选项将 <a class="reference internal" href="path-resolution.html#import-remapping"><span class="std std-ref">路径重定向</span></a>：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>solc github.com/ethereum/dapp-bin/<span class="o">=</span>/usr/local/lib/dapp-bin/ file.sol
+</pre></div>
+</div>
+<p>这实质上是指示编译器在 <code class="docutils literal notranslate"><span class="pre">/usr/local/lib/dapp-bin</span></code> 下搜索
+所有以 <code class="docutils literal notranslate"><span class="pre">github.com/ethereum/dapp-bin/</span></code> 开头的文件。</p>
+<p>当访问文件系统搜索导入文件时，<a class="reference internal" href="path-resolution.html#direct-imports"><span class="std std-ref">不以./或../开头的路径</span></a> 被视为
+相对于使用 <code class="docutils literal notranslate"><span class="pre">--base-path</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--include-path</span></code> 选项指定的目录（如果没有指定基本路径，则是当前工作目录）。
+此外，通过这些选项添加的路径部分将不会出现在合约元数据中。</p>
+<p>出于安全考虑，编译器 <a class="reference internal" href="path-resolution.html#allowed-paths"><span class="std std-ref">对它可以访问的目录有一些限制</span></a>。
+在命令行中指定的源文件的目录和重映射的目标路径被自动允许被文件阅读器访问，
+但其他的都是默认为拒绝的。
+通过 <code class="docutils literal notranslate"><span class="pre">--allow-paths</span> <span class="pre">/sample/path,/another/sample/path</span></code> 语句可以允许额外的路径（和它们的子目录）。
+通过 <code class="docutils literal notranslate"><span class="pre">--base-path</span></code> 指定的路径内的所有内容都是允许的。</p>
+<p>以上只是对编译器如何处理导入路径的一个简化。
+关于详细的解释，包括例子和边缘情况的讨论，请参考 <a class="reference internal" href="path-resolution.html#path-resolution"><span class="std std-ref">路径解析</span></a> 一节。</p>
+</section>
+<section id="library-linking">
+<span id="index-2"></span><span id="id6"></span><h3>库链接<a class="headerlink" href="#library-linking" title="Permalink to this heading"></a></h3>
+<p>如果您的合约使用 <a class="reference internal" href="contracts.html#libraries"><span class="std std-ref">库合约</span></a>，
+您会注意到字节码中含有 <code class="docutils literal notranslate"><span class="pre">__$53aea86b7d70b31448b230b20ae141a537$__</span></code> 形式的字符串。
+这些是实际库的地址的占位符。此占位符是完全限定库名的keccak256散列的十六进制编码的34个字符前缀。
+字节码文件也将包含形式为 <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">&lt;placeholder&gt;</span> <span class="pre">-&gt;</span> <span class="pre">&lt;fq</span> <span class="pre">library</span> <span class="pre">name&gt;</span></code> 的代码行，以帮助识别占位符代表的库。
+注意，完全限定的库名是其源文件的路径和用 <code class="docutils literal notranslate"><span class="pre">:</span></code> 分隔的库名。
+您可以使用 <code class="docutils literal notranslate"><span class="pre">solc</span></code> 作为链接器，意味着您将在这些地方插入库的地址：</p>
+<p>要么在您的命令中加入
+<code class="docutils literal notranslate"><span class="pre">--libraries</span> <span class="pre">&quot;file.sol:Math=0x1234567890123456789012345678901234567890</span> <span class="pre">file.sol:Heap=0xabCD567890123456789012345678901234567890&quot;</span></code>，
+为每个库提供一个地址（用逗号或空格作为分隔符），要么将字符串存储在一个文件中（每行一个库），
+用 <code class="docutils literal notranslate"><span class="pre">-libraries</span> <span class="pre">fileName</span></code> 运行 <code class="docutils literal notranslate"><span class="pre">solc</span></code>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>从Solidity 0.8.1 开始，接受 <code class="docutils literal notranslate"><span class="pre">=</span></code> 作为库和地址之间的分隔符，而 <code class="docutils literal notranslate"><span class="pre">:</span></code> 作为分隔符已被废弃。
+它将在未来被删除。目前 <code class="docutils literal notranslate"><span class="pre">--libraries</span> <span class="pre">&quot;file.sol:Math:0x1234567890123456789012345678901234567890</span> <span class="pre">file.sol:Heap:0xabCD56789012345678901234567890&quot;</span></code> 也可以工作。</p>
+</div>
+<p id="index-3">如果调用 <code class="docutils literal notranslate"><span class="pre">solc</span></code> 时有 <code class="docutils literal notranslate"><span class="pre">--standard-json</span></code> 选项，它将在标准输入中期待一个JSON输入（如下所述），
+并在标准输出中返回一个JSON输出。这是对更复杂的，特别是自动化使用时的推荐接口。
+该进程将始终以 “成功” 状态终止，并通过JSON输出来报告任何错误。
+选项 <code class="docutils literal notranslate"><span class="pre">--base-path</span></code> 也以标准JSON模式处理。</p>
+<p>如果调用 <code class="docutils literal notranslate"><span class="pre">solc</span></code> 时带有 <code class="docutils literal notranslate"><span class="pre">--link</span></code> 选项，所有输入文件都被编译成格式为 <code class="docutils literal notranslate"><span class="pre">__$53aea86b7d70b31448b230b20ae141a537$__</span></code>
+形式的未链接的二进制文件（十六进制编码），并被本地链接（如果从标准输入（stdin）读取输入，则被写到标准输出（stdout））。
+在这种情况下，除了 <code class="docutils literal notranslate"><span class="pre">--libraries</span></code> 以外的所有选项都被忽略（包括 <code class="docutils literal notranslate"><span class="pre">-o</span></code> ）。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>不推荐在生成的字节码上手动链接库文件，因为它不会更新合约元数据。
+由于元数据包含在编译时指定的库的列表，而字节码包含元数据哈希，
+您将得到不同的二进制文件，并且这取决于何时进行链接。</p>
+<p>您应该在编译合约时请求编译器链接库文件，方法是使用 <code class="docutils literal notranslate"><span class="pre">solc</span></code> 的 <code class="docutils literal notranslate"><span class="pre">--libraries</span></code> 选项
+或 <code class="docutils literal notranslate"><span class="pre">libraries</span></code> 键（如果您使用编译器的标准JSON接口）。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>库的占位符曾经是库本身的完全限定名称，而不是它的哈希值。
+这种格式仍然被 <code class="docutils literal notranslate"><span class="pre">solc</span> <span class="pre">--link</span></code> 支持，但编译器将不再输出它。
+这一改变是为了减少库之间发生碰撞的可能性，因为只有完全限定的库名的前36个字符可以被使用。</p>
+</div>
+<span class="target" id="evm-version"></span></section>
+</section>
+<section id="evm">
+<span id="index-4"></span><h2>将EVM版本设置为目标版本<a class="headerlink" href="#evm" title="Permalink to this heading"></a></h2>
+<p>当您编译您的合约代码时，您可以指定以太坊虚拟机版本来编译，以避免特定的功能或行为。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>在错误的EVM版本进行编译会导致错误，奇怪和失败的行为。
+请确保，特别是在运行一个私有链的情况下，您使用匹配的EVM版本。</p>
+</div>
+<p>在命令行中，您可以选择EVM的版本，如下所示：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>solc --evm-version &lt;VERSION&gt; contract.sol
+</pre></div>
+</div>
+<p>在 <a class="reference internal" href="#compiler-api"><span class="std std-ref">标准 JSON 接口</span></a> 中，使用 <code class="docutils literal notranslate"><span class="pre">&quot;settings&quot;</span></code> 字段中的键 <code class="docutils literal notranslate"><span class="pre">&quot;evmVersion&quot;</span></code>。</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;sources&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="cm">/* ... */</span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;settings&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;optimizer&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="cm">/* ... */</span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;evmVersion&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&lt;VERSION&gt;&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id7">
+<h3>EVM版本选项<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<p>以下是一个EVM版本的列表，以及每个版本中引入的编译器相关变化。
+每个版本之间不保证向后兼容。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">homestead</span></code></dt><dd><ul>
+<li><p>（最老的版本）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">tangerineWhistle</span></code></dt><dd><ul>
+<li><p>访问其他账户的gas成本增加，与gas估算和优化器有关。</p></li>
+<li><p>对于外部调用，所有gas都是默认发送的，以前必须保留一定的数量。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">spuriousDragon</span></code></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">exp</span></code> 操作码的gas成本增加，与gas估计和优化器有关。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">byzantium</span></code></dt><dd><ul>
+<li><p>在汇编中可使用操作码 <code class="docutils literal notranslate"><span class="pre">returndatacopy</span></code>， <code class="docutils literal notranslate"><span class="pre">returndatasize</span></code> 和 <code class="docutils literal notranslate"><span class="pre">staticcall</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">staticcall</span></code> 操作码在调用非库合约 view 或 pure 函数时使用，它可以防止函数在EVM级别修改状态，也就是说，甚至适用于您使用无效的类型转换时。</p></li>
+<li><p>可以访问从函数调用返回的动态数据。</p></li>
+<li><p>引入了 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 操作码，这意味着 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 将不会浪费gas。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">constantinople</span></code></dt><dd><ul>
+<li><p>在汇编中可使用操作码 <code class="docutils literal notranslate"><span class="pre">create2</span></code>, <code class="docutils literal notranslate"><span class="pre">extcodehash</span></code>, <code class="docutils literal notranslate"><span class="pre">shl</span></code>, <code class="docutils literal notranslate"><span class="pre">shr</span></code> 和 <code class="docutils literal notranslate"><span class="pre">sar</span></code>。</p></li>
+<li><p>移位运算符使用移位运算码，因此需要的gas较少。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">petersburg</span></code></dt><dd><ul>
+<li><p>编译器的行为与 constantinople 版本的行为相同。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">istanbul</span></code></dt><dd><ul>
+<li><p>在汇编中可使用操作码 <code class="docutils literal notranslate"><span class="pre">chainid</span></code> 和 <code class="docutils literal notranslate"><span class="pre">selfbalance</span></code>。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">berlin</span></code></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SLOAD</span></code>, <code class="docutils literal notranslate"><span class="pre">*CALL</span></code>, <code class="docutils literal notranslate"><span class="pre">BALANCE</span></code>, <code class="docutils literal notranslate"><span class="pre">EXT*</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SELFDESTRUCT</span></code> 的gas成本增加。
+编译器假设这类操作的gas成本是固定的。这与gas估计和优化器有关。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">london</span></code> (<strong>default</strong>)</dt><dd><ul>
+<li><p>区块的基本费用（ <a class="reference external" href="https://eips.ethereum.org/EIPS/eip-3198">EIP-3198</a> 和 <a class="reference external" href="https://eips.ethereum.org/EIPS/eip-1559">EIP-1559</a> ）
+可以通过全局的 <code class="docutils literal notranslate"><span class="pre">block.basefee</span></code> 或内联汇编中的 <code class="docutils literal notranslate"><span class="pre">basefee()</span></code> 访问。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+<section id="json">
+<span id="compiler-api"></span><span id="index-5"></span><h2>编译器输入和输出JSON说明<a class="headerlink" href="#json" title="Permalink to this heading"></a></h2>
+<p>推荐的与Solidity编译器连接的方式，特别是对于更复杂和自动化的设置，是所谓的JSON输入输出接口。
+编译器的所有发行版都提供相同的接口。</p>
+<p>这些字段一般都会有变化，有些是可选的（如前所述），但我们尽量只做向后兼容的改动。</p>
+<p>编译器API期望JSON格式的输入，并将编译结果输出为JSON格式的输出。
+不使用标准错误输出，进程将始终以 “成功” 状态终止，即使存在错误。错误总是作为JSON输出的一部分报告。</p>
+<p>以下各小节通过一个例子来描述该格式。
+当然，注释是不允许的，在此仅用于解释。</p>
+<section id="id8">
+<h3>输入说明<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 必选：源代码语言。目前支持的是 “Solidity“ 和 “Yul“。</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;language&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Solidity&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 必选</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;sources&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 这里的键值是源文件的 “全局“ 名称，</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 导入文件可以通过重映射使用其他文件（见下文）。</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;myFile.sol&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选： 源文件的kaccak256哈希值</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果通过URL导入，它用于验证检索的内容。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;keccak256&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0x123...&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 必选（除非声明了 &quot;content&quot; 字段，参见下文）: 指向源文件的URL。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 应按此顺序导入URL，并根据keccak256哈希值检查结果（如果有的话）。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果哈希值不匹配，或者没有一个URL(s)的结果是成功的，就应该产生一个错误。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 使用命令行界面只支持文件系统路径。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 通过JavaScript接口，URL将被传递给用户提供的读取回调，因此可以使用回调支持的任何URL。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;urls&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;bzzr://56ab...&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;ipfs://Qma...&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;/tmp/path/to/file.sol&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 如果使用文件，其目录应通过 `--allow-paths &lt;path&gt;` 添加到命令行中。</span><span class="w"></span>
+<span class="w">      </span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;destructible&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选：源文件的keccak256哈希值</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;keccak256&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0x234...&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 必选：（除非使用 “urls“）：源文件的字面内容</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;content&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;contract destructible is owned { function shutdown() { if (msg.sender == owner) selfdestruct(owner); } }&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 可选</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;settings&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可选： 在给定的阶段后停止编译。目前这里只有 “parsing” 有效。</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;stopAfter&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;parsing&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可选： 经过排序的重映射列表</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;remappings&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;:g=/dir&quot;</span><span class="w"> </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可选： 优化器设置</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;optimizer&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 默认情况下是禁用的。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 注意：enabled=false 仍然保留了一些优化功能。见下面的注解。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 警告：在0.8.6版本之前，省略 “enabled“ 键并不等同于将其设置为false，</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 实际上会禁用所有优化。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;enabled&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 根据您打算运行代码的次数进行优化。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 较低的值将更多地针对初始部署成本进行优化，</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 较高的值将更多地针对高频使用进行优化。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;runs&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 打开或关闭优化器组件的细节。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 上面的 “enabled“ 开关提供了两个默认值，</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可以在这里进行调整。如果给出了 “details“，“enabled“ 可以省略。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;details&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 如果没有给出 details，窥视孔优化器总是打开的，使用 details 来关闭它。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;peephole&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 如果没有给出 details，内联器总是打开的，</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 使用 details来关闭它。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;inliner&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 如果没有给出 details，未使用的跳板移除器总是打开的，</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 使用 details来关闭它。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;jumpdestRemover&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 在换元运算中，有时会对字词重新排序。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;orderLiterals&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 移除重复的代码块</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;deduplicate&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 常见的子表达式消除，这是最复杂的步骤，但也能提供最大的收益。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;cse&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 优化代码中字面数字和字符串的表示。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;constantOptimizer&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 新的Yul优化器。主要在ABI coder v2 和 内联汇编的代码上运行。</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 它与全局优化器设置一起被激活，并且可以在这里停用。</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 在 Solidity 0.6.0 之前，它必须通过这个开关激活。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;yul&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Yul优化器的调优选项。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;yulDetails&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 改善变量的堆栈槽的分配，可以提前释放堆栈槽。</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 如果Yul优化器被激活，则默认激活。</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;stackAllocation&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 选择要应用的优化步骤。</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 可选, 如果省略，优化器将使用默认序列。</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;optimizerSteps&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;dhfoDgvulfnTUtnIf...&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 编译EVM的版本。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 影响到类型检查和代码生成。版本可以是 homestead,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul or berlin</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;evmVersion&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;byzantium&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可选：改变编译管道以通过Yul的中间表示法。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 这是一个高度试验性的功能，不能用于生产。这在默认情况下是假的。</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;viaIR&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可选： 调试设置</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;debug&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如何处理 revert（和require）的原因字符串。设置是</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// &quot;default&quot;, &quot;strip&quot;, &quot;debug&quot; 和 &quot;verboseDebug&quot;。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// &quot;default&quot; 不注入编译器生成的revert字符串，而是保留用户提供的字符串。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// &quot;strip&quot; 删除所有的revert字符串（如果可能的话，即如果使用了字面意义），以保持副作用。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// &quot;debug&quot; 为编译器生成的内部revert注入字符串，目前为ABI编码器V1和V2实现。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// &quot;verboseDebug&quot; 甚至将进一步的信息附加到用户提供的revert字符串中（尚未实现）。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;revertStrings&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选：在产生的EVM汇编和Yul代码的注释中包括多少额外的调试信息。可用的组件是：</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// - `location`: `@src &lt;index&gt;:&lt;start&gt;:&lt;end&gt;` 形式的注解，</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//   表明原始 Solidity 文件中相应元素的位置，其中：</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//     - `&lt;index&gt;` 是与 `@us-src` 注释相匹配的文件索引。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//     - `&lt;start&gt;` 是该位置的第一个字节的索引。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//     - `&lt;end&gt;` 是该位置后第一个字节的索引。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// - `snippet`: 来自 `@src` 所示位置的单行代码片断。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//     该片段有引号，并跟随相应的 `@src` 注释。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// - `*`: 通配符值，可用于请求所有的东西。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;debugInfo&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;snippet&quot;</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 元数据设置 (可选)</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;metadata&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 只使用字面内容，不使用URL（默认为false）。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;useLiteralContent&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 对附加在字节码上的元数据哈希值使用给定的哈希值方法。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 元数据哈希可以通过选项 &quot;none &quot;从字节码中删除。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 其他选项是 &quot;ipfs&quot; 和 &quot;bzzr1&quot;。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果省略该选项，默认使用 &quot;ipfs&quot;。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;bytecodeHash&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ipfs&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 库的地址。如果这里没有给出所有的库，</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可能会导致未链接的对象，其输出数据是不同的。</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;libraries&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 顶层键是使用该库的源文件的名称。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果使用了重映射，这个源文件应该与应用重映射后的全局路径一致。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果这个键是一个空字符串，那就是指一个全局水平。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;myFile.sol&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;MyLib&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0x123123...&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 以下可用于根据文件和合约名称选择所需的输出。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 如果这个字段被省略，那么编译器就会加载并进行类型检查，但除了错误之外不会产生任何输出。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 第一层键是文件名，第二层键是合约名。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 一个空的合约名称用于不与合约绑定而是与整个源文件绑定的输出，如AST。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 以星号作为合约名称是指文件中的所有合约。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 同样地，以星形作为文件名可以匹配所有文件。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 要选择编译器可能产生的所有输出，</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 使用 &quot;outputSelection&quot;。{ &quot;*&quot;: { &quot;*&quot;: [ &quot;*&quot; ], &quot;&quot;: [ &quot;*&quot; ] } }&quot;，</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 但要注意，这可能会不必要地减慢编译过程。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 可用的输出类型如下：</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 文件级别（需要空字符串作为合约名称）：</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   ast - 所有源文件的AST</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 合约级别（需要合约名称或 &quot;*&quot;）：</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   abi - ABI</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   devdoc - 开发者文档（Natspec格式）</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   userdoc - 用户文档（Natspec格式）</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   metadata - 元数据</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   ir - 优化代码前的Yul中间表示法</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   irOptimized - 优化后的中间表现</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   storageLayout - 合约的状态变量的槽位、偏移量和类型</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.assembly - 新的汇编格式</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.legacyAssembly - JSON中的旧式汇编格式</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.bytecode.functionDebugData - 在函数层面的调试信息</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.bytecode.object - 字节码对象</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.bytecode.opcodes - 操作码列表</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.bytecode.sourceMap - 源码映射（对调试有用）</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.bytecode.linkReferences - 链接引用（如果是未链接的对象）</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.bytecode.generatedSources - 由编译器生成的源码</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.deployedBytecode* - 部署的字节码（拥有evm.bytecode的所有选项）。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.deployedBytecode.immutableReferences - 从AST id到引用不可变的字节码范围的映射</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.methodIdentifiers - 函数哈希值的列表</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   evm.gasEstimates - 函数gas估计</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   ewasm.wast - WebAssembly S-expressions格式的Ewasm</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//   ewasm.wasm - WebAssembly二进制格式的Ewasm</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 注意，使用 `evm`， `evm.bytecode`， `ewasm` 等将选择该输出的每个目标部分。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 此外，`*` 可以作为通配符来请求所有东西。</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;outputSelection&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;*&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;*&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;evm.bytecode&quot;</span><span class="w"> </span><span class="c1">// 启用每个合约的元数据和字节码输出。</span><span class="w"></span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;evm.bytecode.sourceMap&quot;</span><span class="w"> </span><span class="c1">// 启用每个合约的源码映射输出。</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;ast&quot;</span><span class="w"> </span><span class="c1">// 启用每个文件的AST输出。</span><span class="w"></span>
+<span class="w">        </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 启用文件def中定义的MyContract的abi和opcodes输出。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;def&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;MyContract&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;abi&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;evm.bytecode.opcodes&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// modelChecker对象是实验性的，可能会有变化。</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;modelChecker&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 选择哪些合约应作为部署的合约进行分析。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;contracts&quot;</span><span class="o">:</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;source1.sol&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;contract1&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;source2.sol&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;contract2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;contract3&quot;</span><span class="p">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 选择除法和模数操作是否应该用松弛变量的乘法来代替。默认为 `true`。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果您使用CHC引擎而不使用Spacer作为Horn求解器（例如使用Eldarica），建议在这里使用 `false`。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 关于这个选项的更详细解释，请参见形式化验证部分。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;divModWithSlacks&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;engine&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;chc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 选择哪些类型的不变性应该报告给用户：合约，重入。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;invariants&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;contract&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;reentrancy&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 选择是否输出所有未验证的目标。默认为 `false`。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;showUnproved&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果有的话，选择应该使用哪些求解器。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 关于求解器的描述，见形式验证部分。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;solvers&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;cvc4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;smtlib2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;z3&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 选择哪些目标应该被检查：常数条件，下溢，溢出，除以零，余额，断言，弹出空数组，界外。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果没有给出该选项，所有目标都被默认检查，除了 Solidity &gt;=0.8.7 的下溢/溢出。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 目标描述见形式化验证部分。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;targets&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;underflow&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;overflow&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;assert&quot;</span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 每个SMT查询的超时时间，以毫秒为单位。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果没有给出这个选项，SMTChecker将默认使用确定性的资源限制。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 给定超时为0意味着任何查询都没有资源/时间限制。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;timeout&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">20000</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>输出描述<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 可选：如果没有遇到错误/警告/消息，则不存在。</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选：在源文件中的位置。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;sourceLocation&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;file&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;sourceFile.sol&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;end&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选：更多的位置（如有冲突的声明的地方）。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;secondarySourceLocations&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;file&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;sourceFile.sol&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">64</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;end&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">92</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Other declaration is here:&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">],</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 强制：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 完整的类型清单见下文。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;TypeError&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 强制：发生错误的组件，例如“general”，“ewasm”等</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;component&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;general&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 强制：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;severity&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选：错误原因的唯一代码</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;errorCode&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;3141&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 强制</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Invalid keyword&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 可选：带错误源位置的格式化消息</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;formattedMessage&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;sourceFile.sol:100: Invalid keyword&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">],</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这包含文件级的输出。</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 它可以通过outputSelection设置进行限制/过滤。</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;sources&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;sourceFile.sol&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 标识符（用于源码映射）</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// AST对象</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;ast&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 这里包含了合约级别的输出。</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// 它可以通过outputSelection设置进行限制/过滤。</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;contracts&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;sourceFile.sol&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// 如果使用的语言没有合约名称，则该字段应该留空。</span><span class="w"></span>
+<span class="w">      </span><span class="s2">&quot;ContractName&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 以太坊合约的应用二进制接口（ABI）。如果为空，则表示为空数组。</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 请参阅 https://docs.soliditylang.org/en/develop/abi-spec.html</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;abi&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 请参阅元数据输出文档（序列化的JSON字符串）</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;metadata&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{/* ... */}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 用户文档（natspec）</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;userdoc&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 开发人员文档（natspec）</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;devdoc&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 中间表示形式 (string)</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;ir&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 请参阅 &quot;存储布局&quot; 文档。</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;storageLayout&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;storage&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="cm">/* ... */</span><span class="p">],</span><span class="w"> </span><span class="s2">&quot;types&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="cm">/* ... */</span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// EVM相关输出</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;evm&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 汇编 (string)</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;assembly&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 旧风格的汇编 (object)</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;legacyAssembly&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 字节码和相关细节</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;bytecode&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 在函数层面上调试数据。</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;functionDebugData&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// 接下来是一组函数，包括编译器内部的和用户定义的函数。</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// 这组函数不一定是完整的。</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;@mint_13&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 函数的内部名称</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;entryPoint&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">128</span><span class="p">,</span><span class="w"> </span><span class="c1">// 函数开始所在字节码的字节偏移量（可选）</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">13</span><span class="p">,</span><span class="w"> </span><span class="c1">// 函数定义的AST ID，或者对于编译器内部的函数为空（可选）</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;parameterSlots&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="c1">// 函数参数的EVM堆栈槽的数量（可选）</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;returnSlots&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="c1">// 返回值的EVM堆栈槽的数量（可选）</span><span class="w"></span>
+<span class="w">              </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 作为十六进制字符串的字节码。</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;object&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;00fe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 操作码列表（字符串）</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;opcodes&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 作为一个字符串的源映射。参见源映射的定义。</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;sourceMap&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 由编译器生成的源文件的数组。目前只包含一个Yul文件。</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;generatedSources&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// Yul AST</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;ast&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="cm">/* ... */</span><span class="p">},</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// 文本形式的源文件（可能包含注释）。</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;contents&quot;</span><span class="o">:</span><span class="s2">&quot;{ function abi_decode(start, end) -&gt; data { data := calldataload(start) } }&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// 源文件ID，用于源引用，与Solidity源文件相同的 &quot;命名空间&quot;。</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;language&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Yul&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;#utility.yul&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}],</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 如果给定，这就是一个非链接的对象。</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;linkReferences&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;libraryFile.sol&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// 在字节码中的字节偏移量。</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// 链接取代了位于那里的20个字节。</span><span class="w"></span>
+<span class="w">                </span><span class="s2">&quot;Library1&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                  </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;length&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">                  </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;length&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="p">]</span><span class="w"></span>
+<span class="w">              </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;deployedBytecode&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="cm">/* ..., */</span><span class="w"> </span><span class="c1">// 与上述布局相同。</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;immutableReferences&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// 有两个对AST ID为3的不可变的引用，都是32字节长。</span><span class="w"></span>
+<span class="w">              </span><span class="c1">// 一个在字节码偏移量42，另一个在字节码偏移量80。</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;3&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">42</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;length&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">32</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;length&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">32</span><span class="w"> </span><span class="p">}]</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 函数哈希值的列表</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;methodIdentifiers&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;delegate(address)&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;5c19a95c&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 函数gas估计</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;gasEstimates&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;creation&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;codeDepositCost&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;420000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;executionCost&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;infinite&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;totalCost&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;infinite&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;external&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;delegate(address)&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;25000&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;internal&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;heavyLifting()&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;infinite&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Ewasm相关的输出</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;ewasm&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// S-expressions格式</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;wast&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="c1">// 二进制格式（十六进制字符串）</span><span class="w"></span>
+<span class="w">          </span><span class="s2">&quot;wasm&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id10">
+<h4>错误类型<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JSONError</span></code>： JSON输入不符合所需格式，例如，输入不是JSON对象，不支持的语言等。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IOError</span></code>： IO和导入处理错误，例如，在提供的源里包含无法解析的URL或哈希值不匹配。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParserError</span></code>： 源代码不符合语言规则。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DocstringParsingError</span></code>： 注释块中的NatSpec标签无法解析。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>： 语法错误，例如 <code class="docutils literal notranslate"><span class="pre">continue</span></code> 在 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环外部使用。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DeclarationError</span></code>： 无效的，无法解析的或冲突的标识符名称 比如 <code class="docutils literal notranslate"><span class="pre">Identifier</span> <span class="pre">not</span> <span class="pre">found</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TypeError</span></code>： 类型系统内的错误，例如无效类型转换，无效赋值等。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UnimplementedFeatureError</span></code>： 当前编译器不支持该功能，但预计将在未来的版本中支持。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InternalCompilerError</span></code>： 在编译器中触发的内部错误——应将此报告为一个issue。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Exception</span></code>： 编译期间的未知失败——应将此报告为一个issue。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CompilerError</span></code>： 编译器堆栈的无效使用——应将此报告为一个issue。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FatalError</span></code>： 未正确处理致命错误——应将此报告为一个issue。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Warning</span></code>： 警告，不会停止编译，但应尽可能处理。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Info</span></code>： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。</p></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="compiler-tools">
+<span id="id11"></span><h2>编译器工具<a class="headerlink" href="#compiler-tools" title="Permalink to this heading"></a></h2>
+<section id="solidity">
+<h3>Solidity-升级<a class="headerlink" href="#solidity" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">solidity-upgrade</span></code> 可以帮助您半自动地升级您的合约，以适应语言的变化。
+虽然它没有也不可能为每一个中断的版本实现所有需要的变化，
+但它仍然支持那些需要大量重复性手工调整的版本。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">solidity-upgrade</span></code> 在很大程度上进行了工作，但您的合约很可能需要进一步的手工调整。
+我们建议为您的文件使用一个版本控制系统。这有助于审查和最终回滚所做的修改。</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">solidity-upgrade</span></code> 并不被认为是完整的或没有漏洞的，所以请谨慎使用。</p>
+</div>
+<section id="id12">
+<h4>它是如何工作的<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h4>
+<p>您可以将 （一个或多个）Solidity 源文件传递给 <code class="docutils literal notranslate"><span class="pre">solidity-upgrade</span> <span class="pre">[files]</span></code>。
+如果这些文件使用了 <code class="docutils literal notranslate"><span class="pre">import</span></code> 语句，指的是当前源文件目录以外的文件，
+您需要通过 <code class="docutils literal notranslate"><span class="pre">--allow-paths</span> <span class="pre">[directory]</span></code> 来指定允许读取和导入文件的目录。
+您可以通过传递 <code class="docutils literal notranslate"><span class="pre">--ignore-missing</span></code> 来忽略丢失的文件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">solidity-upgrade</span></code> 是基于 <code class="docutils literal notranslate"><span class="pre">libsolidity</span></code> 的，
+可以解析，编译和分析您的源文件，并可能在其中找到适用的源升级。</p>
+<p>源码升级被认为是对您的源代码的轻微的文字修改。
+它们被应用于在内存中表示的给定源文件。默认情况下，相应的源文件会被更新，
+但您可以通过 <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code> 来模拟整个升级过程，而不写到任何文件中。</p>
+<p>升级过程本身有两个阶段。在第一阶段，源文件被解析，
+由于不可能在这个层面上升级源代码。错误被收集起来，
+可以通过 <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> 来记录。
+没有源代码在这一点上可以升级。</p>
+<p>在第二阶段，所有的源代码都被编译，
+所有激活的升级分析模块都与编译同时运行。默认情况下，所有可用的模块都被激活。
+请阅读 <a class="reference internal" href="#upgrade-modules"><span class="std std-ref">可用的模块</span></a> 的文档以了解更多细节。</p>
+<p>这可能会导致编译错误，而这些错误可能会被源码升级所修复。
+如果没有错误发生，就没有报告源码升级，您就完成了。
+如果发生错误，并且一些升级模块报告了源码升级，
+那么第一个报告的源码就会被应用，并且对所有给定的源码文件再次触发编译。
+只要报告了源码升级，就会重复上一步。
+如果仍然发生错误，您可以通过 <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> 来记录它们。
+如果没有错误发生，您的合约是最新的，可以用最新版本的编译器进行编译。</p>
+</section>
+<section id="upgrade-modules">
+<span id="id13"></span><h4>可用的升级模块<a class="headerlink" href="#upgrade-modules" title="Permalink to this heading"></a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 9%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>版本</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">constructor</span></code></p></td>
+<td><p>0.5.0</p></td>
+<td><p>现在必须使用 <code class="docutils literal notranslate"><span class="pre">constructor</span></code> 关键字
+来定义构造器。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">visibility</span></code></p></td>
+<td><p>0.5.0</p></td>
+<td><p>明确的函数可见性现在是强制的，
+默认为 <code class="docutils literal notranslate"><span class="pre">public</span></code>。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">abstract</span></code></p></td>
+<td><p>0.6.0</p></td>
+<td><p>如果一个合约没有实现其所有的功能，
+就必须使用关键字 <code class="docutils literal notranslate"><span class="pre">abstract</span></code>。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">virtual</span></code></p></td>
+<td><p>0.6.0</p></td>
+<td><p>在接口之外没有实现的函数
+必须被标记为 <code class="docutils literal notranslate"><span class="pre">virtual</span></code>。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">override</span></code></p></td>
+<td><p>0.6.0</p></td>
+<td><p>当覆盖一个函数或修改器时，
+必须使用新的关键字 <code class="docutils literal notranslate"><span class="pre">override</span></code>。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dotsyntax</span></code></p></td>
+<td><p>0.7.0</p></td>
+<td><p>以下语法已被弃用：
+<code class="docutils literal notranslate"><span class="pre">f.gas(...)()</span></code>， <code class="docutils literal notranslate"><span class="pre">f.value(...)()</span></code> 和
+<code class="docutils literal notranslate"><span class="pre">(new</span> <span class="pre">C).value(...)()</span></code>。
+用 <code class="docutils literal notranslate"><span class="pre">f{gas:</span> <span class="pre">...，</span> <span class="pre">value:</span> <span class="pre">...}()</span></code> 和
+<code class="docutils literal notranslate"><span class="pre">(new</span> <span class="pre">C){value:</span> <span class="pre">...}()</span></code> 来替代这些方法。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">now</span></code></p></td>
+<td><p>0.7.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">now</span></code> 关键字已被弃用。 Use
+使用 <code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code> 代替。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">constructor-visibility</span></code></p></td>
+<td><p>0.7.0</p></td>
+<td><p>移除构造函数的可见性。</p></td>
+</tr>
+</tbody>
+</table>
+<p>更多详情，请参阅 <a class="reference internal" href="050-breaking-changes.html"><span class="doc">0.5.0 版本说明</span></a>,
+<a class="reference internal" href="060-breaking-changes.html"><span class="doc">0.6.0 版本说明</span></a>,
+<a class="reference internal" href="070-breaking-changes.html"><span class="doc">0.7.0 版本说明</span></a> 和 <a class="reference internal" href="080-breaking-changes.html"><span class="doc">0.8.0 版本说明</span></a>。</p>
+</section>
+<section id="id14">
+<h4>简介<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>用法： solidity-upgrade [options] contract.sol
+
+允许的选项：
+    --help               显示帮助信息并退出。
+    --version            显示版本并退出。
+    --allow-paths path(s)
+                         允许导入一个给定的路径。
+                         可以通过用逗号分隔来提供一个路径列表。
+    --ignore-missing     忽略缺失的文件。
+    --modules module(s)  只激活一个特定的升级模块。
+                         可以用逗号隔开提供一个模块的列表。
+    --dry-run            只在内存中应用变化，不写到输入文件。
+    --verbose            打印日志、错误和变化。缩短了升级补丁的输出。
+    --unsafe             接受 *不安全* 的修改。
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h4>错误报告/功能请求<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h4>
+<p>如果您发现了一个错误，或者您有一个功能请求，请
+<a class="reference external" href="https://github.com/ethereum/solidity/issues/new/choose">在Github上提交一个问题</a>。</p>
+</section>
+<section id="id16">
+<h4>示例<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h4>
+<p>假设您在 <code class="docutils literal notranslate"><span class="pre">Source.sol</span></code> 里有以下合约：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=cHJhZ21hIHNvbGlkaXR5ID49MC42LjAgPDAuNi40OwovLyDov5nlnKgwLjcuMOS5i+WQjuWwhuaXoOazlee8luivkeOAggovLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTMuMApjb250cmFjdCBDIHsKICAgIC8vIEZJWE1FOiDnp7vpmaTmnoTpgKDlh73mlbDnmoTlj6/op4HmgKfvvIzlubbkvb/lkIjnuqbmiJDkuLogYWJzdHJhY3Qg5ZCI57qmCiAgICBjb25zdHJ1Y3RvcigpIGludGVybmFsIHt9Cn0KCmNvbnRyYWN0IEQgewogICAgdWludCB0aW1lOwoKICAgIGZ1bmN0aW9uIGYoKSBwdWJsaWMgcGF5YWJsZSB7CiAgICAgICAgLy8gRklYTUU6IOWwhiBub3cg5pS55oiQIGJsb2NrLnRpbWVzdGFtcAogICAgICAgIHRpbWUgPSBub3c7CiAgICB9Cn0KCmNvbnRyYWN0IEUgewogICAgRCBkOwoKICAgIC8vIEZJWE1FOiDnp7vpmaTmnoTpgKDlh73mlbDnmoTlj6/op4HmgKcKICAgIGNvbnN0cnVjdG9yKCkgcHVibGljIHt9CgogICAgZnVuY3Rpb24gZygpIHB1YmxpYyB7CiAgICAgICAgLy8gRklYTUU6IOWwhiAudmFsdWUoNSkg5pS55oiQICB7dmFsdWU6IDV9CiAgICAgICAgZC5mLnZhbHVlKDUpKCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="k">pragma solidity</span> <span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">0</span> <span class="o">&lt;</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">4</span><span class="p">;</span>
+<span class="c1">// 这在0.7.0之后将无法编译。</span>
+<span class="c1">// </span><span class="cs">SPDX-License-Identifier:</span><span class="c1"> GPL-3.0</span>
+<span class="kd">contract</span> <span class="n">C</span> <span class="p">{</span>
+    <span class="c1">// FIXME: 移除构造函数的可见性，并使合约成为 abstract 合约</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="k">internal</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">contract</span> <span class="n">D</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">time</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="n">f</span><span class="p">()</span> <span class="k">public</span> <span class="k">payable</span> <span class="p">{</span>
+        <span class="c1">// FIXME: 将 now 改成 block.timestamp</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="nb">now</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">contract</span> <span class="n">E</span> <span class="p">{</span>
+    <span class="n">D</span> <span class="n">d</span><span class="p">;</span>
+
+    <span class="c1">// FIXME: 移除构造函数的可见性</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="k">public</span> <span class="p">{}</span>
+
+    <span class="kd">function</span> <span class="n">g</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="c1">// FIXME: 将 .value(5) 改成  {value: 5}</span>
+        <span class="n">d</span><span class="p">.</span><span class="n">f</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="mi">5</span><span class="p">)();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="id17">
+<h5>必要的改变<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h5>
+<p>上述合约从0.7.0开始将不会被编译。为了使合约与当前的 Solidity 版本保持一致，
+必须执行以下升级模块。 <code class="docutils literal notranslate"><span class="pre">constructor-visibility</span></code>， <code class="docutils literal notranslate"><span class="pre">now</span></code> 和 <code class="docutils literal notranslate"><span class="pre">dotsyntax</span></code>。
+请阅读 <a class="reference internal" href="#upgrade-modules"><span class="std std-ref">可用的模块</span></a> 的文件以了解更多细节。</p>
+</section>
+<section id="id18">
+<h5>运行升级<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h5>
+<p>建议通过使用 <code class="docutils literal notranslate"><span class="pre">--modules</span></code> 参数明确指定升级模块。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>solidity-upgrade --modules constructor-visibility,now,dotsyntax Source.sol
+</pre></div>
+</div>
+<p>上面的命令应用了如下所示的所有变化。请仔细查看（pragma必须手动更新）。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC43LjAgPDAuOS4wOwphYnN0cmFjdCBjb250cmFjdCBDIHsKICAgIC8vIEZJWE1FOiDnp7vpmaTmnoTpgKDlh73mlbDnmoTlj6/op4HmgKfvvIzlubbkvb/lkIjnuqbmiJDkuLogYWJzdHJhY3Qg5ZCI57qmCiAgICBjb25zdHJ1Y3RvcigpIHt9Cn0KCmNvbnRyYWN0IEQgewogICAgdWludCB0aW1lOwoKICAgIGZ1bmN0aW9uIGYoKSBwdWJsaWMgcGF5YWJsZSB7CiAgICAgICAgLy8gRklYTUU6IOWwhiBub3cg5pS55oiQIGJsb2NrLnRpbWVzdGFtcAogICAgICAgIHRpbWUgPSBibG9jay50aW1lc3RhbXA7CiAgICB9Cn0KCmNvbnRyYWN0IEUgewogICAgRCBkOwoKICAgIC8vIEZJWE1FOiDnp7vpmaTmnoTpgKDlh73mlbDnmoTlj6/op4HmgKcKICAgIGNvbnN0cnVjdG9yKCkge30KCiAgICBmdW5jdGlvbiBnKCkgcHVibGljIHsKICAgICAgICAvLyBGSVhNRTog5bCGIC52YWx1ZSg1KSDmlLnmiJAgIHt2YWx1ZTogNX0KICAgICAgICBkLmZ7dmFsdWU6IDV9KCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-Solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// </span><span class="cs">SPDX-License-Identifier:</span><span class="c1"> GPL-3.0</span>
+<span class="k">pragma solidity</span> <span class="o">&gt;=</span><span class="mf">0.7</span><span class="p">.</span><span class="mi">0</span> <span class="o">&lt;</span><span class="mf">0.9</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">abstract</span> <span class="kd">contract</span> <span class="n">C</span> <span class="p">{</span>
+    <span class="c1">// FIXME: 移除构造函数的可见性，并使合约成为 abstract 合约</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">contract</span> <span class="n">D</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">time</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="n">f</span><span class="p">()</span> <span class="k">public</span> <span class="k">payable</span> <span class="p">{</span>
+        <span class="c1">// FIXME: 将 now 改成 block.timestamp</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="nb">block.timestamp</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">contract</span> <span class="n">E</span> <span class="p">{</span>
+    <span class="n">D</span> <span class="n">d</span><span class="p">;</span>
+
+    <span class="c1">// FIXME: 移除构造函数的可见性</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="kd">function</span> <span class="n">g</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="c1">// FIXME: 将 .value(5) 改成  {value: 5}</span>
+        <span class="n">d</span><span class="p">.</span><span class="n">f</span><span class="p">{</span><span class="n">value</span><span class="o">:</span> <span class="mi">5</span><span class="p">}();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="grammar.html" class="btn btn-neutral float-left" title="语法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="analysing-compilation-output.html" class="btn btn-neutral float-right" title="分析编译器的输出结果" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

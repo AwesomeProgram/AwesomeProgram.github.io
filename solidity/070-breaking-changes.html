@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity v0.7.0 突破性变化 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solidity v0.8.0 突破性变化" href="080-breaking-changes.html" />
+    <link rel="prev" title="Solidity 0.6.0 版本突破性变化" href="060-breaking-changes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solidity v0.7.0 突破性变化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">语义的微小变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">语法的变化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">内联汇编</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">移除未使用或不安全的功能</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">存储之外的映射关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">函数和事件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">声明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">接口变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">如何更新您的代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Solidity v0.7.0 突破性变化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/070-breaking-changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidity-v0-7-0">
+<h1>Solidity v0.7.0 突破性变化<a class="headerlink" href="#solidity-v0-7-0" title="Permalink to this heading"></a></h1>
+<p>本节强调了 Solidity 0.7.0 版本中引入的主要突破性变化，
+以及这些变化背后的原因和如何更新受影响的代码。
+对于完整的列表，请查看 <a class="reference external" href="https://github.com/ethereum/solidity/releases/tag/v0.7.0">版本更新日志</a>。</p>
+<section id="id2">
+<h2>语义的微小变化<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>用非字符量进行指数和移位（例如： <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">x</span></code> 或 <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">x</span></code>）
+将总是使用 <code class="docutils literal notranslate"><span class="pre">uint256</span></code> 类型（对于非负数）或
+<code class="docutils literal notranslate"><span class="pre">int256</span></code> 类型（对于负数）来执行操作。
+在此之前，该操作是在移位量/指数的类型中进行的，这可能会产生误导。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>语法的变化<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>在外部函数和合约创建调用中，现在使用新的语法指定以太和gas： <code class="docutils literal notranslate"><span class="pre">x.f{gas:</span> <span class="pre">10000,</span> <span class="pre">value:</span> <span class="pre">2</span> <span class="pre">ether}(arg1,</span> <span class="pre">arg2)</span></code>。
+旧的语法 – <code class="docutils literal notranslate"><span class="pre">x.f.gas(10000).value(2</span> <span class="pre">ether)(arg1,</span> <span class="pre">arg2)</span></code> – 会导致错误。</p></li>
+<li><p>全局变量 <code class="docutils literal notranslate"><span class="pre">now</span></code> 已被弃用， 应该使用 <code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code> 来替换。
+对于一个全局变量来说，单一的标识符 <code class="docutils literal notranslate"><span class="pre">now</span></code> 太通用了，可能会让人觉得它在事务处理过程中发生变化，
+而 <code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code> 正确地反映了它只是块的一个属性。</p></li>
+<li><p>对变量的NatSpec注释只允许用于公共状态变量，而不允许用于本地或内部变量。</p></li>
+<li><p>代号 <code class="docutils literal notranslate"><span class="pre">gwei</span></code> 现在是一个关键词（用于指定，例如 <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">gwei</span></code> 作为一个数字），不能作为一个标识符使用。</p></li>
+<li><p>字符串现在只能包含可打印的ASCII字符，这也包括各种转义序列，
+如十六进制（ <code class="docutils literal notranslate"><span class="pre">\xff</span></code>）和unicode转义（ <code class="docutils literal notranslate"><span class="pre">\u20ac</span></code>）。</p></li>
+<li><p>现在支持Unicode字符串文本来容纳有效的UTF-8序列。
+它们用 <code class="docutils literal notranslate"><span class="pre">unicode</span></code> 前缀来标识： <code class="docutils literal notranslate"><span class="pre">unicode&quot;Hello</span> <span class="pre">😃&quot;</span></code>。</p></li>
+<li><p>状态可变性：现在可以在继承过程中限制函数的状态可变性。
+具有默认状态可变性的函数可以被 <code class="docutils literal notranslate"><span class="pre">pure</span></code> 和 <code class="docutils literal notranslate"><span class="pre">view</span></code> 函数所覆盖，
+而 <code class="docutils literal notranslate"><span class="pre">view</span></code> 函数可以被 <code class="docutils literal notranslate"><span class="pre">pure</span></code> 函数所覆盖。
+同时，公共状态变量被认为是 <code class="docutils literal notranslate"><span class="pre">view</span></code>，甚至是 <code class="docutils literal notranslate"><span class="pre">pure</span></code>，如果它们是常量。</p></li>
+</ul>
+<section id="id4">
+<h3>内联汇编<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>在用户定义的函数和变量名称中，不允许在内联汇编中使用 <code class="docutils literal notranslate"><span class="pre">.</span></code>。
+如果您在“仅Yul”模式下使用Solidity，它仍然有效。</p></li>
+<li><p>存储指针变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的槽和偏移量通过 <code class="docutils literal notranslate"><span class="pre">x.slot</span></code> 和 <code class="docutils literal notranslate"><span class="pre">x.offset</span></code> 访问，
+而不是 <code class="docutils literal notranslate"><span class="pre">x_slot</span></code> 和 <code class="docutils literal notranslate"><span class="pre">x_offset</span></code>。</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>移除未使用或不安全的功能<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<section id="id6">
+<h3>存储之外的映射关系<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>如果一个结构或数组包含一个映射，它只能在存储中使用。
+以前，映射成员在内存中被默默地跳过，这让人困惑，也容易出错。</p></li>
+<li><p>如果存储中的结构或数组包含映射，则对其进行赋值是不可行的。
+以前，在复制操作过程中，映射会被默默地跳过，这是一种误导，而且容易出错。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>函数和事件<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>构造函数不再需要可见性（ <code class="docutils literal notranslate"><span class="pre">public</span></code> / <code class="docutils literal notranslate"><span class="pre">internal</span></code>）了。
+为了防止合约被创建，可以将其标记为 <code class="docutils literal notranslate"><span class="pre">abstract</span></code>。
+这使得构造函数的可见性概念变得过时了。</p></li>
+<li><p>类型检查器：不允许库函数为 <code class="docutils literal notranslate"><span class="pre">virtual</span></code>：
+由于库合约不能被继承，库函数不应该被标记为 virtual。</p></li>
+<li><p>不允许在同一继承层次中具有相同名称和参数类型的多个事件。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">B</span></code> 只影响到它所提到的合约。以前，这种影响是继承的。
+现在，您必须在所有使用该特性的派生合约中重复 <code class="docutils literal notranslate"><span class="pre">using</span></code> 语句。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>表达式<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>有符号类型的移位是不允许的。以前，允许负数的移位，但它在运行时会被还原。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">finney</span></code> 和 <code class="docutils literal notranslate"><span class="pre">szabo</span></code> 的面额被删除。它们很少被使用，并且不能使实际的金额清晰可见。
+相反，可以使用明确的数值，如 <code class="docutils literal notranslate"><span class="pre">1e20</span></code> 或非常常见的 <code class="docutils literal notranslate"><span class="pre">gwei</span></code>。</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>声明<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>关键字 <code class="docutils literal notranslate"><span class="pre">var</span></code> 不能再使用了。
+以前，这个关键词可以解析，但会导致一个类型错误，
+并建议使用哪种类型。现在，它导致一个解析器错误。</p></li>
+</ul>
+</section>
+</section>
+<section id="id10">
+<h2>接口变化<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>JSON AST：用 <code class="docutils literal notranslate"><span class="pre">kind:</span> <span class="pre">&quot;hexString&quot;</span></code> 来标记十六进制字符串文本。</p></li>
+<li><p>JSON AST：值为 <code class="docutils literal notranslate"><span class="pre">null</span></code> 的成员将从JSON输出中删除。</p></li>
+<li><p>NatSpec：构造器和函数有一致的用户文档输出。</p></li>
+</ul>
+</section>
+<section id="id11">
+<h2>如何更新您的代码<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h2>
+<p>本节详细说明了如何为每一个突破性变化更新先前的代码。</p>
+<ul class="simple">
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">x.f.value(...)()</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">x.f{value:</span> <span class="pre">...}()</span></code>。类似地， <code class="docutils literal notranslate"><span class="pre">(new</span> <span class="pre">C).value(...)()</span></code> 改为
+<code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">C{value:</span> <span class="pre">...}()</span></code>， <code class="docutils literal notranslate"><span class="pre">x.f.gas(...).value(...)()</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">x.f{gas:</span> <span class="pre">...,</span> <span class="pre">value:</span> <span class="pre">...}()</span></code>。</p></li>
+<li><p>将 <code class="docutils literal notranslate"><span class="pre">now</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">block.timestamp</span></code>.</p></li>
+<li><p>将移位运算符中的右操作数的类型改为无符号类型。
+例如，将 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;&gt;</span> <span class="pre">(256</span> <span class="pre">-</span> <span class="pre">y)</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;&gt;</span> <span class="pre">uint(256</span> <span class="pre">-</span> <span class="pre">y)</span></code>。</p></li>
+<li><p>如果需要，在所有派生合约中重复 <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">A</span> <span class="pre">for</span> <span class="pre">B</span></code> 的语句。</p></li>
+<li><p>从每个构造函数中删除 <code class="docutils literal notranslate"><span class="pre">public</span></code> 关键字。</p></li>
+<li><p>从每个构造函数中删除 <code class="docutils literal notranslate"><span class="pre">internal</span></code> 关键字，并在合约中添加 <code class="docutils literal notranslate"><span class="pre">abstract</span></code> （如果还没有存在）。</p></li>
+<li><p>将内联汇编中的 <code class="docutils literal notranslate"><span class="pre">_slot</span></code> 和 <code class="docutils literal notranslate"><span class="pre">_offset</span></code> 后缀分别改为 <code class="docutils literal notranslate"><span class="pre">.slot</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.offset</span></code>。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="060-breaking-changes.html" class="btn btn-neutral float-left" title="Solidity 0.6.0 版本突破性变化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="080-breaking-changes.html" class="btn btn-neutral float-right" title="Solidity v0.8.0 突破性变化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

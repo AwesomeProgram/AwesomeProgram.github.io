@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能合约概述 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="安装 Solidity 编译器" href="installing-solidity.html" />
+    <link rel="prev" title="Solidity" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">智能合约概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simple-smart-contract">简单的智能合约</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">存储合约示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subcurrency">子货币（Subcurrency）例子</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#blockchain-basics">区块链基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#index-4">交易/事务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-5">区块</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#index-6">以太坊虚拟机</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accounts">账户</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-8">交易</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gas">Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-10">存储，内存和栈</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-11">指令集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-12">消息调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-13">委托调用/代码调用和库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-14">日志</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-15">创建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-16">停用和自毁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#precompiledcontracts">预编译合约</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common-patterns.html">通用模式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>智能合约概述</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduction-to-smart-contracts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>智能合约概述<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<section id="simple-smart-contract">
+<span id="id2"></span><h2>简单的智能合约<a class="headerlink" href="#simple-smart-contract" title="Permalink to this heading"></a></h2>
+<p>让我们从一个基本的例子开始，这个例子设置了一个变量的值，并将其暴露给其他合约来访问。
+如果您现在不理解这些东西也没关系，我们稍后会讨论更多细节。</p>
+<section id="id3">
+<h3>存储合约示例<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5ID49MC40LjE2IDwwLjkuMDsKCmNvbnRyYWN0IFNpbXBsZVN0b3JhZ2UgewogICAgdWludCBzdG9yZWREYXRhOwoKICAgIGZ1bmN0aW9uIHNldCh1aW50IHgpIHB1YmxpYyB7CiAgICAgICAgc3RvcmVkRGF0YSA9IHg7CiAgICB9CgogICAgZnVuY3Rpb24gZ2V0KCkgcHVibGljIHZpZXcgcmV0dXJucyAodWludCkgewogICAgICAgIHJldHVybiBzdG9yZWREYXRhOwogICAgfQp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">&gt;=</span><span class="k">0.4.16</span><span class="w"> </span><span class="o">&lt;</span><span class="k">0.9.0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">SimpleStorage</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="nv">storedData</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">set</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">x</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>storedData<span class="w"> </span><span class="o">=</span><span class="w"> </span>x<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">get</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">return</span><span class="w"> </span>storedData<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>第一行告诉您，源代码是根据GPL3.0版本授权的。
+在发布源代码是默认的情况下，机器可读的许可证说明是很重要的。</p>
+<p>下一行指定源代码是为Solidity 0.4.16版本编写的，或该语言的较新版本，直到但不包括0.9.0版本。
+这是为了确保合约不能被新的（有重大改变的）编译器版本编译，在那里它可能会有不同的表现。
+<a class="reference internal" href="layout-of-source-files.html#pragma"><span class="std std-ref">Pragmas</span></a> 是编译器关于如何处理源代码的常用指令
+（例如， <a class="reference external" href="https://en.wikipedia.org/wiki/Pragma_once">pragma once</a> ）。</p>
+<p>Solidity意义上的合约是代码（其 <em>函数</em>）和数据（其 <em>状态</em>）的集合，
+驻留在以太坊区块链的一个特定地址。
+这一行 <code class="docutils literal notranslate"><span class="pre">uint</span> <span class="pre">storedData;</span></code> 声明了一个名为 <code class="docutils literal notranslate"><span class="pre">storedData</span></code> 的状态变量，
+类型为 <code class="docutils literal notranslate"><span class="pre">uint</span></code> （ <em>u</em>nsigned <em>int</em>eger，共 <em>256</em> 位）。
+您可以把它看作是数据库中的一个槽，您可以通过调用管理数据库的代码函数来查询和改变它。
+在这个例子中，合约定义了可以用来修改或检索变量值的函数 <code class="docutils literal notranslate"><span class="pre">set</span></code> 和 <code class="docutils literal notranslate"><span class="pre">get</span></code>。</p>
+<p>要访问当前合约的一个成员（如状态变量），通常不需要添加 <code class="docutils literal notranslate"><span class="pre">this.</span></code> 前缀，
+只需要通过它的名字直接访问它。
+与其他一些语言不同的是，省略它不仅仅是一个风格问题，
+它导致了一种完全不同的访问成员的方式，但后面会有更多关于这个问题。</p>
+<p>该合约能完成的事情并不多（由于以太坊构建的基础架构的原因），
+它能允许任何人在合约中存储一个单独的数字，并且这个数字可以被世界上任何人访问，
+且没有可行的办法阻止您发布这个数字。
+当然，任何人都可以再次调用 <code class="docutils literal notranslate"><span class="pre">set</span></code> ，传入不同的值，覆盖您的数字，
+但是这个数字仍会被存储在区块链的历史记录中。
+随后，我们会看到怎样施加访问限制，以确保只有您才能改变这个数字。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>小心使用Unicode文本，因为有些字符虽然长得相像（甚至一样），
+但其字符码是不同的，其编码后的字符数组也会不一样。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>所有的标识符（合约名称，函数名称和变量名称）都只能使用ASCII字符集。
+UTF-8编码的数据可以用字符串变量的形式存储。</p>
+</div>
+</section>
+<section id="subcurrency">
+<span id="index-0"></span><h3>子货币（Subcurrency）例子<a class="headerlink" href="#subcurrency" title="Permalink to this heading"></a></h3>
+<p>下面的合约实现了一个最简单的加密货币。
+这里，币确实可以无中生有地产生，但是只有创建合约的人才能做到（实现一个不同的发行计划也不难）。
+而且，任何人都可以给其他人转币，不需要注册用户名和密码，所需要的只是以太坊密钥对。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IENvaW4gewogICAgLy8g5YWz6ZSu5a2XICJwdWJsaWMiIOS9v+WPmOmHj+WPr+S7peS7juWFtuS7luWQiOe6puS4reiuv+mXruOAggogICAgYWRkcmVzcyBwdWJsaWMgbWludGVyOwogICAgbWFwcGluZyAoYWRkcmVzcyA9PiB1aW50KSBwdWJsaWMgYmFsYW5jZXM7CgogICAgLy8g5LqL5Lu25YWB6K645a6i5oi356uv5a+55oKo5aOw5piO55qE54m55a6a5ZCI57qm5Y+Y5YyW5YGa5Ye65Y+N5bqUCiAgICBldmVudCBTZW50KGFkZHJlc3MgZnJvbSwgYWRkcmVzcyB0bywgdWludCBhbW91bnQpOwoKICAgIC8vIOaehOmAoOWHveaVsOS7o+eggeWPquacieWcqOWQiOe6puWIm+W7uuaXtui/kOihjAogICAgY29uc3RydWN0b3IoKSB7CiAgICAgICAgbWludGVyID0gbXNnLnNlbmRlcjsKICAgIH0KCiAgICAvLyDlkJHkuIDkuKrlnLDlnYDlj5HpgIHkuIDlrprmlbDph4/nmoTmlrDliJvlu7rnmoTku6PluIEKICAgIC8vIOS9huWPquiDveeUseWQiOe6puWIm+W7uuiAheiwg+eUqAogICAgZnVuY3Rpb24gbWludChhZGRyZXNzIHJlY2VpdmVyLCB1aW50IGFtb3VudCkgcHVibGljIHsKICAgICAgICByZXF1aXJlKG1zZy5zZW5kZXIgPT0gbWludGVyKTsKICAgICAgICBiYWxhbmNlc1tyZWNlaXZlcl0gKz0gYW1vdW50OwogICAgfQoKICAgIC8vIOmUmeivr+exu+Wei+WPmOmHj+WFgeiuuOaCqOaPkOS+m+WFs+S6juaTjeS9nOWksei0peWOn+WboOeahOS/oeaBr+OAggogICAgLy8g5a6D5Lus5Lya6L+U5Zue57uZ5Ye95pWw55qE6LCD55So6ICF44CCCiAgICBlcnJvciBJbnN1ZmZpY2llbnRCYWxhbmNlKHVpbnQgcmVxdWVzdGVkLCB1aW50IGF2YWlsYWJsZSk7CgogICAgLy8g5LuO5Lu75L2V6LCD55So6ICF6YKj6YeM5Y+R6YCB5LiA5a6a5pWw6YeP55qE5Luj5biB5Yiw5LiA5Liq5Zyw5Z2ACiAgICBmdW5jdGlvbiBzZW5kKGFkZHJlc3MgcmVjZWl2ZXIsIHVpbnQgYW1vdW50KSBwdWJsaWMgewogICAgICAgIGlmIChhbW91bnQgPiBiYWxhbmNlc1ttc2cuc2VuZGVyXSkKICAgICAgICAgICAgcmV2ZXJ0IEluc3VmZmljaWVudEJhbGFuY2UoewogICAgICAgICAgICAgICAgcmVxdWVzdGVkOiBhbW91bnQsCiAgICAgICAgICAgICAgICBhdmFpbGFibGU6IGJhbGFuY2VzW21zZy5zZW5kZXJdCiAgICAgICAgICAgIH0pOwoKICAgICAgICBiYWxhbmNlc1ttc2cuc2VuZGVyXSAtPSBhbW91bnQ7CiAgICAgICAgYmFsYW5jZXNbcmVjZWl2ZXJdICs9IGFtb3VudDsKICAgICAgICBlbWl0IFNlbnQobXNnLnNlbmRlciwgcmVjZWl2ZXIsIGFtb3VudCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">Coin</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 关键字 &quot;public&quot; 使变量可以从其他合约中访问。</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">minter</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>balances<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 事件允许客户端对您声明的特定合约变化做出反应</span>
+<span class="w">    </span><span class="kt">event</span><span class="w"> </span><span class="nv">Sent</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">from</span><span class="p">,</span><span class="w"> </span><span class="kt">address</span><span class="w"> </span><span class="nv">to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 构造函数代码只有在合约创建时运行</span>
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>minter<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 向一个地址发送一定数量的新创建的代币</span>
+<span class="w">    </span><span class="c1">// 但只能由合约创建者调用</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">mint</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">receiver</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">require</span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>minter<span class="p">);</span><span class="w"></span>
+<span class="w">        </span>balances<span class="p">[</span>receiver<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 错误类型变量允许您提供关于操作失败原因的信息。</span>
+<span class="w">    </span><span class="c1">// 它们会返回给函数的调用者。</span>
+<span class="w">    </span>error<span class="w"> </span>InsufficientBalance<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">requested</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">available</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 从任何调用者那里发送一定数量的代币到一个地址</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">send</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">receiver</span><span class="p">,</span><span class="w"> </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>amount<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">])</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>InsufficientBalance<span class="p">({</span><span class="w"></span>
+<span class="w">                </span>requested<span class="p">:</span><span class="w"> </span>amount<span class="p">,</span><span class="w"></span>
+<span class="w">                </span>available<span class="p">:</span><span class="w"> </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"></span>
+<span class="w">            </span><span class="p">});</span><span class="w"></span>
+
+<span class="w">        </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>balances<span class="p">[</span>receiver<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>emit<span class="w"> </span>Sent<span class="p">(</span><span class="k">msg.sender</span><span class="p">,</span><span class="w"> </span>receiver<span class="p">,</span><span class="w"> </span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>这个合约引入了一些新的概念，让我们逐一解读。</p>
+<p><code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">public</span> <span class="pre">minter;</span></code> 这一行声明了一个可以被公开访问的 <a class="reference internal" href="types.html#address"><span class="std std-ref">address</span></a> 类型的状态变量。
+<code class="docutils literal notranslate"><span class="pre">address</span></code> 类型是一个160位的值，且不允许任何算数操作。
+这种类型适合存储合约地址或 <a class="reference internal" href="#accounts"><span class="std std-ref">外部账户</span></a> 的密钥对。</p>
+<p>关键字 <code class="docutils literal notranslate"><span class="pre">public</span></code> 自动生成一个函数，允许您在这个合约之外访问这个状态变量的当前值。
+如果没有这个关键字，其他的合约没有办法访问这个变量。
+由编译器生成的函数的代码大致如下所示（暂时忽略 <code class="docutils literal notranslate"><span class="pre">external</span></code> 和 <code class="docutils literal notranslate"><span class="pre">view</span></code>）：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=ZnVuY3Rpb24gbWludGVyKCkgZXh0ZXJuYWwgdmlldyByZXR1cm5zIChhZGRyZXNzKSB7IHJldHVybiBtaW50ZXI7IH0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">function</span><span class="w"> </span><span class="nv">minter</span><span class="p">()</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">return</span><span class="w"> </span>minter<span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>您可以自己添加一个类似上述的函数，但您会有同名的一个函数和一个变量。
+您不需要这样做，编译器会帮您解决这个问题。</p>
+<p id="index-1">下一行， <code class="docutils literal notranslate"><span class="pre">mapping</span> <span class="pre">(address</span> <span class="pre">=&gt;</span> <span class="pre">uint)</span> <span class="pre">public</span> <span class="pre">balances;</span></code> 也创建了一个公共状态变量，
+但它是一个更复杂的数据类型。
+<a class="reference internal" href="types.html#mapping-types"><span class="std std-ref">映射</span></a> 类型将地址映射到 <a class="reference internal" href="types.html#integers"><span class="std std-ref">无符号整数</span></a>。</p>
+<p>映射可以被看作是 <a class="reference external" href="https://en.wikipedia.org/wiki/Hash_table">哈希表</a>，
+它实际上是被初始化的，因此每一个可能的键从一开始就存在，并被映射到一个值，其字节表示为全零的值。
+然而，它既不可能获得一个映射的所有键的列表，也不可能获得所有值的列表。
+因此，要么记住您添加到映射中的内容，要么在不需要的情况下使用它。
+甚至更好的是，保留一个列表，或者使用一个更合适的数据类型。</p>
+<p>而由 <code class="docutils literal notranslate"><span class="pre">public</span></code> 关键字创建的 <a class="reference internal" href="contracts.html#getter-functions"><span class="std std-ref">getter 函数</span></a> 则是更复杂一些的情况，
+它大致如下所示：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=ZnVuY3Rpb24gYmFsYW5jZXMoYWRkcmVzcyBfYWNjb3VudCkgZXh0ZXJuYWwgdmlldyByZXR1cm5zICh1aW50KSB7CiAgICByZXR1cm4gYmFsYW5jZXNbX2FjY291bnRdOwp9"><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="kt">function</span><span class="w"> </span><span class="nv">balances</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_account</span><span class="p">)</span><span class="w"> </span><span class="kt">external</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">return</span><span class="w"> </span>balances<span class="p">[</span>_account<span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>您可以用这个函数来查询单个账户的余额。</p>
+<p id="index-2">这一行 <code class="docutils literal notranslate"><span class="pre">event</span> <span class="pre">Sent(address</span> <span class="pre">from,</span> <span class="pre">address</span> <span class="pre">to,</span> <span class="pre">uint</span> <span class="pre">amount);</span></code> 声明了一个 <a class="reference internal" href="contracts.html#events"><span class="std std-ref">“事件”</span></a>，
+它是在函数 <code class="docutils literal notranslate"><span class="pre">send</span></code> 的最后一行发出的。以太坊客户端，如网络应用，可以监听区块链上发出的这些事件，而不需要太多的成本。
+一旦发出，监听器就会收到参数 <code class="docutils literal notranslate"><span class="pre">from</span></code>， <code class="docutils literal notranslate"><span class="pre">to</span></code> 和 <code class="docutils literal notranslate"><span class="pre">amount</span></code>，这使得跟踪交易成为可能。</p>
+<p>为了监听这个事件，您可以使用以下方法 JavaScript代码，
+使用 <a class="reference external" href="https://github.com/ethereum/web3.js/">web3.js</a> 来创建 <code class="docutils literal notranslate"><span class="pre">Coin</span></code> 合约对象。
+然后在任何用户界面调用上面自动生成的 <code class="docutils literal notranslate"><span class="pre">balances</span></code> 函数：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">Coin</span><span class="p">.</span><span class="nx">Sent</span><span class="p">().</span><span class="nx">watch</span><span class="p">({},</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Coin transfer: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">amount</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot; coins were sent from &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="kr">from</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot; to &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">to</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Balances now:\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Sender: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">Coin</span><span class="p">.</span><span class="nx">balances</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="kr">from</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Receiver: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">Coin</span><span class="p">.</span><span class="nx">balances</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">args</span><span class="p">.</span><span class="nx">to</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">})</span><span class="w"></span>
+</pre></div>
+</div>
+<p id="index-3"><a class="reference internal" href="contracts.html#constructor"><span class="std std-ref">constructor</span></a> 是一个特殊的函数，只在创建合约的过程中执行，事后不能再被调用。
+在这种情况下，它永久地存储了创建合约的人的地址。
+<code class="docutils literal notranslate"><span class="pre">msg</span></code> 变量（与 <code class="docutils literal notranslate"><span class="pre">tx</span></code> 和 <code class="docutils literal notranslate"><span class="pre">block</span></code> 一起）是一个 <a class="reference internal" href="units-and-global-variables.html#special-variables-functions"><span class="std std-ref">特殊全局变量</span></a>，
+其中包含允许访问区块链的属性。 <code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> 总是当前（外部）函数调用的地址。</p>
+<p>最后，真正被用户或其他合约所调用的，以完成本合约功能的方法是 <code class="docutils literal notranslate"><span class="pre">mint</span></code> 和 <code class="docutils literal notranslate"><span class="pre">send</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">mint</span></code> 函数发送一定数量的新创建的代币到另一个地址。
+<a class="reference internal" href="control-structures.html#assert-and-require"><span class="std std-ref">require</span></a> 函数调用定义了一些条件，如果不满足这些条件就会恢复所有的变化。
+在这个例子中， <code class="docutils literal notranslate"><span class="pre">require(msg.sender</span> <span class="pre">==</span> <span class="pre">minter);</span></code> 确保只有合约的创建者可以调用 <code class="docutils literal notranslate"><span class="pre">mint</span></code>。
+一般来说，创建者可以随心所欲地铸造代币，但在某些时候，这将导致一种叫做 “溢出” 的现象。
+请注意，由于默认的 <a class="reference internal" href="control-structures.html#unchecked"><span class="std std-ref">检查过的算术</span></a>，如果表达式 <code class="docutils literal notranslate"><span class="pre">balances[receiver]</span> <span class="pre">+=</span> <span class="pre">amount;</span></code> 溢出，
+即当任意精度算术中的 <code class="docutils literal notranslate"><span class="pre">balances[receiver]</span> <span class="pre">+</span> <span class="pre">amount</span></code> 大于 <code class="docutils literal notranslate"><span class="pre">uint</span></code> 的最大值（ <code class="docutils literal notranslate"><span class="pre">2**256</span> <span class="pre">-</span> <span class="pre">1</span></code>）时，
+交易将被恢复。对于函数 <code class="docutils literal notranslate"><span class="pre">send</span></code> 中的语句 <code class="docutils literal notranslate"><span class="pre">balances[receiver]</span> <span class="pre">+=</span> <span class="pre">amount;</span></code> 也是如此。</p>
+<p><a class="reference internal" href="contracts.html#errors"><span class="std std-ref">错误（Errors）</span></a> 允许您向调用者提供更多关于一个条件或操作失败原因的信息。
+错误与 <a class="reference internal" href="control-structures.html#revert-statement"><span class="std std-ref">恢复状态</span></a> 一起使用。 <code class="docutils literal notranslate"><span class="pre">revert</span></code> 语句无条件地中止和恢复所有的变化，
+类似于 <code class="docutils literal notranslate"><span class="pre">require</span></code> 函数，但它也允许您提供错误的名称和额外的数据，
+这些数据将提供给调用者（并最终提供给前端应用程序或区块资源管理器），以便更容易调试失败或做出反应。</p>
+<p>任何人（已经拥有一些这样的代币）都可以使用 <code class="docutils literal notranslate"><span class="pre">send</span></code> 函数来发送代币给其他任何人。
+如果发送者没有足够的代币可以发送， 那么 <code class="docutils literal notranslate"><span class="pre">if</span></code> 条件就会为真。
+因此， <code class="docutils literal notranslate"><span class="pre">revert</span></code> 将导致操作失败，同时使用 <code class="docutils literal notranslate"><span class="pre">InsufficientBalance</span></code> 错误向发送者提供错误细节。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如果您用这个合约向一个地址发送代币，当您在区块链浏览器上查看该地址时，
+您不会看到任何东西，因为您发送代币的记录和变化的余额只存储在这个特定的代币合约的数据存储中。
+通过使用事件，您可以创建一个 “区块链浏览器”，跟踪您的新币的交易和余额，
+但您必须检查币合约地址，而不是币主的地址。</p>
+</div>
+</section>
+</section>
+<section id="blockchain-basics">
+<span id="id5"></span><h2>区块链基础<a class="headerlink" href="#blockchain-basics" title="Permalink to this heading"></a></h2>
+<p>对于程序员来说，区块链这个概念并不难理解，这是因为大多数难懂的东西
+（挖矿, <a class="reference external" href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">哈希</a> ，
+<a class="reference external" href="https://en.wikipedia.org/wiki/Elliptic_curve_cryptography">椭圆曲线密码学</a>，
+<a class="reference external" href="https://en.wikipedia.org/wiki/Peer-to-peer">点对点网络（P2P）</a> 等）
+都只是用于提供特定的功能和承诺。
+您只需接受这些既有的特性功能，不必关心底层技术，
+比如，难道您必须知道亚马逊的 AWS 内部原理，您才能使用它吗？</p>
+<section id="index-4">
+<span id="id8"></span><h3>交易/事务<a class="headerlink" href="#index-4" title="Permalink to this heading"></a></h3>
+<p>区块链是全球共享的事务性数据库，这意味着每个人都可加入网络来阅读数据库中的记录。
+如果您想改变数据库中的某些东西，您必须创建一个被所有其他人所接受的事务。
+事务一词意味着您想做的（假设您想要同时更改两个值），要么一点没做，要么全部完成。
+此外，当您的事务被应用到数据库时，其他事务不能修改数据库。</p>
+<p>举个例子，设想一张表，列出电子货币中所有账户的余额。
+如果请求从一个账户转移到另一个账户，
+数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。
+如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。</p>
+<p>此外，交易总是由发送人（创建者）签名。
+这样，就可非常简单地为数据库的特定修改增加访问保护机制。
+在电子货币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。</p>
+</section>
+<section id="index-5">
+<span id="id9"></span><h3>区块<a class="headerlink" href="#index-5" title="Permalink to this heading"></a></h3>
+<p>要克服的一个主要障碍是（用比特币的术语）所谓的 “双花攻击 (double-spend attack)”：
+如果网络中存在两个交易，都想清空一个账户，会发生什么？
+只有其中一个交易是有效的，通常是最先被接受的那个。
+问题是，在点对点的网络中，”第一” 不是一个客观的术语。</p>
+<p>对此，抽象的答案是，您不必在意。一个全球公认的交易顺序将为您选择，
+解决这样的冲突。这些交易将被捆绑成所谓的 “区块”，
+然后它们将在所有参与节点中执行和分发。
+如果两个交易相互矛盾，最终排在第二位的那个交易将被拒绝，不会成为区块的一部分。</p>
+<p>这些块按时间形成了一个线性序列，这正是“区块链”这个词的来源。
+区块以一定的时间间隔添加到链上 — 对于以太坊，这间隔大约是17秒。</p>
+<p>作为 “顺序选择机制”（也就是所谓的“挖矿”）的一部分，
+可能有时会发生块（blocks）被回滚的情况，但仅在链的“末端”。
+末端增加的块越多，其发生回滚的概率越小。
+因此您的交易被回滚甚至从区块链中抹除，这是可能的，
+但等待的时间越长，这种情况发生的概率就越小。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>交易不保证被包括在下一个区块或任何特定的未来区块中，
+因为这不是由交易的提交者决定的，而是由矿工来决定交易被包括在哪个区块中。</p>
+<p>如果您想安排您的合约的未来调用，您可以使用智能合约自动化工具或oracle服务。</p>
+</div>
+<span class="target" id="the-ethereum-virtual-machine"></span></section>
+</section>
+<section id="index-6">
+<span id="id10"></span><h2>以太坊虚拟机<a class="headerlink" href="#index-6" title="Permalink to this heading"></a></h2>
+<section id="id11">
+<h3>概述<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<p>以太坊虚拟机或EVM是以太坊智能合约的运行环境。
+它不仅是沙盒封装的，而且实际上是完全隔离的，
+这意味着在EVM内运行的代码不能访问网络，文件系统或其他进程。
+甚至智能合约之间的访问也是受限的。</p>
+</section>
+<section id="accounts">
+<span id="index-7"></span><span id="id12"></span><h3>账户<a class="headerlink" href="#accounts" title="Permalink to this heading"></a></h3>
+<p>在以太坊有两种共享同一地址空间的账户：
+<strong>外部账户</strong>，由公钥-私钥对（也就是人）控制；
+<strong>合约账户</strong>，由与账户一起存储的代码控制。</p>
+<p>外部账户的地址是由公钥确定的，
+而合约的地址是在合约创建时确定的
+（它是由创建者地址和从该地址发出的交易数量得出的，即所谓的 “nonce”）。</p>
+<p>无论账户是否存储代码，这两种类型都被EVM平等对待。</p>
+<p>每个账户都有一个持久的键值存储，将256位的字映射到256位的字，称为 <strong>存储</strong>。</p>
+<p>此外，每个账户有一个以太 <strong>余额</strong> （ balance ）（单位是“Wei”， <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">ether</span></code> 是 <code class="docutils literal notranslate"><span class="pre">10**18</span> <span class="pre">wei</span></code>），
+余额会因为发送包含以太币的交易而改变。</p>
+</section>
+<section id="index-8">
+<span id="id13"></span><h3>交易<a class="headerlink" href="#index-8" title="Permalink to this heading"></a></h3>
+<p>交易可以看作是从一个帐户发送到另一个帐户的消息
+（这里的账户，可能是相同的或特殊的零帐户，请参阅下文）。
+它能包含一个二进制数据（被称为“合约负载”）和以太。</p>
+<p>如果目标账户含有代码，此代码会被执行，并以合约负载（二进制数据） 作为入参。</p>
+<p>如果目标账户没有设置（交易没有接收者或接收者被设置为 <code class="docutils literal notranslate"><span class="pre">null</span></code>），
+交易会创建一个 <strong>新合约</strong>。
+正如已经提到的，该合约的地址不是零地址，
+而是从发送者和其发送的交易数量（“nonce“）中得出的地址。
+这种合约创建交易的有效负载被认为是EVM字节码并被执行。
+该执行的输出数据被永久地存储为合约的代码。
+这意味着，为创建一个合约，您不需要发送实际的合约代码，而是发送能够产生合约代码的代码。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在合约创建的过程中，它的代码还是空的。
+所以直到构造函数执行结束，您都不应该在其中调用合约自己函数。</p>
+</div>
+</section>
+<section id="gas">
+<span id="index-9"></span><h3>Gas<a class="headerlink" href="#gas" title="Permalink to this heading"></a></h3>
+<p>一经创建，每笔交易都收取一定数量的 <strong>gas</strong> ，
+目的是限制执行交易所需要的工作量和为交易支付手续费。
+当EVM 执行交易时，gas 将按特定规则逐渐耗尽。</p>
+<p><strong>gas price</strong> 是交易的创建者设置的一个值，
+他必须从发送账户中预先支付 <code class="docutils literal notranslate"><span class="pre">gas_price</span> <span class="pre">*</span> <span class="pre">gas</span></code>。
+如果交易执行后还有剩余， gas 会原路返还。</p>
+<p>如果gas在任何时候都用完了（即会是负值），
+就会触发gas不足的异常，从而恢复在当前调用帧中对状态进行的所有修改。</p>
+</section>
+<section id="index-10">
+<span id="id14"></span><h3>存储，内存和栈<a class="headerlink" href="#index-10" title="Permalink to this heading"></a></h3>
+<p>以太坊虚拟机有三个可以存储数据的区域-存储器，内存和堆栈，这将在以下段落中解释。</p>
+<p>每个账户都有一个称为 <strong>存储</strong> 的数据区，在函数调用和交易之间是持久的。
+存储是一个键值存储，将256位的字映射到256位的字。
+在合约中枚举存储是不可能的，读取的成本相对较高，初始化和修改存储的成本更高。
+由于这种成本，您应该把您存储在持久性存储中的内容减少到合约运行所需的程度。
+在合约之外存储像派生计算，缓存和聚合的数据。合约既不能读也不能写到除其自身以外的任何存储。</p>
+<p>第二个数据区被称为 <strong>内存</strong>，合约在每次消息调用时都会获得一个新清除的实例。
+内存是线性的，可以在字节级寻址，但读的宽度限制在256位，
+而写的宽度可以是8位或256位。当访问（无论是读还是写）一个先前未触及的内存字（即一个字内的任何偏移）时，
+内存被扩展一个字（256位）。在扩展的时候，必须支付gas成本。
+内存越大，成本就越高（它以平方级别扩展）。</p>
+<p>EVM 不是基于寄存器的，而是基于栈的，因此所有的计算都在一个被称为 <strong>栈（stack）</strong> 的区域执行。
+栈最大有1024个元素，每个元素长度是一个字（256位）。对栈的访问只限于其顶端，限制方式为：
+允许拷贝最顶端的16个元素中的一个到栈顶，或者是交换栈顶元素和下面16个元素中的一个。
+所有其他操作都只能取最顶的两个（或一个，或更多，取决于具体的操作）元素，
+运算后，把结果压入栈顶。当然可以把栈上的元素放到存储或内存中。
+但是无法只访问栈上指定深度的那个元素，除非先从栈顶移除其他元素。</p>
+</section>
+<section id="index-11">
+<span id="id15"></span><h3>指令集<a class="headerlink" href="#index-11" title="Permalink to this heading"></a></h3>
+<p>EVM的指令集应尽量保持最小，以避免不正确或不一致的实现，这可能导致共识问题。
+所有的指令都是在基本的数据类型上操作的，256位的字或内存的片断（或其他字节数组）。
+具备常用的算术，位，逻辑和比较操作。也可以做到有条件和无条件跳转。
+此外，合约可以访问当前区块的相关属性，比如它的编号和时间戳。</p>
+<p>关于完整的列表，请参见 <a class="reference internal" href="yul.html#opcodes"><span class="std std-ref">操作码列表</span></a>，它是内联汇编文档的一部分。</p>
+</section>
+<section id="index-12">
+<span id="id16"></span><h3>消息调用<a class="headerlink" href="#index-12" title="Permalink to this heading"></a></h3>
+<p>合约可以通过消息调用的方式来调用其它合约或者发送以太币到非合约账户。
+消息调用和交易非常类似，它们都有一个源，目标，数据，以太币，gas和返回数据。
+事实上每个交易都由一个顶层消息调用组成，这个消息调用又可创建更多的消息调用。</p>
+<p>合约可以决定它剩余的 <strong>gas</strong> 有多少应该随内部消息调用一起发送，有多少它想保留。
+如果在内部调用中发生了out-of-gas的异常（或任何其他异常），这将由一个被压入栈顶的错误值来表示。
+在这种情况下，只有与调用一起发送的gas被用完。
+在Solidity中，在这种情况下，发起调用的合约默认会引起一个手动异常，
+所以异常会在调用栈上 “冒泡出来”。</p>
+<p>如前文所述，被调用的合约（可以与调用者是同一个合约）将收到一个新清空的内存实例，
+并可以访问调用的有效负载-由被称为 <strong>calldata</strong> 的独立区域所提供的数据。
+在它执行完毕后，它可以返回数据，这些数据将被存储在调用者内存中由调用者预先分配的位置。
+所有这样的调用都是完全同步的。</p>
+<p>调用被 <strong>限制</strong> 在1024的深度，这意味着对于更复杂的操作，循环应优先于递归调用。
+此外，在一个消息调用中，只有63/64的gas可以被转发，这导致在实践中，深度限制略低于1000。</p>
+</section>
+<section id="index-13">
+<span id="id17"></span><h3>委托调用/代码调用和库<a class="headerlink" href="#index-13" title="Permalink to this heading"></a></h3>
+<p>消息调用有一个特殊的变体，被称为 <strong>委托调用（delegatecall）</strong>，
+除了目标地址的代码是在调用合约的上下文中执行，
+<code class="docutils literal notranslate"><span class="pre">msg.sender</span></code> 和 <code class="docutils literal notranslate"><span class="pre">msg.value</span></code> 不改变它们的值之外，其他与消息调用相同。</p>
+<p>这意味着合约可以在运行时动态地从不同的地址加载代码。
+存储，当前地址和余额仍然指的是调用合约，只是代码取自被调用的地址。</p>
+<p>这使得在Solidity中实现 “库 “的功能成为可能：
+可重复使用的库代码，可以放在一个合约的存储上，例如，用来实现复杂的数据结构的库。</p>
+</section>
+<section id="index-14">
+<span id="id18"></span><h3>日志<a class="headerlink" href="#index-14" title="Permalink to this heading"></a></h3>
+<p>有一种特殊的可索引的数据结构，其存储的数据可以一路映射直到区块层级。
+这个特性被称为 <strong>日志（logs）</strong> ，Solidity用它来实现 <a class="reference internal" href="contracts.html#events"><span class="std std-ref">事件</span></a>。
+合约创建之后就无法访问日志数据，但是这些数据可以从区块链外高效的访问。
+因为部分日志数据被存储在 <a class="reference external" href="https://en.wikipedia.org/wiki/Bloom_filter">布隆过滤器（bloom filter）</a> 中，
+我们可以高效并且加密安全地搜索日志，所以那些没有下载整个区块链的网络节点（轻客户端）也可以找到这些日志。</p>
+</section>
+<section id="index-15">
+<span id="id19"></span><h3>创建<a class="headerlink" href="#index-15" title="Permalink to this heading"></a></h3>
+<p>合约甚至可以通过一个特殊的指令来创建其他合约（不是简单的调用零地址）。
+创建合约的调用 <strong>create calls</strong> 和普通消息调用的唯一区别在于，负载会被执行，
+执行的结果被存储为合约代码，调用者/创建者在栈上得到新合约的地址。</p>
+</section>
+<section id="index-16">
+<span id="id20"></span><h3>停用和自毁<a class="headerlink" href="#index-16" title="Permalink to this heading"></a></h3>
+<p>从区块链上删除代码的唯一方法是当该地址的合约执行 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code> 操作。
+存储在该地址的剩余以太币被发送到一个指定的目标，然后存储和代码被从状态中删除。
+删除合约在理论上听起来是个好主意，但它有潜在的危险性，
+因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>即使一个合约被 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code> 删除，它仍然是区块链历史的一部分，
+可能被大多数以太坊节点保留。
+因此，使用 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code> 与从硬盘上删除数据不一样。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>尽管一个合约的代码中没有显式地调用 <code class="docutils literal notranslate"><span class="pre">selfdestruct</span></code> ，
+它仍然有可能通过 <code class="docutils literal notranslate"><span class="pre">delegatecall</span></code> 或  <code class="docutils literal notranslate"><span class="pre">callcode</span></code> 执行自毁操作。</p>
+</div>
+<p>如果您想停用您的合约，您可以通过改变一些内部状态来 <strong>停用</strong> 它们，
+从而使再次调用所有的功能都会被恢复。这样就无法使用合约了，因为它立即返回以太。</p>
+</section>
+<section id="precompiledcontracts">
+<span id="index-17"></span><span id="id21"></span><h3>预编译合约<a class="headerlink" href="#precompiledcontracts" title="Permalink to this heading"></a></h3>
+<p>有一小群合约地址是特殊的。 <code class="docutils literal notranslate"><span class="pre">1</span></code> 和（包括） <code class="docutils literal notranslate"><span class="pre">8</span></code> 之间的地址范围包含 “预编译合约“，
+可以像其他合约一样被调用，但它们的行为（和它们的gas消耗）
+不是由存储在该地址的EVM代码定义的（它们不包含代码），
+而是由EVM执行环境本身实现。</p>
+<p>不同的EVM兼容链可能使用不同的预编译合约集。
+未来也有可能在以太坊主链上添加新的预编译合约，
+但您可以合理地预期它们总是在 <code class="docutils literal notranslate"><span class="pre">1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">0xffff</span></code> （包括）之间。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Solidity" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installing-solidity.html" class="btn btn-neutral float-right" title="安装 Solidity 编译器" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

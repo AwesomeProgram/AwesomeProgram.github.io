@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>通用模式 &mdash; Solidity 0.8.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/a4_railroad_diagram.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/toggle.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/js/toggle.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="已知bug列表" href="bugs.html" />
+    <link rel="prev" title="风格指南" href="style-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #65afff" >
+            <a href="index.html">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.8.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-smart-contracts.html">智能合约概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-solidity.html">安装 Solidity 编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solidity-by-example.html">Solidity 合约示例</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Language Description</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layout-of-source-files.html">Solidity 源文件结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units-and-global-variables.html">单位和全局变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-structures.html">表达式和控制结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">合约</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">内联汇编</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar.html">语法</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Compiler</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="using-the-compiler.html">使用编译器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysing-compilation-output.html">分析编译器的输出结果</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir-breaking-changes.html">基于Solidity中间表征的Codegen变化</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_storage.html">存储中的状态变量储存结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_memory.html">内存中的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/layout_in_calldata.html">调用数据的存储结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/variable_cleanup.html">清理变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/source_mappings.html">源代码映射</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals/optimizer.html">优化器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">合约的元数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abi-spec.html">合约ABI规范</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional Material</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="050-breaking-changes.html">Solidity v0.5.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060-breaking-changes.html">Solidity 0.6.0 版本突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="070-breaking-changes.html">Solidity v0.7.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="080-breaking-changes.html">Solidity v0.8.0 突破性变化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="natspec-format.html">风格指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-considerations.html">安全考虑</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smtchecker.html">SMT检查器和形式化验证</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">资源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="path-resolution.html">Import Path Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yul.html">Yul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">风格指南</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">通用模式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#withdrawal-pattern">从合约中提款</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-1">限制访问</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-3">状态机</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">已知bug列表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">贡献方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brand-guide.html">Solidity 品牌指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language-influences.html">Language Influences</a></li>
+</ul>
+
+    <ul>
+        <li>
+            <a href="genindex.html">Keyword Index</a>
+        </li>
+    </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #65afff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Solidity</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>通用模式</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/common-patterns.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>通用模式<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<section id="withdrawal-pattern">
+<span id="index-0"></span><span id="id2"></span><h2>从合约中提款<a class="headerlink" href="#withdrawal-pattern" title="Permalink to this heading"></a></h2>
+<p>在某个操作之后发送资金的推荐方式是使用取回（withdrawal）模式。
+尽管在某个操作之后，最直接地发送以太币方法是一个 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 调用，
+但这并不推荐,因为这会引入一个潜在的安全风险。
+您可能需要参考 <a class="reference internal" href="security-considerations.html#security-considerations"><span class="std std-ref">安全考虑</span></a> 来获取更多信息。</p>
+<p>下面是一个合约中实际提款模式的例子，其目标是向合约发送最多的钱，
+以成为 “首富”，其灵感来自于 <a class="reference external" href="https://www.kingoftheether.com/">King of the Ether</a>。</p>
+<p>在下面的合约中，如果您不再是最富有的人，您将收到取代您成为“最富有”的人发送到合约的资金。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IFdpdGhkcmF3YWxDb250cmFjdCB7CiAgICBhZGRyZXNzIHB1YmxpYyByaWNoZXN0OwogICAgdWludCBwdWJsaWMgbW9zdFNlbnQ7CgogICAgbWFwcGluZyAoYWRkcmVzcyA9PiB1aW50KSBwZW5kaW5nV2l0aGRyYXdhbHM7CgogICAgLy8vIOWPkemAgeeahOS7peWkquaVsOmHj+S4jemrmOS6juebruWJjeeahOacgOmrmOmHj+OAggogICAgZXJyb3IgTm90RW5vdWdoRXRoZXIoKTsKCiAgICBjb25zdHJ1Y3RvcigpIHBheWFibGUgewogICAgICAgIHJpY2hlc3QgPSBtc2cuc2VuZGVyOwogICAgICAgIG1vc3RTZW50ID0gbXNnLnZhbHVlOwogICAgfQoKICAgIGZ1bmN0aW9uIGJlY29tZVJpY2hlc3QoKSBwdWJsaWMgcGF5YWJsZSB7CiAgICAgICAgaWYgKG1zZy52YWx1ZSA8PSBtb3N0U2VudCkgcmV2ZXJ0IE5vdEVub3VnaEV0aGVyKCk7CiAgICAgICAgcGVuZGluZ1dpdGhkcmF3YWxzW3JpY2hlc3RdICs9IG1zZy52YWx1ZTsKICAgICAgICByaWNoZXN0ID0gbXNnLnNlbmRlcjsKICAgICAgICBtb3N0U2VudCA9IG1zZy52YWx1ZTsKICAgIH0KCiAgICBmdW5jdGlvbiB3aXRoZHJhdygpIHB1YmxpYyB7CiAgICAgICAgdWludCBhbW91bnQgPSBwZW5kaW5nV2l0aGRyYXdhbHNbbXNnLnNlbmRlcl07CiAgICAgICAgLy8g6K6w5b6X5Zyo5Y+R6YCB5YmN5bCG5b6F5aSE55CG55qE6YCA5qy+5b2S6Zu277yMCiAgICAgICAgLy8g5Lul6Ziy5q2i6YeN5YWl5pS75Ye7CiAgICAgICAgcGVuZGluZ1dpdGhkcmF3YWxzW21zZy5zZW5kZXJdID0gMDsKICAgICAgICBwYXlhYmxlKG1zZy5zZW5kZXIpLnRyYW5zZmVyKGFtb3VudCk7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">WithdrawalContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">richest</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">mostSent</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">mapping</span><span class="w"> </span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint</span><span class="p">)</span><span class="w"> </span>pendingWithdrawals<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 发送的以太数量不高于目前的最高量。</span>
+<span class="w">    </span>error<span class="w"> </span>NotEnoughEther<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>richest<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>mostSent<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">becomeRichest</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>mostSent<span class="p">)</span><span class="w"> </span>revert<span class="w"> </span>NotEnoughEther<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>pendingWithdrawals<span class="p">[</span>richest<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>richest<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span>mostSent<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">uint</span><span class="w"> </span><span class="nv">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pendingWithdrawals<span class="p">[</span><span class="k">msg.sender</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 记得在发送前将待处理的退款归零，</span>
+<span class="w">        </span><span class="c1">// 以防止重入攻击</span>
+<span class="w">        </span>pendingWithdrawals<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span>amount<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>下面是一个相反的直接使用发送模式的例子：</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IFNlbmRDb250cmFjdCB7CiAgICBhZGRyZXNzIHBheWFibGUgcHVibGljIHJpY2hlc3Q7CiAgICB1aW50IHB1YmxpYyBtb3N0U2VudDsKCiAgICAvLy8g5Y+R6YCB55qE5Lul5aSq5pWw6YeP5LiN6auY5LqO55uu5YmN55qE5pyA6auY6YeP44CCCiAgICBlcnJvciBOb3RFbm91Z2hFdGhlcigpOwoKICAgIGNvbnN0cnVjdG9yKCkgcGF5YWJsZSB7CiAgICAgICAgcmljaGVzdCA9IHBheWFibGUobXNnLnNlbmRlcik7CiAgICAgICAgbW9zdFNlbnQgPSBtc2cudmFsdWU7CiAgICB9CgogICAgZnVuY3Rpb24gYmVjb21lUmljaGVzdCgpIHB1YmxpYyBwYXlhYmxlIHsKICAgICAgICBpZiAobXNnLnZhbHVlIDw9IG1vc3RTZW50KSByZXZlcnQgTm90RW5vdWdoRXRoZXIoKTsKICAgICAgICAvLyDov5nkuIDooYzkvJrlr7zoh7Tpl67popjvvIjor6bop4HkuIvmlofvvIkKICAgICAgICByaWNoZXN0LnRyYW5zZmVyKG1zZy52YWx1ZSk7CiAgICAgICAgcmljaGVzdCA9IHBheWFibGUobXNnLnNlbmRlcik7CiAgICAgICAgbW9zdFNlbnQgPSBtc2cudmFsdWU7CiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">SendContract</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="nv">payable</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>richest<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">mostSent</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 发送的以太数量不高于目前的最高量。</span>
+<span class="w">    </span>error<span class="w"> </span>NotEnoughEther<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">constructor</span><span class="p">()</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>richest<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>mostSent<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">becomeRichest</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">payable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span>mostSent<span class="p">)</span><span class="w"> </span>revert<span class="w"> </span>NotEnoughEther<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 这一行会导致问题（详见下文）</span>
+<span class="w">        </span>richest<span class="p">.</span>transfer<span class="p">(</span><span class="k">msg.value</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>richest<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span>mostSent<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.value</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>请注意，在这个例子中，攻击者可以通过使 <code class="docutils literal notranslate"><span class="pre">richest</span></code> 成为一个有 receive 或 fallback 函数的合约的地址
+而使合约陷入无法使用的状态（例如，通过使用 <code class="docutils literal notranslate"><span class="pre">revert()</span></code> 或只是消耗超过转给他们的2300 gas 津贴）。
+这样，每当调用 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 向 “中毒” 的合约交付资金时，它就会失败，
+因此 <code class="docutils literal notranslate"><span class="pre">becomeRichest</span></code> 也会失败，合约会永远被卡住。</p>
+<p>相反，如果您使用第一个例子中的 “取回（withdraw）”模式，
+那么攻击者只能使他/她自己的“取回”失败，并不会导致整个合约无法运作。</p>
+</section>
+<section id="index-1">
+<span id="id3"></span><h2>限制访问<a class="headerlink" href="#index-1" title="Permalink to this heading"></a></h2>
+<p>限制访问是合约的一个常见模式。
+请注意，您永远无法限制任何人类或机器阅读您的交易内容或您的合约状态。
+您可以通过使用加密来增加一点难度，
+但如果您想让您的合约读取这些数据，那么其他人也将可以做到。</p>
+<p>您可以限制 <strong>其他合约</strong> 对您的合约状态的读取权限。
+这实际上是默认的，除非您声明您的状态变量为 <code class="docutils literal notranslate"><span class="pre">public</span></code>。</p>
+<p>此外，您可以限制谁可以对您的合约的状态进行修改或调用您的合约的功能，
+这就是本节的内容。</p>
+<p id="index-2">使用 <strong>函数修饰符</strong> 使这些限制变得非常明确。</p>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IEFjY2Vzc1Jlc3RyaWN0aW9uIHsKICAgIC8vIOi/meS6m+WwhuWcqOaehOmAoOmYtuauteiiq+i1i+WAvAogICAgLy8g5YW25Lit77yMYG1zZy5zZW5kZXJgIOaYrwogICAgLy8g5Yib5bu66L+Z5Liq5ZCI57qm55qE6LSm5oi344CCCiAgICBhZGRyZXNzIHB1YmxpYyBvd25lciA9IG1zZy5zZW5kZXI7CiAgICB1aW50IHB1YmxpYyBjcmVhdGlvblRpbWUgPSBibG9jay50aW1lc3RhbXA7CgogICAgLy8g546w5Zyo5YiX5Ye65LqG6K+l5ZCI57qm5Y+v6IO95Lqn55Sf55qE6ZSZ6K+v77yMCiAgICAvLyDlubblnKjnibnliKvms6jph4rkuK3kvZzkuobmloflrZfop6Pph4rjgIIKCiAgICAvLy8g6LCD55So6ICF5pyq6KKr5o6I5p2D6L+b6KGM5q2k5pON5L2c44CCCiAgICBlcnJvciBVbmF1dGhvcml6ZWQoKTsKCiAgICAvLy8g5Ye95pWw6LCD55So6L+H5pep44CCCiAgICBlcnJvciBUb29FYXJseSgpOwoKICAgIC8vLyDlh73mlbDosIPnlKjml7bmsqHmnInlj5HpgIHotrPlpJ/nmoTku6XlpKrjgIIKICAgIGVycm9yIE5vdEVub3VnaEV0aGVyKCk7CgogICAgLy8g5L+u6aWw5Zmo5Y+v5Lul55So5p2l5pu05pS5CiAgICAvLyDkuIDkuKrlh73mlbDnmoTlh73mlbDkvZPjgIIKICAgIC8vIOWmguaenOS9v+eUqOi/meS4quS/rumlsOWZqO+8jAogICAgLy8g5a6D5Lya6aKE572u5LiA5Liq5qOA5p+l77yM5LuF5YWB6K64CiAgICAvLyDmnaXoh6rnibnlrprlnLDlnYDnmoQKICAgIC8vIOWHveaVsOiwg+eUqOOAggogICAgbW9kaWZpZXIgb25seUJ5KGFkZHJlc3MgX2FjY291bnQpCiAgICB7CiAgICAgICAgaWYgKG1zZy5zZW5kZXIgIT0gX2FjY291bnQpCiAgICAgICAgICAgIHJldmVydCBVbmF1dGhvcml6ZWQoKTsKICAgICAgICAvLyDkuI3opoHlv5jorrDlhpkg4oCcXzvigJ3vvIEKICAgICAgICAvLyDlroPkvJrooqvlrp7pmYXkvb/nlKjov5nkuKrkv67ppbDlmajnmoQKICAgICAgICAvLyDlh73mlbDkvZPmiYDmm7/ku6PjgIIKICAgICAgICBfOwogICAgfQoKICAgIC8vLyDkvb8gYF9uZXdPd25lcmAg5oiQ5Li66L+Z5Liq5ZCI57qm55qE5paw5omA5pyJ6ICF44CCCiAgICBmdW5jdGlvbiBjaGFuZ2VPd25lcihhZGRyZXNzIF9uZXdPd25lcikKICAgICAgICBwdWJsaWMKICAgICAgICBvbmx5Qnkob3duZXIpCiAgICB7CiAgICAgICAgb3duZXIgPSBfbmV3T3duZXI7CiAgICB9CgogICAgbW9kaWZpZXIgb25seUFmdGVyKHVpbnQgX3RpbWUpIHsKICAgICAgICBpZiAoYmxvY2sudGltZXN0YW1wIDwgX3RpbWUpCiAgICAgICAgICAgIHJldmVydCBUb29FYXJseSgpOwogICAgICAgIF87CiAgICB9CgogICAgLy8vIOaKueaOieaJgOacieiAheS/oeaBr+OAggogICAgLy8vIOS7heWFgeiuuOWcqOWQiOe6puWIm+W7uuaIkOWKnyA2IOWRqOS7peWQjgogICAgLy8vIOeahOaXtumXtOiiq+iwg+eUqOOAggogICAgZnVuY3Rpb24gZGlzb3duKCkKICAgICAgICBwdWJsaWMKICAgICAgICBvbmx5Qnkob3duZXIpCiAgICAgICAgb25seUFmdGVyKGNyZWF0aW9uVGltZSArIDYgd2Vla3MpCiAgICB7CiAgICAgICAgZGVsZXRlIG93bmVyOwogICAgfQoKICAgIC8vIOi/meS4quS/rumlsOWZqOimgeaxguWvueWHveaVsOiwg+eUqAogICAgLy8g57uR5a6a5LiA5a6a55qE6LS555So44CCCiAgICAvLyDlpoLmnpzosIPnlKjmlrnlj5HpgIHkuobov4flpJrnmoTotLnnlKjvvIwKICAgIC8vIOS7li/lpbnkvJrlvpfliLDpgIDmrL7vvIzkvYbpnIDopoHlhYjmiafooYzlh73mlbDkvZPjgIIKICAgIC8vIOi/meWcqCAwLjQuMCDniYjmnKzku6XliY3nmoQgU29saWRpdHkg5Lit5b6I5Y2x6Zmp77yMCiAgICAvLyDlm6DkuLrlvojlj6/og73kvJrot7Pov4cgYF87YCDkuYvlkI7nmoTku6PnoIHjgIIKICAgIG1vZGlmaWVyIGNvc3RzKHVpbnQgX2Ftb3VudCkgewogICAgICAgIGlmIChtc2cudmFsdWUgPCBfYW1vdW50KQogICAgICAgICAgICByZXZlcnQgTm90RW5vdWdoRXRoZXIoKTsKCiAgICAgICAgXzsKICAgICAgICBpZiAobXNnLnZhbHVlID4gX2Ftb3VudCkKICAgICAgICAgICAgcGF5YWJsZShtc2cuc2VuZGVyKS50cmFuc2Zlcihtc2cudmFsdWUgLSBfYW1vdW50KTsKICAgIH0KCiAgICBmdW5jdGlvbiBmb3JjZU93bmVyQ2hhbmdlKGFkZHJlc3MgX25ld093bmVyKQogICAgICAgIHB1YmxpYwogICAgICAgIHBheWFibGUKICAgICAgICBjb3N0cygyMDAgZXRoZXIpCiAgICB7CiAgICAgICAgb3duZXIgPSBfbmV3T3duZXI7CiAgICAgICAgLy8g6L+Z5Y+q5piv56S65L6L5p2h5Lu2CiAgICAgICAgaWYgKHVpbnQxNjAob3duZXIpICYgMCA9PSAxKQogICAgICAgICAgICAvLyDov5nml6Dms5XlnKggMC40LjAg54mI5pys5LmL5YmN55qECiAgICAgICAgICAgIC8vIFNvbGlkaXR5IOS4iui/m+ihjOmAgOi/mOOAggogICAgICAgICAgICByZXR1cm47CiAgICAgICAgLy8g6YCA6L+Y5aSa5LuY55qE6LS555SoCiAgICB9Cn0="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">AccessRestriction</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 这些将在构造阶段被赋值</span>
+<span class="w">    </span><span class="c1">// 其中，`msg.sender` 是</span>
+<span class="w">    </span><span class="c1">// 创建这个合约的账户。</span>
+<span class="w">    </span><span class="kt">address</span><span class="w"> </span><span class="k">public </span><span class="nv">owner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">creationTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">block.timestamp</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 现在列出了该合约可能产生的错误，</span>
+<span class="w">    </span><span class="c1">// 并在特别注释中作了文字解释。</span>
+
+<span class="w">    </span><span class="c1">/// 调用者未被授权进行此操作。</span>
+<span class="w">    </span>error<span class="w"> </span>Unauthorized<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 函数调用过早。</span>
+<span class="w">    </span>error<span class="w"> </span>TooEarly<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 函数调用时没有发送足够的以太。</span>
+<span class="w">    </span>error<span class="w"> </span>NotEnoughEther<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 修饰器可以用来更改</span>
+<span class="w">    </span><span class="c1">// 一个函数的函数体。</span>
+<span class="w">    </span><span class="c1">// 如果使用这个修饰器，</span>
+<span class="w">    </span><span class="c1">// 它会预置一个检查，仅允许</span>
+<span class="w">    </span><span class="c1">// 来自特定地址的</span>
+<span class="w">    </span><span class="c1">// 函数调用。</span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>onlyBy<span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_account</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.sender</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span>_account<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>Unauthorized<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 不要忘记写 “_;”！</span>
+<span class="w">        </span><span class="c1">// 它会被实际使用这个修饰器的</span>
+<span class="w">        </span><span class="c1">// 函数体所替代。</span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 使 `_newOwner` 成为这个合约的新所有者。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">changeOwner</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_newOwner</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span>onlyBy<span class="p">(</span>owner<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span>_newOwner<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>onlyAfter<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>_time<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>TooEarly<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">/// 抹掉所有者信息。</span>
+<span class="w">    </span><span class="c1">/// 仅允许在合约创建成功 6 周以后</span>
+<span class="w">    </span><span class="c1">/// 的时间被调用。</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">disown</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span>onlyBy<span class="p">(</span>owner<span class="p">)</span><span class="w"></span>
+<span class="w">        </span>onlyAfter<span class="p">(</span>creationTime<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Decimal">6</span><span class="w"> </span>weeks<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>delete<span class="w"> </span>owner<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 这个修饰器要求对函数调用</span>
+<span class="w">    </span><span class="c1">// 绑定一定的费用。</span>
+<span class="w">    </span><span class="c1">// 如果调用方发送了过多的费用，</span>
+<span class="w">    </span><span class="c1">// 他/她会得到退款，但需要先执行函数体。</span>
+<span class="w">    </span><span class="c1">// 这在 0.4.0 版本以前的 Solidity 中很危险，</span>
+<span class="w">    </span><span class="c1">// 因为很可能会跳过 `_;` 之后的代码。</span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>costs<span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="nv">_amount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span>_amount<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>NotEnoughEther<span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>_amount<span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span><span class="k">msg.value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span>_amount<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">forceOwnerChange</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_newOwner</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="w"></span>
+<span class="w">        </span>costs<span class="p">(</span><span class="m m-Decimal">200</span><span class="w"> </span>ether<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>owner<span class="w"> </span><span class="o">=</span><span class="w"> </span>_newOwner<span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 这只是示例条件</span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span><span class="kt">uint160</span><span class="p">(</span>owner<span class="p">)</span><span class="w"> </span><span class="err">&amp;</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// 这无法在 0.4.0 版本之前的</span>
+<span class="w">            </span><span class="c1">// Solidity 上进行退还。</span>
+<span class="w">            </span><span class="kt">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 退还多付的费用</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>在下一个例子中，将讨论一种更专业的限制函数调用访问的方式。</p>
+</section>
+<section id="index-3">
+<span id="id4"></span><h2>状态机<a class="headerlink" href="#index-3" title="Permalink to this heading"></a></h2>
+<p>合约通常会像状态机那样运作，这意味着它们有特定的 <strong>阶段</strong>，
+使它们有不同的表现或者仅允许特定的不同函数被调用。
+一个函数调用通常会结束一个阶段，
+并将合约转换到下一个阶段（特别是如果一个合约是以 <strong>交互</strong> 来建模的时候）。
+通过达到特定的 <strong>时间</strong> 点来达到某些阶段也是很常见的。</p>
+<p>一个典型的例子是盲拍（blind auction）合约，
+它起始于“接受盲目出价”，
+然后转换到“公示出价”，
+最后结束于“确定拍卖结果”。</p>
+<p id="index-4">函数修饰器可以用在这种情况下来对状态进行建模，
+并确保合约被正常的使用。</p>
+<section id="id5">
+<h3>示例<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<p>在下边的示例中， 修饰器 <code class="docutils literal notranslate"><span class="pre">atStage</span></code> 确保了函数仅在特定的阶段才可以被调用。</p>
+<p>自动定时过渡是由修饰器 <code class="docutils literal notranslate"><span class="pre">timedTransitions</span></code> 处理的，它应该用于所有函数。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>修饰器的顺序非常重要</strong>.
+如果 atStage 和 timedTransitions 要一起使用，
+请确保在 timedTransitions 之后声明 atStage，
+以便新的状态可以 首先被反映到账户中。</p>
+</div>
+<p>最后， 修饰器 <code class="docutils literal notranslate"><span class="pre">transitionNext</span></code> 能够用来在函数执行结束时自动转换到下一个阶段。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>修饰器可以被忽略</strong>.
+这只适用于0.4.0版本之前的Solidity：
+由于修饰器是通过简单地替换代码而不是使用函数调用来应用的，
+如果函数本身使用 return，可以跳过 transitionNext 修饰器中的代码。
+如果您想这样做，请确保从这些函数中手动调用 nextStage。
+从0.4.0版本开始，即使函数明确返回，修饰器代码也会运行。</p>
+</div>
+<p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0zLjAKcHJhZ21hIHNvbGlkaXR5IF4wLjguNDsKCmNvbnRyYWN0IFN0YXRlTWFjaGluZSB7CiAgICBlbnVtIFN0YWdlcyB7CiAgICAgICAgQWNjZXB0aW5nQmxpbmRlZEJpZHMsCiAgICAgICAgUmV2ZWFsQmlkcywKICAgICAgICBBbm90aGVyU3RhZ2UsCiAgICAgICAgQXJlV2VEb25lWWV0LAogICAgICAgIEZpbmlzaGVkCiAgICB9CiAgICAvLy8g5q2k6Zi25q615LiN6IO96LCD55So6K+l5Ye95pWw44CCCiAgICBlcnJvciBGdW5jdGlvbkludmFsaWRBdFRoaXNTdGFnZSgpOwoKICAgIC8vIOi/meaYr+W9k+WJjemYtuauteOAggogICAgU3RhZ2VzIHB1YmxpYyBzdGFnZSA9IFN0YWdlcy5BY2NlcHRpbmdCbGluZGVkQmlkczsKCiAgICB1aW50IHB1YmxpYyBjcmVhdGlvblRpbWUgPSBibG9jay50aW1lc3RhbXA7CgogICAgbW9kaWZpZXIgYXRTdGFnZShTdGFnZXMgX3N0YWdlKSB7CiAgICAgICAgaWYgKHN0YWdlICE9IF9zdGFnZSkKICAgICAgICAgICAgcmV2ZXJ0IEZ1bmN0aW9uSW52YWxpZEF0VGhpc1N0YWdlKCk7CiAgICAgICAgXzsKICAgIH0KCiAgICBmdW5jdGlvbiBuZXh0U3RhZ2UoKSBpbnRlcm5hbCB7CiAgICAgICAgc3RhZ2UgPSBTdGFnZXModWludChzdGFnZSkgKyAxKTsKICAgIH0KCiAgICAvLyDmiafooYzln7rkuo7ml7bpl7TnmoTpmLbmrrXovazmjaLjgIIKICAgIC8vIOivt+ehruS/nemmluWFiOWjsOaYjui/meS4quS/rumlsOWZqO+8jAogICAgLy8g5ZCm5YiZ5paw6Zi25q615LiN5Lya6KKr5bim5YWl6LSm5oi344CCCiAgICBtb2RpZmllciB0aW1lZFRyYW5zaXRpb25zKCkgewogICAgICAgIGlmIChzdGFnZSA9PSBTdGFnZXMuQWNjZXB0aW5nQmxpbmRlZEJpZHMgJiYKICAgICAgICAgICAgICAgICAgICBibG9jay50aW1lc3RhbXAgPj0gY3JlYXRpb25UaW1lICsgMTAgZGF5cykKICAgICAgICAgICAgbmV4dFN0YWdlKCk7CiAgICAgICAgaWYgKHN0YWdlID09IFN0YWdlcy5SZXZlYWxCaWRzICYmCiAgICAgICAgICAgICAgICBibG9jay50aW1lc3RhbXAgPj0gY3JlYXRpb25UaW1lICsgMTIgZGF5cykKICAgICAgICAgICAgbmV4dFN0YWdlKCk7CiAgICAgICAgLy8g55Sx5Lqk5piT6Kem5Y+R55qE5YW25LuW6Zi25q616L2s5o2iCiAgICAgICAgXzsKICAgIH0KCiAgICAvLyDov5nph4znmoTkv67ppbDlmajpobrluo/pnZ7luLjph43opoHvvIEKICAgIGZ1bmN0aW9uIGJpZCgpCiAgICAgICAgcHVibGljCiAgICAgICAgcGF5YWJsZQogICAgICAgIHRpbWVkVHJhbnNpdGlvbnMKICAgICAgICBhdFN0YWdlKFN0YWdlcy5BY2NlcHRpbmdCbGluZGVkQmlkcykKICAgIHsKICAgICAgICAvLyDmiJHku6zkuI3kvJrlnKjov5nph4zlrp7njrDlrp7pmYXlip/og73vvIjlm6DkuLrov5nku4XmmK/kuKrku6PnoIHnpLrkvovvvIzor5HogIXms6jvvIkKICAgIH0KCiAgICBmdW5jdGlvbiByZXZlYWwoKQogICAgICAgIHB1YmxpYwogICAgICAgIHRpbWVkVHJhbnNpdGlvbnMKICAgICAgICBhdFN0YWdlKFN0YWdlcy5SZXZlYWxCaWRzKQogICAgewogICAgfQoKICAgIC8vIOi/meS4quS/rumlsOWZqOWcqOWHveaVsOaJp+ihjOe7k+adn+S5i+WQjgogICAgLy8g5L2/5ZCI57qm6L+b5YWl5LiL5LiA5Liq6Zi25q6144CCCiAgICBtb2RpZmllciB0cmFuc2l0aW9uTmV4dCgpCiAgICB7CiAgICAgICAgXzsKICAgICAgICBuZXh0U3RhZ2UoKTsKICAgIH0KCiAgICBmdW5jdGlvbiBnKCkKICAgICAgICBwdWJsaWMKICAgICAgICB0aW1lZFRyYW5zaXRpb25zCiAgICAgICAgYXRTdGFnZShTdGFnZXMuQW5vdGhlclN0YWdlKQogICAgICAgIHRyYW5zaXRpb25OZXh0CiAgICB7CiAgICB9CgogICAgZnVuY3Rpb24gaCgpCiAgICAgICAgcHVibGljCiAgICAgICAgdGltZWRUcmFuc2l0aW9ucwogICAgICAgIGF0U3RhZ2UoU3RhZ2VzLkFyZVdlRG9uZVlldCkKICAgICAgICB0cmFuc2l0aW9uTmV4dAogICAgewogICAgfQoKICAgIGZ1bmN0aW9uIGkoKQogICAgICAgIHB1YmxpYwogICAgICAgIHRpbWVkVHJhbnNpdGlvbnMKICAgICAgICBhdFN0YWdlKFN0YWdlcy5GaW5pc2hlZCkKICAgIHsKICAgIH0KfQ=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
+<div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span><span class="c1">// SPDX-License-Identifier: GPL-3.0</span>
+<span class="k">pragma solidity</span><span class="w"> </span><span class="o">^</span><span class="k">0.8.4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">contract</span><span class="w"> </span><span class="ni">StateMachine</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">enum</span><span class="w"> </span><span class="nv">Stages</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>AcceptingBlindedBids<span class="p">,</span><span class="w"></span>
+<span class="w">        </span>RevealBids<span class="p">,</span><span class="w"></span>
+<span class="w">        </span>AnotherStage<span class="p">,</span><span class="w"></span>
+<span class="w">        </span>AreWeDoneYet<span class="p">,</span><span class="w"></span>
+<span class="w">        </span>Finished<span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">/// 此阶段不能调用该函数。</span>
+<span class="w">    </span>error<span class="w"> </span>FunctionInvalidAtThisStage<span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 这是当前阶段。</span>
+<span class="w">    </span>Stages<span class="w"> </span><span class="kt">public</span><span class="w"> </span>stage<span class="w"> </span><span class="o">=</span><span class="w"> </span>Stages<span class="p">.</span>AcceptingBlindedBids<span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="k">public </span><span class="nv">creationTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">block.timestamp</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>atStage<span class="p">(</span>Stages<span class="w"> </span>_stage<span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>stage<span class="w"> </span><span class="o">!=</span><span class="w"> </span>_stage<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>revert<span class="w"> </span>FunctionInvalidAtThisStage<span class="p">();</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">nextStage</span><span class="p">()</span><span class="w"> </span><span class="kt">internal</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>stage<span class="w"> </span><span class="o">=</span><span class="w"> </span>Stages<span class="p">(</span><span class="kt">uint</span><span class="p">(</span>stage<span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 执行基于时间的阶段转换。</span>
+<span class="w">    </span><span class="c1">// 请确保首先声明这个修饰器，</span>
+<span class="w">    </span><span class="c1">// 否则新阶段不会被带入账户。</span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>timedTransitions<span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>stage<span class="w"> </span><span class="o">==</span><span class="w"> </span>Stages<span class="p">.</span>AcceptingBlindedBids<span class="w"> </span><span class="err">&amp;&amp;</span><span class="w"></span>
+<span class="w">                    </span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>creationTime<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Decimal">10</span><span class="w"> </span>days<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>nextStage<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="kt">if</span><span class="w"> </span><span class="p">(</span>stage<span class="w"> </span><span class="o">==</span><span class="w"> </span>Stages<span class="p">.</span>RevealBids<span class="w"> </span><span class="err">&amp;&amp;</span><span class="w"></span>
+<span class="w">                </span><span class="k">block.timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>creationTime<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m m-Decimal">12</span><span class="w"> </span>days<span class="p">)</span><span class="w"></span>
+<span class="w">            </span>nextStage<span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 由交易触发的其他阶段转换</span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 这里的修饰器顺序非常重要！</span>
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">bid</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span><span class="kt">payable</span><span class="w"></span>
+<span class="w">        </span>timedTransitions<span class="w"></span>
+<span class="w">        </span>atStage<span class="p">(</span>Stages<span class="p">.</span>AcceptingBlindedBids<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// 我们不会在这里实现实际功能（因为这仅是个代码示例，译者注）</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">reveal</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span>timedTransitions<span class="w"></span>
+<span class="w">        </span>atStage<span class="p">(</span>Stages<span class="p">.</span>RevealBids<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 这个修饰器在函数执行结束之后</span>
+<span class="w">    </span><span class="c1">// 使合约进入下一个阶段。</span>
+<span class="w">    </span><span class="kt">modifier</span><span class="w"> </span>transitionNext<span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span>_<span class="p">;</span><span class="w"></span>
+<span class="w">        </span>nextStage<span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">g</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span>timedTransitions<span class="w"></span>
+<span class="w">        </span>atStage<span class="p">(</span>Stages<span class="p">.</span>AnotherStage<span class="p">)</span><span class="w"></span>
+<span class="w">        </span>transitionNext<span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">h</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span>timedTransitions<span class="w"></span>
+<span class="w">        </span>atStage<span class="p">(</span>Stages<span class="p">.</span>AreWeDoneYet<span class="p">)</span><span class="w"></span>
+<span class="w">        </span>transitionNext<span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">function</span><span class="w"> </span><span class="nv">i</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="kt">public</span><span class="w"></span>
+<span class="w">        </span>timedTransitions<span class="w"></span>
+<span class="w">        </span>atStage<span class="p">(</span>Stages<span class="p">.</span>Finished<span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="style-guide.html" class="btn btn-neutral float-left" title="风格指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bugs.html" class="btn btn-neutral float-right" title="已知bug列表" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2021, Ethereum.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+    <p>
+        <a href="credits-and-attribution.html">Credits and attribution</a>.
+    </p>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book fa-element"> RTD </span>
+
+    <span class="fa fa-element">
+    <input class="container_toggle" type="checkbox" id="switch" name="mode">
+    <label for="switch"></label>
+    </span>
+
+    <span class="fa fa-v fa-element"> v:  <span class="fa fa-caret-down"></span></span>
+
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Downloads</dt> 
+        </dl>
+        <dl>
+            <dt>Versions</dt> 
+        </dl>
+        <dl>
+            
+            <dt>On Read the Docs</dt>
+            <dd>
+                <a href="///projects//?fromdocs=">Project Home</a>
+            </dd>
+            <dd>
+                <a href="///builds//?fromdocs=">Builds</a>
+            </dd>
+        </dl>
+    </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
