@@ -5,8 +5,43 @@
 	<link href="https://awesomeprogram.gitee.io/tags/qu-kuai-lian/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://awesomeprogram.gitee.io"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2022-09-10T00:00:00+00:00</updated>
+	<updated>2022-10-28T00:00:00+00:00</updated>
 	<id>https://awesomeprogram.gitee.io/tags/qu-kuai-lian/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Hardhat DApp 开发教程</title>
+		<published>2022-10-28T00:00:00+00:00</published>
+		<updated>2022-10-28T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/hardhatdapptutorial/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/hardhatdapptutorial/</id>
+		<content type="html">&lt;p&gt;&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_3_3.html&quot; target=&quot;_blank&quot;&gt;查看开发教程&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;&lt;br&#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;center&gt;&lt;b&gt;DApp 调用流程&lt;&#x2F;b&gt;&lt;br&#x2F;&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;imgdata&#x2F;tech_bc_dappcool.png&quot; alt=&quot;DApp State&quot; object-fit=&quot;contain&quot;&gt;
+&lt;&#x2F;center&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Solidity 智能合约开发教程</title>
+		<published>2022-10-24T00:00:00+00:00</published>
+		<updated>2022-10-24T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/soliditytutorial/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/soliditytutorial/</id>
+		<content type="html">&lt;ul&gt;
+&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_3_2.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
+&lt;img src=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;imgdata&#x2F;tech_bc_soliditylogo.png&quot; alt=&quot;Hardhat DApp&quot; object-fit=&quot;contain&quot;&gt;
+&lt;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Move 智能合约开发教程</title>
+		<published>2022-10-01T00:00:00+00:00</published>
+		<updated>2022-10-01T00:00:00+00:00</updated>
+		<link href="https://awesomeprogram.gitee.io/movetutorial/" type="text/html"/>
+		<id>https://awesomeprogram.gitee.io/movetutorial/</id>
+		<content type="html">&lt;ul&gt;
+&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_3_1.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
+&lt;ul&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>演变幻想</title>
 		<published>2022-09-10T00:00:00+00:00</published>
