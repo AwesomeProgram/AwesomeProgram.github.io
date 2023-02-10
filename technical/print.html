@@ -8306,6 +8306,317 @@ plot_histogram(counts)
 </code></pre>
 <p><strong>Version Information</strong></p>
 <table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.23.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.11.2</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.0</td></tr><tr><td><code>qiskit</code></td><td>0.41.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.5.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.4</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.5.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.5.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.16</td></tr><tr><td>Python compiler</td><td>GCC 11.3.0</td></tr><tr><td>Python build</td><td>default, Jan 11 2023 00:28:51</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>6.781219482421875</td></tr><tr><td colspan='2'>Fri Feb 03 18:56:55 2023 UTC</td></tr></table><div style="break-before: page; page-break-before: always;"></div><h1 id="量子状态与量子比特"><a class="header" href="#量子状态与量子比特">量子状态与量子比特</a></h1>
+<h2 id="简介"><a class="header" href="#简介">简介</a></h2>
+<p>如果您认为量子力学听起来很有挑战性，那么您并不孤单。我们所有的直觉都基于日常经验，因此比原子或电子更能理解球和香蕉的行为。尽管量子物体起初看起来随机且混乱，但它们只是遵循一套不同的规则。一旦我们知道这些规则是什么，我们就可以使用它们来创造新的强大技术。量子计算将是这方面最具革命性的例子。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_atoms10.png" alt="" /></p>
+<p>为了让您开始您的量子计算之旅，让我们测试一下您已经知道的内容。以下哪项是对 <em>bit</em> 的正确描述？</p>
+<ul>
+<li>木匠使用的刀片。</li>
+<li>最小的信息单位：0或1。</li>
+<li>你放在马嘴里的东西。</li>
+</ul>
+<p>实际上，它们都是正确的：这是一个非常多用途的词！但是，如果您选择了第二个，则表明您的思路已经正确。信息可以存储和处理为一系列 0s 和 1s 的想法是一个相当大的概念障碍，但这是今天大多数人甚至都没有考虑过的事情。以此为起点，我们可以开始想象遵守量子力学规则的比特。这些 quantum bits，或 qubits，将使我们能够以新的和不同的方式处理信息。</p>
+<p>我们将开始更深入地研究量子比特的世界。为此，我们需要一些方法来跟踪我们应用门时他们在做什么。最有效的方法是使用向量和矩阵的数学语言。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_bloch.png" alt="" /></p>
+<p>本章对于已经熟悉向量和矩阵的读者来说最为有效。那些不熟悉的人也可能没问题，尽管不时查阅我们的<a href="https://qiskit.org/textbook/ch-appendix/linear_algebra.html">量子计算线性代数简介</a>可能会有用。</p>
+<p>由于我们将使用基于 Python 的量子计算框架 Qiskit，因此了解 Python 的基础知识也很有用。需要入门的可以查阅<a href="https://qiskit.org/textbook/ch-prerequisites/python-and-jupyter-notebooks.html">Introduction to Python and Jupyter notebooks</a>。</p>
+<h2 id="计算的原子"><a class="header" href="#计算的原子">计算的原子</a></h2>
+<p>现在，任何人都可以在自己舒适的家中为量子计算机编程。</p>
+<p>但是要创造什么？到底什么是量子程序？其实，什么是量子计算机？</p>
+<p>这些问题可以通过与标准数字计算机进行比较来回答。不幸的是，大多数人实际上也不了解数字计算机的工作原理。在本文中，我们将了解这些设备背后的基本原理。为了帮助我们稍后过渡到量子计算，我们将使用与量子计算相同的工具来完成它。</p>
+<p>如果我们想使用此页面中的代码，下面是我们需要运行的一些 Python 代码：</p>
+<pre><code>from qiskit import QuantumCircuit, assemble, Aer
+from qiskit.visualization import plot_histogram
+</code></pre>
+<ol>
+<li>将信息拆分成比特 
+我们需要了解的第一件事是比特的概念。这些被设计成世界上最简单的字母表。只有两个字符，0 和 1，我们可以表示任何信息。</li>
+</ol>
+<p>一个例子是数字。你可能习惯用0、1、2、3、4、5、6、7、8、9这十位数字的串来表示一个数，在这串数字中，每一位代表这个数的次数包含一定的十次方。例如，当我们写 9213 时，我们的意思是
+$$
+9000 + 200 + 10 + 3
+$$</p>
+<p>或者，以强调十的幂的方式表达
+$$
+(9\times10^3) + (2\times10^2) + (1\times10^1) + (3\times10^0)
+$$</p>
+<p>虽然我们通常使用基于数字 10 的系统，但我们也可以轻松地使用基于任何其他数字的系统。例如，二进制数字系统是基于数字二的。这意味着使用 0 和 1 这两个字符将数字表示为 2 的幂的倍数。例如，9213 变为 10001111111101，因为
+$$
+9213  = (1 \times 2^{13}) + (0 \times 2^{12}) + (0 \times 2^{11})+ (0 \times 2^{10}) +(1 \times 2^9) + (1 \times 2^8) + (1 \times 2^7) \\ ,,,   + (1 \times 2^6) + (1 \times 2^5) + (1 \times 2^4) + (1 \times 2^3) + (1 \times 2^2) + (0 \times 2^1) + (1 \times 2^0)
+$$</p>
+<p>在这里，我们将数字表示为 2、4、8、16、32 等的倍数，而不是 10、100、1000 等。</p>
+<pre><code>from qiskit_textbook.widgets import binary_widget
+binary_widget(nbits=5)
+</code></pre>
+<p>这些位串，称为二进制串，不仅可以用来表示数字。例如，有一种方法可以使用位来表示任何文本。对于您要使用的任何字母、数字或标点符号，您可以使用<a href="https://www.ibm.com/docs/en/aix/7.2?topic=adapters-ascii-decimal-hexadecimal-octal-binary-conversion-table">此表</a>找到对应的最多八位的字符串。尽管这些标准相当武断，但这是一个得到广泛认可的标准。事实上，它就是用来通过互联网向您传送这篇文章的。</p>
+<p>这就是所有信息在计算机中的表示方式。无论是数字、字母、图像还是声音，都以二进制字符串的形式存在。</p>
+<p>与我们的标准数字计算机一样，量子计算机也是基于同样的基本思想。主要区别在于它们使用 <em>qubits</em>，这是比特对量子力学的扩展。在本教科书的其余部分，我们将探讨什么是量子比特、它们能做什么以及它们是如何做到的。然而，在本节中，我们根本不讨论量子。所以，我们只是像使用比特一样使用量子比特。</p>
+<p>快速练习 </p>
+<ul>
+<li>想一个数字并尝试用二进制写下来。</li>
+<li>如果你有n个bit，它们可以处于多少种不同的状态？</li>
+</ul>
+<ol start="2">
+<li>以图表形式计算
+无论我们使用的是量子比特还是经典比特，我们都需要操作它们，以便将我们拥有的输入转化为我们需要的输出。对于比特数很少的最简单程序，用称为电路图的图表来表示此过程很有用。这些在左边有输入，在右边有输出，中间有神秘符号表示的操作。这些操作被称为“门”，主要是出于历史原因。</li>
+</ol>
+<p>下面是标准的基于位的计算机的电路示例。您不需要了解它的作用。它应该只是让您了解这些电路的外观。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_classical_circuit.png" alt="" /></p>
+<p>对于量子计算机，我们使用相同的基本思想，但对于如何表示输入、输出和用于运算的符号有不同的约定。这是代表与上述相同过程的量子电路。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_quantum_circuit.png" alt="" /></p>
+<p>在本节的其余部分，我们将解释如何构建电路。最后，您将了解如何创建上面的电路、它的作用以及它为什么有用。</p>
+<ol>
+<li>你的第一个量子电路
+在电路中，我们通常需要做三项工作：首先，对输入进行编码，然后进行一些实际计算，最后提取输出。对于您的第一个量子电路，我们将专注于这些工作中的最后一个。我们首先创建一个具有八个量子位和八个输出的电路。</li>
+</ol>
+<pre><code>qc_output = QuantumCircuit(8)
+</code></pre>
+<p>这个电路，我们称之为qc_output，是由 Qiskit 使用创建的QuantumCircuit。将QuantumCircuit量子电路中的量子比特数作为参数。</p>
+<p>量子电路中输出的提取是使用称为 <code>measure_all()</code> 的操作完成的。每次测量都会告诉指定的量子位将输出提供给指定的输出经典位。该命令 <code>qc_output.measure_all()</code> 向电路 <code>qc_output</code> 中的每个量子位添加一个测量值，还添加一些经典位以写入输出。</p>
+<pre><code>qc_output.measure_all()
+</code></pre>
+<p>现在我们的电路已经有了一些东西，让我们来看看它。</p>
+<pre><code>qc_output.draw(initial_state=True) 
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc1.png" alt="" /></p>
+<p>量子位总是被初始化输出为0。由于我们没有对上面电路中的量子比特做任何事情，这正是我们测量它们时得到的结果。我们可以通过多次运行电路并在直方图中绘制结果来看到这一点。我们会发现每个量子比特的结果总是 00000000: a 0。</p>
+<pre><code>sim = Aer.get_backend('aer_simulator') 
+result = sim.run(qc_output).result()
+counts = result.get_counts()
+plot_histogram(counts)
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc2.png" alt="" /></p>
+<p>多次运行并将结果显示为直方图的原因是因为量子计算机的结果可能具有一些随机性。在这种情况下，由于我们没有做任何量子的事情，我们只能00000000确定地得到结果。</p>
+<p>请注意，此结果来自量子模拟器，这是一台标准计算机，用于计算理想量子计算机的功能。模拟只能用于少量的量子位（~30 qubits），但在设计您的第一个量子电路时它们仍然是一个非常有用的工具。要在真实设备上运行，您只需替换 <code>Aer.get_backend('aer_simulator')</code> 为您要使用的设备的后端对象。</p>
+<ol start="4">
+<li>示例：创建加法器电路
+<strong>4.1</strong> 编码一个输入 
+现在让我们看看如何将不同的二进制字符串编码为输入。为此，我们需要所谓的 <strong>NOT</strong> 门。这是您可以在计算机上执行的最基本的操作。它只是翻转位值：0成为1和1成为0。对于量子位，它是一个称为 X 的操作，可以完成 NOT 的作业。</li>
+</ol>
+<p>下面我们创建一个专用于编码工作的新电路，并将其称为 qc_encode。现在，我们只指定量子位的数量。</p>
+<pre><code>qc_encode = QuantumCircuit(8)
+qc_encode.x(7)
+qc_encode.draw()
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc2.png" alt="" /></p>
+<p>可以使用我们之前的电路来提取结果：qc_output。</p>
+<pre><code>qc_encode.measure_all()
+qc_encode.draw()
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc3.png" alt="" /></p>
+<p>现在我们可以运行组合电路并查看结果。</p>
+<pre><code>sim = Aer.get_backend('aer_simulator') 
+result = sim.run(qc_encode).result()
+counts = result.get_counts()
+plot_histogram(counts)
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc4.png" alt="" /></p>
+<p>现在我们的计算机输出字符串10000000。</p>
+<p>我们翻转的位来自量子位 7，位于字符串的最左侧。这是因为 Qiskit 从右到左对字符串中的位进行编号。有些人喜欢用相反的方式给他们的位编号，但是当我们使用位来表示数字时，Qiskit 的系统肯定有它的优势。具体来说，这意味着量子比特 7 告诉我们有多少个 2^7 有我们的数字。所以通过翻转这个位，我们现在已经在我们简单的 8 位计算机中写入了数字 128。</p>
+<p>现在尝试为自己写另一个数字。例如，你可以做你的年龄。只需使用搜索引擎找出数字在二进制中的样子（如果它包含 <code>0b</code>，请忽略它），然后如果你的年龄小于 128，则在左侧添加一些 0。</p>
+<pre><code>qc_encode = QuantumCircuit(8)
+qc_encode.x(1)
+qc_encode.x(5)
+
+qc_encode.draw()
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc5.png" alt="" /></p>
+<p>现在我们知道如何在计算机中对信息进行编码。下一步是处理它：获取我们已经编码的输入，并将其转换为我们需要的输出。</p>
+<p><strong>4.2</strong> 记住如何做加法
+要了解将输入转化为输出，我们需要解决一个问题。让我们做一些基本的数学运算。在小学，您会学习到如何处理大型数学问题并将它们分解成易于管理的部分。例如，您将如何解决以下问题？</p>
+<pre><code>   9213
++  1854
+=  ????
+</code></pre>
+<p>一种方法是从右到左逐位进行。所以我们从 3+4 开始</p>
+<pre><code>   9213
++  1854
+=  ???7
+</code></pre>
+<p>然后1+5</p>
+<pre><code>   9213
++  1854
+=  ??67
+</code></pre>
+<p>那么我们有 2+8=10。由于这是一个两位数的答案，我们需要将其转移到下一栏。</p>
+<pre><code>   9213
++  1854
+=  ?067
+</code></pre>
+<p>最后我们有9+1+1=11，得到我们的答案</p>
+<pre><code>   9213
++  1854
+= 11067
+</code></pre>
+<p>这可能只是简单的加法，但它演示了所有算法背后的原理。无论算法是设计用于解决数学问题还是处理文本或图像，我们总是将大任务分解为小而简单的步骤。</p>
+<p>要在计算机上运行，​​需要将算法编译成尽可能最小和最简单的步骤。为了看看这些看起来像什么，让我们再次做上面的加法问题，但是用二进制。</p>
+<pre><code>   10001111111101
++  00011100111110
+
+=  ??????????????
+</code></pre>
+<p>请注意，第二个数字的左侧有一堆额外的 0。这只是为了使两个字符串的长度相同。</p>
+<p>我们的第一个任务是对右侧的列执行 1+0。在二进制中，与在任何数字系统中一样，答案是 1。对于第二列的 0+1，我们得到相同的结果。</p>
+<pre><code>   10001111111101
++  00011100111110
+
+=  ????????????11
+</code></pre>
+<p>接下来，我们有 1+1。您一定会知道，1+1=2。在二进制中，数字 2 被写为10，因此需要两位。这意味着我们需要携带 1，就像我们携带十进制数 10 一样。</p>
+<pre><code>   10001111111101
++  00011100111110
+=  ???????????011 
+</code></pre>
+<p>下一列现在要求我们计算1+1+1。这意味着将三个数字相加，因此对于我们的计算机而言，事情变得越来越复杂。但是我们仍然可以将它编译成更简单的操作，并且只需要我们将两个位加在一起。为此，我们可以只从前两个 1 开始。</p>
+<pre><code>   1
++  1
+= 10
+</code></pre>
+<p>现在我们需要将它添加10到 final 中1，这可以使用我们通常的遍历列的方法来完成。</p>
+<pre><code>  10
++ 01
+= 11
+</code></pre>
+<p>最后的答案是11（也称为3）。</p>
+<p>现在我们可以回到问题的其余部分了。有了 的答案 11，我们就有了另一个进位。</p>
+<pre><code>   10001111111101
++  00011100111110
+=  ??????????1011
+</code></pre>
+<p>所以现在我们还有另一个 1+1+1 要做。但我们已经知道如何做到这一点，所以这没什么大不了的。</p>
+<p>事实上，到目前为止剩下的一切都是我们已经知道该怎么做的事情。这是因为，如果您将所有内容分解为仅添加两位，那么您将只需要计算四种可能的事情。这是四个基本和（我们将用两位写出所有答案以保持一致）。</p>
+<pre><code>0+0 = 00 (in decimal, this is 0+0=0)
+0+1 = 01 (in decimal, this is 0+1=1)
+1+0 = 01 (in decimal, this is 1+0=1)
+1+1 = 10 (in decimal, this is 1+1=2)
+</code></pre>
+<p>这称为半加法器。如果我们的计算机可以实现这一点，并且可以将它们中的许多链接在一起，那么它就可以添加任何东西。</p>
+<p><strong>4.3</strong> 使用 Qiskit 的加法器
+让我们使用 Qiskit 制作我们自己的半加器。这将包括对输入进行编码的电路部分、执行算法的部分以及提取结果的部分。每当我们想要使用新输入时，都需要更改第一部分，但其余部分将始终保持不变。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_half_adder.svg" alt="" /></p>
+<p>我们要添加的两个位被编码在量子位 0 和 1 中。上面的示例1在这两个量子位中对 a 进行编码，因此它试图找到 的解1+1。结果将是一个由两位组成的字符串，我们将从量子位 2 和 3 中读出，并分别存储在经典位 0 和 1 中。剩下的就是填写实际的程序，它位于中间的空白处。</p>
+<p>图中的虚线只是为了区分电路的不同部分（尽管它们也可以有更有趣的用途）。它们是使用barrier命令制作的。</p>
+<p>计算机的基本构建块称为逻辑门。我们已经使用了非门，但这还不足以构成我们的半加器。我们只能用它来手动写出答案。由于我们希望计算机为我们进行实际计算，因此我们需要一些更强大的门。</p>
+<p>为了了解我们需要什么，让我们再看看我们的半加器需要做什么。</p>
+<pre><code>0+0 = 00
+0+1 = 01
+1+0 = 01
+1+1 = 10
+</code></pre>
+<p>所有这四个答案中最右边的位完全取决于我们添加的两位是相同还是不同。所以对于0+0和1+1，当两位相等时，答案的最右边的位就出来了0。对于0+1和1+0，我们在其中添加不同的位值，最右边的位是1。</p>
+<p>为了使我们解决方案的这一部分正确，我们需要一些东西来确定两个位是否不同。传统上，在数字计算的研究中，这被称为异或门。</p>
+<table><thead><tr><th style="text-align: center">Input 1</th><th style="text-align: center">Input 2</th><th style="text-align: center">XOR Output</th></tr></thead><tbody>
+<tr><td style="text-align: center">0</td><td style="text-align: center">0</td><td style="text-align: center">0</td></tr>
+<tr><td style="text-align: center">0</td><td style="text-align: center">1</td><td style="text-align: center">1</td></tr>
+<tr><td style="text-align: center">1</td><td style="text-align: center">0</td><td style="text-align: center">1</td></tr>
+<tr><td style="text-align: center">1</td><td style="text-align: center">1</td><td style="text-align: center">0</td></tr>
+</tbody></table>
+<p>在量子计算机中，异或门的工作由受控非门完成。由于这个名字很长，我们通常将其称为 CNOT。在 Qiskit 中它的名字是cx，更短。在电路图中，它如下图所示。</p>
+<pre><code>qc_cnot = QuantumCircuit(2)
+qc_cnot.cx(0,1)
+qc_cnot.draw()
+</code></pre>
+<code>
+<path d="M 0 123.4824 
+L 125.122272 123.4824 
+L 125.122272 0 
+L 0 0 
+z
+" style="fill:#ffffff;"></path>
+</code>
+<p>这适用于一对量子位。一个充当控制量子位（这是带有小点的那个）。另一个充当目标量子位+（里面有一个大圆圈）。</p>
+<p>有多种方法可以解释 CNOT 的影响。一种是说它查看它的两个输入位，看它们是否相同或不同。接下来，它用答案覆盖目标量子位。0如果它们相同，则目标变为，1如果它们不同。</p>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_cnot_xor.svg" alt="" /></p>
+<p>另一种解释 CNOT 的方法是说，如果控件是1，它对目标执行 NOT，否则不执行任何操作。这个解释与前一个解释一样有效（事实上，正是这个解释给了大门它的名字）。</p>
+<p>通过尝试每个可能的输入来亲自尝试 CNOT。例如，这是一个使用输入测试 CNOT 的电路01。</p>
+<pre><code>qc = QuantumCircuit(2,2)
+qc.x(0)
+qc.cx(0,1)
+qc.measure(0,0)
+qc.measure(1,1)
+qc.draw()
+</code></pre>
+<code>
+<path d="M 0 168.9334 
+L 261.475272 168.9334 
+L 261.475272 0 
+L 0 0 
+z
+" style="fill:#ffffff;"></path>
+</code>
+<p>如果你执行这个电路，你会发现输出是11。我们可以认为这种情况的发生是由于以下任一原因。</p>
+<p>CNOT计算输入值是否不同，发现不同，则表示要输出1。它通过覆盖 qubit 1 的状态（记住，它位于位串的左侧），01变成11.</p>
+<p>CNOT 看到量子位 0 处于状态1，因此将 NOT 应用于量子位 1。这会将0量子位 1 的 翻转为1，因此01变为11。</p>
+<p>下表显示了 CNOT 门的所有可能输入和相应输出：</p>
+<table><thead><tr><th style="text-align: center">Input (q1 q0)</th><th style="text-align: center">Output (q1 q0)</th></tr></thead><tbody>
+<tr><td style="text-align: center">00</td><td style="text-align: center">00</td></tr>
+<tr><td style="text-align: center">01</td><td style="text-align: center">11</td></tr>
+<tr><td style="text-align: center">10</td><td style="text-align: center">10</td></tr>
+<tr><td style="text-align: center">11</td><td style="text-align: center">01</td></tr>
+</tbody></table>
+<p>对于我们的半加器，我们不想覆盖我们的输入之一。相反，我们想将结果写在不同的一对量子位上。为此，我们可以使用两个 CNOT。</p>
+<pre><code>qc_ha = QuantumCircuit(4,2)
+# encode inputs in qubits 0 and 1
+qc_ha.x(0) # For a=0, remove this line. For a=1, leave it.
+qc_ha.x(1) # For b=0, remove this line. For b=1, leave it.
+qc_ha.barrier()
+# use cnots to write the XOR of the inputs on qubit 2
+qc_ha.cx(0,2)
+qc_ha.cx(1,2)
+qc_ha.barrier()
+# extract outputs
+qc_ha.measure(2,0) # extract XOR value
+qc_ha.measure(3,1)
+
+qc_ha.draw()
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc6.png" alt="" /></p>
+<p>我们现在已经完成了一个完全工作的半加器的一半。我们只剩下输出的另一部分要做：将存在于 qubit 3 上的那个。</p>
+<p>如果您再次查看四个可能的总和，您会注意到只有一种情况是 this1而不是0: 1+1= 10。只有当我们添加的两个位都是1.</p>
+<p>要计算这部分输出，我们可以让我们的计算机查看两个输入是否都是1。如果它们是——并且仅当它们是——我们需要在量子位 3 上做一个非门。这将把它翻转到1仅适用于这种情况的所需值，为我们提供我们需要的输出。</p>
+<p>为此，我们需要一个新门：类似于 CNOT，但控制在两个量子位上，而不是一个。只有当两个控件都处于 state 时，这才会对目标 qubit 执行 NOT 1。这座新城门叫做Toffoli。对于那些熟悉布尔逻辑门的人来说，它基本上是一个与门。</p>
+<p>在 Qiskit 中，Toffoli 用ccx命令表示。</p>
+<pre><code>qc_ha = QuantumCircuit(4,2)
+# encode inputs in qubits 0 and 1
+qc_ha.x(0) # For a=0, remove the this line. For a=1, leave it.
+qc_ha.x(1) # For b=0, remove the this line. For b=1, leave it.
+qc_ha.barrier()
+# use cnots to write the XOR of the inputs on qubit 2
+qc_ha.cx(0,2)
+qc_ha.cx(1,2)
+# use ccx to write the AND of the inputs on qubit 3
+qc_ha.ccx(0,1,3)
+qc_ha.barrier()
+# extract outputs
+qc_ha.measure(2,0) # extract XOR value
+qc_ha.measure(3,1) # extract AND value
+
+qc_ha.draw()
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc7.png" alt="" /></p>
+<p>在这个例子中，我们正在计算1+1，因为两个输入位都是1。让我们看看我们得到了什么。</p>
+<pre><code>qobj = assemble(qc_ha)
+counts = sim.run(qobj).result().get_counts()
+plot_histogram(counts)
+
+/home/divs/.local/lib/python3.8/site-packages/qiskit/utils/deprecation.py:62: DeprecationWarning: Using a qobj for run() is deprecated as of qiskit-aer 0.9.0 and will be removed no sooner than 3 months from that release date. Transpiled circuits should now be passed directly using `backend.run(circuits, **run_options).
+  return func(*args, **kwargs)
+</code></pre>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_quan_qc8.png" alt="" /></p>
+<p>结果是10，这是数字 2 的二进制表示。我们建造了一台可以解决著名数学问题 1+1 的计算机！</p>
+<p>现在您可以尝试其他三个可能的输入，并证明我们的算法也能为这些输入提供正确的结果。</p>
+<p>半加器包含加法所需的一切。使用 NOT、CNOT 和 Toffoli 门，我们可以创建程序来添加任意大小的任意数字集。</p>
+<p>这三个门也足以完成计算中的所有其他事情。事实上，我们甚至可以不用 CNOT。此外，只有在创建具有值的位时才真正需要非门1。托夫利门本质上是数学的原子。它是最简单的元素，可以从中编译所有其他问题解决技术。</p>
+<p>正如我们所见，在量子计算中我们将分裂原子。</p>
+<pre><code>import qiskit.tools.jupyter
+%qiskit_version_table
+
+/home/divs/.local/lib/python3.8/site-packages/qiskit/aqua/__init__.py:86: DeprecationWarning: The package qiskit.aqua is deprecated. It was moved/refactored to qiskit-terra For more information see &lt;https://github.com/Qiskit/qiskit-aqua/blob/main/README.md#migration-guide&gt;
+  warn_package('aqua', 'qiskit-terra')
+</code></pre>
+<p><strong>Version Information</strong></p>
+<table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.18.2</td></tr><tr><td><code>qiskit-aer</code></td><td>0.9.0</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.16.0</td></tr><tr><td><code>qiskit-aqua</code></td><td>0.9.5</td></tr><tr><td><code>qiskit</code></td><td>0.30.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.2.1</td></tr><tr><td><code>qiskit-finance</code></td><td>0.2.1</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.2.2</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.2.1</td></tr><tr><th>System information</th></tr><tr><td>Python</td><td>3.8.10 (default, Jun  2 2021, 10:49:15) 
+[GCC 9.4.0]</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>7.521877288818359</td></tr><tr><td colspan='2'>Sun Oct 03 22:50:56 2021 IST</td></tr></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多量子比特与量子纠缠"><a class="header" href="#多量子比特与量子纠缠">多量子比特与量子纠缠</a></h1>
 <p><img src="https://awesomeprogram.gitee.io/imgdata/techs/202207061914193.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="量子协议和量子算法"><a class="header" href="#量子协议和量子算法">量子协议和量子算法</a></h1>
