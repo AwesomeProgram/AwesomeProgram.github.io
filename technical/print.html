@@ -8599,6 +8599,396 @@ plot_histogram(counts)
 <p><strong>Version Information</strong></p>
 <table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.18.2</td></tr><tr><td><code>qiskit-aer</code></td><td>0.9.0</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.16.0</td></tr><tr><td><code>qiskit-aqua</code></td><td>0.9.5</td></tr><tr><td><code>qiskit</code></td><td>0.30.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.2.1</td></tr><tr><td><code>qiskit-finance</code></td><td>0.2.1</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.2.2</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.2.1</td></tr><tr><th>System information</th></tr><tr><td>Python</td><td>3.8.10 (default, Jun  2 2021, 10:49:15) 
 [GCC 9.4.0]</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>7.521877288818359</td></tr><tr><td colspan='2'>Sun Oct 03 22:50:56 2021 IST</td></tr></table>
+<h2 id="表示量子比特状态"><a class="header" href="#表示量子比特状态">表示量子比特状态</a></h2>
+<p>您现在对位以及我们熟悉的数字计算机的工作原理有所了解。现代软件中使用的所有复杂变量、对象和数据结构基本上都是一大堆比特。我们这些从事量子计算工作的人称这些为经典变量。使用它们的计算机，就像您用来阅读本文的计算机，我们称为经典计算机。</p>
+<p>在量子计算机中，我们的基本变量是量子位：位的量子变体。它们与普通位具有完全相同的限制：它们只能存储一条二进制信息，并且只能为我们提供0or的输出1。然而，它们也可以以只有量子力学才能描述的方式被操纵。这为我们提供了新的门，让我们能够找到设计算法的新方法。</p>
+<p>要完全理解这些新门，我们首先需要了解如何记下量子比特状态。为此，我们将使用向量、矩阵和复数的数学。尽管我们会边走边介绍这些概念，但最好您已经熟悉它们。如果您需要更深入的解释或复习，可以在此处找到<a href="https://qiskit.org/textbook/ch-appendix/linear_algebra.html">指南</a>。</p>
+<p>内容</p>
+<p>1.经典比特与量子比特
+1.1状态向量
+1.2量子比特符号
+1.3使用 Qiskit 探索量子比特
+2.测量规则
+2.1一个非常重要的规则
+2.2这个规则的含义
+3.布洛赫球体
+3.1描述受限量子位状态
+3.2视觉表示量子位状态</p>
+<h3 id="经典比特与量子比特"><a class="header" href="#经典比特与量子比特">经典比特与量子比特</a></h3>
+<h4 id="状态向量"><a class="header" href="#状态向量">状态向量</a></h4>
+<p>在量子物理学中，我们使用状态向量来描述系统的状态。假设我们想描述汽车在赛道上的位置，这是一个经典系统，所以我们可以使用一个数字 x :</p>
+<p><img src="https://learn.qiskit.org/content/ch-states/images/car_track_1.jpg" alt="" /></p>
+<p>$$
+x = 4
+$$</p>
+<p>或者，我们可以使用称为 状态向量的向量中的一组数字。statevector 中的每个元素都包含在某个地方找到汽车的概率：</p>
+<p><img src="https://learn.qiskit.org/content/ch-states/images/car_track_2.jpg" alt="" /></p>
+<p>$$
+|x\rangle = \begin{bmatrix} 0\ \vdots \ 0 \ 1 \ 0 \ \vdots \ 0 \end{bmatrix} 
+\begin{matrix} \  \  \ \leftarrow \  \  \  \ \end{matrix}
+\begin{matrix} \  \ \text{Probability of} \ \text{car being at} \ \text{position 4} \  \  \ \end{matrix}
+$$</p>
+<p>这不仅限于位置，我们还可以保留汽车可能具有的所有可能速度以及汽车可能具有的所有可能颜色的状态向量。对于经典系统（如上面的汽车示例），这是一件愚蠢的事情，因为当我们真的只需要一个数字时，它需要保留巨大的向量。但正如我们将在本章中看到的那样，状态向量恰好是跟踪量子系统（包括量子计算机）的一种非常好的方法。</p>
+<h4 id="量子比特符号"><a class="header" href="#量子比特符号">量子比特符号</a></h4>
+<p>经典位总是有一个完全明确定义的状态：它们要么是0，要么1在计算过程中的每个点。没有比这更多的细节可以添加到 bit 的状态中了。所以要写下一个经典位 ( c) 的状态，我们可以只使用这两个二进制值。例如：</p>
+<p>c = 0</p>
+<p>对于量子位，此限制已解除。我们只需要在进行测量以提取输出时明确定义我们是从量子位得到 a0还是 a 。1届时，它必须承诺这两个选项之一。在所有其他时间，它的状态将比简单的二进制值所捕获的更复杂。</p>
+<p>要了解如何描述这些，我们可以先关注两个最简单的情况。正如我们在上一节中看到的，可以在0测量时明确给出结果的状态下准备一个量子位。</p>
+<p>我们需要这个状态的名称。让我们缺乏想象力并称它为 0。类似地，存在一个 qubit 状态，它一定会输出 a 1。我们称之为 1 个。这两种状态是完全互斥的。要么 qubit 肯定输出 a 0，要么它肯定输出 a 1。没有重叠。用数学表示这一点的一种方法是使用两个正交向量。</p>
+<p>$$
+|0\rangle = \begin{bmatrix} 1 \ 0 \end{bmatrix} , , , , |1\rangle =\begin{bmatrix} 0 \ 1 \end{bmatrix}.
+$$</p>
+<p>这是一次要全部接受的很多符号。首先，让我们打开奇怪的包装 | 和 ⟩。他们的工作本质上只是提醒我们，我们正在谈论代表标记的量子比特状态的向量 0 和 个。这有助于我们将它们与位值0和1/或数字 0 和 1 之类的东西区分开来。它是 Dirac 引入的 bra-ket 表示法的一部分。</p>
+<p>如果您不熟悉向量，您基本上可以将它们视为我们使用特定规则操作的数字列表。如果您熟悉高中物理课上的向量，您就会知道这些规则使向量非常适合描述具有大小和方向的量。例如，物体的速度可以用矢量完美地描述。然而，我们对量子态使用向量的方式与此略有不同，所以不要太坚持你以前的直觉。是时候做点新的了！</p>
+<p>使用向量，我们可以描述更复杂的状态，而不仅仅是 |0⟩ 和 |1。例如，考虑向量</p>
+<p>$$
+|q_0\rangle = \begin{bmatrix} \tfrac{1}{\sqrt{2}} \ \tfrac{i}{\sqrt{2}} \end{bmatrix} .
+$$</p>
+<p>要了解此状态的含义，我们需要使用数学规则来处理向量。具体来说，我们需要了解如何将向量相加以及如何将它们与标量相乘。</p>
+<ul>
+<li>提醒：标量的矩阵加法和乘法（单击此处展开）
+要添加两个向量，我们将它们的元素加在一起：</li>
+</ul>
+<p>$$
+|a\rangle = \begin{bmatrix}a_0 \ a_1 \ \vdots \ a_n \end{bmatrix}, \quad
+|b\rangle = \begin{bmatrix}b_0 \ b_1 \ \vdots \ b_n \end{bmatrix}
+|a\rangle + |b\rangle = \begin{bmatrix}a_0 + b_0 \ a_1 + b_1 \ \vdots \ a_n + b_n \end{bmatrix}
+$$</p>
+<p>要将向量乘以标量，我们将每个元素乘以标量：</p>
+<p>$$
+x|a\rangle = \begin{bmatrix}x \times a_0 \ x \times  a_1 \ \vdots \ x \times  a_n \end{bmatrix}
+$$</p>
+<p>这两个规则用于重写向量 |q0⟩（如上图）：</p>
+<p>$$
+\begin{aligned} 
+|q_0\rangle &amp; = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle \
+&amp; = \tfrac{1}{\sqrt{2}}\begin{bmatrix}1\0\end{bmatrix} + \tfrac{i}{\sqrt{2}}\begin{bmatrix}0\1\end{bmatrix}\
+&amp; = \begin{bmatrix}\tfrac{1}{\sqrt{2}}\0\end{bmatrix} + \begin{bmatrix}0\\tfrac{i}{\sqrt{2}}\end{bmatrix}\
+&amp; = \begin{bmatrix}\tfrac{1}{\sqrt{2}} \ \tfrac{i}{\sqrt{2}} \end{bmatrix}\
+\end{aligned}
+$$</p>
+<ul>
+<li>提醒：正交基（单击此处展开）前面说过这两个向量 |0⟩ 和 |1 个 ⟩ 是正交的，这意味着它们既是正交的又是归一化的。正交意味着向量成直角：
+<img src="https://qiskit.org/textbook/ch-states/images/basis.svg" alt="" /></li>
+</ul>
+<p>归一化意味着它们的大小（箭头的长度）等于 1。这两个向量 |0⟩ 和 |1 个 ⟩ 是线性独立的，这意味着我们无法描述 |0⟩ 按照 |1 个 ⟩，反之亦然。但是，使用这两个向量 |0⟩ 和 |1 个 ⟩，以及我们的标量加法和乘法规则，我们可以描述二维空间中所有可能的向量：
+<img src="https://qiskit.org/textbook/ch-states/images/basis2.svg" alt="" /></p>
+<p>因为载体 |0⟩ 和 |1 个 ⟩ 是线性无关的，并且可以使用向量加法和标量乘法来描述二维空间中的任何向量，我们称向量 |0⟩ 和 |1 个 ⟩ 形成基础。在这种情况下，由于它们既是正交的又是归一化的，我们称之为正交基。</p>
+<p>由于各状态 |0⟩ 和 |1 个 ⟩ 形成正交基，我们可以用这两种状态的组合来表示任何二维向量。这允许我们以替代形式编写我们的量子比特的状态：</p>
+<p>$$
+|q_0\rangle = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle
+$$</p>
+<p>这个向量，|q<sub>0</sub>⟩ 被称为量子比特的状态向量，它告诉我们关于这个量子比特我们可能知道的一切。目前，我们只能对状态向量的这个特定示例得出一些简单的结论：它并不完全 |0⟩ 并不完全 |1 个 ⟩。相反，它是由两者的线性组合来描述的。在量子力学中，我们通常使用“叠加”一词来描述此类线性组合。虽然我们的例子说明 |q<sub>0</sub>⟩ 可以表示为的叠加 |0⟩ 和 |1 个⟩，它与它们一样是一个确定且定义明确的量子位状态。为了解这一点，我们可以开始探索如何操纵量子位。</p>
+<h4 id="用-qiskit-探索量子比特"><a class="header" href="#用-qiskit-探索量子比特">用 Qiskit 探索量子比特</a></h4>
+<p>首先，我们需要导入所有需要的工具：</p>
+<pre><code>from qiskit import QuantumCircuit, assemble, Aer
+from qiskit.visualization import plot_histogram, plot_bloch_vector
+from math import sqrt, pi
+</code></pre>
+<p>在 Qiskit 中，我们使用该QuantumCircuit对象来存储我们的电路，这本质上是我们电路上的量子操作列表以及它们所应用的量子位。</p>
+<pre><code>qc = QuantumCircuit(1) # Create a quantum circuit with one qubit
+</code></pre>
+<p>在我们的量子电路中，我们的量子位总是从状态开始 |0⟩。我们可以使用该initialize()方法将其转换为任何状态。initialize()我们以列表的形式给出我们想要的向量，并告诉它我们想要在这个状态下初始化哪个量子位：</p>
+<pre><code>qc = QuantumCircuit(1)  # Create a quantum circuit with one qubit
+initial_state = [0,1]   # Define initial_state as |1&gt;
+qc.initialize(initial_state, 0) # Apply initialisation operation to the 0th qubit
+qc.draw()  # Let's view our circuit
+</code></pre>
+<p>然后我们可以使用 Qiskit 的模拟器之一来查看我们的量子比特的结果状态。</p>
+<pre><code>sim = Aer.get_backend('aer_simulator')  # Tell Qiskit how to simulate our circuit
+</code></pre>
+<p>为了从我们的电路中获得结果，我们使用 run 来执行我们的电路，将电路和后端作为参数。然后我们用 .result() 它来得到这个结果：</p>
+<pre><code>qc = QuantumCircuit(1)  # Create a quantum circuit with one qubit
+initial_state = [0,1]   # Define initial_state as |1&gt;
+qc.initialize(initial_state, 0) # Apply initialisation operation to the 0th qubit
+qc.save_statevector()   # Tell simulator to save statevector
+qobj = assemble(qc)     # Create a Qobj from the circuit for the simulator to run
+result = sim.run(qobj).result() # Do the simulation and return the result
+</code></pre>
+<p>从 result，然后我们可以使用 获得最终的状态向量 .get_statevector()：</p>
+<pre><code>out_state = result.get_statevector()
+print(out_state) # Display the output state vector
+
+Statevector([0.+0.j, 1.+0.j],
+            dims=(2,))
+</code></pre>
+<p>注： Python 用来 j 表示 i 在复数中。我们看到一个包含两个复数元素的向量：0.+ 0.j = 0 和 1.+ 0.j = 1。</p>
+<p>现在让我们像在真正的量子计算机中那样测量我们的量子位并查看结果：</p>
+<pre><code>qc.measure_all()
+qc.draw()
+</code></pre>
+<p>这一次，我们将使用以下方法获取 0 和结果的计数，而不是状态向量 .get_counts()</p>
+<pre><code>qobj = assemble(qc)
+result = sim.run(qobj).result()
+counts = result.get_counts()
+plot_histogram(counts)
+</code></pre>
+<p>我们可以看到我们（不出所料）有 100% 的机会测量 |1个 ⟩。这一次，让我们将我们的量子比特置于叠加态中，看看会发生什么。我们将使用状态 |q<sub>0</sub>⟩ 来自本节前面的内容：</p>
+<p>$$
+|q_0\rangle = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle
+$$</p>
+<p>我们需要将这些振幅添加到 python 列表中。为了添加复振幅，Python 使用j虚数单位（我们通常称其为&quot; i &quot;数学上）：</p>
+<pre><code>initial_state = [1/sqrt(2), 1j/sqrt(2)]  # Define state |q_0&gt;
+</code></pre>
+<p>然后我们像以前一样重复初始化量子位的步骤：</p>
+<pre><code>qc = QuantumCircuit(1) # Must redefine qc
+qc.initialize(initial_state, 0) # Initialize the 0th qubit in the state `initial_state`
+qc.save_statevector() # Save statevector
+qobj = assemble(qc)
+state = sim.run(qobj).result().get_statevector() # Execute the circuit
+print(state)           # Print the result
+
+Statevector([0.70710678+0.j        , 0.        +0.70710678j],
+            dims=(2,))
+</code></pre>
+<p>我们可以看到我们有相等的概率测量 |0⟩ 或者 |1 个 ⟩。为了解释这一点，我们需要谈谈测量。</p>
+<h3 id="测量规则"><a class="header" href="#测量规则">测量规则</a></h3>
+<h4 id="一个非常重要的规则"><a class="header" href="#一个非常重要的规则">一个非常重要的规则</a></h4>
+<p>有一个简单的测量规则。找出测量状态的概率 |ψ⟩ 在该州 |x⟩ 我们的确是：</p>
+<p>$$
+p(|x\rangle) = | \langle x| \psi \rangle|^2
+$$</p>
+<p>符号 ⟨ 和 | 告诉我们 ⟨X| 是一个行向量和符号 | 和 ⟩ 告诉我们 |ψ⟩ 是列向量。在量子力学中，我们称列向量为kets，行向量为bra。它们一起构成了小括号表示法。任何凯特 |A⟩ 有对应的bra ⟨A|，我们使用共轭转置在它们之间进行转换。</p>
+<ul>
+<li>提醒：共轭转置（单击此处展开）
+bra-ket 之间的转换使用共轭转置方法进行。我们知道一个ket（列向量）表示如下：</li>
+</ul>
+<p>$$
+\quad|a\rangle = \begin{bmatrix}a_0 \ a_1 \ \vdots \ a_n \end{bmatrix}
+$$</p>
+<p>在共轭转置法中，矩阵被转置并且元素是复共轭的（由 &quot;∗&quot; 运算）其中复共轭（&quot;∗&quot;）的复数是实部和虚部大小相等但符号相反的数。这给出了对应的胸罩（行向量）如下：</p>
+<p>$$
+\langle a| = \begin{bmatrix}a_0^<em>, &amp; a_1^</em>, &amp; \dots &amp; a_n^* \end{bmatrix}
+$$</p>
+<ul>
+<li>提醒：内积（点击此处展开）
+向量相乘有不同的方法，这里我们使用内积。内积是您可能已经熟悉的点积的推广。在本指南中，我们使用 bra（行向量）和 ket（列向量）之间的内积，它遵循以下规则：</li>
+</ul>
+<p>$$
+\langle a| = \begin{bmatrix}a_0^<em>, &amp; a_1^</em>, &amp; \dots &amp; a_n^* \end{bmatrix}, \quad
+|b\rangle = \begin{bmatrix}b_0 \ b_1 \ \vdots \ b_n \end{bmatrix}
+\langle a|b\rangle = a_0^* b_0 + a_1^* b_1 \dots a_n^* b_n
+$$ </p>
+<p>我们可以看到两个向量的内积总是给我们一个标量。要记住的一件有用的事情是两个正交向量的内积是 0，例如，如果我们有正交向量 |0⟩ 和 |1个 ⟩：</p>
+<p>$$
+\langle1|0\rangle = \begin{bmatrix} 0 &amp; 1\end{bmatrix}\begin{bmatrix}1 \ 0\end{bmatrix} = 0
+$$</p>
+<p>此外，请记住向量 |0⟩ 和 |1个 ⟩ 也归一化（量级等于 1）：</p>
+<p>$$
+\begin{aligned} 
+\langle0|0\rangle &amp; = \begin{bmatrix} 1 &amp; 0\end{bmatrix}\begin{bmatrix}1 \ 0\end{bmatrix} = 1 \
+\langle1|1\rangle &amp; = \begin{bmatrix} 0 &amp; 1\end{bmatrix}\begin{bmatrix}0 \ 1\end{bmatrix} = 1
+\end{aligned}
+$$</p>
+<p>在上面的等式中，|X⟩ 可以是任何量子比特状态。找到测量的概率 |x⟩，我们取内积 |x⟩ 以及我们正在测量的状态（在这种情况下 |ψ⟩），然后平方幅度。这可能看起来有点令人费解，但很快就会成为第二天性。</p>
+<p>如果我们看状态 |q<sub>0</sub>⟩ 从之前，我们可以看到测量的概率 |0⟩ 确实是 0.5：
+$$
+\begin{aligned}
+|q_0\rangle &amp; = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle \
+\langle 0| q_0 \rangle  &amp; = \tfrac{1}{\sqrt{2}}\langle 0|0\rangle + \tfrac{i}{\sqrt{2}}\langle 0|1\rangle \
+&amp; = \tfrac{1}{\sqrt{2}}\cdot 1 +  \tfrac{i}{\sqrt{2}} \cdot 0\
+&amp; = \tfrac{1}{\sqrt{2}}\
+|\langle 0| q_0 \rangle|^2 &amp; = \tfrac{1}{2}
+\end{aligned}
+$$</p>
+<p>你应该验证测量的概率 |1个 ⟩ 作为练习。</p>
+<p>这条规则支配着我们如何从量子态中获取信息。因此，它对我们在量子计算中所做的一切都非常重要。它还立即暗示了几个重要的事实。</p>
+<h4 id="本规则的含义"><a class="header" href="#本规则的含义">本规则的含义</a></h4>
+<h5 id="1-归一化"><a class="header" href="#1-归一化">#1 归一化</a></h5>
+<p>该规则向我们表明振幅与概率有关。如果我们希望概率加起来为 1（它们应该！），我们需要确保状态向量被正确归一化。具体来说，我们需要状态向量的大小为 1。</p>
+<p>$$
+\langle\psi|\psi\rangle = 1 \
+$$</p>
+<p>因此，如果：</p>
+<p>$$
+|\psi\rangle = \alpha|0\rangle + \beta|1\rangle
+$$</p>
+<p>然后：</p>
+<p>$$
+|\alpha|^2 + |\beta|^2 = 1
+$$</p>
+<p>这解释了以下因素 <math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>2</mn></msqrt></math> 个你已经在本章中看到了。事实上，如果我们试图给出initialize()一个未归一化的向量，它会给我们一个错误：</p>
+<pre><code>vector = [1,1]
+qc.initialize(vector, 0)
+
+
+---------------------------------------------------------------------------
+QiskitError                               Traceback (most recent call last)
+Input In [12], in &lt;cell line: 2&gt;()
+      1 vector = [1,1]
+----&gt; 2 qc.initialize(vector, 0)
+
+File /usr/local/lib/python3.8/site-packages/qiskit/extensions/quantum_initializer/initializer.py:191, in initialize(self, params, qubits)
+    188     qubits = [qubits]
+    189 num_qubits = len(qubits) if isinstance(params, int) else None
+--&gt; 191 return self.append(Initialize(params, num_qubits), qubits)
+
+File /usr/local/lib/python3.8/site-packages/qiskit/extensions/quantum_initializer/initializer.py:57, in Initialize.__init__(self, params, num_qubits)
+     36 def __init__(self, params, num_qubits=None):
+     37     r&quot;&quot;&quot;Create new initialize composite.
+     38 
+     39     Args:
+   (...)
+     55             and the remaining 3 qubits to be initialized to :math:`|0\rangle`.
+     56     &quot;&quot;&quot;
+---&gt; 57     self._stateprep = StatePreparation(params, num_qubits)
+     59     super().__init__(&quot;initialize&quot;, self._stateprep.num_qubits, 0, self._stateprep.params)
+
+File /usr/local/lib/python3.8/site-packages/qiskit/circuit/library/data_preparation/state_preparation.py:99, in StatePreparation.__init__(self, params, num_qubits, inverse, label)
+     96 self._from_label = isinstance(params, str)
+     97 self._from_int = isinstance(params, int)
+---&gt; 99 num_qubits = self._get_num_qubits(num_qubits, params)
+    101 params = [params] if isinstance(params, int) else params
+    103 super().__init__(self._name, num_qubits, params, label=self._label)
+
+File /usr/local/lib/python3.8/site-packages/qiskit/circuit/library/data_preparation/state_preparation.py:202, in StatePreparation._get_num_qubits(self, num_qubits, params)
+    200     # Check if probabilities (amplitudes squared) sum to 1
+    201     if not math.isclose(sum(np.absolute(params) ** 2), 1.0, abs_tol=_EPS):
+--&gt; 202         raise QiskitError(&quot;Sum of amplitudes-squared does not equal one.&quot;)
+    204     num_qubits = int(num_qubits)
+    205 return num_qubits
+
+QiskitError: 'Sum of amplitudes-squared does not equal one.'
+</code></pre>
+<p><b>快速练习</b> 
+1.创建一个状态向量，它将给出 1个/3个测量概率 |0⟩。
+2.创建将提供相同测量概率的不同状态向量。
+3.验证测量的概率 |1个 ⟩ 对于这两个状态是 2个/3个。
+您可以在下面的小部件中检查您的答案（接受答案 ±1% 的准确度，您可以在向量中使用 numpy 术语，例如在向量中的 'pi' 和 'sqrt()'）</p>
+<pre><code># Run the code in this cell to interact with the widget
+from qiskit_textbook.widgets import state_vector_exercise
+state_vector_exercise(target=1/3)
+</code></pre>
+<h5 id="2-替代测量"><a class="header" href="#2-替代测量">#2 替代测量</a></h5>
+<p>测量规则给了我们概率 p(|x⟩) 那个状态 |ψ⟩ 被测量为 |x⟩。它没有告诉我们 |x⟩ 只能是 |0⟩ 或者 |1个 ⟩。</p>
+<p>到目前为止，我们考虑的测量实际上只是测量量子位的无数种可能方法中的一种。对于任何正交状态对，我们可以定义一个测量值，使量子位在两者之间进行选择。</p>
+<p>下一节将进一步探讨这种可能性。现在，请记住 |x⟩ 不仅限于简单 |0⟩ 或者 |1个 ⟩。</p>
+<h5 id="3-全球阶段"><a class="header" href="#3-全球阶段">#3 全球阶段</a></h5>
+<p>我们知道测量状态 |1个 ⟩ 1会给我们确定的输出。但是我们也可以写下这样的状态
+$$
+\begin{bmatrix}0 \ i\end{bmatrix} = i|1\rangle.
+$$</p>
+<p>要查看其行为方式，我们应用测量规则。</p>
+<p>$$
+|\langle x| (i|1\rangle) |^2 = | i \langle x|1\rangle|^2 = |\langle x|1\rangle|^2
+$$</p>
+<p>在这里我们发现因素 i 一旦我们取复数的大小，它就会消失。这种影响完全独立于测量状态 |x⟩。我们正在考虑的衡量标准无关紧要，状态的概率 i|1个⟩ 与那些相同 |1个⟩。由于测量是我们从量子比特中提取任何信息的唯一方式，这意味着这两种状态在物理相关的所有方面都是等价的。</p>
+<p>更一般地说，我们指的是任何整体因素 γ 在一个状态下 |γ| =1 个作为“全球阶段”。仅在全局阶段不同的状态在物理上是无法区分的。</p>
+<p>$$
+|\langle x| ( \gamma |a\rangle) |^2 = | \gamma \langle x|a\rangle|^2 = |\langle x|a\rangle|^2
+$$</p>
+<p>请注意，这与叠加中项之间的相位差不同，后者被称为“相对相位”。一旦我们考虑不同类型的测量和多个量子位，这就变得相关了。</p>
+<h5 id="4-观察者效应"><a class="header" href="#4-观察者效应">#4 观察者效应</a></h5>
+<p>我们知道振幅包含有关我们找到处于特定状态的量子位的概率的信息，但是一旦我们测量了量子位，我们就可以确定地知道量子位的状态。例如，如果我们测量状态下的量子比特：</p>
+<p>$$
+|q\rangle = \alpha|0\rangle + \beta|1\rangle
+$$</p>
+<p>并在状态内找到它 |0⟩，如果我们再次测量，有 100% 的机会找到状态中的量子比特 |0⟩。这意味着测量行为会改变我们量子比特的状态。</p>
+<p>$$
+|q\rangle = \begin{bmatrix} \alpha \ \beta \end{bmatrix} \xrightarrow{\text{Measure }|0\rangle} |q\rangle = |0\rangle = \begin{bmatrix} 1 \ 0 \end{bmatrix}
+$$</p>
+<p>我们有时将此称为折叠量子比特的状态。这是一种强大的效果，因此必须明智地使用它。例如，如果我们不断地测量我们的每个量子比特以跟踪它们在计算中每个点的值，它们将总是简单地处于一个明确定义的状态 |0⟩ 或者 |1个⟩。因此，它们与经典位没有什么不同，我们的计算可以很容易地被经典计​​算所取代。为了实现真正的量子计算，我们必须允许量子比特探索更复杂的状态。因此，仅当我们需要提取输出时才使用测量。这意味着我们经常将所有测量放在量子电路的末端。</p>
+<p>我们可以使用 Qiskit 的状态向量模拟器来演示这一点。让我们在叠加中初始化一个量子位：</p>
+<pre><code>qc = QuantumCircuit(1) # We are redefining qc
+initial_state = [0.+1.j/sqrt(2),1/sqrt(2)+0.j]
+qc.initialize(initial_state, 0)
+qc.draw()
+</code></pre>
+<p>这应该在状态中初始化我们的量子位：</p>
+<pre><code>|q\rangle = \tfrac{i}{\sqrt{2}}|0\rangle + \tfrac{1}{\sqrt{2}}|1\rangle
+</code></pre>
+<p>我们可以使用模拟器验证这一点：</p>
+<pre><code>qc.save_statevector()
+result = sim.run(assemble(qc)).result()
+state = result.get_statevector()
+print(&quot;Qubit State = &quot; + str(state))
+
+Qubit State = Statevector([0.        +0.70710678j, 0.70710678+0.j        ],
+            dims=(2,))
+</code></pre>
+<p>我们可以在这里看到 qubit 在 state 中初始化[0.+0.70710678j 0.70710678+0.j]，这是我们期望的状态。</p>
+<p>现在让我们创建一个电路来测量这个量子位：</p>
+<pre><code>qc = QuantumCircuit(1) # We are redefining qc
+initial_state = [0.+1.j/sqrt(2),1/sqrt(2)+0.j]
+qc.initialize(initial_state, 0)
+qc.measure_all()
+qc.save_statevector()
+qc.draw()
+</code></pre>
+<p>当我们模拟整个电路时，我们可以看到其中一个振幅始终为0：</p>
+<pre><code>qobj = assemble(qc)
+state = sim.run(qobj).result().get_statevector()
+print(&quot;State of Measured Qubit = &quot; + str(state))
+
+State of Measured Qubit = Statevector([0.+1.j, 0.+0.j],
+            dims=(2,))
+</code></pre>
+<p>您可以重新运行此单元几次以重新初始化量子位并再次测量它。你会注意到这两种结果的可能性是相等的，但是量子比特的状态永远不是 
+|0⟩ 和 |1个⟩。有点有趣的是，国家的全球阶段 |0⟩ 幸存下来，但由于这是全球阶段，我们永远无法在真正的量子计算机上测量它。</p>
+<h4 id="关于量子模拟器的注释"><a class="header" href="#关于量子模拟器的注释">关于量子模拟器的注释</a></h4>
+<p>我们可以看到，写下一个量子位的状态需要跟踪两个复数，但在使用真正的量子计算机时，我们只会收到每个量子位的是或否（或）答案0。110 量子位量子计算机的输出将如下所示：</p>
+<p>0110111110</p>
+<p>仅 10 位，无叠加或复振幅。当使用真正的量子计算机时，我们无法看到我们的量子比特在计算过程中的状态，因为这会破坏它们！这种行为对于学习来说并不理想，因此 Qiskit 提供了不同的量子模拟器：默认情况下，模拟aer_simulator真实量子计算机的执行，但如果我们在电路中包含某些指令，也可以让您在测量前窥视量子状态。例如，这里我们包含了指令.save_statevector()，这意味着我们可以使用.get_statevector()模拟的结果。</p>
+<h3 id="布洛赫球体"><a class="header" href="#布洛赫球体">布洛赫球体</a></h3>
+<h4 id="描述受限量子比特态"><a class="header" href="#描述受限量子比特态">描述受限量子比特态</a></h4>
+<p>我们在本章前面看到了量子位的一般状态（|q⟩）是：</p>
+<p>$$
+|q\rangle = \alpha|0\rangle + \beta|1\rangle
+$$</p>
+<p>（第二行告诉我们 α 和 β 是复数）。第 2 节中的前两个含义告诉我们，我们无法区分其中一些状态。这意味着我们可以更具体地描述量子位。</p>
+<p>首先，由于我们无法测量全局相位，我们只能测量状态之间的相位差 |0⟩ 和 |1个⟩。而不是拥有 α 和 β 复杂，我们可以将它们限制为实数并添加一个项来告诉我们它们之间的相对相位：</p>
+<p>$$
+|q\rangle = \alpha|0\rangle + e^{i\phi}\beta|1\rangle
+\alpha, \beta, \phi \in \mathbb{R}
+$$</p>
+<p>最后，由于量子位状态必须归一化，即</p>
+<p>$$
+\sqrt{\alpha^2 + \beta^2} = 1
+$$</p>
+<p>我们可以使用三角恒等式：</p>
+<p>$$
+\sqrt{\sin^2{x} + \cos^2{x}} = 1
+$$</p>
+<p>来描述真实的 α 和 β 就一个变量而言，θ：</p>
+<p>$$
+\alpha = \cos{\tfrac{\theta}{2}}, \quad \beta=\sin{\tfrac{\theta}{2}}
+$$</p>
+<p>由此我们可以使用两个变量来描述任何量子比特的状态 φ 和 θ：</p>
+<p>$$
+|q\rangle = \cos{\tfrac{\theta}{2}}|0\rangle + e^{i\phi}\sin{\tfrac{\theta}{2}}|1\rangle
+\theta, \phi \in \mathbb{R}
+$$</p>
+<h4 id="32-可视化表示量子比特状态"><a class="header" href="#32-可视化表示量子比特状态">3.2 可视化表示量子比特状态</a></h4>
+<p>我们想绘制我们的一般量子位状态：</p>
+<p>$$
+|q\rangle = \cos{\tfrac{\theta}{2}}|0\rangle + e^{i\phi}\sin{\tfrac{\theta}{2}}|1\rangle
+$$</p>
+<p>如果我们解释 θ 和 φ 作为球面坐标（r = 1个，因为量子比特状态的大小是 1个），我们可以在球体表面绘制任何单个量子比特状态，称为<em>Bloch</em>球体。</p>
+<p>下面我们绘制了一个处于状态的量子比特 |+⟩。在这种情况下，θ=π/2 个和 φ = 0。</p>
+<p>Qiskit 具有绘制 Bloch 球体的功能，plot_bloch_vector()。该函数默认接受笛卡尔坐标，但也可以通过传递参数接受球坐标coord_type='spherical'。</p>
+<p>您也可以尝试这个<a href="https://javafxpert.github.io/grok-bloch/">交互式 Bloch 球体演示</a>。</p>
+<pre><code>from qiskit.visualization import plot_bloch_vector
+coords = [1,pi/2,0]  # [Radius, Theta, Phi]
+plot_bloch_vector(coords, coord_type='spherical')
+</code></pre>
+<p><b>警告！</b> 
+第一次了解量子位状态时，很容易混淆 qubits statevector和它的Bloch vector。请记住，<a href="https://qiskit.org/textbook/ch-states/representing-qubit-states.html#notation">状态向量是1.1</a>中讨论的向量，它保存我们的量子位可能处于的两个状态的振幅。布洛赫向量是一种可视化工具，可将 2D 复数状态向量映射到真实的 3D 空间。</p>
+<p><b>快速练习</b> 
+用于plot_bloch_vector()绘制状态中的量子位：</p>
+<p>$$
+1.|0\rangle
+2.|1\rangle
+3.\tfrac{1}{\sqrt{2}}(|0\rangle + |1\rangle)
+4.\tfrac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)
+5.\tfrac{1}{\sqrt{2}}\begin{bmatrix}i\1\end{bmatrix}
+$$</p>
+<pre><code>import qiskit.tools.jupyter
+%qiskit_version_table
+</code></pre>
+<ul>
+<li>版本信息</li>
+</ul>
+<table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.22.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.11.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.39.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.1</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.2</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.13</td></tr><tr><td>Python compiler</td><td>Clang 13.1.6 (clang-1316.0.21.2.5)</td></tr><tr><td>Python build</td><td>default, Aug 29 2022 05:17:23</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>32.0</td></tr><tr><td colspan='2'>Mon Nov 28 09:32:47 2022 GMT</td></tr></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多量子比特与量子纠缠"><a class="header" href="#多量子比特与量子纠缠">多量子比特与量子纠缠</a></h1>
 <p><img src="https://awesomeprogram.gitee.io/imgdata/techs/202207061914193.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="量子协议和量子算法"><a class="header" href="#量子协议和量子算法">量子协议和量子算法</a></h1>
