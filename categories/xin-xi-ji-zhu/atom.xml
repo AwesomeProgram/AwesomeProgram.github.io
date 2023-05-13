@@ -2,17 +2,17 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 	<title>杂经 - 信息技术</title>
 	<subtitle>分享计算机科学知识，技术文章，软件开发，编程，心理学，经济理财，传统文化等</subtitle>
-	<link href="https://awesomeprogram.gitee.io/categories/xin-xi-ji-zhu/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://awesomeprogram.gitee.io"/>
+	<link href="https://awesomeprogram.github.io/categories/xin-xi-ji-zhu/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://awesomeprogram.github.io/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
 	<updated>2022-10-28T00:00:00+00:00</updated>
-	<id>https://awesomeprogram.gitee.io/categories/xin-xi-ji-zhu/atom.xml</id>
+	<id>https://awesomeprogram.github.io/categories/xin-xi-ji-zhu/atom.xml</id>
 	<entry xml:lang="en">
 		<title>Hardhat DApp 开发教程</title>
 		<published>2022-10-28T00:00:00+00:00</published>
 		<updated>2022-10-28T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/hardhatdapptutorial/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/hardhatdapptutorial/</id>
+		<link href="https://awesomeprogram.github.io/hardhatdapptutorial/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/hardhatdapptutorial/</id>
 		<content type="html">&lt;p&gt;&lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_3_3.html&quot; target=&quot;_blank&quot;&gt;查看开发教程&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;&lt;br&#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;center&gt;&lt;b&gt;DApp 调用流程&lt;&#x2F;b&gt;&lt;br&#x2F;&gt;
 &lt;img src=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;imgdata&#x2F;tech_bc_dappcool.png&quot; alt=&quot;DApp State&quot; object-fit=&quot;contain&quot;&gt;
@@ -23,8 +23,8 @@
 		<title>Solidity 智能合约开发教程</title>
 		<published>2022-10-24T00:00:00+00:00</published>
 		<updated>2022-10-24T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/soliditytutorial/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/soliditytutorial/</id>
+		<link href="https://awesomeprogram.github.io/soliditytutorial/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/soliditytutorial/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_3_2.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;img src=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;imgdata&#x2F;tech_bc_soliditylogo.png&quot; alt=&quot;Hardhat DApp&quot; object-fit=&quot;contain&quot;&gt;
@@ -35,8 +35,8 @@
 		<title>Move 智能合约开发教程</title>
 		<published>2022-10-01T00:00:00+00:00</published>
 		<updated>2022-10-01T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/movetutorial/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/movetutorial/</id>
+		<link href="https://awesomeprogram.github.io/movetutorial/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/movetutorial/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_3_1.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;
@@ -46,8 +46,8 @@
 		<title>演变幻想</title>
 		<published>2022-09-10T00:00:00+00:00</published>
 		<updated>2022-09-10T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/imagineuniverse/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/imagineuniverse/</id>
+		<link href="https://awesomeprogram.github.io/imagineuniverse/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/imagineuniverse/</id>
 		<content type="html">&lt;p&gt;
 &lt;img src=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;imgdata&#x2F;quantametaverse.png&quot; alt=&quot;Imagine Universe&quot;&gt;&lt;&#x2F;p&gt;
 </content>
@@ -56,8 +56,8 @@
 		<title>Substrate区块链框架</title>
 		<published>2022-09-09T00:00:00+00:00</published>
 		<updated>2022-09-09T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/substratequ-kuai-lian-kuang-jia/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/substratequ-kuai-lian-kuang-jia/</id>
+		<link href="https://awesomeprogram.github.io/substratequ-kuai-lian-kuang-jia/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/substratequ-kuai-lian-kuang-jia/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_2_1.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;
@@ -67,8 +67,8 @@
 		<title>BlockChain简史与介绍</title>
 		<published>2022-08-01T00:00:00+00:00</published>
 		<updated>2022-08-01T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/blockchainhis/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/blockchainhis/</id>
+		<link href="https://awesomeprogram.github.io/blockchainhis/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/blockchainhis/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;blockchain&#x2F;chapter_1_1.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;
@@ -78,8 +78,8 @@
 		<title>Rust 类型操作分享</title>
 		<published>2022-07-30T00:00:00+00:00</published>
 		<updated>2022-07-30T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/rusttypeoperate/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/rusttypeoperate/</id>
+		<link href="https://awesomeprogram.github.io/rusttypeoperate/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/rusttypeoperate/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_6.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;
@@ -89,8 +89,8 @@
 		<title>Rust 工具链用法分享</title>
 		<published>2022-07-16T00:00:00+00:00</published>
 		<updated>2022-07-16T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/rusttoolchains/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/rusttoolchains/</id>
+		<link href="https://awesomeprogram.github.io/rusttoolchains/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/rusttoolchains/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_5.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;
@@ -100,8 +100,8 @@
 		<title>Rust 常用标准库实操总结</title>
 		<published>2022-07-10T00:00:00+00:00</published>
 		<updated>2022-07-10T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/ruststdlibrary/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/ruststdlibrary/</id>
+		<link href="https://awesomeprogram.github.io/ruststdlibrary/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/ruststdlibrary/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_4.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;
@@ -111,8 +111,8 @@
 		<title>Rust 语法归纳</title>
 		<published>2022-07-08T00:00:00+00:00</published>
 		<updated>2022-07-08T00:00:00+00:00</updated>
-		<link href="https://awesomeprogram.gitee.io/rustsyntax/" type="text/html"/>
-		<id>https://awesomeprogram.gitee.io/rustsyntax/</id>
+		<link href="https://awesomeprogram.github.io/rustsyntax/" type="text/html"/>
+		<id>https://awesomeprogram.github.io/rustsyntax/</id>
 		<content type="html">&lt;ul&gt;
 &lt;b&gt;&lt;a href=&quot;https:&#x2F;&#x2F;awesomeprogram.gitee.io&#x2F;technical&#x2F;rust&#x2F;chapter_1_1.html&quot; target=&quot;_blank&quot;&gt;点我查看&lt;&#x2F;a&gt;&lt;&#x2F;b&gt;
 &lt;ul&gt;

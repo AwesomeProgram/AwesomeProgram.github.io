@@ -1,4 +1,4 @@
-Sitemap: https://awesomeprogram.gitee.io/sitemap.xml
+Sitemap: https://awesomeprogram.github.io/sitemap.xml
 User-Agent: *
 Allow: /
-Host: https://awesomeprogram.gitee.io
+Host: https://awesomeprogram.github.io

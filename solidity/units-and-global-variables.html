@@ -60,7 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="structure-of-a-contract.html">合约结构</a></li>
 <li class="toctree-l1"><a class="reference internal" href="types.html">类型</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">单位和全局变量</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ether">以太币（Ether） 单位</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ether">以太Coin（Ether） 单位</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#index-1">时间单位</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#special-variables-functions">特殊变量和函数</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#index-2">区块和交易属性</a></li>
@@ -152,8 +152,8 @@
   <section id="id1">
 <h1>单位和全局变量<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <section id="ether">
-<span id="index-0"></span><h2>以太币（Ether） 单位<a class="headerlink" href="#ether" title="Permalink to this heading"></a></h2>
-<p>一个字面常数可以带一个后缀 <code class="docutils literal notranslate"><span class="pre">wei</span></code>， <code class="docutils literal notranslate"><span class="pre">gwei</span></code> 或 <code class="docutils literal notranslate"><span class="pre">ether</span></code> 来指定一个以太币的数量，
+<span id="index-0"></span><h2>以太Coin（Ether） 单位<a class="headerlink" href="#ether" title="Permalink to this heading"></a></h2>
+<p>一个字面常数可以带一个后缀 <code class="docutils literal notranslate"><span class="pre">wei</span></code>， <code class="docutils literal notranslate"><span class="pre">gwei</span></code> 或 <code class="docutils literal notranslate"><span class="pre">ether</span></code> 来指定一个以太Coin的数量，
 其中没有后缀的以太数字被认为单位是wei。</p>
 <p class="remix-link-container"><a class="remix-link reference external" href="https://remix.ethereum.org/?language=solidity&amp;version=0.8.13&amp;code=YXNzZXJ0KDEgd2VpID09IDEpOwphc3NlcnQoMSBnd2VpID09IDFlOSk7CmFzc2VydCgxIGV0aGVyID09IDFlMTgpOw=="><span class="link-icon"></span><span class="link-text">open in Remix</span></a></p>
 <div class="highlight-solidity notranslate"><div class="highlight"><pre><span></span>assert<span class="p">(</span><span class="m m-Decimal">1</span><span class="w"> </span>wei<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m m-Decimal">1</span><span class="p">);</span><span class="w"></span>
@@ -380,7 +380,7 @@ OpenZeppelin有一个 <a class="reference external" href="https://docs.openzeppe
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">send</span></code> 有很多危险：如果调用栈深度已经达到 1024（这总是可以由调用者所强制指定），
-转账会失败；并且如果接收者用光了 gas，转账同样会失败。为了保证以太币转账安全，
+转账会失败；并且如果接收者用光了 gas，转账同样会失败。为了保证以太Coin转账安全，
 总是检查 <code class="docutils literal notranslate"><span class="pre">send</span></code> 的返回值，使用 <code class="docutils literal notranslate"><span class="pre">transfer</span></code> 或者下面更好的方式： 用接收者提款的模式。</p>
 </div>
 <div class="admonition warning">
