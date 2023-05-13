@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -31,17 +30,18 @@
         <!-- Custom theme stylesheets -->
 
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -69,12 +69,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -82,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html" class="active"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">4.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">7.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">7.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">7.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">7.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html" class="active"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1.html"><strong aria-hidden="true">3.</strong> JavaScript-TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../js-ts/chapter_1_1.html"><strong aria-hidden="true">3.1.</strong> JS与TS 语法结构</a></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1_2.html"><strong aria-hidden="true">3.2.</strong> JS与TS 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1.html"><strong aria-hidden="true">4.</strong> C-C++</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> C与C++ 语法结构</a></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> C与C++ 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">5.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">6.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">6.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">6.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">6.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">6.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">6.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">6.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">6.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">6.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">6.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">6.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">6.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">6.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">6.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">6.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">6.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">6.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">6.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">6.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">6.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">7.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">7.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">7.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">7.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">7.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">7.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">7.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">7.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">7.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">7.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">7.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">7.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">8.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">8.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">8.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">8.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">8.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">8.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">8.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">8.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">8.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">9.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">9.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">9.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">9.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">9.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">9.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">9.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">9.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">9.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">9.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">10.</strong> 软考记录</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -103,7 +105,7 @@
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -133,7 +135,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -147,13 +149,12 @@
 <h2 id="hello-rust"><a class="header" href="#hello-rust">Hello, Rust!</a></h2>
 <pre><pre class="playground"><code class="language-rust editable">fn main() {
     println!(&quot;Hello, AwesomeProgram!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h2 id="数据结构"><a class="header" href="#数据结构">数据结构</a></h2>
 <ul>
 <li>通过关键字定义的数据类型和内存位置</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>struct S {}</code></td><td>使用命名字段定义一个 <strong>结构体</strong></td></tr>
 <tr><td>  <code>struct S { x: T }</code></td><td><code>x</code> 使用类型 <code>T</code> 的命名字段定义结构体</td></tr>
 <tr><td>  <code>struct S (T);</code></td><td>定义带有编号字段类型的&quot;元组&quot;结构体</td></tr>
@@ -168,10 +169,11 @@
 <tr><td><code>let mut x: T;</code></td><td>同上，但允许 <strong>可变</strong> 和可变借用</td></tr>
 <tr><td>  <code>x = y;</code></td><td>移动 <code>y</code> 到 <code>x</code>，如果 <code>T</code> 没有实现 <strong>Copy</strong>，则 <code>y</code> 的所有权会失效，否则会保留所有权并把 <code>y</code> 复制一份</td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>创建和访问数据结构，以及一些符号类型</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>S { x: y }</code></td><td>创建 <code>struct S {}</code> 或者 <code>use</code> 库 <code>enum E::S {}</code> ，将字段 <code>x</code> 设置为 <code>y</code></td></tr>
 <tr><td><code>S { x }</code></td><td>同上，但使用本地变量 <code>x</code> 设置字段 <code>x</code></td></tr>
 <tr><td><code>S { ..s }</code></td><td>填写剩余的字段 <code>s</code>，特别是与 <a href="https://doc.rust-lang.org/std/default/trait.Default.html">Default</a> 一起使用</td></tr>
@@ -198,11 +200,12 @@
 <tr><td><code>s.x</code></td><td>命名字段的访问，如果 <code>x</code> 不是类型 <code>S</code> 的一部分，则可能会尝试去调用 <a href="https://doc.rust-lang.org/std/ops/trait.Deref.html">Deref</a>（取消引用）</td></tr>
 <tr><td><code>s.0</code></td><td>编号字段访问，用于元组类型 <code>S (T)</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="引用和指针"><a class="header" href="#引用和指针">引用和指针</a></h2>
 <ul>
 <li>授权未拥有内存的访问权限，另外可参阅泛型和约束部分</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>&amp;S</code></td><td>共享的引用（空间中可存放任何的 <code>&amp;s</code>）</td></tr>
 <tr><td>  <code>&amp;[S]</code></td><td>包含地址和长度的指定切片引用</td></tr>
 <tr><td>  <code>&amp;str</code></td><td>包含地址和长度的指定字符串切片引用</td></tr>
@@ -230,11 +233,12 @@
 <tr><td>  <code>fn f&lt;'a&gt;(t: &amp;'a T)</code></td><td>同上，对于一个函数，调用者决定生命周期 <code>'a</code> 的长短</td></tr>
 <tr><td><code>'static</code></td><td>持续整个程序执行期间的固定生命周期</td></tr>
 </tbody></table>
+</div>
 <h2 id="函数与方法"><a class="header" href="#函数与方法">函数与方法</a></h2>
 <ul>
 <li>定义代码单元及其抽象表达</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>trait T {}</code></td><td>定义一个可以实现的通用行为，<strong>特征</strong></td></tr>
 <tr><td><code>trait T : R {}</code></td><td><code>T</code> 是 <strong>supertrait</strong> <code>R</code> 的 <strong>subtrait</strong>，任何 <code>S</code> 必须在它 <code>impl T</code> 之前 <code>impl R</code></td></tr>
 <tr><td><code>impl S {}</code></td><td>类型 <code>S</code> 的方法实现</td></tr>
@@ -261,11 +265,12 @@
 <tr><td>  <code>unsafe { f(); }</code></td><td>向编译器保证已经检查了必要条件</td></tr>
 <tr><td>  <code>unsafe impl T for S {}</code></td><td>保证 <code>S</code> 是表现良好的，可以安全在 <code>S</code> 上使用 <code>T</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="控制流程"><a class="header" href="#控制流程">控制流程</a></h2>
 <ul>
 <li>在函数内执行控制</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>while x {}</code></td><td><strong>Loop</strong>，当表达式 <code>x</code> 是真时一直运行</td></tr>
 <tr><td><code>loop {}</code></td><td><strong>Loop indefinitely</strong> 直到 <code>break</code>，可以主动创建 <code>break x</code></td></tr>
 <tr><td><code>for x in iter {}</code></td><td>循环遍历 <strong>迭代器</strong> 的语法糖</td></tr>
@@ -290,11 +295,12 @@
 <tr><td><code>X::f()</code></td><td>调用关联函数，如 <code>X::new()</code></td></tr>
 <tr><td>  <code>&lt;X as T&gt;::f()</code></td><td>为 <code>X</code> 调用特征方法 <code>T::f()</code> 的实现</td></tr>
 </tbody></table>
+</div>
 <h2 id="代码组织"><a class="header" href="#代码组织">代码组织</a></h2>
 <ul>
 <li>拆分项目到更小的作用域内和最少的依赖</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>mod m {}</code></td><td>定义一个模块，从 <code>{}</code> 内部获取定义</td></tr>
 <tr><td><code>mod m;</code></td><td>定义一个模块，从 <code>m.rs</code> 或 <code>m/mod.rs</code> 中获取定义</td></tr>
 <tr><td><code>a::b</code></td><td>在 <code>a</code> (<code>mod</code>, <code>enum</code>, …) 的内部，名命空间的路径到元素 <code>b</code></td></tr>
@@ -317,6 +323,7 @@
 <tr><td><code>extern &quot;C&quot; {}</code></td><td>从 <strong>FFI</strong> 声明外部依赖项和 ABI（如 &quot;C&quot;）</td></tr>
 <tr><td><code>extern &quot;C&quot; fn f() {}</code></td><td>定义要使用 ABI（&quot;C&quot;）导出到 <strong>FFI</strong> 的函数</td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>子模块中的项目始终可以访问任何项目，无论是否为 <code>pub</code></li>
 </ul>
@@ -324,7 +331,7 @@
 <ul>
 <li>类型的简写名称，以及将一种类型转换为另一种类型的方法</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>type T = S;</code></td><td>创建一个类型别名，即 <code>S</code> 的另一个名称</td></tr>
 <tr><td><code>Self</code></td><td><strong>implementing type</strong>，如 <code>fn new() -&gt; Self</code></td></tr>
 <tr><td><code>self</code></td><td>在 <code>fn f(self) {}</code> 里的方法，与 <code>fn f(self: Self) {}</code> 一样</td></tr>
@@ -335,17 +342,18 @@
 <tr><td><code>S as R</code></td><td>在<strong>use</strong>符号中使用，导入 <code>S</code> 作为 <code>R</code>，如 <code>use a::S as R</code></td></tr>
 <tr><td><code>x as u32</code></td><td>简单映射，可能会遭到意外的截断</td></tr>
 </tbody></table>
+</div>
 <h2 id="宏和属性"><a class="header" href="#宏和属性">宏和属性</a></h2>
 <ul>
 <li>代码在实际编译之前进行展开生成</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>m!()</code></td><td>宏调用, 也可以 <code>m!{}</code>， <code>m![]</code> (依赖宏的实现)</td></tr>
 <tr><td><code>#[attr]</code></td><td>外部属性，用于注释下面的条目</td></tr>
 <tr><td><code>#![attr]</code></td><td>内部属性，用于注释上一级和周围的条目</td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>内部宏</th><th>解释</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>内部宏</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>$x:ty</code></td><td>宏捕获，<code>:...</code> 片段为 <code>$x</code> 声明了允许的内容</td></tr>
 <tr><td><code>$x</code></td><td>宏替换，例如使用上面捕获的 <code>$x:ty</code></td></tr>
 <tr><td><code>$(x),*</code></td><td>宏重复，例如在宏中重复零次或多次</td></tr>
@@ -353,11 +361,12 @@
 <tr><td>  <code>$(x),+</code></td><td>同上，但重复一次或多次</td></tr>
 <tr><td>  <code>$(x)&lt;&lt;+</code></td><td>实际上除了分隔符 <code>,</code> 也可以接受这样的 <code>&lt;&lt;</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="模式匹配"><a class="header" href="#模式匹配">模式匹配</a></h2>
 <ul>
 <li>在 match 或 let 表达式 以及函数参数中的模式构造</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>match m {}</code></td><td>初始化模式匹配，然后使用匹配分支</td></tr>
 <tr><td><code>let S(x) = get();</code></td><td>明显地，<code>let</code> 还可以解构成类似下面的形式</td></tr>
 <tr><td>  <code>let S { x } = s;</code></td><td>仅把 <code>x</code> 绑定到 <code>s.x</code> 的值</td></tr>
@@ -371,11 +380,12 @@
 <tr><td><code>while let Some(x) = get() {}	</code></td><td>同上，<code>{}</code> 只要模式可被分配成分支，将继续调用 <code>get()</code></td></tr>
 <tr><td><code>fn f(S { x }: S)</code></td><td>函数参数也像 <code>let</code> 一样使用，这里把 <code>x</code> 绑定到 <code>f(s)</code> 的 <code>s.x</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>脱糖后如 <code>match get() { Some(x) =&gt; {}, _ =&gt; () }</code></p>
 <ul>
 <li>匹配表达式中的模式匹配分支，左侧这些分支也可以在 let 表达式中找到</li>
 </ul>
-<table><thead><tr><th>在匹配分支内</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>在匹配分支内</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>E::A =&gt; {}</code></td><td>匹配枚举变体 <code>A</code>，<strong>模式匹配</strong></td></tr>
 <tr><td><code>E::B ( .. ) =&gt; {}</code></td><td>匹配枚举元组变体 <code>B</code>，任何索引的通配符</td></tr>
 <tr><td><code>E::C { .. } =&gt; {}</code></td><td>匹配枚举结构体变体，任何字段的通配符</td></tr>
@@ -403,11 +413,12 @@
 <tr><td>  <code>Err(x @ Error {..}) =&gt; {}</code></td><td>也可以用于嵌套，这里 <code>x</code> 绑定到 <code>Error</code>，特别是下面有用的 <code>if</code> 形式</td></tr>
 <tr><td><code>S { x } if x &gt; 10 =&gt; {}</code></td><td>模式 <strong>匹配保护</strong>，条件也必须为真才能匹配</td></tr>
 </tbody></table>
+</div>
 <h2 id="泛型和约束"><a class="header" href="#泛型和约束">泛型和约束</a></h2>
 <ul>
 <li>泛型结合类型构造函数，特征和函数为你的代码提供更大的灵活性</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>S&lt;T&gt;</code></td><td>带有类型参数的 <strong>泛型</strong> 类型（<code>T</code> 表示占位符名称）</td></tr>
 <tr><td><code>S&lt;T: R&gt;</code></td><td>打印简写的 <strong>trait bound</strong> 范式（<code>R</code> 必须是实际的特征）</td></tr>
 <tr><td>  <code>T: R, P: S</code></td><td><strong>Independent trait bounds</strong>（这里一个给 <code>T</code>，一个给 <code>P</code>）</td></tr>
@@ -441,11 +452,12 @@
 <tr><td>  <code>fn f() where Self: Sized;</code></td><td>使用 <code>Sized</code> 可以从 <code>dyn T</code> trait object vtable 中选出 <code>f</code>，启用 trait object</td></tr>
 <tr><td>  <code>fn f() where Self: R {}</code></td><td>其它 <code>R</code> 有用的 <code>w. dflt</code>，方法（<code>non dflt</code> 无论怎样都需要被实现）</td></tr>
 </tbody></table>
+</div>
 <h2 id="higher-ranked-例子"><a class="header" href="#higher-ranked-例子">Higher-Ranked 例子</a></h2>
 <ul>
 <li>实际的类型和特征，抽象于一些东西，通常是生命周期</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>for&lt;'a&gt;</code></td><td><strong>higher-ranked bounds</strong> 的标记</td></tr>
 <tr><td>  <code>trait T: for&lt;'a&gt; R&lt;'a&gt; {}</code></td><td>任何 <code>impl T</code> 的 <code>S</code> 都必须为了整个生命周期满足 <code>R</code></td></tr>
 <tr><td><code>fn(&amp;'a u8)</code></td><td>函数指针类型持有 <code>fn</code> 可调用的指定的生命周期</td></tr>
@@ -456,17 +468,19 @@
 <tr><td>  <code>dyn Fn(&amp;'_ u8)</code></td><td>同上，自动展开到类型 <code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td></tr>
 <tr><td>  <code>dyn Fn(&amp;u8)</code></td><td>同上，自动展开到类型 <code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup> <code>for&lt;&gt;</code> 是类型的一种，下面展示了 <code>impl T for for&lt;'a&gt; fn(&amp;'a u8)</code> 这样的写法</p>
-<table><thead><tr><th>实现特征</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>实现特征</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>impl&lt;'a&gt; T for fn(&amp;'a u8) {}</code></td><td>对于指针 <code>fn</code>，其中调用接受指定的 <code>'a</code>， imple trait <code>T</code></td></tr>
 <tr><td><code>impl T for for&lt;'a&gt; fn(&amp;'a u8) {}	</code></td><td>对于指针 <code>fn</code>，其中调用接受任何的 imple trait <code>T</code></td></tr>
 <tr><td>  <code>impl T for fn(&amp;u8) {}</code></td><td>同上，简写版</td></tr>
 </tbody></table>
+</div>
 <h2 id="字符串和字符"><a class="header" href="#字符串和字符">字符串和字符</a></h2>
 <ul>
 <li>Rust 有几种创建文本值的方法</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>&quot;...&quot;</code></td><td>字符串文本，UTF-8 将解释 <code>\n</code> 为换行符</td></tr>
 <tr><td><code>r&quot;...&quot;</code></td><td>原始字符串文本，UTF-8 不会解释 <code>\n</code></td></tr>
 <tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文本，UTF-8 也可以包含 <code>&quot;</code>，<code>#</code> 数量是可变的</td></tr>
@@ -475,8 +489,9 @@
 <tr><td><code>'🦀'</code></td><td>字符文本，固定 4 字节的 unicode <code>char</code></td></tr>
 <tr><td><code>b'x'</code></td><td>ASCII 字节文本</td></tr>
 </tbody></table>
+</div>
 <h2 id="文档注释"><a class="header" href="#文档注释">文档注释</a></h2>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>///</code></td><td>外部文档注释，通常用于类型、特征、函数</td></tr>
 <tr><td><code>//!</code></td><td>内行文档注释，主要用于文件到文档模块的开头</td></tr>
 <tr><td><code>//</code></td><td>行注释，使用这些来记录代码流或内部结构</td></tr>
@@ -484,11 +499,12 @@
 <tr><td><code>/**...*/</code></td><td>外部块文档注释</td></tr>
 <tr><td><code>/*!...*/</code></td><td>内部块文档注释</td></tr>
 </tbody></table>
+</div>
 <h2 id="其它杂项"><a class="header" href="#其它杂项">其它杂项</a></h2>
 <ul>
 <li>这些符号不属于任何其他类别，但知道了还是很好</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>!</code></td><td>始终为空</td></tr>
 <tr><td><code>_</code></td><td>未命名的通配符变量绑定，例如 <code>|x, _| {}</code></td></tr>
 <tr><td>  <code>let _ = x;</code></td><td>未命名的分配是不执行的，不会 <strong>move out x</strong> 或保留目标值</td></tr>
@@ -499,6 +515,7 @@
 <tr><td><code>r#foo</code></td><td>用于版本兼容的原始标识符</td></tr>
 <tr><td><code>x;</code></td><td>语句终止符或表达式</td></tr>
 </tbody></table>
+</div>
 <h2 id="常用运算符"><a class="header" href="#常用运算符">常用运算符</a></h2>
 <p>Rust 支持大多数运算符（<code>+</code>，<code>*</code>，<code>%</code>，<code>=</code>，<code>==</code>，...），包括重载。因为它们在 Rust 中的行为没有什么不同，所以就不在此处列出它们。</p>
 
@@ -533,7 +550,7 @@
 
 
         <!-- Google Analytics Tag -->
-        <script type="text/javascript">
+        <script>
             var localAddrs = ["localhost", "127.0.0.1", ""];
 
             // make sure we don't activate google analytics if the developer is
@@ -550,26 +567,27 @@
         </script>
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

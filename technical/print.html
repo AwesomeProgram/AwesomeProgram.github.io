@@ -9,7 +9,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -32,17 +31,18 @@
         <!-- Custom theme stylesheets -->
 
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +58,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,12 +70,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -83,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_3_3.html"><strong aria-hidden="true">4.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_6.html"><strong aria-hidden="true">7.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_7.html"><strong aria-hidden="true">7.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_8.html"><strong aria-hidden="true">7.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_9.html"><strong aria-hidden="true">7.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="js-ts/chapter_1.html"><strong aria-hidden="true">3.</strong> JavaScript-TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="js-ts/chapter_1_1.html"><strong aria-hidden="true">3.1.</strong> JS与TS 语法结构</a></li><li class="chapter-item expanded "><a href="js-ts/chapter_1_2.html"><strong aria-hidden="true">3.2.</strong> JS与TS 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="c-cpp/chapter_1.html"><strong aria-hidden="true">4.</strong> C-C++</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c-cpp/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> C与C++ 语法结构</a></li><li class="chapter-item expanded "><a href="c-cpp/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> C与C++ 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">5.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1.html"><strong aria-hidden="true">6.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1.html"><strong aria-hidden="true">6.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">6.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">6.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">6.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">6.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">6.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">6.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">6.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">6.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_2.html"><strong aria-hidden="true">6.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">6.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">6.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_3.html"><strong aria-hidden="true">6.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">6.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">6.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_3.html"><strong aria-hidden="true">6.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="blockchain/chapter_1_3_1.html"><strong aria-hidden="true">6.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_3_2.html"><strong aria-hidden="true">6.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="blockchain/chapter_1_3_3.html"><strong aria-hidden="true">6.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1.html"><strong aria-hidden="true">7.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_2_1.html"><strong aria-hidden="true">7.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_2_2.html"><strong aria-hidden="true">7.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_3_1.html"><strong aria-hidden="true">7.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_3_2.html"><strong aria-hidden="true">7.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_3_3.html"><strong aria-hidden="true">7.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_4_1.html"><strong aria-hidden="true">7.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_4_2.html"><strong aria-hidden="true">7.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_4_3.html"><strong aria-hidden="true">7.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="cloud/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cloud/chapter_1_5_1.html"><strong aria-hidden="true">7.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_5_2.html"><strong aria-hidden="true">7.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="cloud/chapter_1_5_3.html"><strong aria-hidden="true">7.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="privacy/chapter_1.html"><strong aria-hidden="true">8.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="privacy/chapter_1_1.html"><strong aria-hidden="true">8.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="privacy/chapter_1_1_1.html"><strong aria-hidden="true">8.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_2.html"><strong aria-hidden="true">8.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_3.html"><strong aria-hidden="true">8.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_4.html"><strong aria-hidden="true">8.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_1_5.html"><strong aria-hidden="true">8.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="privacy/chapter_1_2.html"><strong aria-hidden="true">8.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="privacy/chapter_1_3.html"><strong aria-hidden="true">8.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="quantum/chapter_1.html"><strong aria-hidden="true">9.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="quantum/chapter_1_1.html"><strong aria-hidden="true">9.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_2.html"><strong aria-hidden="true">9.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_3.html"><strong aria-hidden="true">9.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_4.html"><strong aria-hidden="true">9.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_5.html"><strong aria-hidden="true">9.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_6.html"><strong aria-hidden="true">9.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_7.html"><strong aria-hidden="true">9.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_8.html"><strong aria-hidden="true">9.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="quantum/chapter_1_9.html"><strong aria-hidden="true">9.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_8.html"><strong aria-hidden="true">10.</strong> 软考记录</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -104,7 +106,7 @@
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -134,7 +136,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -166,6 +168,18 @@
 <ul>
 <li><a href="./go/chapter_1_1.html">Go 语法结构</a></li>
 <li><a href="./go/chapter_1_2.html">Go 标准库</a></li>
+</ul>
+</li>
+<li><a href="./js-ts/chapter_1.html">JavaScript-TypeScript</a>
+<ul>
+<li><a href="./js-ts/chapter_1_1.html">JS与TS 语法结构</a></li>
+<li><a href="./js-ts/chapter_1_2.html">JS与TS 标准库</a></li>
+</ul>
+</li>
+<li><a href="./c-cpp/chapter_1.html">C-C++</a>
+<ul>
+<li><a href="./c-cpp/chapter_1_1.html">C与C++ 语法结构</a></li>
+<li><a href="./c-cpp/chapter_1_2.html">C与C++ 标准库</a></li>
 </ul>
 </li>
 <li><a href="./chapter_3.html">各语言对比</a></li>
@@ -349,13 +363,12 @@
 <h2 id="hello-rust"><a class="header" href="#hello-rust">Hello, Rust!</a></h2>
 <pre><pre class="playground"><code class="language-rust editable">fn main() {
     println!(&quot;Hello, AwesomeProgram!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h2 id="数据结构"><a class="header" href="#数据结构">数据结构</a></h2>
 <ul>
 <li>通过关键字定义的数据类型和内存位置</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>struct S {}</code></td><td>使用命名字段定义一个 <strong>结构体</strong></td></tr>
 <tr><td>  <code>struct S { x: T }</code></td><td><code>x</code> 使用类型 <code>T</code> 的命名字段定义结构体</td></tr>
 <tr><td>  <code>struct S (T);</code></td><td>定义带有编号字段类型的&quot;元组&quot;结构体</td></tr>
@@ -370,10 +383,11 @@
 <tr><td><code>let mut x: T;</code></td><td>同上，但允许 <strong>可变</strong> 和可变借用</td></tr>
 <tr><td>  <code>x = y;</code></td><td>移动 <code>y</code> 到 <code>x</code>，如果 <code>T</code> 没有实现 <strong>Copy</strong>，则 <code>y</code> 的所有权会失效，否则会保留所有权并把 <code>y</code> 复制一份</td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>创建和访问数据结构，以及一些符号类型</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>S { x: y }</code></td><td>创建 <code>struct S {}</code> 或者 <code>use</code> 库 <code>enum E::S {}</code> ，将字段 <code>x</code> 设置为 <code>y</code></td></tr>
 <tr><td><code>S { x }</code></td><td>同上，但使用本地变量 <code>x</code> 设置字段 <code>x</code></td></tr>
 <tr><td><code>S { ..s }</code></td><td>填写剩余的字段 <code>s</code>，特别是与 <a href="https://doc.rust-lang.org/std/default/trait.Default.html">Default</a> 一起使用</td></tr>
@@ -400,11 +414,12 @@
 <tr><td><code>s.x</code></td><td>命名字段的访问，如果 <code>x</code> 不是类型 <code>S</code> 的一部分，则可能会尝试去调用 <a href="https://doc.rust-lang.org/std/ops/trait.Deref.html">Deref</a>（取消引用）</td></tr>
 <tr><td><code>s.0</code></td><td>编号字段访问，用于元组类型 <code>S (T)</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="引用和指针"><a class="header" href="#引用和指针">引用和指针</a></h2>
 <ul>
 <li>授权未拥有内存的访问权限，另外可参阅泛型和约束部分</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>&amp;S</code></td><td>共享的引用（空间中可存放任何的 <code>&amp;s</code>）</td></tr>
 <tr><td>  <code>&amp;[S]</code></td><td>包含地址和长度的指定切片引用</td></tr>
 <tr><td>  <code>&amp;str</code></td><td>包含地址和长度的指定字符串切片引用</td></tr>
@@ -432,11 +447,12 @@
 <tr><td>  <code>fn f&lt;'a&gt;(t: &amp;'a T)</code></td><td>同上，对于一个函数，调用者决定生命周期 <code>'a</code> 的长短</td></tr>
 <tr><td><code>'static</code></td><td>持续整个程序执行期间的固定生命周期</td></tr>
 </tbody></table>
+</div>
 <h2 id="函数与方法"><a class="header" href="#函数与方法">函数与方法</a></h2>
 <ul>
 <li>定义代码单元及其抽象表达</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>trait T {}</code></td><td>定义一个可以实现的通用行为，<strong>特征</strong></td></tr>
 <tr><td><code>trait T : R {}</code></td><td><code>T</code> 是 <strong>supertrait</strong> <code>R</code> 的 <strong>subtrait</strong>，任何 <code>S</code> 必须在它 <code>impl T</code> 之前 <code>impl R</code></td></tr>
 <tr><td><code>impl S {}</code></td><td>类型 <code>S</code> 的方法实现</td></tr>
@@ -463,11 +479,12 @@
 <tr><td>  <code>unsafe { f(); }</code></td><td>向编译器保证已经检查了必要条件</td></tr>
 <tr><td>  <code>unsafe impl T for S {}</code></td><td>保证 <code>S</code> 是表现良好的，可以安全在 <code>S</code> 上使用 <code>T</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="控制流程"><a class="header" href="#控制流程">控制流程</a></h2>
 <ul>
 <li>在函数内执行控制</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>while x {}</code></td><td><strong>Loop</strong>，当表达式 <code>x</code> 是真时一直运行</td></tr>
 <tr><td><code>loop {}</code></td><td><strong>Loop indefinitely</strong> 直到 <code>break</code>，可以主动创建 <code>break x</code></td></tr>
 <tr><td><code>for x in iter {}</code></td><td>循环遍历 <strong>迭代器</strong> 的语法糖</td></tr>
@@ -492,11 +509,12 @@
 <tr><td><code>X::f()</code></td><td>调用关联函数，如 <code>X::new()</code></td></tr>
 <tr><td>  <code>&lt;X as T&gt;::f()</code></td><td>为 <code>X</code> 调用特征方法 <code>T::f()</code> 的实现</td></tr>
 </tbody></table>
+</div>
 <h2 id="代码组织"><a class="header" href="#代码组织">代码组织</a></h2>
 <ul>
 <li>拆分项目到更小的作用域内和最少的依赖</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>mod m {}</code></td><td>定义一个模块，从 <code>{}</code> 内部获取定义</td></tr>
 <tr><td><code>mod m;</code></td><td>定义一个模块，从 <code>m.rs</code> 或 <code>m/mod.rs</code> 中获取定义</td></tr>
 <tr><td><code>a::b</code></td><td>在 <code>a</code> (<code>mod</code>, <code>enum</code>, …) 的内部，名命空间的路径到元素 <code>b</code></td></tr>
@@ -519,6 +537,7 @@
 <tr><td><code>extern &quot;C&quot; {}</code></td><td>从 <strong>FFI</strong> 声明外部依赖项和 ABI（如 &quot;C&quot;）</td></tr>
 <tr><td><code>extern &quot;C&quot; fn f() {}</code></td><td>定义要使用 ABI（&quot;C&quot;）导出到 <strong>FFI</strong> 的函数</td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>子模块中的项目始终可以访问任何项目，无论是否为 <code>pub</code></li>
 </ul>
@@ -526,7 +545,7 @@
 <ul>
 <li>类型的简写名称，以及将一种类型转换为另一种类型的方法</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>type T = S;</code></td><td>创建一个类型别名，即 <code>S</code> 的另一个名称</td></tr>
 <tr><td><code>Self</code></td><td><strong>implementing type</strong>，如 <code>fn new() -&gt; Self</code></td></tr>
 <tr><td><code>self</code></td><td>在 <code>fn f(self) {}</code> 里的方法，与 <code>fn f(self: Self) {}</code> 一样</td></tr>
@@ -537,17 +556,18 @@
 <tr><td><code>S as R</code></td><td>在<strong>use</strong>符号中使用，导入 <code>S</code> 作为 <code>R</code>，如 <code>use a::S as R</code></td></tr>
 <tr><td><code>x as u32</code></td><td>简单映射，可能会遭到意外的截断</td></tr>
 </tbody></table>
+</div>
 <h2 id="宏和属性"><a class="header" href="#宏和属性">宏和属性</a></h2>
 <ul>
 <li>代码在实际编译之前进行展开生成</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>m!()</code></td><td>宏调用, 也可以 <code>m!{}</code>， <code>m![]</code> (依赖宏的实现)</td></tr>
 <tr><td><code>#[attr]</code></td><td>外部属性，用于注释下面的条目</td></tr>
 <tr><td><code>#![attr]</code></td><td>内部属性，用于注释上一级和周围的条目</td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>内部宏</th><th>解释</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>内部宏</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>$x:ty</code></td><td>宏捕获，<code>:...</code> 片段为 <code>$x</code> 声明了允许的内容</td></tr>
 <tr><td><code>$x</code></td><td>宏替换，例如使用上面捕获的 <code>$x:ty</code></td></tr>
 <tr><td><code>$(x),*</code></td><td>宏重复，例如在宏中重复零次或多次</td></tr>
@@ -555,11 +575,12 @@
 <tr><td>  <code>$(x),+</code></td><td>同上，但重复一次或多次</td></tr>
 <tr><td>  <code>$(x)&lt;&lt;+</code></td><td>实际上除了分隔符 <code>,</code> 也可以接受这样的 <code>&lt;&lt;</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="模式匹配"><a class="header" href="#模式匹配">模式匹配</a></h2>
 <ul>
 <li>在 match 或 let 表达式 以及函数参数中的模式构造</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>match m {}</code></td><td>初始化模式匹配，然后使用匹配分支</td></tr>
 <tr><td><code>let S(x) = get();</code></td><td>明显地，<code>let</code> 还可以解构成类似下面的形式</td></tr>
 <tr><td>  <code>let S { x } = s;</code></td><td>仅把 <code>x</code> 绑定到 <code>s.x</code> 的值</td></tr>
@@ -573,11 +594,12 @@
 <tr><td><code>while let Some(x) = get() {}	</code></td><td>同上，<code>{}</code> 只要模式可被分配成分支，将继续调用 <code>get()</code></td></tr>
 <tr><td><code>fn f(S { x }: S)</code></td><td>函数参数也像 <code>let</code> 一样使用，这里把 <code>x</code> 绑定到 <code>f(s)</code> 的 <code>s.x</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>脱糖后如 <code>match get() { Some(x) =&gt; {}, _ =&gt; () }</code></p>
 <ul>
 <li>匹配表达式中的模式匹配分支，左侧这些分支也可以在 let 表达式中找到</li>
 </ul>
-<table><thead><tr><th>在匹配分支内</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>在匹配分支内</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>E::A =&gt; {}</code></td><td>匹配枚举变体 <code>A</code>，<strong>模式匹配</strong></td></tr>
 <tr><td><code>E::B ( .. ) =&gt; {}</code></td><td>匹配枚举元组变体 <code>B</code>，任何索引的通配符</td></tr>
 <tr><td><code>E::C { .. } =&gt; {}</code></td><td>匹配枚举结构体变体，任何字段的通配符</td></tr>
@@ -605,11 +627,12 @@
 <tr><td>  <code>Err(x @ Error {..}) =&gt; {}</code></td><td>也可以用于嵌套，这里 <code>x</code> 绑定到 <code>Error</code>，特别是下面有用的 <code>if</code> 形式</td></tr>
 <tr><td><code>S { x } if x &gt; 10 =&gt; {}</code></td><td>模式 <strong>匹配保护</strong>，条件也必须为真才能匹配</td></tr>
 </tbody></table>
+</div>
 <h2 id="泛型和约束"><a class="header" href="#泛型和约束">泛型和约束</a></h2>
 <ul>
 <li>泛型结合类型构造函数，特征和函数为你的代码提供更大的灵活性</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>S&lt;T&gt;</code></td><td>带有类型参数的 <strong>泛型</strong> 类型（<code>T</code> 表示占位符名称）</td></tr>
 <tr><td><code>S&lt;T: R&gt;</code></td><td>打印简写的 <strong>trait bound</strong> 范式（<code>R</code> 必须是实际的特征）</td></tr>
 <tr><td>  <code>T: R, P: S</code></td><td><strong>Independent trait bounds</strong>（这里一个给 <code>T</code>，一个给 <code>P</code>）</td></tr>
@@ -643,11 +666,12 @@
 <tr><td>  <code>fn f() where Self: Sized;</code></td><td>使用 <code>Sized</code> 可以从 <code>dyn T</code> trait object vtable 中选出 <code>f</code>，启用 trait object</td></tr>
 <tr><td>  <code>fn f() where Self: R {}</code></td><td>其它 <code>R</code> 有用的 <code>w. dflt</code>，方法（<code>non dflt</code> 无论怎样都需要被实现）</td></tr>
 </tbody></table>
+</div>
 <h2 id="higher-ranked-例子"><a class="header" href="#higher-ranked-例子">Higher-Ranked 例子</a></h2>
 <ul>
 <li>实际的类型和特征，抽象于一些东西，通常是生命周期</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>for&lt;'a&gt;</code></td><td><strong>higher-ranked bounds</strong> 的标记</td></tr>
 <tr><td>  <code>trait T: for&lt;'a&gt; R&lt;'a&gt; {}</code></td><td>任何 <code>impl T</code> 的 <code>S</code> 都必须为了整个生命周期满足 <code>R</code></td></tr>
 <tr><td><code>fn(&amp;'a u8)</code></td><td>函数指针类型持有 <code>fn</code> 可调用的指定的生命周期</td></tr>
@@ -658,17 +682,19 @@
 <tr><td>  <code>dyn Fn(&amp;'_ u8)</code></td><td>同上，自动展开到类型 <code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td></tr>
 <tr><td>  <code>dyn Fn(&amp;u8)</code></td><td>同上，自动展开到类型 <code>dyn for&lt;'a&gt; Fn(&amp;'a u8)</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup> <code>for&lt;&gt;</code> 是类型的一种，下面展示了 <code>impl T for for&lt;'a&gt; fn(&amp;'a u8)</code> 这样的写法</p>
-<table><thead><tr><th>实现特征</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>实现特征</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>impl&lt;'a&gt; T for fn(&amp;'a u8) {}</code></td><td>对于指针 <code>fn</code>，其中调用接受指定的 <code>'a</code>， imple trait <code>T</code></td></tr>
 <tr><td><code>impl T for for&lt;'a&gt; fn(&amp;'a u8) {}	</code></td><td>对于指针 <code>fn</code>，其中调用接受任何的 imple trait <code>T</code></td></tr>
 <tr><td>  <code>impl T for fn(&amp;u8) {}</code></td><td>同上，简写版</td></tr>
 </tbody></table>
+</div>
 <h2 id="字符串和字符"><a class="header" href="#字符串和字符">字符串和字符</a></h2>
 <ul>
 <li>Rust 有几种创建文本值的方法</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>&quot;...&quot;</code></td><td>字符串文本，UTF-8 将解释 <code>\n</code> 为换行符</td></tr>
 <tr><td><code>r&quot;...&quot;</code></td><td>原始字符串文本，UTF-8 不会解释 <code>\n</code></td></tr>
 <tr><td><code>r#&quot;...&quot;#</code></td><td>原始字符串文本，UTF-8 也可以包含 <code>&quot;</code>，<code>#</code> 数量是可变的</td></tr>
@@ -677,8 +703,9 @@
 <tr><td><code>'🦀'</code></td><td>字符文本，固定 4 字节的 unicode <code>char</code></td></tr>
 <tr><td><code>b'x'</code></td><td>ASCII 字节文本</td></tr>
 </tbody></table>
+</div>
 <h2 id="文档注释"><a class="header" href="#文档注释">文档注释</a></h2>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>///</code></td><td>外部文档注释，通常用于类型、特征、函数</td></tr>
 <tr><td><code>//!</code></td><td>内行文档注释，主要用于文件到文档模块的开头</td></tr>
 <tr><td><code>//</code></td><td>行注释，使用这些来记录代码流或内部结构</td></tr>
@@ -686,11 +713,12 @@
 <tr><td><code>/**...*/</code></td><td>外部块文档注释</td></tr>
 <tr><td><code>/*!...*/</code></td><td>内部块文档注释</td></tr>
 </tbody></table>
+</div>
 <h2 id="其它杂项"><a class="header" href="#其它杂项">其它杂项</a></h2>
 <ul>
 <li>这些符号不属于任何其他类别，但知道了还是很好</li>
 </ul>
-<table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>!</code></td><td>始终为空</td></tr>
 <tr><td><code>_</code></td><td>未命名的通配符变量绑定，例如 <code>|x, _| {}</code></td></tr>
 <tr><td>  <code>let _ = x;</code></td><td>未命名的分配是不执行的，不会 <strong>move out x</strong> 或保留目标值</td></tr>
@@ -701,6 +729,7 @@
 <tr><td><code>r#foo</code></td><td>用于版本兼容的原始标识符</td></tr>
 <tr><td><code>x;</code></td><td>语句终止符或表达式</td></tr>
 </tbody></table>
+</div>
 <h2 id="常用运算符"><a class="header" href="#常用运算符">常用运算符</a></h2>
 <p>Rust 支持大多数运算符（<code>+</code>，<code>*</code>，<code>%</code>，<code>=</code>，<code>==</code>，...），包括重载。因为它们在 Rust 中的行为没有什么不同，所以就不在此处列出它们。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust标准库"><a class="header" href="#rust标准库">Rust标准库</a></h1>
@@ -708,7 +737,7 @@
 <ul>
 <li>常见的需求但容易忘记的代码片段</li>
 </ul>
-<table><thead><tr><th><strong>字符串</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><strong>字符串</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
 <tr><td>拼接字符串（任何实现了 <code>Display</code>）</td><td><code>format!(&quot;{x}{y}&quot;)</code></td></tr>
 <tr><td>追加字符串（任何实现了 <code>Display</code> 到 任何实现了 <code>Write</code>）</td><td><code>write!(x, &quot;{y}&quot;)</code></td></tr>
 <tr><td>按分隔符模式分割</td><td><code>s.split(pattern)</code></td></tr>
@@ -719,33 +748,36 @@
 <tr><td>用换行符分割</td><td><code>s.lines()</code></td></tr>
 <tr><td>按正则表达式分割</td><td><code>Regex::new(r&quot;\s&quot;)?.split(&quot;one two three&quot;)</code></td></tr>
 </tbody></table>
+</div>
 <ol>
 <li>如果 <code>x</code> 或 <code>y</code> 之后不打算用到，考虑使用 <code>write!</code> 或 <code>std::ops::Add</code></li>
 <li>需要 <a href="https://crates.io/crates/regex">regex</a> crate </li>
 </ol>
 <br>
-<table><thead><tr><th><strong>I/O</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><strong>I/O</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
 <tr><td>创建一个新文件</td><td><code>File::create(PATH)?</code></td></tr>
 <tr><td>通过<strong>OpenOptions</strong>创建</td><td><code>OpenOptions::new().create(true).write(true).truncate(true).open(PATH)?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th><strong>宏</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th><strong>宏</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
 <tr><td>宏 可变参数</td><td><code>macro_rules! var_args { ($($args:expr),*) =&gt; {{ }} }</code></td></tr>
 <tr><td>  使用参数，如多次调用 <code>f</code></td><td><code>$( f($args); )*</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th><strong>Esoterics</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th><strong>Esoterics</strong> 需求</th><th>代码片段</th></tr></thead><tbody>
 <tr><td>干净的闭包捕获</td><td><code>wants_closure({ let c = outer.clone(); move || use_clone(c) })</code></td></tr>
 <tr><td>在 <code>try</code> 闭包中的修复推断</td><td><code>iter.try_for_each(|x| { Ok::&lt;(), Error&gt;(()) })?;</code></td></tr>
 <tr><td>如果 <code>T</code> 实现了 Copy，则可迭代和编辑 <code>&amp;mut [T]</code></td><td><code>Cell::from_mut(mut_slice).as_slice_of_cells()</code></td></tr>
 <tr><td>获取带有长度的子切片</td><td><code>&amp;original_slice[offset..][..length]</code></td></tr>
 <tr><td>敏锐的确保特征 <code>T</code> 是对象安全的</td><td><code>const _: Option&lt;&amp;dyn T&gt; = None;</code></td></tr>
 </tbody></table>
+</div>
 <h2 id="线程安全"><a class="header" href="#线程安全">线程安全</a></h2>
-<table><thead><tr><th>例子</th><th><code>Send*</code></th><th><code>!Send</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>例子</th><th><code>Send*</code></th><th><code>!Send</code></th></tr></thead><tbody>
 <tr><td><code>Sync*</code></td><td>大多数类型是 ...<code>Arc&lt;T&gt;1,2</code>， <code>Mutex&lt;T&gt;</code></td><td><code>MutexGuard&lt;T&gt;</code>，<code>RwLockReadGuard&lt;T&gt;</code></td></tr>
 <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;2</code>，<code>RefCell&lt;T&gt;</code></td><td><code>Rc&lt;T&gt;</code>，<code>&amp;dyn Trait</code>，<code>*const T</code>，<code>*mut T</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>一个 <code>T: Send</code> 的实例可以被移动到另一个线程，而一个 <code>T: Sync</code> 意味着 <code>&amp;t</code> 可以被移动到移动到另一个线程</p>
 <ol>
 <li>如果 <code>T</code> 是 <code>Sync</code></li>
@@ -816,11 +848,12 @@
 </tr>
 </table>
 <h2 id="数字转换"><a class="header" href="#数字转换">数字转换</a></h2>
-<table><thead><tr><th>需要转换成的→</th><th><code>u8 … i128</code></th><th><code>f32 / f64</code></th><th><strong><code>String</code></strong></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>需要转换成的→</th><th><code>u8 … i128</code></th><th><code>f32 / f64</code></th><th><strong><code>String</code></strong></th></tr></thead><tbody>
 <tr><td><code>u8 … i128</code></td><td><code>u8::try_from(x)?</code></td><td><code>x as f32</code></td><td><code>x.to_string()</code></td></tr>
 <tr><td><code>f32 / f64</code></td><td><code>x as u8</code></td><td><code>x as f32</code></td><td><code>x.to_string()</code></td></tr>
 <tr><td><code>String</code></td><td><code>x.parse::&lt;u8&gt;()?</code></td><td><code>x.parse::&lt;f32&gt;()?</code></td><td><code>x</code></td></tr>
 </tbody></table>
+</div>
 <ol>
 <li>如果打印是正确的话 <code>from()</code>会直接输出，如 <code>u32::from(my_u8)</code></li>
 <li>截断(<code>11.9_f32 as u8 gives 11</code>)，充满(<code>1024_f32 as u8 gives 255</code>)</li>
@@ -830,7 +863,7 @@
 <ul>
 <li>如果你想要一个指定类型的字符串</li>
 </ul>
-<table><thead><tr><th>已经存在的类型 <code>x</code></th><th>要转换成 <strong>String</strong></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>已经存在的类型 <code>x</code></th><th>要转换成 <strong>String</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>x</code></td></tr>
 <tr><td><code>CString</code></td><td><code>x.into_string()?</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
@@ -842,8 +875,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>x.to_str()?.to_string()</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>String::from_utf8_lossy(x).to_string()</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>CString</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>CString</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>CString::new(x)?</code></td></tr>
 <tr><td><code>CString</code></td><td><code>x</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
@@ -856,8 +889,8 @@
 <tr><td><code>&amp;[u8]</code></td><td><code>CString::new(Vec::from(x))?</code></td></tr>
 <tr><td><code>*mut c_char</code></td><td><code>unsafe { CString::from_raw(x) }</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>OsString</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>OsString</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>OsString::from(x)</code></td></tr>
 <tr><td><code>CString</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>x</code></td></tr>
@@ -869,8 +902,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>x.as_os_str().to_owned()</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
 <tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
@@ -882,8 +915,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>PathBuf::from(x)</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
 <tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
@@ -895,8 +928,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>PathBuf::from(x)</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>Vec<u8></strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>Vec<u8></strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>x.into_bytes()</code></td></tr>
 <tr><td><code>CString</code></td><td><code>x.into_bytes()</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>?</code></td></tr>
@@ -908,8 +941,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>?</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>x.to_vec()</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;str</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;str</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>x.as_str()</code></td></tr>
 <tr><td><code>CString</code></td><td><code>x.to_str()?</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
@@ -921,8 +954,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>x.to_str()?</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>std::str::from_utf8(x)?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;CStr</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;CStr</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>CString::new(x)?.as_c_str()</code></td></tr>
 <tr><td><code>CString</code></td><td><code>x.as_c_str()</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
@@ -934,8 +967,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>?</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>PathBuf</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
 <tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
@@ -948,8 +981,8 @@
 <tr><td><code>&amp;[u8]</code></td><td><code>CStr::from_bytes_with_nul(x)?</code></td></tr>
 <tr><td><code>*const c_char</code></td><td><code>unsafe { CStr::from_ptr(x) }</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;OsStr</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;OsStr</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>OsStr::new(&amp;x)</code></td></tr>
 <tr><td><code>CString</code></td><td><code>?</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>x.as_os_str()</code></td></tr>
@@ -961,8 +994,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>x.as_os_str()</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;Path</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;Path</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>Path::new(x)</code></td></tr>
 <tr><td><code>CString</code></td><td><code>Path::new(x.to_str()?)</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>Path::new(x.to_str()?)</code></td></tr>
@@ -974,8 +1007,8 @@
 <tr><td><code>&amp;Path</code></td><td><code>x</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>?</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;[u8]</strong></th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>&amp;[u8]</strong></th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>x.as_bytes()</code></td></tr>
 <tr><td><code>CString</code></td><td><code>x.as_bytes()</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>?</code></td></tr>
@@ -987,10 +1020,11 @@
 <tr><td><code>&amp;Path</code></td><td><code>?</code></td></tr>
 <tr><td><code>&amp;[u8]</code></td><td><code>x</code></td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>Other</strong>( <code>*const c_char</code> )</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>已存在的类型 <code>x</code></th><th>要转换成 <strong>Other</strong>( <code>*const c_char</code> )</th></tr></thead><tbody>
 <tr><td><code>CString</code></td><td><code>x.as_ptr()</code> ( <code>*const c_char</code> )</td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>如果类型能被推断出来则可使用简写 <code>x.into()</code></p>
 <p><sup>*</sup>如果类型能被推断出来则可使用简写 <code>x.as_ref()</code></p>
 <ol>
@@ -999,8 +1033,7 @@
 </ol>
 <pre><code class="language-rust editable noplayground">use std::os::unix::ffi::OsStrExt;
 let bytes: &amp;[u8] = my_os_str.as_bytes();
-CString::new(bytes)?
-</code></pre>
+CString::new(bytes)?</code></pre>
 <ol start="3">
 <li><code>c_char</code> 必须来自之前的 <code>CString</code>，如果来自FFI，请参阅 <code>&amp;CStr</code></li>
 <li><code>x</code> 因为缺少终止符 <code>0x0</code>，没有已知的简写，可能最好的方式是通过 <code>CString</code></li>
@@ -1011,7 +1044,7 @@ CString::new(bytes)?
 <ul>
 <li>Rust使用这些APIs将类型转换为字符串化输出，统称为格式宏</li>
 </ul>
-<table><thead><tr><th>宏</th><th>输出</th><th>备注</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>宏</th><th>输出</th><th>备注</th></tr></thead><tbody>
 <tr><td><code>format!(fmt)</code></td><td><code>String</code></td><td>&quot;to String&quot; 的转换器</td></tr>
 <tr><td><code>print!(fmt)</code></td><td>Console</td><td>写到标准输出</td></tr>
 <tr><td><code>println!(fmt)</code></td><td>Console</td><td>写到标准输出，换行</td></tr>
@@ -1020,14 +1053,15 @@ CString::new(bytes)?
 <tr><td><code>write!(dst, fmt)</code></td><td>Buffer</td><td>还有 <code>use std::io::Write;</code></td></tr>
 <tr><td><code>writeln!(dst, fmt)</code></td><td>Buffer</td><td>还有 <code>use std::io::Write;</code>，换行</td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>方法</th><th>备注</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>方法</th><th>备注</th></tr></thead><tbody>
 <tr><td><code>x.to_string()</code></td><td>生成 <code>String</code>，实现任何的 <code>Display</code> 类型</td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>这 <code>fmt</code> 是字符串文字，例如 <code>&quot;hello {}&quot;</code>，指定输出和其他参数</p>
 <h3 id="可打印的类型"><a class="header" href="#可打印的类型">可打印的类型</a></h3>
 <p><sup>*</sup>在友好的 <code>format!</code> 中，类型通过 <code>trait Display &quot;{}&quot;</code> 或 <code>Debug &quot;{:?}&quot;</code> 转换，非详尽列表如下</p>
-<table><thead><tr><th>类型</th><th>实现</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>类型</th><th>实现</th></tr></thead><tbody>
 <tr><td><code>String</code></td><td><code>Debug, Display</code></td></tr>
 <tr><td><code>CString</code></td><td><code>Debug</code></td></tr>
 <tr><td><code>OsString</code></td><td><code>Debug</code></td></tr>
@@ -1045,14 +1079,14 @@ CString::new(bytes)?
 <tr><td><code>!</code></td><td><code>Debug, Display</code></td></tr>
 <tr><td><code>()</code></td><td><code>Debug</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>简而言之，几乎所有东西都是Debug，更多特殊类型可能需要特殊处理或转换到 <code>Display</code></p>
 <h3 id="格式化"><a class="header" href="#格式化">格式化</a></h3>
 <ul>
 <li>格式宏中的每个参数指示符要么是空的 {}，{argument}，要么遵循基本语法</li>
 </ul>
-<pre><code class="language-rust editable noplayground">{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
-</code></pre>
-<table><thead><tr><th>元素</th><th>含义</th></tr></thead><tbody>
+<pre><code class="language-rust editable noplayground">{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>元素</th><th>含义</th></tr></thead><tbody>
 <tr><td><code>argument</code></td><td>数字( <code>0, 1, ...</code> )，变量或名字，如 <code>print!(&quot;{x}&quot;)</code></td></tr>
 <tr><td><code>fill</code></td><td>如果指定了宽度，用(如 <code>0</code> )来填充空白的字符</td></tr>
 <tr><td><code>align</code></td><td>如果指定了宽度，则左(&lt;)、中(^)或右(&gt;)</td></tr>
@@ -1063,8 +1097,8 @@ CString::new(bytes)?
 <tr><td><code>$</code></td><td>解释宽度(width)或精度(precision)作为参数标识符，而不是允许动态格式化</td></tr>
 <tr><td><strong><code>type</code></strong></td><td><code>Debug</code> 格式化、十六进制(x)、二进制(b)、八进制(o)、指针(p)、exp(e)</td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>格式化示例</th><th>解释</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>格式化示例</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>{}</code></td><td>使用 <code>Display</code> 打印下一个参数</td></tr>
 <tr><td><code>{x}</code></td><td>同上，但在范围内使用变量 <code>x</code></td></tr>
 <tr><td><code>{:?}</code></td><td>使用 <code>Debug</code> 打印下一个参数</td></tr>
@@ -1073,18 +1107,18 @@ CString::new(bytes)?
 <tr><td><code>{:&lt;10.3}</code></td><td>左对齐宽度为 10，精度为 3</td></tr>
 <tr><td><code>{val:#x}</code></td><td>将参数 <code>val</code> 格式化为十六进制，带前缀 <code>0x</code> (替代格式 <code>x</code> ）</td></tr>
 </tbody></table>
-<br>
-<table><thead><tr><th>完整示例</th><th>解释</th></tr></thead><tbody>
+</div><br>
+<div class="table-wrapper"><table><thead><tr><th>完整示例</th><th>解释</th></tr></thead><tbody>
 <tr><td><code>println!(&quot;{}&quot;, x)</code></td><td>使用 <code>Display</code> 在标准输出打印并且追加一个新行</td></tr>
 <tr><td><code>println!(&quot;{x}&quot;)</code></td><td>同上，但在范围内使用变量 <code>x</code></td></tr>
 <tr><td><code>format!(&quot;{a:.3} {b:?}&quot;)</code></td><td>用三位数字转换 <code>PI</code>，增加空格，<code>b</code> 使用 <code>Debug</code>，返回 <code>String</code></td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="rust-工具链"><a class="header" href="#rust-工具链">Rust 工具链</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="rust-工具链"><a class="header" href="#rust-工具链">Rust 工具链</a></h1>
 <h2 id="项目组织"><a class="header" href="#项目组织">项目组织</a></h2>
 <ul>
 <li>基本的项目结构布局，通用的文件和文件夹，一般可由 <code>cargo</code> 生成 </li>
 </ul>
-<table><thead><tr><th>入口</th><th>相关的 <code>code</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>入口</th><th>相关的 <code>code</code></th></tr></thead><tbody>
 <tr><td>📁 <code>.cargo/</code></td><td>项目本地的 cargo 配置，通常会包含 <a href="https://doc.rust-lang.org/cargo/reference/config.html"><strong><code>config.toml</code></strong></a></td></tr>
 <tr><td>📁 <code>benches/</code></td><td>通过运行 <strong>cargo bench</strong> 来为你的 crate 执行基准测试，一般需要设置默认为 nightly</td></tr>
 <tr><td>📁 <code>examples/</code></td><td>通过示例展示如何使用你的 crate，他们会像外部用户一样看到你的 crate</td></tr>
@@ -1102,21 +1136,20 @@ CString::new(bytes)?
 <tr><td><code>Cargo.lock</code></td><td>可用于查看依赖关系细节，为程序添加 <code>git</code>，而不是库</td></tr>
 <tr><td><code>rust-toolchain.toml</code></td><td>为项目定义覆盖的工具链（channel、components、targets）</td></tr>
 </tbody></table>
+</div>
 <h3 id="各种入口文件的小例子"><a class="header" href="#各种入口文件的小例子">各种入口文件的小例子</a></h3>
 <pre><pre class="playground"><code class="language-rust editable">// src/main.rs (程序的默认入口文件)
 
 fn main() {
     println!(&quot;Hello, AwesomeProgram!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <pre><code class="language-rust editable noplayground">// src/lib.rs (库的默认入口文件)
 
 pub fn f() {}      // 因为是根目录中的公开目录，所以可从外部访问
 
 mod m {
     pub fn g() {}  // 不是根目录中的公开路径(模块 m 不是公开的), 因此 g 不能在 crate 之外被访问
-}  
-</code></pre>
+}  </code></pre>
 <pre><code class="language-rust editable noplayground">// src/my_module.rs (单元测试可以在你项目中的任意文件)
 
 fn f() -&gt; u32 { 0 }
@@ -1129,15 +1162,13 @@ mod test {
     fn ff() {
         assert_eq!(f(), 0);
     }
-}
-</code></pre>
+}</code></pre>
 <pre><code class="language-rust editable noplayground">// tests/sample.rs (集成测试的例子)
 
 #[test]
 fn my_sample() {
     assert_eq!(my_crate::f(), 123); // 集成测试和基准测试依赖第三方的 crate，因此，他们仅看到公开的目录
-}
-</code></pre>
+}</code></pre>
 <pre><code class="language-rust editable noplayground">// benches/sample.rs (基准测试的例子)
 
 #![feature(test)]   // 基准测试仍处于试验阶段
@@ -1149,15 +1180,13 @@ use test::{black_box, Bencher};
 #[bench]
 fn my_algo(b: &amp;mut Bencher) {
     b.iter(|| black_box(my_crate::f())); // `black_box` 阻止 `f` 被优化掉
-}
-</code></pre>
+}</code></pre>
 <pre><code class="language-rust editable noplayground">// build.rs (预构建脚本的例子)
 
 fn main() {
     // 你需要依赖目标 OS 的环境变量，对于当前的 OS 可以表示 `#[cfg(...)]`
     let target_os = env::var(&quot;CARGO_CFG_TARGET_OS&quot;);
-}
-</code></pre>
+}</code></pre>
 <pre><code class="language-rust editable noplayground">// src/lib.rs (过程宏的默认入口文件)
 
 extern crate proc_macro;  // 显然需要像这样被导入
@@ -1176,8 +1205,7 @@ name = &quot;my_crate&quot;
 version = &quot;0.1.0&quot;
 
 [lib]
-proc-macro = true
-</code></pre>
+proc-macro = true</code></pre>
 <h3 id="模块树和namespace导入的使用"><a class="header" href="#模块树和namespace导入的使用">模块树和NameSpace导入的使用</a></h3>
 <table>
 <tr>
@@ -1204,7 +1232,7 @@ proc-macro = true
 </tr>
 </table>
 <br>
-<table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Rust 有三种 NameSpaces</th><th style="text-align: left"></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: left">Rust 有三种 NameSpaces</th><th style="text-align: left"></th></tr></thead><tbody>
 <tr><td style="text-align: left">Namespace 类型</td><td style="text-align: left">Namespace 函数</td><td style="text-align: left">Namespace 宏</td></tr>
 <tr><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>mod X {}</code></td><td style="text-align: left"><code>fn X() {}</code></td><td style="text-align: left"><code>macro_rules! X { ... }</code></td></tr>
@@ -1216,6 +1244,7 @@ proc-macro = true
 <tr><td style="text-align: left">  <code>struct X;</code><sup>1</sup></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left">  <code>struct X();</code><sup>2</sup></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
 </tbody></table>
+</div>
 <ol>
 <li>在<em>类型</em>和<em>函数</em>中，定义类型 <code>X</code> 和常量 <code>X</code></li>
 <li>在<em>类型</em>和<em>函数</em>中，定义类型 <code>X</code> 和函数 <code>X</code></li>
@@ -1232,7 +1261,7 @@ proc-macro = true
 <p><sup>*<sup>由于命名约定,如 按照约定 <code>fn</code> 和 <code>mod</code> 是小写，并且大多数开发者不会把所有东西都命名为 <code>X</code>， 在通常情况下你不必担心这些类型，它们可以成为设计宏时的一个因素</p>
 <h2 id="cargo"><a class="header" href="#cargo">Cargo</a></h2>
 <p><sup>*<sup>必须要被了解的命令和工具</p>
-<table><thead><tr><th>命令</th><th>描述</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>命令</th><th>描述</th></tr></thead><tbody>
 <tr><td><code>cargo init</code></td><td>在最近的版本创建一个新项目</td></tr>
 <tr><td><code>cargo build</code></td><td>在调试模式中构建项目( <code>--release</code> 适用于所有可以优化的地方)</td></tr>
 <tr><td><code>cargo check</code></td><td>检查项目是否可以编译成功(执行很快)</td></tr>
@@ -1248,12 +1277,14 @@ proc-macro = true
 <tr><td>  <code>rustc -- -Zunpretty=expanded</code></td><td>显示展开的宏</td></tr>
 <tr><td><code>rustup doc</code></td><td>打开离线 Rust 文档，包括书籍，在没有网络环境下使用很好</td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>这里的 <code>cargo build</code> 你也可以打印 <code>cargo b</code>，并且 <code>--release</code> 意味着可以用 <code>-r</code> 代替</p>
 <p>下面这些是可选的 rustup 组件，使用 <code>rustup component add [tool]</code> 安装它们</p>
-<table><thead><tr><th>工具</th><th>描述</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>工具</th><th>描述</th></tr></thead><tbody>
 <tr><td>cargo clippy</td><td>增加 lints 捕获一些常见的 <strong>滥用API</strong> 和 <strong>不符合语言习惯</strong> 的代码</td></tr>
 <tr><td>cargo fmt</td><td>自动代码格式化 <code>rustup component add rustfmt</code></td></tr>
 </tbody></table>
+</div>
 <p><sup>*</sup>有更多可添加的 cargo 插件 <a href="https://crates.io/categories/development-tools::cargo-plugins?sort=downloads"><strong>点我查看</strong></a></p>
 <h2 id="交叉编译"><a class="header" href="#交叉编译">交叉编译</a></h2>
 <p>🔘检查目标系统是支持的</p>
@@ -1263,17 +1294,14 @@ proc-macro = true
 <p>一些工具链需要额外的构建步骤(如 安卓系统需要 <code>make-standalone-toolchain.sh</code> )</p>
 <p>🔘像下面这样更新 <strong><code>~/.cargo/config.toml</code></strong></p>
 <pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
-linker = &quot;[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang&quot;
-</code></pre>
+linker = &quot;[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang&quot;</code></pre>
 <pre><code class="language-rust editable noplayground">[target.aarch64-linux-android]
-linker = &quot;C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd&quot;
-</code></pre>
+linker = &quot;C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd&quot;</code></pre>
 <p>🔘设置环境变量(可选的，等待编译器如果有报错提示后再进行设置)</p>
 <pre><code class="language-rust editable noplayground">set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
 set CXX=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
 set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe
-...
-</code></pre>
+...</code></pre>
 <p>是否设置它们依赖于编译反馈的报错提示，不一定都是需要的</p>
 <p>一些平台的配置可能会非常敏感，取决于如何指定路径(如 <code>\</code> 与 <code>/</code> )和引用路径</p>
 <p>✔️使用 <code>cargo build --target=X</code> 去编译</p>
@@ -2019,11 +2047,12 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 <ul>
 <li>一组具有给定语义、布局等等</li>
 </ul>
-<table><thead><tr><th style="text-align: left">类型</th><th style="text-align: left">值</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">类型</th><th style="text-align: left">值</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>u8</code></td><td style="text-align: left"><code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code></td></tr>
 <tr><td style="text-align: left"><code>char</code></td><td style="text-align: left"><code>{ 'a', 'b', ... '🦀' }</code></td></tr>
 <tr><td style="text-align: left"><code>struct S(u8, char)</code></td><td style="text-align: left"><code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code></td></tr>
 </tbody></table>
+</div>
 <h4 id="类型等价与转换"><a class="header" href="#类型等价与转换">类型等价与转换</a></h4>
 <ul>
 <li>这可能很明显，但 <code>u8</code>， <code>&amp;u8</code>， <code>&amp;mut u8</code>，彼此完全不同</li>
@@ -2036,12 +2065,13 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 </li>
 </ul>
 <p><sup>*</sup>在数学意义上，从类型的角度来看 <code>0 != 0</code>，在语言意义上，<code>==(0u8, 0u16)</code> 仅为了阻止一些小意外而没有定义</p>
-<table><thead><tr><th style="text-align: left">类型</th><th style="text-align: left">值</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">类型</th><th style="text-align: left">值</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>u8</code></td><td style="text-align: left"><code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code></td></tr>
 <tr><td style="text-align: left"><code>u16</code></td><td style="text-align: left"><code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, ..., 65_535<sub>u16</sub> }</code></td></tr>
 <tr><td style="text-align: left"><code>&amp;u8	</code></td><td style="text-align: left"><code>{ 0xffaa<sub>&amp;u8</sub>, 0xffbb<sub>&amp;u8</sub>, ... }</code></td></tr>
 <tr><td style="text-align: left"><code>&amp;mut u8</code></td><td style="text-align: left"><code>{ 0xffaa<sub>&amp;mut u8</sub>, 0xffbb<sub>&amp;mut u8</sub>, ... }</code></td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>然而，Rust 有时可能有助于在类型之间进行转换
 <ul>
@@ -2057,8 +2087,7 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 <h3 id="implementations--impl-s--"><a class="header" href="#implementations--impl-s--">Implementations — <code>impl S { }</code></a></h3>
 <pre><code class="language-rust editable noplayground">impl Port {
     fn f() { ... }
-}
-</code></pre>
+}</code></pre>
 <ul>
 <li>类型通常伴随着实现，如 <code>impl Port {}</code>，与类型相关的行为有：
 <ul>
@@ -2080,13 +2109,14 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 </li>
 <li>将 trait 视为类型的“成员列表”：</li>
 </ul>
-<table><thead><tr><th style="text-align: center">Copy Trait</th><th></th><th style="text-align: center">Clone Trait</th><th></th><th style="text-align: center">Sized Trait</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Copy Trait</th><th></th><th style="text-align: center">Clone Trait</th><th></th><th style="text-align: center">Sized Trait</th></tr></thead><tbody>
 <tr><td style="text-align: center"><strong><code>Self</code></strong></td><td></td><td style="text-align: center"><strong><code>Self</code></strong></td><td></td><td style="text-align: center"><strong><code>Self</code></strong></td></tr>
 <tr><td style="text-align: center"><code>u8</code></td><td></td><td style="text-align: center"><code>u8</code></td><td></td><td style="text-align: center"><code>char</code></td></tr>
 <tr><td style="text-align: center"><code>u16</code></td><td></td><td style="text-align: center"><code>String</code></td><td></td><td style="text-align: center"><code>Port</code></td></tr>
 <tr><td style="text-align: center">...</td><td></td><td style="text-align: center">...</td><td></td><td style="text-align: center">...</td></tr>
 <tr><td style="text-align: center">trait 作为成员表，<strong><code>Self</code></strong> 是指包含的类型</td><td></td><td style="text-align: center"></td><td></td><td style="text-align: center"></td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>属于该成员名单的任何人都将遵守名单的行为</li>
 <li>Traits 还可以包括相关的方法、函数、...</li>
@@ -2097,11 +2127,9 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 
     // Provided by trait author.
     fn print_hex() {}
-}
-</code></pre>
+}</code></pre>
 <p><code>⌾ Copy</code></p>
-<pre><code class="language-rust editable noplayground">trait Copy { }
-</code></pre>
+<pre><code class="language-rust editable noplayground">trait Copy { }</code></pre>
 <ul>
 <li>没有方法的特征通常被称为<strong>marker traits</strong></li>
 <li><code>Copy</code> 是标记特征的例子，意味着内存可以按位复制</li>
@@ -2112,25 +2140,26 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 <li>Sized 由已知大小类型的编译器提供，要么是，要么不是</li>
 </ul>
 <h3 id="implementing-traits-for-types--impl-t-for-s--"><a class="header" href="#implementing-traits-for-types--impl-t-for-s--">Implementing Traits for Types — <code>impl T for S { }</code></a></h3>
-<pre><code class="language-rust editable noplayground">impl ShowHex for Port { ... }
-</code></pre>
+<pre><code class="language-rust editable noplayground">impl ShowHex for Port { ... }</code></pre>
 <ul>
 <li>特征是在'at some point'时为类型实现的</li>
 <li><code>impl A for B</code> 添加类型 <code>B</code> 到 trait 成员列表：</li>
 </ul>
-<table><thead><tr><th style="text-align: center"><strong><code>ShowHex Trait</code></strong></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center"><strong><code>ShowHex Trait</code></strong></th></tr></thead><tbody>
 <tr><td style="text-align: center"><strong><code>Self</code></strong></td></tr>
 <tr><td style="text-align: center"><code>Port</code></td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>从表面上看，你可以认为该类型因其成员资格而获得“badge”</li>
 </ul>
-<table><thead><tr><th style="text-align: left"><code>u8</code></th><th></th><th style="text-align: left"><code>Device</code></th><th></th><th style="text-align: left"><code>Port</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"><code>u8</code></th><th></th><th style="text-align: left"><code>Device</code></th><th></th><th style="text-align: left"><code>Port</code></th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>impl { ... }</code></td><td></td><td style="text-align: left"><code>impl { ... }</code></td><td></td><td style="text-align: left"><code>impl { ... }</code></td></tr>
 <tr><td style="text-align: left"><code>⌾Sized</code></td><td></td><td style="text-align: left"><code>⌾Transport</code></td><td></td><td style="text-align: left"><code>⌾Sized</code></td></tr>
 <tr><td style="text-align: left"><code>⌾Clone</code></td><td></td><td style="text-align: left"></td><td></td><td style="text-align: left"><code>⌾Clone</code></td></tr>
 <tr><td style="text-align: left"><code>⌾Copy</code></td><td></td><td style="text-align: left"></td><td></td><td style="text-align: left"><code>⌾ShowHex</code></td></tr>
 </tbody></table>
+</div>
 <h3 id="特征与接口"><a class="header" href="#特征与接口">特征与接口</a></h3>
 <h4 id="接口"><a class="header" href="#接口">接口</a></h4>
 <ul>
@@ -2142,8 +2171,7 @@ set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-
 <pre><code class="language-rust editable noplayground">// Santa imports `Venison` to create it, can `eat()` if he wants.
 import food.Venison;
 
-new Venison(&quot;rudolph&quot;).eat();
-</code></pre>
+new Venison(&quot;rudolph&quot;).eat();</code></pre>
 <h4 id="特征"><a class="header" href="#特征">特征</a></h4>
 <ul>
 <li>在 <strong>Rust</strong> 中，用户Alice创建特征 <code>Eat</code></li>
@@ -2156,21 +2184,780 @@ use food::Venison;
 use tasks::Eat;
 
 // Ho ho ho
-Venison::new(&quot;rudolph&quot;).eat();
-</code></pre>
+Venison::new(&quot;rudolph&quot;).eat();</code></pre>
 <p><sup>*</sup>为了防止两个人实现不同的 <code>Eat</code>，Rust 编译器将限制选择为 Alice 或 Bob 其中的一个， 也就是说 <code>impl Eat for Venison</code> 可能只发生在 Venison crate 或 Eat crate 中。</p>
 <div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="go-翻译于官网描述"><a class="header" href="#go-翻译于官网描述">Go 翻译于官网描述</a></h1>
 <h4 id="go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言"><a class="header" href="#go-语言具有很强的表达能力它简洁清晰而高效得益于其并发机制-用它编写的程序能够非常有效地利用多核与联网的计算机其新颖的类型系统则使程序结构变得灵活而模块化-go-代码编译成机器码不仅非常迅速还具有方便的垃圾收集机制和强大的运行时反射机制-它是一个快速的静态类型的编译型语言感觉却像动态类型的解释型语言">Go 语言具有很强的表达能力，它简洁、清晰而高效。得益于其并发机制， 用它编写的程序能够非常有效地利用多核与联网的计算机，其新颖的类型系统则使程序结构变得灵活而模块化。 Go 代码编译成机器码不仅非常迅速，还具有方便的垃圾收集机制和强大的运行时反射机制。 它是一个快速的、静态类型的编译型语言，感觉却像动态类型的解释型语言。</a></h4>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="go语法"><a class="header" href="#go语法">Go语法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="go-基本常用语法"><a class="header" href="#go-基本常用语法">Go 基本常用语法</a></h2>
+<p><img src="https://awesomeprogram.gitee.io/imgdata/tech_go_path.png" alt="" /></p>
+<h4 id="env"><a class="header" href="#env">env</a></h4>
+<pre><code class="language-bash editable">go -h
+go env
+go version # go1.20.1 darwin/amd64
+
+# GOROOT: Go 语言的安装路径
+# GOPATH: 工作区目录的路径(第三方包保存的目录)，bin, pkg(安装后的 *.a 文件, archive file), src
+# GOBIN: Go 可执行文件的路径
+
+go build # 构建
+go install # 安装
+
+go build -a # 不但目标代码包总是会被编译，它依赖的代码包也总会被编译，即使依赖的是标准库中的代码包也是如此。
+go build -n # 只查看，不执行
+go build -x # 查看执行详情
+go build -v # 查看编译的代码包的名称
+</code></pre>
 <h4 id="hello-go"><a class="header" href="#hello-go">Hello, Go!</a></h4>
+<pre><code class="language-go editable">// hello.go  The program entry main function must be in a code package named main.
+package main
+
+import (
+  &quot;fmt&quot;
+)
+
+func main() {
+  str := &quot;world&quot;
+  text := fmt.Sprintf(&quot;hello %s! AwesomeProgram.&quot;, str)
+  fmt.Println(text)
+}
+</code></pre>
+<h4 id="run"><a class="header" href="#run">run</a></h4>
+<pre><code class="language-go editable">// run
+go run hello.go
+go build hello.go; ./hello
+</code></pre>
+<h4 id="command-argv"><a class="header" href="#command-argv">Command Argv</a></h4>
+<pre><code class="language-go editable">package main
+ 
+import (
+	&quot;flag&quot;
+	&quot;fmt&quot;
+)
+var name string
+
+func init() {
+	flag.StringVar(&amp;name, &quot;name&quot;, &quot;everyone&quot;, &quot;The greeting object.&quot;)
+}
+
+func main() {
+	flag.Parse()
+	fmt.Printf(&quot;Hello, %s!&quot;, name)
+}
+
+//
+go run test.go -h
+go run test.go -name=123 // Hello, 123!
+</code></pre>
+<h4 id="init"><a class="header" href="#init">init</a></h4>
+<pre><code class="language-go editable">package main
+
+import &quot;fmt&quot;
+
+func init() {
+  fmt.Println(&quot;init 1&quot;)
+}
+
+func main() {
+  fmt.Println(&quot;main&quot;)
+}
+
+func init() {
+  fmt.Println(&quot;init 2&quot;)
+}
+
+// init 1
+// init 2
+// main
+</code></pre>
+<h4 id="import"><a class="header" href="#import">import</a></h4>
+<pre><code class="language-go editable">import format &quot;fmt&quot; // format.Println()
+import &quot;fmt&quot; // fmt.Println()
+import . &quot;fmt&quot; // use Println directly, not recommended
+import _ &quot;net/http/pprof&quot; // used to load pprof package, it's init function will be called.
+</code></pre>
+<h4 id="struct"><a class="header" href="#struct">struct</a></h4>
+<pre><code class="language-go editable">type Book struct {
+  title, author string
+  pages         int
+}
+
+book = Book{author: &quot;Book author&quot;, pages: 256, title: &quot;Book Name&quot;}
+// or
+book = Book{}
+fmt.Println(book.title)
+</code></pre>
+<h4 id="array-slice-map"><a class="header" href="#array-slice-map">Array, Slice, Map</a></h4>
+<pre><code class="language-go editable">[100]Book // Array, with element type Book
+
+[]Book // Slide, with element type Book
+
+map[string]Book // Map, with key value: string - Book 
+
+books := [...]Book {
+  {title: &quot;title1&quot;},
+  {title: &quot;title2&quot;},
+  {title: &quot;title3&quot;},
+}
+len(books) // 3
+cap(books) // 3
+</code></pre>
+<h4 id="数组"><a class="header" href="#数组">数组</a></h4>
+<pre><code class="language-go editable">var number_array [3]int // [0, 0, 0]
+append(number_array, 1) // Error
+number_array[0] = 1 // [1, 0, 0]
+</code></pre>
+<h4 id="切片"><a class="header" href="#切片">切片</a></h4>
+<pre><code class="language-go editable">var number_slice []int // []
+// Recreate to append
+number_slice = append(number_slice, 1) // [1]
+// Create a new slice from an array
+some_numbers := number_array[0:1] // [0]
+
+s0 := []int{1, 2, 3}
+s1 := append(s0, 4, 5)
+
+fmt.Println(s0, cap(s0)) // [1, 2, 3] 3
+fmt.Println(s1, cap(s1)) // [1, 2, 3, 4, 5] 6
+// Note the cap is 6, not 5
+
+s3 := append(s0, s0...) // [1, 2, 3, 1, 2, 3]
+</code></pre>
+<h4 id="字典"><a class="header" href="#字典">字典</a></h4>
+<pre><code class="language-go editable">m := map[string]int{&quot;abc&quot;: 123, &quot;xyz&quot;: 789}
+n, is_exist := m[&quot;hello&quot;] // 0 false
+m = nil
+fmt.Println(m[&quot;abc&quot;]) // 0
+m[&quot;dfg&quot;] = 456
+delete(m, &quot;dfg&quot;)
+
+your_map := make(map[string]int)
+your_map[&quot;key&quot;] = 1
+fmt.Println(your_map[&quot;key&quot;]) // 1
+// Remove key
+delete(your_map, &quot;key&quot;)
+</code></pre>
+<h4 id="make"><a class="header" href="#make">make</a></h4>
+<pre><code class="language-go editable">m := make(map[string]int)) // map[]
+
+s := make([]int, 3, 5)
+fmt.Println(s, len(s), cap(s)) // [0 0 0] 3 5
+</code></pre>
+<h4 id="iterate"><a class="header" href="#iterate">iterate</a></h4>
+<pre><code class="language-go editable">for key, element = range aContainer {
+  // do something
+}
+</code></pre>
+<h4 id="clone"><a class="header" href="#clone">clone</a></h4>
+<pre><code class="language-go editable">sClone := append(s[:0:0], s...) // s is a slice
+
+// or
+var sClone []T
+if s != nil {
+  sClone = make([]T, len(s))
+  copy(sClone, s)
+}
+</code></pre>
+<h4 id="strings"><a class="header" href="#strings">strings</a></h4>
+<pre><code class="language-go editable">import (
+  &quot;strings&quot;
+)
+
+len(&quot;hello&quot;)
+strings.HasPrefix(&quot;helloWorld&quot;, &quot;hello&quot;) // true
+strings.Contains(&quot;something&quot;, &quot;some&quot;) // true
+</code></pre>
+<h4 id="function-parameters"><a class="header" href="#function-parameters">function parameters</a></h4>
+<pre><code class="language-go editable">func Sum(values ...int64) (sum int64) {
+  // values's type is []int64。
+  sum = 0
+  for _, v := range values {
+    sum += v
+  }
+  return sum
+}
+Sum(2, 3, 5)
+</code></pre>
+<h4 id="json"><a class="header" href="#json">JSON</a></h4>
+<pre><code class="language-go editable">type Config struct {
+    Name bool `json:&quot;name&quot;` // OK
+
+    Name bool `json: &quot;name&quot;` // Error
+    Name bool `json:name` // Error
+}
+</code></pre>
+<h4 id="循环"><a class="header" href="#循环">循环</a></h4>
+<pre><code class="language-go editable">names := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;} // [a b c]
+for i, name := range names {
+  fmt.Printf(&quot;%d. %s&quot;, i+1, name)
+}
+// 1. a
+// 2. b
+// 3. c
+</code></pre>
+<h4 id="goroutine"><a class="header" href="#goroutine">goroutine</a></h4>
+<pre><code class="language-go editable">go say(&quot;hello&quot;) // run say in goroutine
+</code></pre>
+<h4 id="channel"><a class="header" href="#channel">Channel</a></h4>
+<pre><code class="language-go editable">ch := make(chan int, 10) // create channel
+
+close(ch) // close channel
+
+ch &lt;- v // send v to ch
+
+v = &lt;-ch // accept v from ch
+v, sentBeforeClosed = &lt;-ch
+
+cap(ch) // capacity
+len(ch) // length
+
+go func(ch &lt;-chan int) {
+  ch &lt;- 123 // send 123 to ch
+}
+go func(ch chan&lt;- int) {
+  n := &lt;-ch // get value from ch
+}
+</code></pre>
+<h4 id="loop-channel"><a class="header" href="#loop-channel">Loop Channel</a></h4>
+<pre><code class="language-go editable">for x, ok := &lt;-c; ok; x, ok = &lt;-c {
+  fmt.Println(x)
+}
+
+for v := range aChannel {
+  // do something
+}
+// equivalent
+for {
+  v, ok = &lt;-aChannel
+  if !ok {
+    break
+  }
+  // do something
+}
+</code></pre>
+<h4 id="select-case"><a class="header" href="#select-case">select-case</a></h4>
 <pre><code class="language-go editable">package main
 
 import &quot;fmt&quot;
 
 func main() {
-	fmt.Println(&quot;Hello, AwesomeProgram&quot;)
+  c := make(chan string, 2)
+  trySend := func(v string) {
+    select {
+    case c &lt;- v:
+    default: // 如果c的缓冲已满，则执行默认分支。
+    }
+  }
+  tryReceive := func() string {
+    select {
+    case v := &lt;-c: return v
+    default: return &quot;-&quot; // 如果c的缓冲为空，则执行默认分支。
+    }
+  }
+  trySend(&quot;Hello!&quot;) // 发送成功
+  trySend(&quot;Hi!&quot;)    // 发送成功
+  trySend(&quot;Bye!&quot;)   // 发送失败，但不会阻塞。
+  // 下面这两行将接收成功。
+  fmt.Println(tryReceive()) // Hello!
+  fmt.Println(tryReceive()) // Hi!
+  // 下面这行将接收失败。
+  fmt.Println(tryReceive()) //
 }
 </code></pre>
+<h4 id="methods"><a class="header" href="#methods">methods</a></h4>
+<pre><code class="language-go editable">type Book struct {
+  pages int
+}
+func (b Book) Pages() int {
+  return b.pages
+}
+func (b *Book) SetPages(pages int) {
+  b.pages = pages
+}
+
+var book Book
+book.SetPages(123) // = (*Book).SetPages(&amp;book, 123)
+book.Pages() // = Book.Pages(book)
+</code></pre>
+<h4 id="接口-1"><a class="header" href="#接口-1">接口</a></h4>
+<pre><code class="language-go editable">// res.Data is &lt;interface {}&gt;, res.Data &gt; data is &lt;[]interface {}&gt;
+// 断言res.Data是一个interface{}类型的切片
+items, ok := res.Data.([]interface{}) 
+if !ok {
+    return
+}
+
+for i, item := range items {
+	// 断言item是一个interface{}类型的map
+    data, ok := item.(map[string]interface{}) 
+    if !ok {
+        continue 
+    }
+
+    id := data[&quot;id&quot;]
+	// 断言data[&quot;id&quot;]是一个float64值
+    if idFloat, ok := id.(float64); ok {
+        // use idFloat 
+    } else {
+        // use default id
+    }
+}
+</code></pre>
+<h4 id="使用-delve-调试"><a class="header" href="#使用-delve-调试">使用 Delve 调试</a></h4>
+<pre><code class="language-go editable"># https://github.com/go-delve/delve
+dlv debug app.go
+</code></pre>
+<h4 id="debugger-内部"><a class="header" href="#debugger-内部">Debugger 内部</a></h4>
+<pre><code class="language-go editable"># Set breakpoint
+break [path/filename].go:[line_num]
+
+# Run and should pauses at the breakpoint
+continue
+
+# Print variable
+print [variable_name]
+
+# Move to next line in the source
+next
+</code></pre>
+<h4 id="gin"><a class="header" href="#gin">Gin</a></h4>
+<pre><code class="language-go editable">// Read Request Body in JSON
+type GitHubInput struct {
+  Zen string `json:&quot;zen&quot;`
+}
+var input GitHubInput
+if err := c.ShouldBindJSON(&amp;input); err != nil {
+  c.JSON(http.StatusBadRequest, gin.H{&quot;error&quot;: err.Error()})
+  return
+}
+input.Zen
+
+// Read Header
+c.Request.Header.Get(&quot;X-GitHub-Event&quot;)
+
+// HTTP Response
+c.JSON(http.StatusBadRequest, gin.H{&quot;error&quot;: err.Error()})
+c.String(200, input.Zen)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="javascript"><a class="header" href="#javascript">JavaScript</a></h1>
+<h4 id="javascriptjs是一种具有函数优先特性的轻量级解释型或者说即时编译型的编程语言虽然作为-web-页面中的脚本语言被人所熟知但是它也被用到了很多非浏览器环境中例如-nodejsapache-couchdbadobe-acrobat-等进一步说javascript-是一种基于原型多范式单线程的动态语言并且支持面向对象命令式和声明式如函数式编程风格"><a class="header" href="#javascriptjs是一种具有函数优先特性的轻量级解释型或者说即时编译型的编程语言虽然作为-web-页面中的脚本语言被人所熟知但是它也被用到了很多非浏览器环境中例如-nodejsapache-couchdbadobe-acrobat-等进一步说javascript-是一种基于原型多范式单线程的动态语言并且支持面向对象命令式和声明式如函数式编程风格">JavaScript（JS）是一种具有函数优先特性的轻量级、解释型或者说即时编译型的编程语言。虽然作为 Web 页面中的脚本语言被人所熟知，但是它也被用到了很多非浏览器环境中，例如 Node.js、Apache CouchDB、Adobe Acrobat 等。进一步说，JavaScript 是一种基于原型、多范式、单线程的动态语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。</a></h4>
+<h4 id="javascript-的动态特性包括运行时对象的构造变量参数列表函数变量动态脚本创建通过-eval对象内枚举通过-forin-和-object-工具方法和源代码恢复javascript-函数会存储其源代码文本可以使用-tostring-进行检索"><a class="header" href="#javascript-的动态特性包括运行时对象的构造变量参数列表函数变量动态脚本创建通过-eval对象内枚举通过-forin-和-object-工具方法和源代码恢复javascript-函数会存储其源代码文本可以使用-tostring-进行检索">JavaScript 的动态特性包括运行时对象的构造、变量参数列表、函数变量、动态脚本创建（通过 eval）、对象内枚举（通过 for...in 和 Object 工具方法）和源代码恢复（JavaScript 函数会存储其源代码文本，可以使用 toString() 进行检索）。</a></h4>
+<h4 id="ecmascript-语言规范ecmascript-language-specificationecma-262和ecmascript-国际化-api-规范ecmascript-internationalization-api-specificationecma-402是-javascript-的标准当某个-ecmascript-新特性的提案已经被一些浏览器实现时mdn-上的文档或示例就可能会涉及到这些新特性大多数时候处在-stages-3-和-4-的新特性会被收录到文档中且收录时间通常早于其正式发布的时间"><a class="header" href="#ecmascript-语言规范ecmascript-language-specificationecma-262和ecmascript-国际化-api-规范ecmascript-internationalization-api-specificationecma-402是-javascript-的标准当某个-ecmascript-新特性的提案已经被一些浏览器实现时mdn-上的文档或示例就可能会涉及到这些新特性大多数时候处在-stages-3-和-4-的新特性会被收录到文档中且收录时间通常早于其正式发布的时间">ECMAScript 语言规范（ECMAScript Language Specification）（ECMA-262）和ECMAScript 国际化 API 规范（ECMAScript Internationalization API specification）（ECMA-402）是 Javascript 的标准。当某个 ECMAScript 新特性的提案已经被一些浏览器实现时，MDN 上的文档或示例就可能会涉及到这些新特性。大多数时候，处在 stages 3 和 4 的新特性会被收录到文档中，且收录时间通常早于其正式发布的时间。</a></h4>
+<h4 id="不要将-javascript-与-java-编程语言混淆javascript-不是解释型-java虽然java和javascript都是-oracle-公司在美国和其他国家注册或未注册的商标但是这两门语言在语法语义与用途方面有相当大的不同"><a class="header" href="#不要将-javascript-与-java-编程语言混淆javascript-不是解释型-java虽然java和javascript都是-oracle-公司在美国和其他国家注册或未注册的商标但是这两门语言在语法语义与用途方面有相当大的不同">不要将 JavaScript 与 Java 编程语言混淆——JavaScript 不是“解释型 Java”。虽然“Java”和“JavaScript”都是 Oracle 公司在美国和其他国家注册（或未注册）的商标，但是这两门语言在语法、语义与用途方面有相当大的不同。</a></h4>
+<h1 id="typescript"><a class="header" href="#typescript">TypeScript</a></h1>
+<h3 id="始于javascript归于javascript"><a class="header" href="#始于javascript归于javascript">始于JavaScript，归于JavaScript</a></h3>
+<h4 id="typescript从今天数以百万计的javascript开发者所熟悉的语法和语义开始使用现有的javascript代码包括流行的javascript库并从javascript代码中调用typescript代码"><a class="header" href="#typescript从今天数以百万计的javascript开发者所熟悉的语法和语义开始使用现有的javascript代码包括流行的javascript库并从javascript代码中调用typescript代码">TypeScript从今天数以百万计的JavaScript开发者所熟悉的语法和语义开始。使用现有的JavaScript代码，包括流行的JavaScript库，并从JavaScript代码中调用TypeScript代码。</a></h4>
+<h3 id="强大的工具构建-大型应用程序"><a class="header" href="#强大的工具构建-大型应用程序">强大的工具构建 大型应用程序</a></h3>
+<h4 id="类型允许javascript开发者在开发javascript应用程序时使用高效的开发工具和常用操作比如静态检查和代码重构"><a class="header" href="#类型允许javascript开发者在开发javascript应用程序时使用高效的开发工具和常用操作比如静态检查和代码重构">类型允许JavaScript开发者在开发JavaScript应用程序时使用高效的开发工具和常用操作比如静态检查和代码重构。</a></h4>
+<h4 id="类型是可选的类型推断让一些类型的注释使你的代码的静态验证有很大的不同类型让你定义软件组件之间的接口和洞察现有javascript库的行为"><a class="header" href="#类型是可选的类型推断让一些类型的注释使你的代码的静态验证有很大的不同类型让你定义软件组件之间的接口和洞察现有javascript库的行为">类型是可选的，类型推断让一些类型的注释使你的代码的静态验证有很大的不同。类型让你定义软件组件之间的接口和洞察现有JavaScript库的行为。</a></h4>
+<h3 id="先进的-javascript"><a class="header" href="#先进的-javascript">先进的 JavaScript</a></h3>
+<h4 id="typescript提供最新的和不断发展的javascript特性包括那些来自2015年的ecmascript和未来的提案中的特性比如异步功能和decorators以帮助建立健壮的组件"><a class="header" href="#typescript提供最新的和不断发展的javascript特性包括那些来自2015年的ecmascript和未来的提案中的特性比如异步功能和decorators以帮助建立健壮的组件">TypeScript提供最新的和不断发展的JavaScript特性，包括那些来自2015年的ECMAScript和未来的提案中的特性，比如异步功能和Decorators，以帮助建立健壮的组件。</a></h4>
+<h4 id="这些特性为高可信应用程序开发时是可用的但是会被编译成简洁的ecmascript3或更新版本的javascript"><a class="header" href="#这些特性为高可信应用程序开发时是可用的但是会被编译成简洁的ecmascript3或更新版本的javascript">这些特性为高可信应用程序开发时是可用的，但是会被编译成简洁的ECMAScript3（或更新版本）的JavaScript。</a></h4>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="javascript-基本常用语法"><a class="header" href="#javascript-基本常用语法">JavaScript 基本常用语法</a></h2>
+<h4 id="hello-js"><a class="header" href="#hello-js">Hello, JS!</a></h4>
+<pre><code class="language-js editable">// 在控制台输出
+console.log('AwesomeProgram!');
+</code></pre>
+<pre><code class="language-js editable">// 在网页输出
+document.write('AwesomeProgram!');
+</code></pre>
+<pre><code class="language-js editable">// 在网页中创建元素进行输出
+let hello = document.createElement('h1');
+hello.innerText = 'AwesomeProgram!';
+document.body.appendChild(hello); 
+</code></pre>
+<pre><code class="language-js editable">// 使用浏览器弹窗输出
+alert('AwesomeProgram!');
+</code></pre>
+<h4 id="解构赋值"><a class="header" href="#解构赋值">解构赋值</a></h4>
+<pre><code class="language-javascript editable">let [first, last] = ['Awesome', 'Program']
+// or
+let {first, last} = {
+  first: 'Awesome',
+  last: 'Program'
+}
+</code></pre>
+<h4 id="字符串操作"><a class="header" href="#字符串操作">字符串操作</a></h4>
+<pre><code class="language-javascript editable">&quot;AwesomeProgram&quot;.includes(&quot;some&quot;) // true
+&quot;AwesomeProgram&quot;.startsWith(&quot;Awesome&quot;) // true
+&quot;AwesomeProgram&quot;.endsWith(&quot;Program&quot;) // true
+'Awe:some:Program'.split(':') // [&quot;Awe&quot;, &quot;some&quot;, &quot;Program&quot;]
+parseFloat(&quot;123&quot;).toFixed(2) // &quot;123.00&quot;
+</code></pre>
+<h4 id="箭头函数"><a class="header" href="#箭头函数">箭头函数</a></h4>
+<pre><code class="language-javascript editable">const getName = user =&gt; user.name
+const funcName = name =&gt; {
+  // do something
+  return name
+}
+</code></pre>
+<h4 id="数组遍历"><a class="header" href="#数组遍历">数组遍历</a></h4>
+<pre><code class="language-javascript editable">const numbers = [1, 2, 3]
+numbers.map(n =&gt; n * 2) // [2, 4, 6]
+numbers.filter(n =&gt; n % 2 === 0) // [2]
+numbers.reduce((prev, next) =&gt; prev + next, 0) // 6
+numbers.find(n =&gt; n &gt; 2) // 3
+</code></pre>
+<h4 id="数组操作"><a class="header" href="#数组操作">数组操作</a></h4>
+<pre><code class="language-javascript editable">// Delete at index
+array.splice(index, 1)
+
+// Insert at index
+array.splice(index, 0, newItem)
+
+// check exist
+[1, 2, 3].includes(3) // true
+
+// find index
+[1, 2, 3].indexOf(3) // 2; return -1 if not found
+
+// concat
+let array3 = array1.concat(array2) // [1].concat([2]) is [1, 2]
+
+// new array
+let array4 = [1, 2, 3, 4, 5].slice(2, 4) // [3, 4]
+</code></pre>
+<h4 id="展开操作符"><a class="header" href="#展开操作符">展开操作符</a></h4>
+<pre><code class="language-javascript editable">const array1 = [1, 2]
+const array2 = [...array1, 3, 4] // [1, 2, 3, 4]
+
+const funcName = (x, ...params) =&gt; {
+  console.log(x)
+  console.log(params)
+}
+
+funcName(1, 2, 3, 4)
+// 1
+// [2, 3, 4]
+</code></pre>
+<h4 id="对象展开"><a class="header" href="#对象展开">对象展开</a></h4>
+<pre><code class="language-javascript editable">const options = {
+  ...defaults,
+  show: true
+}
+</code></pre>
+<h4 id="数组展开"><a class="header" href="#数组展开">数组展开</a></h4>
+<pre><code class="language-javascript editable">const array3 = [
+  ...array1,
+  ...array2,
+  'newItem'
+]
+</code></pre>
+<h4 id="遍历"><a class="header" href="#遍历">遍历</a></h4>
+<pre><code class="language-javascript editable">for (const i of [1, 2, 3]) {
+  console.log(i)
+}
+// 1
+// 2
+// 3
+
+for (const [index, value] of ['Awesome', 'Program', '@git'].entries()) {
+  console.log(index, value)
+}
+// 0 &quot;Awesome&quot;
+// 1 &quot;Program&quot;
+// 2 &quot;@git&quot;
+
+const obj = {part1: 'Awesome', part2: 'Program', part3: '@git'};
+for (const key in obj) {
+  console.log(key, obj[key])
+}
+// or
+for (const [key, value] of Object.entries(obj)) {
+  console.log(key, value)
+}
+// part1 Awesome
+// part2 Program
+// part3 @git
+</code></pre>
+<h4 id="创建-promise"><a class="header" href="#创建-promise">创建 Promise</a></h4>
+<pre><code class="language-javascript editable">const funcName = params =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    // ....
+    // do something
+    // if success
+    resolve(result)
+    // if fail
+    reject(error)
+  })
+}
+funcName('test')
+  .then(result =&gt; {
+    // ...
+  })
+  .catch(error =&gt; {
+    // ...
+  })
+  .finally(() =&gt; {
+    // ...
+  })
+</code></pre>
+<h4 id="收集所有-promise-返回"><a class="header" href="#收集所有-promise-返回">收集所有 Promise 返回</a></h4>
+<pre><code class="language-javascript editable">let promises = []
+// func1 and func2 returns a promise
+promises.push(func1())
+promises.push(func2())
+
+Promise.all(promises).then(allResult =&gt; {
+  let [result1, resul2] = allResult
+  // ...
+})
+</code></pre>
+<h4 id="async-await"><a class="header" href="#async-await">Async-await</a></h4>
+<pre><code class="language-javascript editable">const funcName = async () =&gt; {
+  const data = await fetchData()
+  return data
+}
+
+await funcName()
+</code></pre>
+<h4 id="生成器"><a class="header" href="#生成器">生成器</a></h4>
+<pre><code class="language-javascript editable">function * countdown(n) {
+  for (let i = n; i &gt; 0; --i) {
+    yield i
+  }
+}
+[...countdown(3)] // [ 3, 2, 1 ]
+
+let gen = countdown(3)
+gen.next() // 3
+gen.next() // 2
+</code></pre>
+<h4 id="浏览器"><a class="header" href="#浏览器">浏览器</a></h4>
+<pre><code class="language-javascript editable">encodeURIComponent() // Encodes a URI into UTF-8
+decodeURIComponent() // Decodes
+</code></pre>
+<h4 id="window"><a class="header" href="#window">window</a></h4>
+<pre><code class="language-javascript editable">const formData = new window.FormData()
+formData.append('file', data)
+
+window.localStorage.getItem(key)
+window.localStorage.setItem(key, data)
+
+window.location.origin // &quot;https://awesomeprogram.github.io/&quot;
+window.location.hostname // &quot;awesomeprogram.github.io&quot;
+window.location.href // &quot;https://awesomeprogram.github.io/js-ts/chapter_1_1.html&quot;
+
+window.open(&quot;https://awesomeprogram.github.io/&quot;)
+
+window.addEventListener('resize', resizeHandler)
+window.removeEventListener('resize', resizeHandler)
+</code></pre>
+<h4 id="xmlhttprequest"><a class="header" href="#xmlhttprequest">XMLHttpRequest</a></h4>
+<pre><code class="language-javascript editable">// Download excel file
+const xhr = new window.XMLHttpRequest()
+const applicationType = 'application/vnd.ms-excel; charset=UTF-8'
+xhr.open('GET', url, true)
+xhr.responseType = 'blob'
+xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8')
+xhr.onload = function(e) {
+  if (this.status === 200) {
+    let blob = new window.Blob([this.response], { type: applicationType })
+    let downloadUrl = window.URL.createObjectURL(blob)
+    let a = document.createElement('a')
+    a.href = downloadUrl
+    a.download = fileName
+    a.click()
+  }
+}
+xhr.onreadystatechange = e =&gt; {
+  if (xhr.readyState === 4) {
+    // 
+  } else if (xhr.readyState === 3) {
+    //
+  })
+}
+xhr.send()
+</code></pre>
+<h4 id="email-validation"><a class="header" href="#email-validation">Email Validation</a></h4>
+<pre><code class="language-javascript editable">// From https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+function validateEmail(email) {
+  if (email === '') {
+    return true
+  }
+  const re = /^(([^&lt;&gt;()[]\.,;:s@&quot;]+(.[^&lt;&gt;()[]\.,;:s@&quot;]+)*)|(&quot;.+&quot;))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+</code></pre>
+<h2 id="typescript-基本常用语法"><a class="header" href="#typescript-基本常用语法">TypeScript 基本常用语法</a></h2>
+<h4 id="编译到-javascript"><a class="header" href="#编译到-javascript">编译到 JavaScript</a></h4>
+<p><code>tsc --outFile sample.js Test.ts</code></p>
+<h4 id="基本"><a class="header" href="#基本">基本</a></h4>
+<pre><code class="language-ts editable">let name: string = 'name';
+let isDone: boolean = false;
+let count: number = 10;
+let sentence: string = `Hello, ${ name }.`
+let notSure: any = 1;
+
+let list1: number[] = [1, 2, 3];
+let list2: Array&lt;number&gt; = [1, 2, 3];
+
+let tupleX: [string, number];
+x = ['hello', 10]
+
+enum Color {Red, Green, Blue};
+let c: Color = Color.Green;
+
+let [first, ...rest] = [1, 2, 3, 4];
+// first: 1, rest: [2, 3, 4 ]
+
+// type assert
+let strLength: number = (&lt;string&gt;someValue).length;
+let strLength: number = (someValue as string).length;
+</code></pre>
+<h4 id="函数"><a class="header" href="#函数">函数</a></h4>
+<pre><code class="language-ts editable">const params = (value: string) =&gt; {
+  console.log(value);
+}
+
+const paramOr = (value: string | null) =&gt; {
+  console.log(value);
+}
+paramOr('1'); // OK
+paramOr(null); // OK
+paramOr(1); // Error
+
+const paramArray = ([first, second]: [string, number]) =&gt; {
+  console.log(first);
+  console.log(second);
+}
+
+const returnValue = (): String =&gt;  {
+  return 'return a stirng';
+}
+</code></pre>
+<h4 id="接口-2"><a class="header" href="#接口-2">接口</a></h4>
+<pre><code class="language-typescript editable">interface Config {
+  color?: string;
+  width?: number;
+  readonly y?: number;
+  [propName: string]: any;
+}
+const funcName = (config: Config) =&gt; {
+  console.log(config.test);
+}
+funcName({test: 'test prop'}); // test prop
+</code></pre>
+<h4 id="类"><a class="header" href="#类">类</a></h4>
+<pre><code class="language-typescript editable">class Example {
+  name: string; // default public
+  private priaveName: string;
+  protected protectedName: string;
+  readonly readonlyName: string;
+  private _fullName: string;
+  static baseRoute = '/basePath';
+  constructor(name: string) {
+    this.name = name;
+    this.priaveName = name;
+    this.protectedName = name;
+    this.readonlyName = name;
+    this._fullName = name;
+  }
+  hello() {
+    return `Hello, ${this.name}`;
+  }
+  get fullName(): string {
+    return this._fullName;
+  }
+  set fullName(newName: string) {
+    // do some check
+    // ...
+    this._fullName = newName;
+  }
+}
+let test = new Example(&quot;world&quot;);
+console.log(test.hello()); // Hello, world
+test.priaveName; // Error
+
+class NewExample extends Example {
+  hi() {
+    return `Hi, ${super.hello()}`;
+  }
+  getProtectedName() {
+    return this.protectedName
+  }
+}
+
+let newTest = new NewExample(&quot;new world&quot;);
+console.log(newTest.hi()); // Hi, Hello, new world
+
+newTest.protectedName; // Error
+newTest.getProtectedName(); // OK
+
+
+// Abstract Class
+abstract class AbstractExample {
+  abstract hi(): void;
+  say(): void {
+    console.log('say something');
+  }
+}
+class ActualExample extends AbstractExample {
+  hi() {
+    return 'hi'
+  }
+}
+</code></pre>
+<h4 id="命名空间"><a class="header" href="#命名空间">命名空间</a></h4>
+<pre><code class="language-typescript editable">namespace Validation {
+    export interface StringValidator {
+        isAcceptable(s: string): boolean;
+    }
+}
+Validation.StringValidator;
+</code></pre>
+<h4 id="泛型"><a class="header" href="#泛型">泛型</a></h4>
+<pre><code class="language-typescript editable">class GenericNumber&lt;T&gt; {
+    zeroValue: T;
+    add: (x: T, y: T) =&gt; T;
+}
+
+let myGenericNumber = new GenericNumber&lt;number&gt;();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+</code></pre>
+<h4 id="声明"><a class="header" href="#声明">声明</a></h4>
+<pre><code class="language-typescript editable"># File ends with `.d.ts`
+declare var testNumber: number;
+declare function hi(greeting: string): void;
+declare namespace myNamespace {
+  function hello(s: string): string;
+  let count: number;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="c语言"><a class="header" href="#c语言">C语言</a></h1>
+<h4 id="c语言是一门面向过程的编译型语言它的运行速度极快仅次于汇编语言c语言是计算机产业的核心语言操作系统硬件驱动关键组件数据库等都离不开c语言不学习c语言就不能了解计算机底层"><a class="header" href="#c语言是一门面向过程的编译型语言它的运行速度极快仅次于汇编语言c语言是计算机产业的核心语言操作系统硬件驱动关键组件数据库等都离不开c语言不学习c语言就不能了解计算机底层">C语言是一门面向过程的编译型语言，它的运行速度极快，仅次于汇编语言。C语言是计算机产业的核心语言，操作系统、硬件驱动、关键组件、数据库等都离不开C语言；不学习C语言，就不能了解计算机底层。</a></h4>
+<h4 id="c语言除了能让你了解编程的相关概念带你走进编程的大门还能让你明白程序的运行原理比如计算机的各个部件是如何交互的程序在内存中是一种怎样的状态操作系统和用户程序之间有着怎样的爱恨情仇这些底层知识决定了你的发展高度也决定了你的职业生涯"><a class="header" href="#c语言除了能让你了解编程的相关概念带你走进编程的大门还能让你明白程序的运行原理比如计算机的各个部件是如何交互的程序在内存中是一种怎样的状态操作系统和用户程序之间有着怎样的爱恨情仇这些底层知识决定了你的发展高度也决定了你的职业生涯">C语言除了能让你了解编程的相关概念，带你走进编程的大门，还能让你明白程序的运行原理，比如，计算机的各个部件是如何交互的，程序在内存中是一种怎样的状态，操作系统和用户程序之间有着怎样的“爱恨情仇”，这些底层知识决定了你的发展高度，也决定了你的职业生涯。</a></h4>
+<h4 id="如果你希望成为出类拔萃的人才而不仅仅是码农这么这些知识就是不可逾越的也只有学习c语言才能更好地了解它们有了足够的基础以后学习其他语言会触类旁通很快上手7-天了解一门新语言不是神话"><a class="header" href="#如果你希望成为出类拔萃的人才而不仅仅是码农这么这些知识就是不可逾越的也只有学习c语言才能更好地了解它们有了足够的基础以后学习其他语言会触类旁通很快上手7-天了解一门新语言不是神话">如果你希望成为出类拔萃的人才，而不仅仅是码农，这么这些知识就是不可逾越的。也只有学习C语言，才能更好地了解它们。有了足够的基础，以后学习其他语言，会触类旁通，很快上手，7 天了解一门新语言不是神话。</a></h4>
+<h4 id="c语言概念少词汇少包含了基本的编程元素后来的很多语言cjava等都参考了c语言说c语言是现代编程语言的开山鼻祖毫不夸张它改变了编程世界"><a class="header" href="#c语言概念少词汇少包含了基本的编程元素后来的很多语言cjava等都参考了c语言说c语言是现代编程语言的开山鼻祖毫不夸张它改变了编程世界">C语言概念少，词汇少，包含了基本的编程元素，后来的很多语言（C++、Java等）都参考了C语言，说C语言是现代编程语言的开山鼻祖毫不夸张，它改变了编程世界。</a></h4>
+<h4 id="软件行业的很多细分学科都是基于c语言的学习数据结构算法操作系统编译原理等都离不开c语言所以大学将c语言作为一门公共课程计算机相关专业的同学都要学习"><a class="header" href="#软件行业的很多细分学科都是基于c语言的学习数据结构算法操作系统编译原理等都离不开c语言所以大学将c语言作为一门公共课程计算机相关专业的同学都要学习">软件行业的很多细分学科都是基于C语言的，学习数据结构、算法、操作系统、编译原理等都离不开C语言，所以大学将C语言作为一门公共课程，计算机相关专业的同学都要学习。</a></h4>
+<h4 id="c语言被誉为上帝语言它不但奠定了软件产业的基础还创造了很多其它语言例如"><a class="header" href="#c语言被誉为上帝语言它不但奠定了软件产业的基础还创造了很多其它语言例如">C语言被誉为“上帝语言”，它不但奠定了软件产业的基础，还创造了很多其它语言，例如：</a></h4>
+<ul>
+<li>PHP、Python 等都是用C语言开发出来的，虽然平时做项目的时候看不到C语言的影子，但是如果想深入学习 PHP 和 Python，那就要有C语言基础了。</li>
+<li>C++ 和 Objective-C 干脆在C语言的基础上直接进行扩展，增加一些新功能后变成了新的语言，所以学习 C++ 和 Objective-C 之前也要先学习C语言。</li>
+</ul>
+<h1 id="c"><a class="header" href="#c">C++</a></h1>
+<h4 id="c-由c语言发展而来几乎完全兼容c语言换句话说你编写的c语言代码几乎可以不加修改地用于-c"><a class="header" href="#c-由c语言发展而来几乎完全兼容c语言换句话说你编写的c语言代码几乎可以不加修改地用于-c">C++ 由C语言发展而来，几乎完全兼容C语言；换句话说，你编写的C语言代码几乎可以不加修改地用于 C++。</a></h4>
+<h4 id="c语言是面向过程的语言c-在此基础上增加了面向对象以及泛型编程机制因此-c-更适合大中型程序的开发然而c-并没有牺牲效率如果不使用高级特性它的效率和c语言几乎没有差异"><a class="header" href="#c语言是面向过程的语言c-在此基础上增加了面向对象以及泛型编程机制因此-c-更适合大中型程序的开发然而c-并没有牺牲效率如果不使用高级特性它的效率和c语言几乎没有差异">C语言是面向过程的语言，C++ 在此基础上增加了面向对象以及泛型编程机制，因此 C++ 更适合大中型程序的开发。然而，C++ 并没有牺牲效率，如果不使用高级特性，它的效率和C语言几乎没有差异。</a></h4>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="c语言的语法"><a class="header" href="#c语言的语法">C语言的语法</a></h2>
+<h4 id="hello-c"><a class="header" href="#hello-c">Hello, C!</a></h4>
+<pre><code class="language-c editable">#include &lt;stdio.h&gt;
+int main()
+{
+    puts(&quot;Hello, C!&quot;);
+    return 0;
+}
+</code></pre>
+<p><code>gcc main.c</code></p>
+<h2 id="c语法"><a class="header" href="#c语法">C++语法</a></h2>
+<h4 id="hello-c-1"><a class="header" href="#hello-c-1">Hello, C++!</a></h4>
+<pre><code class="language-c++ editable">#include &lt;stdio.h&gt;
+int main()
+{
+    puts(&quot;Hello, C++!&quot;);
+    return 0;
+}
+</code></pre>
+<p><code>gcc main.cpp -lstdc++</code> 或者 <code>g++ main.cpp</code></p>
 <div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p><img src="https://awesomeprogram.gitee.io/imgdata/techs/202207061914193.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="区块链技术"><a class="header" href="#区块链技术">区块链技术</a></h1>
 <h4 id="一个不断增长的记录列表被称为区块链中的块这些记录使用密码学安全地链接在一起整个区块链采用分布式且去中心的网络"><a class="header" href="#一个不断增长的记录列表被称为区块链中的块这些记录使用密码学安全地链接在一起整个区块链采用分布式且去中心的网络">一个不断增长的记录列表，被称为区块链中的块，这些记录使用密码学安全地链接在一起；整个区块链采用分布式且去中心的网络。</a></h4>
@@ -2542,8 +3329,7 @@ pub mod pallet {
  #[pallet::call]
  impl&lt;T:Config&gt; Pallet&lt;T&gt; { ... }
 
-}
-</code></pre>
+}</code></pre>
 <p>你可以根据需要使用部分或所有 pallets 去组合。在开始设计和构建自定义运行时时，你将了解更多关于 FRAME 库和用于定义 configuration traits、storage items、events和 errors 的运行时原语，以及如何编写分派给运行时执行的调用函数。</p>
 <h2 id="共识"><a class="header" href="#共识">共识</a></h2>
 <p>所有区块链都需要某种类型的共识机制来商定区块链状态。由于 Substrate 提供了构建区块链的模块化框架，因此它支持节点达成共识的几种不同模型。一般来说，不同的共识模型有不同的权衡，因此选择要用于链的共识类型是一个重要的考虑因素。Substrate 默认支持的共识模型只要最少的配置，但如果需要，也可以构建自定义的共识模型。</p>
@@ -2740,11 +3526,9 @@ pub mod pallet {
 <p>要计算简单 Storage Value 的密钥，获取包含存储值的 pallet 名称的 <a href="https://github.com/Cyan4973/xxHash">TwoX 128 hash</a> ，并将存储值本身的名称的 TwoX 128 hash 附加到它。例如，<a href="https://paritytech.github.io/substrate/master/pallet_sudo/index.html">Sudo</a> pallet 公开名为 <code>Key</code> 的存储值项：</p>
 <pre><code class="language-rust editable noplayground">twox_128(&quot;Sudo&quot;)                   = &quot;0x5c0d1176a568c1f92944340dbfed9e9c&quot;
 twox_128(&quot;Key&quot;)                    = &quot;0x530ebca703c85910e7164cb7d1c9e47b&quot;
-twox_128(&quot;Sudo&quot;) + twox_128(&quot;Key&quot;) = &quot;0x5c0d1176a568c1f92944340dbfed9e9c530ebca703c85910e7164cb7d1c9e47b&quot;
-</code></pre>
+twox_128(&quot;Sudo&quot;) + twox_128(&quot;Key&quot;) = &quot;0x5c0d1176a568c1f92944340dbfed9e9c530ebca703c85910e7164cb7d1c9e47b&quot;</code></pre>
 <p>如果熟悉的 <code>Alice</code> 帐户是 sudo 用户，读取 sudo pallet 的 <code>Key</code> 存储值的 RPC 请求和响应可以表示为：</p>
-<pre><code class="language-rust editable noplayground">state_getStorage(&quot;0x5c0d1176a568c1f92944340dbfed9e9c530ebca703c85910e7164cb7d1c9e47b&quot;) = &quot;0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;
-</code></pre>
+<pre><code class="language-rust editable noplayground">state_getStorage(&quot;0x5c0d1176a568c1f92944340dbfed9e9c530ebca703c85910e7164cb7d1c9e47b&quot;) = &quot;0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;</code></pre>
 <p>在这种情况下，返回的值 (<code>&quot;0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;</code>)  是 Alice's SCALE-encoded 账户的 ID (<code>5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY</code>)。</p>
 <p>你可能已经注意到，非加密的 TwoX 128 hash 算法用于生成 Storage Value 密钥。这是因为无需支付与加密哈希函数相关的执行成本，因为输入的哈希函数（pallet 和存储项目的名称）由运行时开发人员确定，而不是由区块链的潜在恶意用户确定。</p>
 <h4 id="storage-map-keys"><a class="header" href="#storage-map-keys">Storage map keys</a></h4>
@@ -2757,8 +3541,7 @@ scale_encode(&quot;5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY&quot;) = &qu
 
 blake2_128_concat(&quot;0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;) = &quot;0xde1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;
 
-state_getStorage(&quot;0xc2261276cc9d1f8598ea4b6a74b15c2f6482b9ade7bc6657aaca787ba1add3b4de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;) = &quot;0x0000a0dec5adc9353600000000000000&quot;
-</code></pre>
+state_getStorage(&quot;0xc2261276cc9d1f8598ea4b6a74b15c2f6482b9ade7bc6657aaca787ba1add3b4de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;) = &quot;0x0000a0dec5adc9353600000000000000&quot;</code></pre>
 <p>存储查询返回的值（上例中为“0x0000a0dec5adc9353600000000000000”）是 Alice 账户余额的 SCALE 编码值(本例中为“1000000000000000000000”)。请注意，在对 Alice 的帐户 ID 进行哈希运算之前，必须对其进行 SCALE 编码。还要注意，<code>blake2_128_concat</code> 函数的输出由32个十六进制字符组成，然后是该函数的输入。这是因为 Blake2 128 Concat 是一种透明的哈希算法。</p>
 <p>虽然上面的示例可能会使此特性看起来多余，但当目标是遍历 map 中的键时（而不是检索与单个键相关的值），它的实用性会变得更加明显了。为了让人们以一种看起来自然的方式使用 map（如 UIs），对 map 中的键进行遍历是一项常见的要求：首先用户会看到 map 中的元素列表，然后用户可以选择他们感兴趣的元素，并在 map 中查询关于该特定元素的更多细节。</p>
 <p>下面是另一个使用相同示例 Storage Map 的示例（一个名为 <code>FreeBalances</code> 的 map，在名为 <code>Balances</code> 的 pallet 中使用 Blake2 128 Concat 哈希算法，该 pallet 演示了如何使用 Substrate RPC 通过 <code>state_getKeys</code> RPC endpoint 查询 Storage Map 的密钥列表）：</p>
@@ -2769,8 +3552,7 @@ state_getKeys(&quot;0xc2261276cc9d1f8598ea4b6a74b15c2f6482b9ade7bc6657aaca787ba1
  &quot;0xc2261276cc9d1f8598ea4b6a74b15c2f6482b9ade7bc6657aaca787ba1add3b4de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d&quot;,
  &quot;0xc2261276cc9d1f8598ea4b6a74b15c2f6482b9ade7bc6657aaca787ba1add3b432a5935f6edc617ae178fef9eb1e211fbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f&quot;,
  ...
-]
-</code></pre>
+]</code></pre>
 <p>Substrate RPC 的 <code>state_getKeys</code> endpoint 返回的列表中的每个元素都可以直接用作 RPC 的 <code>state_getStorage</code> endpoint 的输入。实际上，上面示例列表中的第一个元素等于上一个示例中用于 <code>state_getStorage</code> 查询的输入（用作为 <code>Alice</code> 找到余额）。因为这些键所属的 map 使用一个透明哈希算法来生成的，所以可以确定与列表中的第二个元素关联的帐户。注意，列表中的每个元素都是以相同的64个字符开头的十六进制值，这是因为每个列表元素表示同一 map 中的键，并且该 map 通过连接两个 TwoX 128 hashes 来识别，每个都是 128-bits 或 32个十六进制字符。在解除列表中第二个元素的这一部分之后，你只剩下了 <code>0x32a5935f6edc617ae178fef9eb1e211fbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f</code> 。</p>
 <p>你在前面的示例中看到，这表示某个 SCALE 编码的帐户 ID 的 Blake2 128 Concat hash。Blake 128 Concat 哈希算法包括将哈希算法对其 Blake 128 哈希的输入的追加（或称为串联）。这意味着 Blake2 128 Concat 哈希的前 128 bits （或32个十六进制字符）代表 Blake2 128 哈希。剩下的数表示传递给Blake 2 128 哈希算法的值。在本例中，在删除表示 Blake 2 128 哈希 （如 0x32a5935f6edc617ae178fef9eb1e211f）的前32个十六进制字符后，剩下的是十六进制值 <code>0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f</code>，这是一个 SCALE 编码的帐户 ID。解码该值的结果是 <code>5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY</code>，这是很熟悉的 <code>Alice_Stash</code> 帐户的帐户ID。</p>
 <h3 id="运行时存储api"><a class="header" href="#运行时存储api">运行时存储API</a></h3>
@@ -3094,8 +3876,7 @@ RPC request：</p>
   impl_version: 1,
   apis: RUNTIME_API_VERSIONS,
   transaction_version: 1,
-};
-</code></pre>
+};</code></pre>
 <p>结构中的参数提供了以下信息:
 |<strong>This parameter</strong>|<strong>Provides this</strong>|
 |:-----|:-----|
@@ -3201,7 +3982,7 @@ y
 --validator
 </code></pre>
 <h3 id="回顾命令行选项"><a class="header" href="#回顾命令行选项">回顾命令行选项</a></h3>
-<table><thead><tr><th style="text-align: left">选项</th><th style="text-align: left">描述</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">选项</th><th style="text-align: left">描述</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>--base-path</code></td><td style="text-align: left">指定用于存储与此链相关的所有数据的目录。</td></tr>
 <tr><td style="text-align: left"><code>--chain local</code></td><td style="text-align: left">指定要使用的 chain specification，有效的预定义 chain specifications 包括 <code>local</code>、<code>development</code> 和 <code>staging</code>。</td></tr>
 <tr><td style="text-align: left"><code>--alice</code></td><td style="text-align: left">将 <code>alice</code> 帐户的预定义密钥添加到节点的密钥库中。通过此设置，alice 帐户用于区块生成和最终确认。</td></tr>
@@ -3212,6 +3993,7 @@ y
 <tr><td style="text-align: left"><code>--telemetry-url</code></td><td style="text-align: left">指定发送遥测数据的位置。对于本教程，你可以将遥测数据发送到由 Parity 托管的服务器，该服务器可供任何人使用。</td></tr>
 <tr><td style="text-align: left"><code>--validator</code></td><td style="text-align: left">指定此节点参与网络的区块生成和最终确认。</td></tr>
 </tbody></table>
+</div>
 <p>有关 node template 可用的命令行选项的详细信息，请通过运行以下命令查看用法帮助：
 <code>./target/release/node-template --help</code></p>
 <h3 id="查看显示的节点消息"><a class="header" href="#查看显示的节点消息">查看显示的节点消息</a></h3>
@@ -3648,8 +4430,7 @@ std = [
 <pre><code class="language-rust editable noplayground">parameter_types! {
  pub const MaxWellKnownNodes: u32 = 8;
  pub const MaxPeerIdLength: u32 = 128;
-}
-</code></pre>
+}</code></pre>
 <ul>
 <li>使用以下代码为 pallet 的 <code>Config</code> trait 添加 <code>impl</code> 部分</li>
 </ul>
@@ -3662,8 +4443,7 @@ std = [
  type SwapOrigin = EnsureRoot&lt;AccountId&gt;;
  type ResetOrigin = EnsureRoot&lt;AccountId&gt;;
  type WeightInfo = ();
-}
-</code></pre>
+}</code></pre>
 <ul>
 <li>使用以下代码行将 pallet 添加到 <code>construct_runtime</code> 宏：</li>
 </ul>
@@ -3721,8 +4501,7 @@ fn testnet_genesis(
        endowed_accounts[1].clone()
      ),
    ],
- },
-</code></pre>
+ },</code></pre>
 <p>在这部分代码中，<code>NodeAuthorizationConfig</code> 包含一个 <code>nodes</code> 属性，代表一个拥有两个元素 tuple 的 vector。元组中第一个元素是 <code>OpaquePeerId</code>，<code>bs58::decode</code> 操作转化为方便 human-readable <code>PeerId</code>，如，<code>12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2</code> 到字节。元组中第二个元素是 <code>AccountId</code>，代表此节点的所有者，该示例使用预定义的 Alice 和 Bob，此处标识为 endowed 的帐户 [0] 和 [1]。</p>
 <p>保存代码并关闭文件。</p>
 <h4 id="验证节点是否可编译"><a class="header" href="#验证节点是否可编译">验证节点是否可编译</a></h4>
@@ -3856,8 +4635,7 @@ std = [
 <pre><code class="language-rust editable noplayground">parameter_types! {
  pub MaximumSchedulerWeight: Weight = 10_000_000;
  pub const MaxScheduledPerBlock: u32 = 50;
-}
-</code></pre>
+}</code></pre>
 <p>为 Scheduler pallet 的 Config trait 添加实现。</p>
 <pre><code class="language-rust editable noplayground">impl pallet_scheduler::Config for Runtime {
  type Event = Event;
@@ -3871,8 +4649,7 @@ std = [
  type OriginPrivilegeCmp = EqualPrivilegeOnly;
  type PreimageProvider = ();
  type NoPreimagePostponement = ();
-}
-</code></pre>
+}</code></pre>
 <p>在 <code>construct_runtime!</code> 宏里添加 Scheduler pallet。</p>
 <pre><code class="language-rust editable noplayground">construct_runtime!(
  pub enum Runtime where
@@ -3883,11 +4660,9 @@ std = [
    /*** snip ***/
    Scheduler: pallet_scheduler,
  }
-);
-</code></pre>
+);</code></pre>
 <p>在文件的顶部添加以下 trait 依赖：</p>
-<pre><code class="language-rust editable noplayground">pub use frame_support::traits::EqualPrivilegeOnly;
-</code></pre>
+<pre><code class="language-rust editable noplayground">pub use frame_support::traits::EqualPrivilegeOnly;</code></pre>
 <p>增加 <a href="https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html"><code>RuntimeVersion</code> 结构</a>中的 <a href="https://paritytech.github.io/substrate/master/sp_version/struct.RuntimeVersion.html#structfield.spec_version">spec_version</a> 以升级运行时版本。</p>
 <pre><code class="language-rust editable noplayground">pub const VERSION: RuntimeVersion = RuntimeVersion {
  spec_name: create_runtime_str!(&quot;node-template&quot;),
@@ -3897,8 +4672,7 @@ std = [
  impl_version: 1,
  apis: RUNTIME_API_VERSIONS,
  transaction_version: 1,
-};
-</code></pre>
+};</code></pre>
 <p>检查 <code>RuntimeVersion</code> 结构体的组件：</p>
 <ul>
 <li><code>spec_name</code> 指定运行时的名称。</li>
@@ -3952,8 +4726,7 @@ parameter_types! {
  pub const MaxLocks: u32 = 50;
 }
 
-/*** snip ***/
-</code></pre>
+/*** snip ***/</code></pre>
 <p>这一变化增加了 Balances pallet 的 <a href="https://docs.substrate.io/reference/glossary/#existential-deposit"><code>ExistentialDeposit</code></a>，从 Balances pallet 的角度来看，需要保持帐户存活的最低余额。</p>
 <p>请记住，此更改不会导致所有在500到1000之间的余额都被获取，这将需要进行存储迁移，不在本节教程的范围。</p>
 <h4 id="构建一个可升级的运行时"><a class="header" href="#构建一个可升级的运行时">构建一个可升级的运行时</a></h4>
@@ -3997,8 +4770,7 @@ std = [
   &quot;pallet-balances/std&quot;,
   &quot;pallet-nicks/std&quot;,
   ...
-]
-</code></pre>
+]</code></pre>
 <p>如果你忘记更新 <code>Cargo.toml</code> 的 <code>features</code> 部分，在编译运行时二进制文件时，你可能会看到 <code>cannot find function</code> 错误。</p>
 <p>通过以下命令检查依赖项是否被正确解析：</p>
 <pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
@@ -4062,8 +4834,7 @@ type MaxLength = ConstU32&lt;32&gt;;
 
 // The ubiquitous event type.
 type Event = Event;
-}
-</code></pre>
+}</code></pre>
 <p>添加 Nicks 到 <code>construct_runtime!</code> 宏中，如下代码：</p>
 <pre><code class="language-rust editable noplayground">construct_runtime!(
 pub enum Runtime where
@@ -4077,8 +4848,7 @@ pub enum Runtime where
    /*** Add This Line ***/
    Nicks: pallet_nicks,
  }
-);
-</code></pre>
+);</code></pre>
 <p>通过运行下面的命令检查新的依赖是否被正确解析：</p>
 <pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
 </code></pre>
@@ -4116,11 +4886,9 @@ pub enum Runtime where
 <h2 id="配置合约pallet"><a class="header" href="#配置合约pallet">配置合约pallet</a></h2>
 <h3 id="添加contracts-pallet依赖"><a class="header" href="#添加contracts-pallet依赖">添加contracts pallet依赖</a></h3>
 <p>将 contracts pallet 的依赖项添加到运行时，导入 <code>pallet-contracts</code> crate，打开 <code>runtime/Cargo.toml</code> 文件，复制一个存在的 pallet 依赖项描述，然后把名字替换为 <code>pallet-contracts</code>，使该 pallet 在 node template 运行时是可用的。例如，添加如下类似的一行：</p>
-<pre><code class="language-rust editable noplayground">pallet-contracts = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
-</code></pre>
+<pre><code class="language-rust editable noplayground">pallet-contracts = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }</code></pre>
 <p>导入 <code>pallet-contracts-primitives</code> crate，通过将其添加到依赖项列表中，使其可用于 node template 运行时。在大多数情况下，你在任何给定版本的 node template 中为每个托盘指定相同的信息。然而，如果编译器指定的版本与你所指定的版本不同，你可能需要修改依赖项以匹配编译器识别的版本。例如，如果编译器发现 <code>pallet-contracts-primitives</code> crate 的版本是 6.0.0：</p>
-<pre><code class="language-rust editable noplayground">pallet-contracts-primitives = { version = &quot;6.0.0&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
-</code></pre>
+<pre><code class="language-rust editable noplayground">pallet-contracts-primitives = { version = &quot;6.0.0&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }</code></pre>
 <p>将 Contracts pallet 添加到 <code>std</code> 特性列表中，这样当运行时作为平台原生二进制（非 Wasm 二进制）文件构建时，它的特性就包括在内了。</p>
 <pre><code class="language-rust editable noplayground">[features]
 default = [&quot;std&quot;]
@@ -4135,12 +4903,10 @@ std = [
   &quot;pallet-balances/std&quot;,
   &quot;pallet-contracts/std&quot;,
   &quot;pallet-contracts-primitives/std&quot;,
-]
-</code></pre>
+]</code></pre>
 <p>保存代码并关闭 <code>runtime/Cargo.toml</code> 文件。</p>
 <p>通过运行下面的命令检查你的运行时编译是否正确：</p>
-<pre><code class="language-rust editable noplayground">cargo check -p node-template-runtime
-</code></pre>
+<pre><code class="language-rust editable noplayground">cargo check -p node-template-runtime</code></pre>
 <h3 id="实现-contracts-configuration-trait"><a class="header" href="#实现-contracts-configuration-trait">实现 Contracts configuration trait</a></h3>
 <p>如果你查看 <code>pallet_contracts::Config</code> Rust API 文档，你将会注意到，该 pallet 不像 Nicks pallet 一样，有很多关联类型，因此本节教程的代码比之前的要更复杂。</p>
 <p>为了在运行时给 Contracts pallet 实现 <code>Config</code> trait，打开 <code>runtime/src/lib.rs</code>，找到 <code>pub use frame_support</code> 代码块并添加 <code>Nothing</code> 到 traits 列表之中，如下：</p>
@@ -4154,15 +4920,13 @@ weights::{
  IdentityFee, Weight,
 },
 StorageValue,
-};
-</code></pre>
+};</code></pre>
 <p>添加一行从 Contracts pallet 导入默认的 contract 权重，如下：</p>
 <pre><code class="language-rust editable noplayground">pub use frame_system::Call as SystemCall;
 pub use pallet_balances::Call as BalancesCall;
 pub use pallet_timestamp::Call as TimestampCall;
 use pallet_transaction_payment::CurrencyAdapter;
-use pallet_contracts::DefaultContractAccessWeight; // Add this line
-</code></pre>
+use pallet_contracts::DefaultContractAccessWeight; // Add this line</code></pre>
 <p>添加 Contracts pallet 所需的常量添加到运行时，如下：</p>
 <pre><code class="language-rust editable noplayground">/* After this block */
 // Time is measured by number of blocks.
@@ -4180,8 +4944,7 @@ const fn deposit(items: u32, bytes: u32) -&gt; Balance {
 items as Balance * 15 * CENTS + (bytes as Balance) * 6 * CENTS
 }
 const AVERAGE_ON_INITIALIZE_RATIO: Perbill = Perbill::from_percent(10);
-/*** End Added Block ***/
-</code></pre>
+/*** End Added Block ***/</code></pre>
 <p>在运行时中为 <code>pallet_contracts</code> 添加参数类型和实现 <code>Config</code> trait，如下</p>
 <pre><code class="language-rust editable noplayground">/*** Add a block similar to the following ***/
 parameter_types! {
@@ -4214,8 +4977,7 @@ impl pallet_contracts::Config for Runtime {
   type RelaxedMaxCodeLen = ConstU32&lt;{ 512 * 1024 }&gt;;
   type MaxStorageKeyLen = ConstU32&lt;{ 512 * 1024 }&gt;;
 }
-/*** End added block ***/
-</code></pre>
+/*** End added block ***/</code></pre>
 <p>关于 Contracts pallet 配置的更多信息以及类型和参数如何被使用的，可参考 <a href="https://github.com/paritytech/substrate/blob/master/frame/contracts/src/lib.rs">Contracts pallet source code</a></p>
 <p>添加 <code>pallet_contracts</code> 到 <code>construct_runtime!</code> 宏中，如下：</p>
 <pre><code class="language-rust editable noplayground">// Create the runtime by composing the FRAME pallets that were previously configured
@@ -4235,8 +4997,7 @@ construct_runtime!(
      Sudo: pallet_sudo,
      Contracts: pallet_contracts,
   }
-);
-</code></pre>
+);</code></pre>
 <p>保存代码并关闭 <code>runtime/src/lib.rs</code> 文件。</p>
 <p>通过运行下面的命令检查你的运行时编译是否正确：</p>
 <pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
@@ -4248,8 +5009,7 @@ construct_runtime!(
 <li>在不进行交易的情况下调用节点存储。</li>
 </ul>
 <p>要暴露合约 RPC API，打开 <code>runtime/Cargo.toml</code> 文件，使用与其他 pallets 相同的版本和分支信息，将 <code>pallet-contracts-rpc-runtime-api</code> pallet 的相关代码描述添加到 <code>[dependencies]</code> 部分，如下：</p>
-<pre><code class="language-rust editable noplayground">pallet-contracts-rpc-runtime-api = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }
-</code></pre>
+<pre><code class="language-rust editable noplayground">pallet-contracts-rpc-runtime-api = { version = &quot;4.0.0-dev&quot;, default-features = false, git = &quot;https://github.com/paritytech/substrate.git&quot;, branch = &quot;polkadot-v0.9.26&quot; }</code></pre>
 <p>将 <code>pallet-contracts-rpc-runtime-api</code> 添加到 <code>std</code> 特性列表中，以便在构建运行时为原生二进制时包含其特性。</p>
 <pre><code class="language-rust editable noplayground">[features]
 default = [&quot;std&quot;]
@@ -4260,12 +5020,10 @@ std = [
   &quot;pallet-contracts-primitives/std&quot;,
   &quot;pallet-contracts-rpc-runtime-api/std&quot;,
   ...
-]
-</code></pre>
+]</code></pre>
 <p>保存代码并关闭 <code>runtime/Cargo.toml</code> 文件。</p>
 <p>打开 <code>runtime/src/lib.rs</code> 文件，并通过添加以下常量启用合约调试：</p>
-<pre><code class="language-rust editable noplayground">const CONTRACTS_DEBUG_OUTPUT: bool = true;
-</code></pre>
+<pre><code class="language-rust editable noplayground">const CONTRACTS_DEBUG_OUTPUT: bool = true;</code></pre>
 <p>在 <code>impl_runtime_apis!</code> 宏中，接近运行时 <code>lib.rs</code> 文件末尾的地方，实现合约运行时 API，如在 <code>impl_runtime_apis! { }</code> 的部分：</p>
 <pre><code class="language-rust editable noplayground">/*** Add this block ***/
 impl pallet_contracts_rpc_runtime_api::ContractsApi&lt;Block, AccountId, Balance, BlockNumber, Hash&gt;
@@ -4308,8 +5066,7 @@ impl pallet_contracts_rpc_runtime_api::ContractsApi&lt;Block, AccountId, Balance
      ) -&gt; pallet_contracts_primitives::GetStorageResult {
      Contracts::get_storage(address, key)
      }
-  }
-</code></pre>
+  }</code></pre>
 <p>保存代码并关闭 <code>runtime/src/lib.rs</code> 文件。</p>
 <p>通过运行下面的命令检查你的运行时编译是否正确：</p>
 <pre><code class="language-bash editable noplayground">cargo check -p node-template-runtime
@@ -4323,13 +5080,11 @@ pallet-contracts-rpc = { version = &quot;4.0.0-dev&quot;, git = &quot;https://gi
 <p>由于你已经暴露了运行时API，并且现在正在为外部节点编写代码，不需要使用 <code>no_std</code> 配置，所以你不必维护专用的 <code>std</code> 特性列表。</p>
 <p>保存代码并关闭 <code>node/Cargo.toml</code> 文件。</p>
 <p>打开 <code>node/src/rpc.rs</code> 文件，并找到下面这一行。</p>
-<pre><code class="language-rust editable noplayground">use node_template_runtime::{opaque::Block, AccountId, Balance, Index};
-</code></pre>
+<pre><code class="language-rust editable noplayground">use node_template_runtime::{opaque::Block, AccountId, Balance, Index};</code></pre>
 <p>将 <code>use pallet_contracts_rpc</code> 添加到文件中，如下：</p>
 <pre><code class="language-rust editable noplayground">use pallet_transaction_payment_rpc::{TransactionPayment, TransactionPaymentApiServer};
 use substrate_frame_rpc_system::{System, SystemApiServer};
-use pallet_contracts_rpc::{Contracts, ContractsApiServer}; // Add this line
-</code></pre>
+use pallet_contracts_rpc::{Contracts, ContractsApiServer}; // Add this line</code></pre>
 <p>为 RPC 扩展添加 Contracts RPC pallet 到 <code>create_full</code> 函数中，如下：</p>
 <pre><code class="language-rust editable noplayground">/// Instantiate all full RPC extensions.
 pub fn create_full&lt;C, P&gt;(
@@ -4343,13 +5098,11 @@ where
   C::Api: pallet_transaction_payment_rpc::TransactionPaymentRuntimeApi&lt;Block, Balance&gt;,
   C::Api: pallet_contracts_rpc::ContractsRuntimeApi&lt;Block, AccountId, Balance, BlockNumber, Hash&gt;, // Add this line
   C::Api: BlockBuilder&lt;Block&gt;,
-  P: TransactionPool + 'static,
-</code></pre>
+  P: TransactionPool + 'static,</code></pre>
 <p>添加 Contracts RPC API 的扩展。</p>
 <pre><code class="language-rust editable noplayground">module.merge(System::new(client.clone(), pool.clone(), deny_unsafe).into_rpc())?;
 module.merge(TransactionPayment::new(client.clone()).into_rpc())?;
-module.merge(Contracts::new(client.clone()).into_rpc())?; // Add this line
-</code></pre>
+module.merge(Contracts::new(client.clone()).into_rpc())?; // Add this line</code></pre>
 <p>保存代码并关闭 <code>node/src/rpc.rs</code> 文件。</p>
 <p>通过运行下面的命令检查你的运行时编译是否正确：</p>
 <pre><code class="language-bash editable noplayground">cargo check -p node-template
@@ -4565,8 +5318,7 @@ pub struct MyContract {
 	my_bool: bool,
 	// Store a number
 	my_number: u32,
-}
-</code></pre>
+}</code></pre>
 <h4 id="支持的类型-1"><a class="header" href="#支持的类型-1">支持的类型</a></h4>
 <p>Substrate 智能合约支持最常见的 Rust 数据类型，包括布尔类型，未签名和已签名的整数型，字符串，元组，以及数组。这些数据类型使用 <a href="https://github.com/paritytech/parity-scale-codec"><strong>Parity scale codec</strong></a> 进行编码和解码，以便可以在网络上高效的传输。</p>
 <p>除了常见的 Rust 类型使用 scale codec 进行编码解码外，ink! 语言支持 Substrate 特性类型，像 <code>AccountId</code>，<code>Balance</code>，和 <code>Hash</code>，就好像它们是原始类型。下面的代码说明了如何为该合约存储一个 <code>AccountId</code> 和 <code>Balance</code>。</p>
@@ -4585,8 +5337,7 @@ mod MyContract {
 		my_balance: Balance,
 	}
 	/* --snip-- */
-}
-</code></pre>
+}</code></pre>
 <h4 id="构造函数"><a class="header" href="#构造函数">构造函数</a></h4>
 <p>每一个 ink! 智能合约必须至少有一个在创建合约时运行的构造函数。然而，如果你需要，一个智能合约也可以有多个多个构造函数。下面的代码说明了如何使用多个构造函数：</p>
 <pre><code class="language-rust editable noplayground">use ink_lang as ink;
@@ -4619,8 +5370,7 @@ mod mycontract {
 		}
 	/* --snip-- */
 	}
-}
-</code></pre>
+}</code></pre>
 <h3 id="更新你的智能合约"><a class="header" href="#更新你的智能合约">更新你的智能合约</a></h3>
 <p>现在你已经了解到如何存储简单的值，声明数据类型，以及使用构造函数，你可以更新你的智能合约源代码以实现下面的功能：</p>
 <ul>
@@ -4632,8 +5382,7 @@ mod mycontract {
 <pre><code class="language-rust editable noplayground">#[ink(storage)]
 pub struct Incrementer {
    value: i32,
-}
-</code></pre>
+}</code></pre>
 <p>修改 <code>Incrementer</code> 构造函数，将其 <code>value</code> 设置为 <code>init_value</code>。</p>
 <pre><code class="language-rust editable noplayground">impl Incrementer {
  #[ink(constructor)]
@@ -4642,20 +5391,17 @@ pub struct Incrementer {
          value: init_value,
        }
  }
-}
-</code></pre>
+}</code></pre>
 <p>添加第二个名为 <code>default</code> 的构造函数，该函数创建一个新的 <code>Incrementer</code>，将其 <code>value</code> 设置为 <code>0</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(constructor)]
 pub fn default() -&gt; Self {
    Self {
        value: 0,
    }
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
-<pre><code class="language-rust editable noplayground">cargo +nightly test
-</code></pre>
+<pre><code class="language-rust editable noplayground">cargo +nightly test</code></pre>
 <p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
 <pre><code class="language-bash editable noplayground">running 1 test
 test incrementer::tests::default_works ... ok
@@ -4668,15 +5414,13 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn get(&amp;self) -&gt; i32 {
    self.value
-}
-</code></pre>
+}</code></pre>
 <p>因为这个函数只从合约存储中读取数据，所以它使用 <code>&amp;self</code> 参数来访问合约函数和存储项，此函数不允许更改存储项 <code>value</code> 的状态。如果函数中的最后一个表达式没有分号（;），Rust 将则将其视为返回值。</p>
 <p>将私有 <code>default_works</code> 函数中的 <code>Test Your Contract</code> 注释替换为测试 <code>get</code> 函数的代码。</p>
 <pre><code class="language-rust editable noplayground">fn default_works() {
    let contract = Incrementer::default();
    assert_eq!(contract.get(), 0);
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
@@ -4687,8 +5431,7 @@ pub fn get(&amp;self) -&gt; i32 {
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn inc(&amp;mut self, by: i32) {
    self.value += by;
-}
-</code></pre>
+}</code></pre>
 <p>向源代码中添加一个新测试，以验证此函数。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
    fn it_works() {
@@ -4698,8 +5441,7 @@ pub fn inc(&amp;mut self, by: i32) {
        assert_eq!(contract.get(), 47);
        contract.inc(-50);
        assert_eq!(contract.get(), -3);
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
@@ -4796,8 +5538,7 @@ mod incrementer {
             assert_eq!(contract.get(), -3);
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h2 id="使用maps存储值"><a class="header" href="#使用maps存储值">使用maps存储值</a></h2>
 <p>本节教程说明了如何可以扩展智能合约的功能，以管理每个用户的一个号码。要添加这个功能，你将会使用 <a href="https://paritytech.github.io/ink/ink_storage/struct.Mapping.html"><code>Mapping</code></a> 类型。</p>
 <p>ink! 语言提供 <a href="https://paritytech.github.io/ink/ink_storage/struct.Mapping.html"><code>Mapping</code></a> 类型，使你能够将数据存储为键值对。例如，下面的代码说明了映射一个用户到一个号码。</p>
@@ -4805,8 +5546,7 @@ mod incrementer {
 pub struct MyContract {
 	// Store a mapping from AccountIds to a u32
 	my_number_map: ink_storage::Mapping&lt;AccountId, u32&gt;,
-}
-</code></pre>
+}</code></pre>
 <p>使用 <code>Mapping</code> 数据类型，可以为每个键存储值的唯一实例。本节教程中，每一个 <code>AccountId</code> 代表一个键，该键映射到一个且仅一个存储的数字 <code>my_value</code>。每个用户只能存储、增加和检索与其自己的 <code>AccountId</code> 关联的值。</p>
 <h3 id="初始化一个mapping"><a class="header" href="#初始化一个mapping">初始化一个mapping</a></h3>
 <p>第一步是初始化 <code>AccountId</code> 和存储值之间的映射。在你的合约中使用映射之前，你必须始终初始化映射，以避免映射错误和不一致。要初始化映射，需要执行以下操作：</p>
@@ -4854,8 +5594,7 @@ mod mycontract {
             self.map.get(&amp;caller).unwrap_or_default()
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h4 id="识别合约的调用者"><a class="header" href="#识别合约的调用者">识别合约的调用者</a></h4>
 <p>在前面的例子中，你可能注意到了 <code>self.env().caller()</code> 函数调用。这个函数在整个合约逻辑中都是可用的，并且总是返回 <strong>contract caller</strong>。重要的是要注意，<strong>contract caller</strong> 与 <strong>origin caller</strong> 是不同的。如果用户访问一个合约，然后再调用后来的合约，那么第二个合约中的 <code>self.env().caller()</code> 是第一个合约的地址，而不是 original user 的地址。</p>
 <h4 id="使用合约的调用者"><a class="header" href="#使用合约的调用者">使用合约的调用者</a></h4>
@@ -4882,8 +5621,7 @@ mod mycontract {
 		}
 		/* --snip-- */
 	}
-}
-</code></pre>
+}</code></pre>
 <p>因为你已经使用 <code>owner</code> 标识符保存了合约调用者，所以你可以再后面编写函数来检查当前合约调用者是否是合同的所有者。</p>
 <h3 id="添加mapping到智能合约中"><a class="header" href="#添加mapping到智能合约中">添加mapping到智能合约中</a></h3>
 <p>为 <code>incrementer</code> 合约添加 storage map，在 <code>incrementer</code> 项目文件夹中，打开 <code>lib.rs</code>，为你的合约导入 <code>SpreadAllocate</code> 特征并追加派生宏。</p>
@@ -4892,14 +5630,12 @@ mod incrementer {
    use ink_storage::traits::SpreadAllocate;
 
    #[ink(storage)]
-   #[derive(SpreadAllocate)]
-</code></pre>
+   #[derive(SpreadAllocate)]</code></pre>
 <p>将映射键从 <code>AccountId</code> 添加到存储为 <code>my_value</code> 的 <code>i32</code> 数据类型。</p>
 <pre><code class="language-rust editable noplayground">pub struct Incrementer {
    value: i32,
    my_value: ink_storage::Mapping&lt;AccountId, i32&gt;,
-}
-</code></pre>
+}</code></pre>
 <p>使用 <code>initialize_contract</code> 函数为合约中的 <code>new</code> 函数设置一个初始 <code>value</code> 和 <code>my_value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(constructor)]
 pub fn new(init_value: i32) -&gt; Self {
@@ -4908,30 +5644,26 @@ pub fn new(init_value: i32) -&gt; Self {
        let caller = Self::env().caller();
        contract.my_value.insert(&amp;caller, &amp;0);
    })
-}
-</code></pre>
+}</code></pre>
 <p>使用 <code>initialize_contract</code> 函数为合约中的 <code>default</code> 函数设置一个初始 <code>value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(constructor)]
 pub fn default() -&gt; Self {
    ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
        contract.value = Default::default();
    })
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>get_mine</code> 函数，使用 Mapping API <code>get</code> 函数读取 <code>my_value</code>，并为合约调用者返回 <code>my_value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn get_mine(&amp;self) -&gt; i32 {
    self.my_value.get(&amp;self.env().caller()).unwrap_or_default()
-}
-</code></pre>
+}</code></pre>
 <p>向初始化帐户添加一个新测试。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
 fn my_value_works() {
    let contract = Incrementer::new(11);
    assert_eq!(contract.get(), 11);
    assert_eq!(contract.get_mine(), 0);
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
@@ -4952,14 +5684,12 @@ pub fn inc_mine(&amp;mut self, by: i32) {
    let caller = self.env().caller();
    let my_value = self.get_mine();
    self.my_value.insert(caller, &amp;(my_value + by));
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>remove_mine()</code> 函数，该函数允许合约调用者从存储中获取可删除的 <code>my_value</code> 存储项。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn remove_mine(&amp;mut self) {
    self.my_value.remove(&amp;self.env().caller())
-}
-</code></pre>
+}</code></pre>
 <p>添加一个新测试，以验证 <code>inc_mine()</code> 函数是否按预期工作。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
 fn inc_mine_works() {
@@ -4969,8 +5699,7 @@ fn inc_mine_works() {
    assert_eq!(contract.get_mine(), 5);
    contract.inc_mine(5);
    assert_eq!(contract.get_mine(), 10);
-}
-</code></pre>
+}</code></pre>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
 </code></pre>
@@ -5102,8 +5831,7 @@ mod incrementer {
             assert_eq!(contract.get_mine(), 0);
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h2 id="构建一个token合约"><a class="header" href="#构建一个token合约">构建一个token合约</a></h2>
 <p>本节教程演示了如何使用 ink! 语言构建 ERC-20 代币合约，ERC-20 规范定义了可替换代币的通用标准。拥有定义代币属性的标准，使遵循规范的开发人员，能够构建与其他产品和服务互操作的应用程序。ERC-20 代币标准不是唯一的代币标准，但它是最常用的标准之一。</p>
 <h3 id="erc-20标准的基础知识"><a class="header" href="#erc-20标准的基础知识">ERC-20标准的基础知识</a></h3>
@@ -5186,13 +5914,11 @@ test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <pre><code class="language-rust editable noplayground">let from_balance = self.balance_of(from);
 if from_balance &lt; value {
 return Err(Error::InsufficientBalance)
-}
-</code></pre>
+}</code></pre>
 <p>从转移账户中减去该值，并将该值添加到接收账户。</p>
 <pre><code class="language-rust editable noplayground">self.balances.insert(from, &amp;(from_balance - value));
 let to_balance = self.balance_of(to);
-self.balances.insert(to, &amp;(to_balance + value));
-</code></pre>
+self.balances.insert(to, &amp;(to_balance + value));</code></pre>
 <p>要添加转移函数到智能合约，在 <code>erc20</code> 项目目录中，打开 <code>lib.rs</code> 文件，添加一个 <code>Error</code> 声明，以在帐户中没有足够的代币来完成转账时返回一个错误。</p>
 <pre><code class="language-rust editable noplayground">/// Specify ERC-20 error type.
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
@@ -5200,19 +5926,16 @@ self.balances.insert(to, &amp;(to_balance + value));
 pub enum Error {
 /// Return if the balance cannot fulfill a request.
    InsufficientBalance,
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>Result</code> 返回类型，以返回 <code>InsufficientBalance</code> 错误。</p>
 <pre><code class="language-rust editable noplayground">/// Specify the ERC-20 result type.
-pub type Result&lt;T&gt; = core::result::Result&lt;T, Error&gt;;
-</code></pre>
+pub type Result&lt;T&gt; = core::result::Result&lt;T, Error&gt;;</code></pre>
 <p>添加 <code>transfer()</code> 公共函数，使合约调用者能够将代币转移到另一个帐户。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn transfer(&amp;mut self, to: AccountId, value: Balance) -&gt; Result&lt;()&gt; {
    let from = self.env().caller();
    self.transfer_from_to(&amp;from, &amp;to, value)
-}
-</code></pre>
+}</code></pre>
 <p>添加 <code>transfer_from_to()</code> 私有函数，将代币从与合约调用者关联的帐户转移到接收帐户。</p>
 <pre><code class="language-rust editable noplayground">fn transfer_from_to(
    &amp;mut self,
@@ -5229,14 +5952,12 @@ pub fn transfer(&amp;mut self, to: AccountId, value: Balance) -&gt; Result&lt;()
     let to_balance = self.balance_of_impl(to);
     self.balances.insert(to, &amp;(to_balance + value));
     Ok(())
-}
-</code></pre>
+}</code></pre>
 <p>这段代码片段使用了 <code>balance_of_impl()</code> 函数，<code>balance_of_impl()</code> 函数与 <code>balance_of</code> 函数相同，不同的是它使用引用在 WebAssembly 中以更有效的方式查找帐户余额。在智能合约中添加如下函数即可使用该功能：</p>
 <pre><code class="language-rust editable noplayground">#[inline]
 fn balance_of_impl(&amp;self, owner: &amp;AccountId) -&gt; Balance {
    self.balances.get(owner).unwrap_or_default()
-}
-</code></pre>
+}</code></pre>
 <p>通过运行下面的命令，验证程序是否编译并通过了测试用例：</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
 </code></pre>
@@ -5266,8 +5987,7 @@ pub struct Transfer {
    #[ink(topic)]
    to: Option&lt;AccountId&gt;,
    value: Balance,
- }
-</code></pre>
+ }</code></pre>
 <p>你可以使用 <code>.unwrap_or()</code> 函数为 <code>Option&lt;T&gt;</code> 变量检索数据。</p>
 <h4 id="发出事件"><a class="header" href="#发出事件">发出事件</a></h4>
 <p>现在你已经声明了事件并定义了事件包含的信息，接下来需要添加发出事件的代码。你可以通过调用 <code>self.env().emit_event()</code> 来实现这一点，将事件名称作为调用的唯一参数。</p>
@@ -5287,8 +6007,7 @@ pub struct Transfer {
        to: Some(caller),
        value: initial_supply,
      });
-   }
-</code></pre>
+   }</code></pre>
 <p>将 <code>Transfer</code> 事件添加到 <code>transfer_from_to()</code> 函数中。</p>
 <pre><code class="language-rust editable noplayground">self.balances.insert(from, &amp;(from_balance - value));
 let to_balance = self.balance_of_impl(to);
@@ -5297,8 +6016,7 @@ self.env().emit_event(Transfer {
    from: Some(*from),
    to: Some(*to),
    value,
-});
-</code></pre>
+});</code></pre>
 <p>注意 <code>value </code> 不需要 <code>Some()</code>，因为值没有存储在 <code>Option</code> 中。</p>
 <p>添加一个将代币从一个帐户转移到另一个帐户的测试用例。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
@@ -5307,11 +6025,9 @@ fn transfer_works() {
    assert_eq!(erc20.balance_of(AccountId::from([0x0; 32])), 0);
    assert_eq!(erc20.transfer((AccountId::from([0x0; 32])), 10), Ok(()));
    assert_eq!(erc20.balance_of(AccountId::from([0x0; 32])), 10);
-}
-</code></pre>
+}</code></pre>
 <p>通过运行以下命令验证程序的编译并且通过所有测试用例：</p>
-<pre><code class="language-rust editable noplayground">cargo +nightly test
-</code></pre>
+<pre><code class="language-rust editable noplayground">cargo +nightly test</code></pre>
 <p>该命令应该显示类似以下的输出，以表示成功完成测试：</p>
 <pre><code class="language-bash editable noplayground">running 3 tests
 test erc20::tests::new_works ... ok
@@ -5331,8 +6047,7 @@ test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <pre><code class="language-rust editable noplayground">pub struct Erc20 {
  /// Balances that can be transferred by non-owners: (owner, spender) -&gt; allowed
  allowances: ink_storage::Mapping&lt;(AccountId, AccountId), Balance&gt;,
-}
-</code></pre>
+}</code></pre>
 <p>元组使用 <code>(owner, spender)</code> 来标识 <code>spender</code> 帐户，该帐户被允许在指定 <code>allowance</code> 代表 <code>owner</code> 访问代币。</p>
 <p>要为智能合约添加批准逻辑，打开 <code>lib.rs</code> 文件，使用 <code>#[ink(event)]</code> 属性宏声明 <code>Approval</code> 事件。</p>
 <pre><code class="language-rust editable noplayground">#[ink(event)]
@@ -5342,19 +6057,16 @@ pub struct Approval {
    #[ink(topic)]
    spender: AccountId,
    value: Balance,
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>Error</code> 声明，以便在转账请求超过帐户限额时返回一个错误。</p>
 <pre><code class="language-rust editable noplayground">#[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
 #[cfg_attr(feature = &quot;std&quot;, derive(scale_info::TypeInfo))]
 pub enum Error {
    InsufficientBalance,
    InsufficientAllowance,
-}
-</code></pre>
+}</code></pre>
 <p>将所有者和非所有者组合的存储映射添加到帐户余额。</p>
-<pre><code class="language-rust editable noplayground">allowances: Mapping&lt;(AccountId, AccountId), Balance&gt;,
-</code></pre>
+<pre><code class="language-rust editable noplayground">allowances: Mapping&lt;(AccountId, AccountId), Balance&gt;,</code></pre>
 <p>添加 <code>approve()</code> 函数来授权 <code>spender</code> 帐户从调用者的帐户中提取代币，直到取到最大 <code>value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn approve(&amp;mut self, spender: AccountId, value: Balance) -&gt; Result&lt;()&gt; {
@@ -5366,20 +6078,17 @@ pub fn approve(&amp;mut self, spender: AccountId, value: Balance) -&gt; Result&l
      value,
    });
    Ok(())
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>allowance()</code> 函数来返回允许 <code>spender</code> 从 <code>owner</code> 帐户中提取的代币数量。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn allowance(&amp;self, owner: AccountId, spender: AccountId) -&gt; Balance {
    self.allowance_impl(&amp;owner, &amp;spender)
-}
-</code></pre>
+}</code></pre>
 <p>这段代码片段使用了 <code>allowance_impl()</code> 函数。<code>allowance_impl()</code> 函数与 <code>allowance</code> 函数相同，不同之处是它使用引用来在 WebAssembly 中以更有效的方式查找代币限额。在智能合约中添加如下函数即可使用该功能：</p>
 <pre><code class="language-rust editable noplayground">#[inline]
 fn allowance_impl(&amp;self, owner: &amp;AccountId, spender: &amp;AccountId) -&gt; Balance {
    self.allowances.get((owner, spender)).unwrap_or_default()
-}
-</code></pre>
+}</code></pre>
 <h4 id="从逻辑中添加转账"><a class="header" href="#从逻辑中添加转账">从逻辑中添加转账</a></h4>
 <p>现在你已经为一个帐户设置了代表另一个帐户转移代币的批准，你需要创建一个 <code>transfer_from</code> 函数，以允许已批准的用户转移代币。<code>transfer_from</code> 函数调用私有 <code>transfer_from_to</code> 函数来执行大部分转移逻辑。授权非所有者转让代币有几个要求：</p>
 <ul>
@@ -5407,8 +6116,7 @@ pub fn transfer_from(
    self.allowances
        .insert((&amp;from, &amp;caller), &amp;(allowance - value));
    Ok(())
-  }
-</code></pre>
+  }</code></pre>
 <p>为 <code>transfer_from()</code> 函数添加一个测试用例。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
 fn transfer_from_works() {
@@ -5417,8 +6125,7 @@ fn transfer_from_works() {
    contract.approve(AccountId::from([0x1; 32]), 20);
    contract.transfer_from(AccountId::from([0x1; 32]), AccountId::from([0x0; 32]), 10);
    assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 10);
-}
-</code></pre>
+}</code></pre>
 <p>通过运行以下命令验证程序的编译并且通过所有测试用例：</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
 </code></pre>
@@ -5682,8 +6389,7 @@ mod erc20 {
             );
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h2 id="智能合约的问题排查"><a class="header" href="#智能合约的问题排查">智能合约的问题排查</a></h2>
 <p>本节介绍了在基于 Substrate 的区块链上编写和部署智能合约时可能遇到的一些常见问题，以及如何解决这些问题。</p>
 <h3 id="意外的运行错误"><a class="header" href="#意外的运行错误">意外的运行错误</a></h3>
@@ -6052,8 +6758,7 @@ impl paras_registrar::Config for Runtime {
 </ul>
 <h4 id="提交一个插槽请求"><a class="header" href="#提交一个插槽请求">提交一个插槽请求</a></h4>
 <p>Rococo 运行时需要 <code>sudo</code> 访问来分配插槽。例如，Rococo 运行时指定用于分配插槽的帐户必须具有 root 级别权限：</p>
-<pre><code class="language-rust editable noplayground">AssignSlotOrigin = EnsureRoot&lt;Self::AccountId&gt;;
-</code></pre>
+<pre><code class="language-rust editable noplayground">AssignSlotOrigin = EnsureRoot&lt;Self::AccountId&gt;;</code></pre>
 <p>最终，插槽分配将通过 Rococo 治理方式由社区驱动。然而，Rococo <code>sudo</code> 的密钥目前是由 Parity 公司控制。因此，你必须提交 <a href="https://github.com/paritytech/subport/issues/new?assignees=&amp;labels=Rococo&amp;template=rococo.yaml">Rococo Slot Request</a> 接收插槽分配。分配插槽后，你将收到通知，并准备连接。</p>
 <h4 id="使用管理帐户分配一个插槽"><a class="header" href="#使用管理帐户分配一个插槽">使用管理帐户分配一个插槽</a></h4>
 <p>如果你有一个具有 <code>AssignSlotOrigin</code> origin 帐户，你可以使用该帐户在 Rococo 网络上分配一个临时插槽。</p>
@@ -6398,14 +7103,12 @@ cargo build --release
 impl frame_system::Config for Test {
  // -- snip --
  type AccountId = u64;
-}
-</code></pre>
+}</code></pre>
 <p>如果 <code>Test</code> 实现了 <code>pallet_balances::Config</code>，则可能使用 <code>u64</code> 作为 <code>Balance</code> 类型。例如:</p>
 <pre><code class="language-rust editable noplayground">impl pallet_balances::Config for Test {
  // -- snip --
  type Balance = u64;
-}
-</code></pre>
+}</code></pre>
 <p>通过分配 <code>pallet_balances::Balance</code> 和 <code>frame_system::AccountId</code> 为 <code>u64</code>，测试帐户和余额仅需要在模拟运行时跟踪一个（<code>AccountId: u64, Balance: u64</code>）映射。</p>
 <h3 id="在一个mock运行时中测试存储"><a class="header" href="#在一个mock运行时中测试存储">在一个mock运行时中测试存储</a></h3>
 <p><a href="https://paritytech.github.io/substrate/master/sp_io/index.html"><code>sp-io</code></a> crate 公开了一个 <a href="https://paritytech.github.io/substrate/master/sp_io/type.TestExternalities.html"><code>TestExternalities</code></a> 实现，你可以使用它在一个模拟环境中测试存储。它是内存中的类型别名，它是substrate_state_machine <a href="https://paritytech.github.io/substrate/master/sp_state_machine/index.html"><code>substrate_state_machine</code></a> 中基于 hashmap 的外部性实现，称为 <a href="https://paritytech.github.io/substrate/master/sp_state_machine/struct.TestExternalities.html"><code>TestExternalities</code></a>。</p>
@@ -6419,16 +7122,14 @@ impl ExtBuilder {
   ext.execute_with(|| System::set_block_number(1));
   ext
  }
-}
-</code></pre>
+}</code></pre>
 <p>要在单元测试中创建测试环境，调用构建方法来使用默认的创世配置生成 <code>TestExternalities</code>。</p>
 <pre><code class="language-rust editable noplayground">#[test]
 fn fake_test_example() {
  ExtBuilder::default().build_and_execute(|| {
   // ...test logics...
  });
-}
-</code></pre>
+}</code></pre>
 <p><a href="https://paritytech.github.io/substrate/master/sp_externalities/index.html">Externalities</a> 的自定义实现允许你构建提供对外部节点特性访问的运行时环境。另一个例子可以在 <a href="https://paritytech.github.io/substrate/master/sp_core/offchain/index.html"><code>offchain</code></a> 模块中找到。<code>offchain</code> 模块维护自己的 <a href="https://paritytech.github.io/substrate/master/sp_core/offchain/trait.Externalities.html">Externalities</a> 实现。</p>
 <h3 id="创世配置-1"><a class="header" href="#创世配置-1">创世配置</a></h3>
 <p>在前面的示例中，<code>ExtBuilder::build()</code> 方法使用默认的起源配置来构建模拟运行时环境。在许多情况下，在测试之前设置存储是很方便的。例如你可能希望在测试之前预设置帐户的余额。</p>
@@ -6453,14 +7154,12 @@ fn fake_test_example() {
   ext.execute_with(|| System::set_block_number(1));
   ext
  }
-}
-</code></pre>
+}</code></pre>
 <p>在本例中，账户 1 有余额 10，账户 2 有余额 20，以此类推。</p>
 <p>用于定义 pallet 的创世配置的确切结构取决于 pallet 的 <code>GenesisConfig</code> 结构定义。例如在 Balances pallet 中，它被定义为：</p>
 <pre><code class="language-rust editable noplayground">pub struct GenesisConfig&lt;T: Config&lt;I&gt;, I: 'static = ()&gt; {
  pub balances: Vec&lt;(T::AccountId, T::Balance)&gt;,
-}
-</code></pre>
+}</code></pre>
 <h3 id="区块生产"><a class="header" href="#区块生产">区块生产</a></h3>
 <p>模拟区块生产以验证预期行为在区块生产中是否存在是有用的。</p>
 <p>一种简单的方法是，使用 <code>System::block_number()</code> 作为唯一输入，在来自所有模块的 <code>on_initialize</code> 和 <code>on_finalize</code> 调用之间递增 System 模块的区块号。尽管对运行时代码来说缓存对存储或系统模块的调用是很重要的，但是测试环境脚手架应该优先考虑可读性，以促进未来可继续容易的维护。</p>
@@ -6474,8 +7173,7 @@ fn fake_test_example() {
   System::on_initialize(System::block_number());
   ExamplePallet::on_initialize(System::block_number());
  }
-}
-</code></pre>
+}</code></pre>
 <p><code>on_finalize</code> 和 <code>on_initialize</code> 方法只能从 <code>ExamplePallet</code> 调用，如果 pallet trait 实现了 <code>frame_support::traits::{OnInitialize, OnFinalize}</code> traits，分别在每个块之前和之后执行运行时方法中编码的逻辑。</p>
 <p>然后按以下方式调用此函数。</p>
 <pre><code class="language-rust editable noplayground">#[test]
@@ -6485,8 +7183,7 @@ fn my_runtime_test() {
   run_to_block(10);
   assert_ok!(ExamplePallet::end_auction());
  });
-}
-</code></pre>
+}</code></pre>
 <h2 id="调试"><a class="header" href="#调试">调试</a></h2>
 <p>在软件开发的各个阶段，调试都是必要的，区块链也不例外。大多数常见的 Rust 调试工具同样也适用于 Substrate。</p>
 <h3 id="日志工具"><a class="header" href="#日志工具">日志工具</a></h3>
@@ -6503,13 +7200,11 @@ fn my_runtime_test() {
 
 	Self::deposit_event(RawEvent::SomethingStored(my_val, who));
 	Ok(())
-}
-</code></pre>
+}</code></pre>
 <h3 id="可打印trait"><a class="header" href="#可打印trait">可打印trait</a></h3>
 <p>可打印trait 是一种在 <code>no_std</code> 和在 <code>std</code> 情况下从运行时打印的方法。<code>print</code> 函数适用于实现了 <a href="https://paritytech.github.io/substrate/master/sp_runtime/traits/trait.Printable.html"><code>Printable</code> trait</a> 的任何类型。Substrate 默认为某些类型（<code>u8</code>, <code>u32</code>, <code>u64</code>, <code>usize</code>, <code>&amp;[u8]</code>, <code>&amp;str</code>）实现此特性。你也可以为你的自定义类型实现它，下面是一个使用 node-template 作为示例代码库为 pallet 的 <code>Error</code> 类型实现它的示例。</p>
 <pre><code class="language-rust editable noplayground">use sp_runtime::traits::Printable;
-use sp_runtime::print;
-</code></pre>
+use sp_runtime::print;</code></pre>
 <pre><code class="language-rust editable noplayground">#[frame_support::pallet]
 pub mod pallet {
 	// The pallet's errors
@@ -6530,8 +7225,7 @@ pub mod pallet {
 			}
 		}
 	}
-}
-</code></pre>
+}</code></pre>
 <pre><code class="language-rust editable noplayground">/// takes no parameters, attempts to increment storage value, and possibly throws an error
 pub fn cause_error(origin) -&gt; dispatch::DispatchResult {
 	// Check it was signed and get the signer. See also: ensure_root and ensure_none
@@ -6554,11 +7248,9 @@ pub fn cause_error(origin) -&gt; dispatch::DispatchResult {
 			Ok(())
 		},
 	}
-}
-</code></pre>
+}</code></pre>
 <p>运行带有 RUST_LOG 环境变量的节点二进制文件以打印值。</p>
-<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev
-</code></pre>
+<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev</code></pre>
 <p>每次调用运行时函数时，这些值都打印在终端或标准输出中。</p>
 <pre><code class="language-bash editable noplayground">2020-01-01 tokio-blocking-driver DEBUG runtime  My Test Message  &lt;-- str implements Printable by default
 2020-01-01 tokio-blocking-driver DEBUG runtime  Invalid Value    &lt;-- the custom string from NoneValue
@@ -6586,11 +7278,9 @@ pub fn do_something(origin) -&gt; DispatchResult {
 	Self::deposit_event(RawEvent::SomethingStored(my_val, who));
 	Ok(())
 }
-// --snip--
-</code></pre>
+// --snip--</code></pre>
 <p>使用 <code>RUST_LOG</code> 环境变量启动链，以查看打印日志。</p>
-<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev
-</code></pre>
+<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev</code></pre>
 <p>如果 Error 被触发，这些值将打印在终端或标准输出中。</p>
 <pre><code class="language-bash editable noplayground">2020-01-01 00:00:00 tokio-blocking-driver DEBUG runtime  Execute do_something
 2020-01-01 00:00:00 tokio-blocking-driver DEBUG runtime  After storing my_val
@@ -6598,8 +7288,7 @@ pub fn do_something(origin) -&gt; DispatchResult {
 <h3 id="if-std"><a class="header" href="#if-std">If std</a></h3>
 <p>传统的 <code>print</code> 函数允许你打印并获得 <code>Printable</code> trait 的实现。然而有一些传统的用例，可能想要做更多的事情，而不仅仅是打印，或者仅仅为了调试目的，而不必考虑 Substrate-specific traits。 <a href="https://paritytech.github.io/substrate/master/sp_std/macro.if_std.html"><code>if_std!</code> macro</a> 在这种情况下是有用的。</p>
 <p>使用此宏的一个警告是，只有当你实际运行 runtime 的 native 版本时，内部的代码才会执行。</p>
-<pre><code class="language-rust editable noplayground">use sp_std::if_std; // Import into scope the if_std! macro.
-</code></pre>
+<pre><code class="language-rust editable noplayground">use sp_std::if_std; // Import into scope the if_std! macro.</code></pre>
 <p><code>println!</code> 语句应该在 <code>if_std</code> 宏中。</p>
 <pre><code class="language-rust editable noplayground">#[pallet::call]
 impl&lt;T: Config&lt;I&gt;, I: 'static&gt; Pallet&lt;T, I&gt; {
@@ -6622,8 +7311,7 @@ impl&lt;T: Config&lt;I&gt;, I: 'static&gt; Pallet&lt;T, I&gt; {
 			Ok(())
 		}
 		// --snip--
-}
-</code></pre>
+}</code></pre>
 <p>每次调用运行时函数时，这些值都打印在终端或标准输出中。</p>
 <pre><code class="language-bash editable noplayground">$		2020-01-01 00:00:00 Substrate Node
 		2020-01-01 00:00:00   version x.y.z-x86_64-linux-gnu
@@ -6688,8 +7376,7 @@ impl&lt;T: Config&lt;I&gt;, I: 'static&gt; Pallet&lt;T, I&gt; {
 <p>你可以在所有预构建的 <a href="https://github.com/paritytech/substrate/tree/master/frame">FRAME pallets</a> 中找到端到端基准的的示例。</p>
 <h3 id="测试基准测试"><a class="header" href="#测试基准测试">测试基准测试</a></h3>
 <p>你可以使用为单元测试 pallet 创建类似的模拟运行时执行基准测试。使用的基准测试宏在你的 <code>benchmarking.rs</code> 模块中可以自动的生成测试函数。例如：</p>
-<pre><code class="language-rust editable noplayground">fn test_benchmark_[benchmark_name]&lt;T&gt;::() -&gt; Result&lt;(), &amp;'static str&gt;
-</code></pre>
+<pre><code class="language-rust editable noplayground">fn test_benchmark_[benchmark_name]&lt;T&gt;::() -&gt; Result&lt;(), &amp;'static str&gt;</code></pre>
 <p>你可以将基准测试函数添加到单元测试中，并确保函数的结果是 <code>Ok(())</code>。</p>
 <h4 id="验证块"><a class="header" href="#验证块">验证块</a></h4>
 <p>通常你只需要检查基准测试是否返回 <code>Ok(())</code>，因为该结果表明函数已成功执行。但是如果你想要验证任何最终条件，比如运行时的最终状态，你可以选择在基准测试中包含一个 <code>verify</code> 块。额外的 <code>verify</code> 块不会影响你的最终基准测试过程的结果。</p>
@@ -6708,8 +7395,7 @@ mod benches {
 		[pallet_babe, Babe]
     ...
     [pallet_mycustom, MyCustom]
-    ...
-</code></pre>
+    ...</code></pre>
 <p>在添加了 pallet 之后，使用 <code>runtime-benchmarks</code> 特性标志编译节点二进制文件。例如：</p>
 <pre><code class="language-bash editable noplayground">cd bin/node/cli
 cargo build --profile=production --features runtime-benchmarks
@@ -7002,15 +7688,13 @@ public fun transfer(from: &amp;signer, to: address, amount: u64) acquires Balanc
 <p>接下来再看本模块所需要各数据结构.</p>
 <p>Move 语言的模块没有自己的数据存储，相反的是 Move 语言提供按地址(addresses) 索引的 <strong>全局存储</strong> (也是就是我们所说的区块链状态(blockchain state)). 每个地址之下包含有 Move 模块(代码)和 Move 资源 (数据)。</p>
 <p>在 Rust 语法中，全局存储看起来有点像这样：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct GlobalStorage {
     resources: Map&lt;address, Map&lt;ResourceType, ResourceValue&gt;&gt;
     modules: Map&lt;address, Map&lt;ModuleName, ModuleBytecode&gt;&gt;
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>每个地址下的 Move 资源存储是一个类型到数值的映射。(细心的读者也许已经注意到每个地址, 每个类型下只能对应一个具体值)。这方便地为我们提供了一个按地址索引的本地映射。
 在 <code>BasicCoin</code> 模块中，定义了每个 <code>Balance</code> (钱包，余额)资源表示每个地址下持有的币的数量：</p>
 <pre><code>/// Struct representing the balance of each address.
@@ -8495,12 +9179,13 @@ qc_encode.draw()
 </code></pre>
 <p>所有这四个答案中最右边的位完全取决于我们添加的两位是相同还是不同。所以对于0+0和1+1，当两位相等时，答案的最右边的位就出来了0。对于0+1和1+0，我们在其中添加不同的位值，最右边的位是1。</p>
 <p>为了使解的这一部分正确，我们需要一些东西来确定两个位是否不同。传统上，在数字计算的研究中，这被称为异或门。</p>
-<table><thead><tr><th style="text-align: center">Input 1</th><th style="text-align: center">Input 2</th><th style="text-align: center">XOR Output</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Input 1</th><th style="text-align: center">Input 2</th><th style="text-align: center">XOR Output</th></tr></thead><tbody>
 <tr><td style="text-align: center">0</td><td style="text-align: center">0</td><td style="text-align: center">0</td></tr>
 <tr><td style="text-align: center">0</td><td style="text-align: center">1</td><td style="text-align: center">1</td></tr>
 <tr><td style="text-align: center">1</td><td style="text-align: center">0</td><td style="text-align: center">1</td></tr>
 <tr><td style="text-align: center">1</td><td style="text-align: center">1</td><td style="text-align: center">0</td></tr>
 </tbody></table>
+</div>
 <p>在量子计算机中，异或门的工作由受控非门完成。由于这个名字很长，我们通常将其称为 CNOT。在 Qiskit 中它的名字是cx，更短。在电路图中，它如下图所示。</p>
 <pre><code>qc_cnot = QuantumCircuit(2)
 qc_cnot.cx(0,1)
@@ -8530,12 +9215,13 @@ qc.draw()
 </li>
 </ul>
 <p>下表显示了 CNOT 门的所有可能输入和相应输出：</p>
-<table><thead><tr><th style="text-align: center">Input (q1 q0)</th><th style="text-align: center">Output (q1 q0)</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Input (q1 q0)</th><th style="text-align: center">Output (q1 q0)</th></tr></thead><tbody>
 <tr><td style="text-align: center">00</td><td style="text-align: center">00</td></tr>
 <tr><td style="text-align: center">01</td><td style="text-align: center">11</td></tr>
 <tr><td style="text-align: center">10</td><td style="text-align: center">10</td></tr>
 <tr><td style="text-align: center">11</td><td style="text-align: center">01</td></tr>
 </tbody></table>
+</div>
 <p>对于我们的半加器，我们不想覆盖我们的输入之一。相反，我们想将结果写在一对不同的量子位上。为此，我们可以使用两个 CNOT。</p>
 <pre><code>qc_ha = QuantumCircuit(4,2)
 # encode inputs in qubits 0 and 1
@@ -8599,396 +9285,6 @@ plot_histogram(counts)
 <p><strong>Version Information</strong></p>
 <table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.18.2</td></tr><tr><td><code>qiskit-aer</code></td><td>0.9.0</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.16.0</td></tr><tr><td><code>qiskit-aqua</code></td><td>0.9.5</td></tr><tr><td><code>qiskit</code></td><td>0.30.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.2.1</td></tr><tr><td><code>qiskit-finance</code></td><td>0.2.1</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.2.2</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.2.1</td></tr><tr><th>System information</th></tr><tr><td>Python</td><td>3.8.10 (default, Jun  2 2021, 10:49:15) 
 [GCC 9.4.0]</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>2</td></tr><tr><td>Memory (Gb)</td><td>7.521877288818359</td></tr><tr><td colspan='2'>Sun Oct 03 22:50:56 2021 IST</td></tr></table>
-<h2 id="表示量子比特状态"><a class="header" href="#表示量子比特状态">表示量子比特状态</a></h2>
-<p>您现在对位以及我们熟悉的数字计算机的工作原理有所了解。现代软件中使用的所有复杂变量、对象和数据结构基本上都是一大堆比特。我们这些从事量子计算工作的人称这些为经典变量。使用它们的计算机，就像您用来阅读本文的计算机，我们称为经典计算机。</p>
-<p>在量子计算机中，我们的基本变量是量子位：位的量子变体。它们与普通位具有完全相同的限制：它们只能存储一条二进制信息，并且只能为我们提供0or的输出1。然而，它们也可以以只有量子力学才能描述的方式被操纵。这为我们提供了新的门，让我们能够找到设计算法的新方法。</p>
-<p>要完全理解这些新门，我们首先需要了解如何记下量子比特状态。为此，我们将使用向量、矩阵和复数的数学。尽管我们会边走边介绍这些概念，但最好您已经熟悉它们。如果您需要更深入的解释或复习，可以在此处找到<a href="https://qiskit.org/textbook/ch-appendix/linear_algebra.html">指南</a>。</p>
-<p>内容</p>
-<p>1.经典比特与量子比特
-1.1状态向量
-1.2量子比特符号
-1.3使用 Qiskit 探索量子比特
-2.测量规则
-2.1一个非常重要的规则
-2.2这个规则的含义
-3.布洛赫球体
-3.1描述受限量子位状态
-3.2视觉表示量子位状态</p>
-<h3 id="经典比特与量子比特"><a class="header" href="#经典比特与量子比特">经典比特与量子比特</a></h3>
-<h4 id="状态向量"><a class="header" href="#状态向量">状态向量</a></h4>
-<p>在量子物理学中，我们使用状态向量来描述系统的状态。假设我们想描述汽车在赛道上的位置，这是一个经典系统，所以我们可以使用一个数字 x :</p>
-<p><img src="https://learn.qiskit.org/content/ch-states/images/car_track_1.jpg" alt="" /></p>
-<p>$$
-x = 4
-$$</p>
-<p>或者，我们可以使用称为 状态向量的向量中的一组数字。statevector 中的每个元素都包含在某个地方找到汽车的概率：</p>
-<p><img src="https://learn.qiskit.org/content/ch-states/images/car_track_2.jpg" alt="" /></p>
-<p>$$
-|x\rangle = \begin{bmatrix} 0\ \vdots \ 0 \ 1 \ 0 \ \vdots \ 0 \end{bmatrix} 
-\begin{matrix} \  \  \ \leftarrow \  \  \  \ \end{matrix}
-\begin{matrix} \  \ \text{Probability of} \ \text{car being at} \ \text{position 4} \  \  \ \end{matrix}
-$$</p>
-<p>这不仅限于位置，我们还可以保留汽车可能具有的所有可能速度以及汽车可能具有的所有可能颜色的状态向量。对于经典系统（如上面的汽车示例），这是一件愚蠢的事情，因为当我们真的只需要一个数字时，它需要保留巨大的向量。但正如我们将在本章中看到的那样，状态向量恰好是跟踪量子系统（包括量子计算机）的一种非常好的方法。</p>
-<h4 id="量子比特符号"><a class="header" href="#量子比特符号">量子比特符号</a></h4>
-<p>经典位总是有一个完全明确定义的状态：它们要么是0，要么1在计算过程中的每个点。没有比这更多的细节可以添加到 bit 的状态中了。所以要写下一个经典位 ( c) 的状态，我们可以只使用这两个二进制值。例如：</p>
-<p>c = 0</p>
-<p>对于量子位，此限制已解除。我们只需要在进行测量以提取输出时明确定义我们是从量子位得到 a0还是 a 。1届时，它必须承诺这两个选项之一。在所有其他时间，它的状态将比简单的二进制值所捕获的更复杂。</p>
-<p>要了解如何描述这些，我们可以先关注两个最简单的情况。正如我们在上一节中看到的，可以在0测量时明确给出结果的状态下准备一个量子位。</p>
-<p>我们需要这个状态的名称。让我们缺乏想象力并称它为 0。类似地，存在一个 qubit 状态，它一定会输出 a 1。我们称之为 1 个。这两种状态是完全互斥的。要么 qubit 肯定输出 a 0，要么它肯定输出 a 1。没有重叠。用数学表示这一点的一种方法是使用两个正交向量。</p>
-<p>$$
-|0\rangle = \begin{bmatrix} 1 \ 0 \end{bmatrix} , , , , |1\rangle =\begin{bmatrix} 0 \ 1 \end{bmatrix}.
-$$</p>
-<p>这是一次要全部接受的很多符号。首先，让我们打开奇怪的包装 | 和 ⟩。他们的工作本质上只是提醒我们，我们正在谈论代表标记的量子比特状态的向量 0 和 个。这有助于我们将它们与位值0和1/或数字 0 和 1 之类的东西区分开来。它是 Dirac 引入的 bra-ket 表示法的一部分。</p>
-<p>如果您不熟悉向量，您基本上可以将它们视为我们使用特定规则操作的数字列表。如果您熟悉高中物理课上的向量，您就会知道这些规则使向量非常适合描述具有大小和方向的量。例如，物体的速度可以用矢量完美地描述。然而，我们对量子态使用向量的方式与此略有不同，所以不要太坚持你以前的直觉。是时候做点新的了！</p>
-<p>使用向量，我们可以描述更复杂的状态，而不仅仅是 |0⟩ 和 |1。例如，考虑向量</p>
-<p>$$
-|q_0\rangle = \begin{bmatrix} \tfrac{1}{\sqrt{2}} \ \tfrac{i}{\sqrt{2}} \end{bmatrix} .
-$$</p>
-<p>要了解此状态的含义，我们需要使用数学规则来处理向量。具体来说，我们需要了解如何将向量相加以及如何将它们与标量相乘。</p>
-<ul>
-<li>提醒：标量的矩阵加法和乘法（单击此处展开）
-要添加两个向量，我们将它们的元素加在一起：</li>
-</ul>
-<p>$$
-|a\rangle = \begin{bmatrix}a_0 \ a_1 \ \vdots \ a_n \end{bmatrix}, \quad
-|b\rangle = \begin{bmatrix}b_0 \ b_1 \ \vdots \ b_n \end{bmatrix}
-|a\rangle + |b\rangle = \begin{bmatrix}a_0 + b_0 \ a_1 + b_1 \ \vdots \ a_n + b_n \end{bmatrix}
-$$</p>
-<p>要将向量乘以标量，我们将每个元素乘以标量：</p>
-<p>$$
-x|a\rangle = \begin{bmatrix}x \times a_0 \ x \times  a_1 \ \vdots \ x \times  a_n \end{bmatrix}
-$$</p>
-<p>这两个规则用于重写向量 |q0⟩（如上图）：</p>
-<p>$$
-\begin{aligned} 
-|q_0\rangle &amp; = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle \
-&amp; = \tfrac{1}{\sqrt{2}}\begin{bmatrix}1\0\end{bmatrix} + \tfrac{i}{\sqrt{2}}\begin{bmatrix}0\1\end{bmatrix}\
-&amp; = \begin{bmatrix}\tfrac{1}{\sqrt{2}}\0\end{bmatrix} + \begin{bmatrix}0\\tfrac{i}{\sqrt{2}}\end{bmatrix}\
-&amp; = \begin{bmatrix}\tfrac{1}{\sqrt{2}} \ \tfrac{i}{\sqrt{2}} \end{bmatrix}\
-\end{aligned}
-$$</p>
-<ul>
-<li>提醒：正交基（单击此处展开）前面说过这两个向量 |0⟩ 和 |1 个 ⟩ 是正交的，这意味着它们既是正交的又是归一化的。正交意味着向量成直角：
-<img src="https://qiskit.org/textbook/ch-states/images/basis.svg" alt="" /></li>
-</ul>
-<p>归一化意味着它们的大小（箭头的长度）等于 1。这两个向量 |0⟩ 和 |1 个 ⟩ 是线性独立的，这意味着我们无法描述 |0⟩ 按照 |1 个 ⟩，反之亦然。但是，使用这两个向量 |0⟩ 和 |1 个 ⟩，以及我们的标量加法和乘法规则，我们可以描述二维空间中所有可能的向量：
-<img src="https://qiskit.org/textbook/ch-states/images/basis2.svg" alt="" /></p>
-<p>因为载体 |0⟩ 和 |1 个 ⟩ 是线性无关的，并且可以使用向量加法和标量乘法来描述二维空间中的任何向量，我们称向量 |0⟩ 和 |1 个 ⟩ 形成基础。在这种情况下，由于它们既是正交的又是归一化的，我们称之为正交基。</p>
-<p>由于各状态 |0⟩ 和 |1 个 ⟩ 形成正交基，我们可以用这两种状态的组合来表示任何二维向量。这允许我们以替代形式编写我们的量子比特的状态：</p>
-<p>$$
-|q_0\rangle = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle
-$$</p>
-<p>这个向量，|q<sub>0</sub>⟩ 被称为量子比特的状态向量，它告诉我们关于这个量子比特我们可能知道的一切。目前，我们只能对状态向量的这个特定示例得出一些简单的结论：它并不完全 |0⟩ 并不完全 |1 个 ⟩。相反，它是由两者的线性组合来描述的。在量子力学中，我们通常使用“叠加”一词来描述此类线性组合。虽然我们的例子说明 |q<sub>0</sub>⟩ 可以表示为的叠加 |0⟩ 和 |1 个⟩，它与它们一样是一个确定且定义明确的量子位状态。为了解这一点，我们可以开始探索如何操纵量子位。</p>
-<h4 id="用-qiskit-探索量子比特"><a class="header" href="#用-qiskit-探索量子比特">用 Qiskit 探索量子比特</a></h4>
-<p>首先，我们需要导入所有需要的工具：</p>
-<pre><code>from qiskit import QuantumCircuit, assemble, Aer
-from qiskit.visualization import plot_histogram, plot_bloch_vector
-from math import sqrt, pi
-</code></pre>
-<p>在 Qiskit 中，我们使用该QuantumCircuit对象来存储我们的电路，这本质上是我们电路上的量子操作列表以及它们所应用的量子位。</p>
-<pre><code>qc = QuantumCircuit(1) # Create a quantum circuit with one qubit
-</code></pre>
-<p>在我们的量子电路中，我们的量子位总是从状态开始 |0⟩。我们可以使用该initialize()方法将其转换为任何状态。initialize()我们以列表的形式给出我们想要的向量，并告诉它我们想要在这个状态下初始化哪个量子位：</p>
-<pre><code>qc = QuantumCircuit(1)  # Create a quantum circuit with one qubit
-initial_state = [0,1]   # Define initial_state as |1&gt;
-qc.initialize(initial_state, 0) # Apply initialisation operation to the 0th qubit
-qc.draw()  # Let's view our circuit
-</code></pre>
-<p>然后我们可以使用 Qiskit 的模拟器之一来查看我们的量子比特的结果状态。</p>
-<pre><code>sim = Aer.get_backend('aer_simulator')  # Tell Qiskit how to simulate our circuit
-</code></pre>
-<p>为了从我们的电路中获得结果，我们使用 run 来执行我们的电路，将电路和后端作为参数。然后我们用 .result() 它来得到这个结果：</p>
-<pre><code>qc = QuantumCircuit(1)  # Create a quantum circuit with one qubit
-initial_state = [0,1]   # Define initial_state as |1&gt;
-qc.initialize(initial_state, 0) # Apply initialisation operation to the 0th qubit
-qc.save_statevector()   # Tell simulator to save statevector
-qobj = assemble(qc)     # Create a Qobj from the circuit for the simulator to run
-result = sim.run(qobj).result() # Do the simulation and return the result
-</code></pre>
-<p>从 result，然后我们可以使用 获得最终的状态向量 .get_statevector()：</p>
-<pre><code>out_state = result.get_statevector()
-print(out_state) # Display the output state vector
-
-Statevector([0.+0.j, 1.+0.j],
-            dims=(2,))
-</code></pre>
-<p>注： Python 用来 j 表示 i 在复数中。我们看到一个包含两个复数元素的向量：0.+ 0.j = 0 和 1.+ 0.j = 1。</p>
-<p>现在让我们像在真正的量子计算机中那样测量我们的量子位并查看结果：</p>
-<pre><code>qc.measure_all()
-qc.draw()
-</code></pre>
-<p>这一次，我们将使用以下方法获取 0 和结果的计数，而不是状态向量 .get_counts()</p>
-<pre><code>qobj = assemble(qc)
-result = sim.run(qobj).result()
-counts = result.get_counts()
-plot_histogram(counts)
-</code></pre>
-<p>我们可以看到我们（不出所料）有 100% 的机会测量 |1个 ⟩。这一次，让我们将我们的量子比特置于叠加态中，看看会发生什么。我们将使用状态 |q<sub>0</sub>⟩ 来自本节前面的内容：</p>
-<p>$$
-|q_0\rangle = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle
-$$</p>
-<p>我们需要将这些振幅添加到 python 列表中。为了添加复振幅，Python 使用j虚数单位（我们通常称其为&quot; i &quot;数学上）：</p>
-<pre><code>initial_state = [1/sqrt(2), 1j/sqrt(2)]  # Define state |q_0&gt;
-</code></pre>
-<p>然后我们像以前一样重复初始化量子位的步骤：</p>
-<pre><code>qc = QuantumCircuit(1) # Must redefine qc
-qc.initialize(initial_state, 0) # Initialize the 0th qubit in the state `initial_state`
-qc.save_statevector() # Save statevector
-qobj = assemble(qc)
-state = sim.run(qobj).result().get_statevector() # Execute the circuit
-print(state)           # Print the result
-
-Statevector([0.70710678+0.j        , 0.        +0.70710678j],
-            dims=(2,))
-</code></pre>
-<p>我们可以看到我们有相等的概率测量 |0⟩ 或者 |1 个 ⟩。为了解释这一点，我们需要谈谈测量。</p>
-<h3 id="测量规则"><a class="header" href="#测量规则">测量规则</a></h3>
-<h4 id="一个非常重要的规则"><a class="header" href="#一个非常重要的规则">一个非常重要的规则</a></h4>
-<p>有一个简单的测量规则。找出测量状态的概率 |ψ⟩ 在该州 |x⟩ 我们的确是：</p>
-<p>$$
-p(|x\rangle) = | \langle x| \psi \rangle|^2
-$$</p>
-<p>符号 ⟨ 和 | 告诉我们 ⟨X| 是一个行向量和符号 | 和 ⟩ 告诉我们 |ψ⟩ 是列向量。在量子力学中，我们称列向量为kets，行向量为bra。它们一起构成了小括号表示法。任何凯特 |A⟩ 有对应的bra ⟨A|，我们使用共轭转置在它们之间进行转换。</p>
-<ul>
-<li>提醒：共轭转置（单击此处展开）
-bra-ket 之间的转换使用共轭转置方法进行。我们知道一个ket（列向量）表示如下：</li>
-</ul>
-<p>$$
-\quad|a\rangle = \begin{bmatrix}a_0 \ a_1 \ \vdots \ a_n \end{bmatrix}
-$$</p>
-<p>在共轭转置法中，矩阵被转置并且元素是复共轭的（由 &quot;∗&quot; 运算）其中复共轭（&quot;∗&quot;）的复数是实部和虚部大小相等但符号相反的数。这给出了对应的胸罩（行向量）如下：</p>
-<p>$$
-\langle a| = \begin{bmatrix}a_0^<em>, &amp; a_1^</em>, &amp; \dots &amp; a_n^* \end{bmatrix}
-$$</p>
-<ul>
-<li>提醒：内积（点击此处展开）
-向量相乘有不同的方法，这里我们使用内积。内积是您可能已经熟悉的点积的推广。在本指南中，我们使用 bra（行向量）和 ket（列向量）之间的内积，它遵循以下规则：</li>
-</ul>
-<p>$$
-\langle a| = \begin{bmatrix}a_0^<em>, &amp; a_1^</em>, &amp; \dots &amp; a_n^* \end{bmatrix}, \quad
-|b\rangle = \begin{bmatrix}b_0 \ b_1 \ \vdots \ b_n \end{bmatrix}
-\langle a|b\rangle = a_0^* b_0 + a_1^* b_1 \dots a_n^* b_n
-$$ </p>
-<p>我们可以看到两个向量的内积总是给我们一个标量。要记住的一件有用的事情是两个正交向量的内积是 0，例如，如果我们有正交向量 |0⟩ 和 |1个 ⟩：</p>
-<p>$$
-\langle1|0\rangle = \begin{bmatrix} 0 &amp; 1\end{bmatrix}\begin{bmatrix}1 \ 0\end{bmatrix} = 0
-$$</p>
-<p>此外，请记住向量 |0⟩ 和 |1个 ⟩ 也归一化（量级等于 1）：</p>
-<p>$$
-\begin{aligned} 
-\langle0|0\rangle &amp; = \begin{bmatrix} 1 &amp; 0\end{bmatrix}\begin{bmatrix}1 \ 0\end{bmatrix} = 1 \
-\langle1|1\rangle &amp; = \begin{bmatrix} 0 &amp; 1\end{bmatrix}\begin{bmatrix}0 \ 1\end{bmatrix} = 1
-\end{aligned}
-$$</p>
-<p>在上面的等式中，|X⟩ 可以是任何量子比特状态。找到测量的概率 |x⟩，我们取内积 |x⟩ 以及我们正在测量的状态（在这种情况下 |ψ⟩），然后平方幅度。这可能看起来有点令人费解，但很快就会成为第二天性。</p>
-<p>如果我们看状态 |q<sub>0</sub>⟩ 从之前，我们可以看到测量的概率 |0⟩ 确实是 0.5：
-$$
-\begin{aligned}
-|q_0\rangle &amp; = \tfrac{1}{\sqrt{2}}|0\rangle + \tfrac{i}{\sqrt{2}}|1\rangle \
-\langle 0| q_0 \rangle  &amp; = \tfrac{1}{\sqrt{2}}\langle 0|0\rangle + \tfrac{i}{\sqrt{2}}\langle 0|1\rangle \
-&amp; = \tfrac{1}{\sqrt{2}}\cdot 1 +  \tfrac{i}{\sqrt{2}} \cdot 0\
-&amp; = \tfrac{1}{\sqrt{2}}\
-|\langle 0| q_0 \rangle|^2 &amp; = \tfrac{1}{2}
-\end{aligned}
-$$</p>
-<p>你应该验证测量的概率 |1个 ⟩ 作为练习。</p>
-<p>这条规则支配着我们如何从量子态中获取信息。因此，它对我们在量子计算中所做的一切都非常重要。它还立即暗示了几个重要的事实。</p>
-<h4 id="本规则的含义"><a class="header" href="#本规则的含义">本规则的含义</a></h4>
-<h5 id="1-归一化"><a class="header" href="#1-归一化">#1 归一化</a></h5>
-<p>该规则向我们表明振幅与概率有关。如果我们希望概率加起来为 1（它们应该！），我们需要确保状态向量被正确归一化。具体来说，我们需要状态向量的大小为 1。</p>
-<p>$$
-\langle\psi|\psi\rangle = 1 \
-$$</p>
-<p>因此，如果：</p>
-<p>$$
-|\psi\rangle = \alpha|0\rangle + \beta|1\rangle
-$$</p>
-<p>然后：</p>
-<p>$$
-|\alpha|^2 + |\beta|^2 = 1
-$$</p>
-<p>这解释了以下因素 <math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>2</mn></msqrt></math> 个你已经在本章中看到了。事实上，如果我们试图给出initialize()一个未归一化的向量，它会给我们一个错误：</p>
-<pre><code>vector = [1,1]
-qc.initialize(vector, 0)
-
-
----------------------------------------------------------------------------
-QiskitError                               Traceback (most recent call last)
-Input In [12], in &lt;cell line: 2&gt;()
-      1 vector = [1,1]
-----&gt; 2 qc.initialize(vector, 0)
-
-File /usr/local/lib/python3.8/site-packages/qiskit/extensions/quantum_initializer/initializer.py:191, in initialize(self, params, qubits)
-    188     qubits = [qubits]
-    189 num_qubits = len(qubits) if isinstance(params, int) else None
---&gt; 191 return self.append(Initialize(params, num_qubits), qubits)
-
-File /usr/local/lib/python3.8/site-packages/qiskit/extensions/quantum_initializer/initializer.py:57, in Initialize.__init__(self, params, num_qubits)
-     36 def __init__(self, params, num_qubits=None):
-     37     r&quot;&quot;&quot;Create new initialize composite.
-     38 
-     39     Args:
-   (...)
-     55             and the remaining 3 qubits to be initialized to :math:`|0\rangle`.
-     56     &quot;&quot;&quot;
----&gt; 57     self._stateprep = StatePreparation(params, num_qubits)
-     59     super().__init__(&quot;initialize&quot;, self._stateprep.num_qubits, 0, self._stateprep.params)
-
-File /usr/local/lib/python3.8/site-packages/qiskit/circuit/library/data_preparation/state_preparation.py:99, in StatePreparation.__init__(self, params, num_qubits, inverse, label)
-     96 self._from_label = isinstance(params, str)
-     97 self._from_int = isinstance(params, int)
----&gt; 99 num_qubits = self._get_num_qubits(num_qubits, params)
-    101 params = [params] if isinstance(params, int) else params
-    103 super().__init__(self._name, num_qubits, params, label=self._label)
-
-File /usr/local/lib/python3.8/site-packages/qiskit/circuit/library/data_preparation/state_preparation.py:202, in StatePreparation._get_num_qubits(self, num_qubits, params)
-    200     # Check if probabilities (amplitudes squared) sum to 1
-    201     if not math.isclose(sum(np.absolute(params) ** 2), 1.0, abs_tol=_EPS):
---&gt; 202         raise QiskitError(&quot;Sum of amplitudes-squared does not equal one.&quot;)
-    204     num_qubits = int(num_qubits)
-    205 return num_qubits
-
-QiskitError: 'Sum of amplitudes-squared does not equal one.'
-</code></pre>
-<p><b>快速练习</b> 
-1.创建一个状态向量，它将给出 1个/3个测量概率 |0⟩。
-2.创建将提供相同测量概率的不同状态向量。
-3.验证测量的概率 |1个 ⟩ 对于这两个状态是 2个/3个。
-您可以在下面的小部件中检查您的答案（接受答案 ±1% 的准确度，您可以在向量中使用 numpy 术语，例如在向量中的 'pi' 和 'sqrt()'）</p>
-<pre><code># Run the code in this cell to interact with the widget
-from qiskit_textbook.widgets import state_vector_exercise
-state_vector_exercise(target=1/3)
-</code></pre>
-<h5 id="2-替代测量"><a class="header" href="#2-替代测量">#2 替代测量</a></h5>
-<p>测量规则给了我们概率 p(|x⟩) 那个状态 |ψ⟩ 被测量为 |x⟩。它没有告诉我们 |x⟩ 只能是 |0⟩ 或者 |1个 ⟩。</p>
-<p>到目前为止，我们考虑的测量实际上只是测量量子位的无数种可能方法中的一种。对于任何正交状态对，我们可以定义一个测量值，使量子位在两者之间进行选择。</p>
-<p>下一节将进一步探讨这种可能性。现在，请记住 |x⟩ 不仅限于简单 |0⟩ 或者 |1个 ⟩。</p>
-<h5 id="3-全球阶段"><a class="header" href="#3-全球阶段">#3 全球阶段</a></h5>
-<p>我们知道测量状态 |1个 ⟩ 1会给我们确定的输出。但是我们也可以写下这样的状态
-$$
-\begin{bmatrix}0 \ i\end{bmatrix} = i|1\rangle.
-$$</p>
-<p>要查看其行为方式，我们应用测量规则。</p>
-<p>$$
-|\langle x| (i|1\rangle) |^2 = | i \langle x|1\rangle|^2 = |\langle x|1\rangle|^2
-$$</p>
-<p>在这里我们发现因素 i 一旦我们取复数的大小，它就会消失。这种影响完全独立于测量状态 |x⟩。我们正在考虑的衡量标准无关紧要，状态的概率 i|1个⟩ 与那些相同 |1个⟩。由于测量是我们从量子比特中提取任何信息的唯一方式，这意味着这两种状态在物理相关的所有方面都是等价的。</p>
-<p>更一般地说，我们指的是任何整体因素 γ 在一个状态下 |γ| =1 个作为“全球阶段”。仅在全局阶段不同的状态在物理上是无法区分的。</p>
-<p>$$
-|\langle x| ( \gamma |a\rangle) |^2 = | \gamma \langle x|a\rangle|^2 = |\langle x|a\rangle|^2
-$$</p>
-<p>请注意，这与叠加中项之间的相位差不同，后者被称为“相对相位”。一旦我们考虑不同类型的测量和多个量子位，这就变得相关了。</p>
-<h5 id="4-观察者效应"><a class="header" href="#4-观察者效应">#4 观察者效应</a></h5>
-<p>我们知道振幅包含有关我们找到处于特定状态的量子位的概率的信息，但是一旦我们测量了量子位，我们就可以确定地知道量子位的状态。例如，如果我们测量状态下的量子比特：</p>
-<p>$$
-|q\rangle = \alpha|0\rangle + \beta|1\rangle
-$$</p>
-<p>并在状态内找到它 |0⟩，如果我们再次测量，有 100% 的机会找到状态中的量子比特 |0⟩。这意味着测量行为会改变我们量子比特的状态。</p>
-<p>$$
-|q\rangle = \begin{bmatrix} \alpha \ \beta \end{bmatrix} \xrightarrow{\text{Measure }|0\rangle} |q\rangle = |0\rangle = \begin{bmatrix} 1 \ 0 \end{bmatrix}
-$$</p>
-<p>我们有时将此称为折叠量子比特的状态。这是一种强大的效果，因此必须明智地使用它。例如，如果我们不断地测量我们的每个量子比特以跟踪它们在计算中每个点的值，它们将总是简单地处于一个明确定义的状态 |0⟩ 或者 |1个⟩。因此，它们与经典位没有什么不同，我们的计算可以很容易地被经典计​​算所取代。为了实现真正的量子计算，我们必须允许量子比特探索更复杂的状态。因此，仅当我们需要提取输出时才使用测量。这意味着我们经常将所有测量放在量子电路的末端。</p>
-<p>我们可以使用 Qiskit 的状态向量模拟器来演示这一点。让我们在叠加中初始化一个量子位：</p>
-<pre><code>qc = QuantumCircuit(1) # We are redefining qc
-initial_state = [0.+1.j/sqrt(2),1/sqrt(2)+0.j]
-qc.initialize(initial_state, 0)
-qc.draw()
-</code></pre>
-<p>这应该在状态中初始化我们的量子位：</p>
-<pre><code>|q\rangle = \tfrac{i}{\sqrt{2}}|0\rangle + \tfrac{1}{\sqrt{2}}|1\rangle
-</code></pre>
-<p>我们可以使用模拟器验证这一点：</p>
-<pre><code>qc.save_statevector()
-result = sim.run(assemble(qc)).result()
-state = result.get_statevector()
-print(&quot;Qubit State = &quot; + str(state))
-
-Qubit State = Statevector([0.        +0.70710678j, 0.70710678+0.j        ],
-            dims=(2,))
-</code></pre>
-<p>我们可以在这里看到 qubit 在 state 中初始化[0.+0.70710678j 0.70710678+0.j]，这是我们期望的状态。</p>
-<p>现在让我们创建一个电路来测量这个量子位：</p>
-<pre><code>qc = QuantumCircuit(1) # We are redefining qc
-initial_state = [0.+1.j/sqrt(2),1/sqrt(2)+0.j]
-qc.initialize(initial_state, 0)
-qc.measure_all()
-qc.save_statevector()
-qc.draw()
-</code></pre>
-<p>当我们模拟整个电路时，我们可以看到其中一个振幅始终为0：</p>
-<pre><code>qobj = assemble(qc)
-state = sim.run(qobj).result().get_statevector()
-print(&quot;State of Measured Qubit = &quot; + str(state))
-
-State of Measured Qubit = Statevector([0.+1.j, 0.+0.j],
-            dims=(2,))
-</code></pre>
-<p>您可以重新运行此单元几次以重新初始化量子位并再次测量它。你会注意到这两种结果的可能性是相等的，但是量子比特的状态永远不是 
-|0⟩ 和 |1个⟩。有点有趣的是，国家的全球阶段 |0⟩ 幸存下来，但由于这是全球阶段，我们永远无法在真正的量子计算机上测量它。</p>
-<h4 id="关于量子模拟器的注释"><a class="header" href="#关于量子模拟器的注释">关于量子模拟器的注释</a></h4>
-<p>我们可以看到，写下一个量子位的状态需要跟踪两个复数，但在使用真正的量子计算机时，我们只会收到每个量子位的是或否（或）答案0。110 量子位量子计算机的输出将如下所示：</p>
-<p>0110111110</p>
-<p>仅 10 位，无叠加或复振幅。当使用真正的量子计算机时，我们无法看到我们的量子比特在计算过程中的状态，因为这会破坏它们！这种行为对于学习来说并不理想，因此 Qiskit 提供了不同的量子模拟器：默认情况下，模拟aer_simulator真实量子计算机的执行，但如果我们在电路中包含某些指令，也可以让您在测量前窥视量子状态。例如，这里我们包含了指令.save_statevector()，这意味着我们可以使用.get_statevector()模拟的结果。</p>
-<h3 id="布洛赫球体"><a class="header" href="#布洛赫球体">布洛赫球体</a></h3>
-<h4 id="描述受限量子比特态"><a class="header" href="#描述受限量子比特态">描述受限量子比特态</a></h4>
-<p>我们在本章前面看到了量子位的一般状态（|q⟩）是：</p>
-<p>$$
-|q\rangle = \alpha|0\rangle + \beta|1\rangle
-$$</p>
-<p>（第二行告诉我们 α 和 β 是复数）。第 2 节中的前两个含义告诉我们，我们无法区分其中一些状态。这意味着我们可以更具体地描述量子位。</p>
-<p>首先，由于我们无法测量全局相位，我们只能测量状态之间的相位差 |0⟩ 和 |1个⟩。而不是拥有 α 和 β 复杂，我们可以将它们限制为实数并添加一个项来告诉我们它们之间的相对相位：</p>
-<p>$$
-|q\rangle = \alpha|0\rangle + e^{i\phi}\beta|1\rangle
-\alpha, \beta, \phi \in \mathbb{R}
-$$</p>
-<p>最后，由于量子位状态必须归一化，即</p>
-<p>$$
-\sqrt{\alpha^2 + \beta^2} = 1
-$$</p>
-<p>我们可以使用三角恒等式：</p>
-<p>$$
-\sqrt{\sin^2{x} + \cos^2{x}} = 1
-$$</p>
-<p>来描述真实的 α 和 β 就一个变量而言，θ：</p>
-<p>$$
-\alpha = \cos{\tfrac{\theta}{2}}, \quad \beta=\sin{\tfrac{\theta}{2}}
-$$</p>
-<p>由此我们可以使用两个变量来描述任何量子比特的状态 φ 和 θ：</p>
-<p>$$
-|q\rangle = \cos{\tfrac{\theta}{2}}|0\rangle + e^{i\phi}\sin{\tfrac{\theta}{2}}|1\rangle
-\theta, \phi \in \mathbb{R}
-$$</p>
-<h4 id="32-可视化表示量子比特状态"><a class="header" href="#32-可视化表示量子比特状态">3.2 可视化表示量子比特状态</a></h4>
-<p>我们想绘制我们的一般量子位状态：</p>
-<p>$$
-|q\rangle = \cos{\tfrac{\theta}{2}}|0\rangle + e^{i\phi}\sin{\tfrac{\theta}{2}}|1\rangle
-$$</p>
-<p>如果我们解释 θ 和 φ 作为球面坐标（r = 1个，因为量子比特状态的大小是 1个），我们可以在球体表面绘制任何单个量子比特状态，称为<em>Bloch</em>球体。</p>
-<p>下面我们绘制了一个处于状态的量子比特 |+⟩。在这种情况下，θ=π/2 个和 φ = 0。</p>
-<p>Qiskit 具有绘制 Bloch 球体的功能，plot_bloch_vector()。该函数默认接受笛卡尔坐标，但也可以通过传递参数接受球坐标coord_type='spherical'。</p>
-<p>您也可以尝试这个<a href="https://javafxpert.github.io/grok-bloch/">交互式 Bloch 球体演示</a>。</p>
-<pre><code>from qiskit.visualization import plot_bloch_vector
-coords = [1,pi/2,0]  # [Radius, Theta, Phi]
-plot_bloch_vector(coords, coord_type='spherical')
-</code></pre>
-<p><b>警告！</b> 
-第一次了解量子位状态时，很容易混淆 qubits statevector和它的Bloch vector。请记住，<a href="https://qiskit.org/textbook/ch-states/representing-qubit-states.html#notation">状态向量是1.1</a>中讨论的向量，它保存我们的量子位可能处于的两个状态的振幅。布洛赫向量是一种可视化工具，可将 2D 复数状态向量映射到真实的 3D 空间。</p>
-<p><b>快速练习</b> 
-用于plot_bloch_vector()绘制状态中的量子位：</p>
-<p>$$
-1.|0\rangle
-2.|1\rangle
-3.\tfrac{1}{\sqrt{2}}(|0\rangle + |1\rangle)
-4.\tfrac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)
-5.\tfrac{1}{\sqrt{2}}\begin{bmatrix}i\1\end{bmatrix}
-$$</p>
-<pre><code>import qiskit.tools.jupyter
-%qiskit_version_table
-</code></pre>
-<ul>
-<li>版本信息</li>
-</ul>
-<table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.22.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.11.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.39.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.1</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.2</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.13</td></tr><tr><td>Python compiler</td><td>Clang 13.1.6 (clang-1316.0.21.2.5)</td></tr><tr><td>Python build</td><td>default, Aug 29 2022 05:17:23</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>32.0</td></tr><tr><td colspan='2'>Mon Nov 28 09:32:47 2022 GMT</td></tr></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="多量子比特与量子纠缠"><a class="header" href="#多量子比特与量子纠缠">多量子比特与量子纠缠</a></h1>
 <p><img src="https://awesomeprogram.gitee.io/imgdata/techs/202207061914193.png" alt="" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="量子协议和量子算法"><a class="header" href="#量子协议和量子算法">量子协议和量子算法</a></h1>
@@ -9026,7 +9322,7 @@ $$</p>
 
 
         <!-- Google Analytics Tag -->
-        <script type="text/javascript">
+        <script>
             var localAddrs = ["localhost", "127.0.0.1", ""];
 
             // make sure we don't activate google analytics if the developer is
@@ -9043,27 +9339,27 @@ $$</p>
         </script>
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
-        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
 
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
 
-        <script type="text/javascript">
+        <script>
         window.addEventListener('load', function() {
             MathJax.Hub.Register.StartupHook('End', function() {
                 window.setTimeout(window.print, 100);
@@ -9071,5 +9367,6 @@ $$</p>
         });
         </script>
 
+    </div>
     </body>
 </html>

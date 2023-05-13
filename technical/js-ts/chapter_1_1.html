@@ -1,0 +1,592 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js navy">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>JS与TS 语法结构 - 信息技术 | AwesomeProgram</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1.html"><strong aria-hidden="true">3.</strong> JavaScript-TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../js-ts/chapter_1_1.html" class="active"><strong aria-hidden="true">3.1.</strong> JS与TS 语法结构</a></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1_2.html"><strong aria-hidden="true">3.2.</strong> JS与TS 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1.html"><strong aria-hidden="true">4.</strong> C-C++</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> C与C++ 语法结构</a></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> C与C++ 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">5.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">6.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">6.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">6.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">6.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">6.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">6.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">6.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">6.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">6.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">6.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">6.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">6.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">6.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">6.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">6.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">6.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">6.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">6.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">6.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">6.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">7.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">7.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">7.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">7.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">7.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">7.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">7.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">7.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">7.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">7.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">7.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">7.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">8.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">8.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">8.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">8.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">8.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">8.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">8.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">8.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">8.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">9.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">9.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">9.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">9.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">9.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">9.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">9.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">9.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">9.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">9.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">10.</strong> 软考记录</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">信息技术 | AwesomeProgram</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="javascript-基本常用语法"><a class="header" href="#javascript-基本常用语法">JavaScript 基本常用语法</a></h2>
+<h4 id="hello-js"><a class="header" href="#hello-js">Hello, JS!</a></h4>
+<pre><code class="language-js editable">// 在控制台输出
+console.log('AwesomeProgram!');
+</code></pre>
+<pre><code class="language-js editable">// 在网页输出
+document.write('AwesomeProgram!');
+</code></pre>
+<pre><code class="language-js editable">// 在网页中创建元素进行输出
+let hello = document.createElement('h1');
+hello.innerText = 'AwesomeProgram!';
+document.body.appendChild(hello); 
+</code></pre>
+<pre><code class="language-js editable">// 使用浏览器弹窗输出
+alert('AwesomeProgram!');
+</code></pre>
+<h4 id="解构赋值"><a class="header" href="#解构赋值">解构赋值</a></h4>
+<pre><code class="language-javascript editable">let [first, last] = ['Awesome', 'Program']
+// or
+let {first, last} = {
+  first: 'Awesome',
+  last: 'Program'
+}
+</code></pre>
+<h4 id="字符串操作"><a class="header" href="#字符串操作">字符串操作</a></h4>
+<pre><code class="language-javascript editable">&quot;AwesomeProgram&quot;.includes(&quot;some&quot;) // true
+&quot;AwesomeProgram&quot;.startsWith(&quot;Awesome&quot;) // true
+&quot;AwesomeProgram&quot;.endsWith(&quot;Program&quot;) // true
+'Awe:some:Program'.split(':') // [&quot;Awe&quot;, &quot;some&quot;, &quot;Program&quot;]
+parseFloat(&quot;123&quot;).toFixed(2) // &quot;123.00&quot;
+</code></pre>
+<h4 id="箭头函数"><a class="header" href="#箭头函数">箭头函数</a></h4>
+<pre><code class="language-javascript editable">const getName = user =&gt; user.name
+const funcName = name =&gt; {
+  // do something
+  return name
+}
+</code></pre>
+<h4 id="数组遍历"><a class="header" href="#数组遍历">数组遍历</a></h4>
+<pre><code class="language-javascript editable">const numbers = [1, 2, 3]
+numbers.map(n =&gt; n * 2) // [2, 4, 6]
+numbers.filter(n =&gt; n % 2 === 0) // [2]
+numbers.reduce((prev, next) =&gt; prev + next, 0) // 6
+numbers.find(n =&gt; n &gt; 2) // 3
+</code></pre>
+<h4 id="数组操作"><a class="header" href="#数组操作">数组操作</a></h4>
+<pre><code class="language-javascript editable">// Delete at index
+array.splice(index, 1)
+
+// Insert at index
+array.splice(index, 0, newItem)
+
+// check exist
+[1, 2, 3].includes(3) // true
+
+// find index
+[1, 2, 3].indexOf(3) // 2; return -1 if not found
+
+// concat
+let array3 = array1.concat(array2) // [1].concat([2]) is [1, 2]
+
+// new array
+let array4 = [1, 2, 3, 4, 5].slice(2, 4) // [3, 4]
+</code></pre>
+<h4 id="展开操作符"><a class="header" href="#展开操作符">展开操作符</a></h4>
+<pre><code class="language-javascript editable">const array1 = [1, 2]
+const array2 = [...array1, 3, 4] // [1, 2, 3, 4]
+
+const funcName = (x, ...params) =&gt; {
+  console.log(x)
+  console.log(params)
+}
+
+funcName(1, 2, 3, 4)
+// 1
+// [2, 3, 4]
+</code></pre>
+<h4 id="对象展开"><a class="header" href="#对象展开">对象展开</a></h4>
+<pre><code class="language-javascript editable">const options = {
+  ...defaults,
+  show: true
+}
+</code></pre>
+<h4 id="数组展开"><a class="header" href="#数组展开">数组展开</a></h4>
+<pre><code class="language-javascript editable">const array3 = [
+  ...array1,
+  ...array2,
+  'newItem'
+]
+</code></pre>
+<h4 id="遍历"><a class="header" href="#遍历">遍历</a></h4>
+<pre><code class="language-javascript editable">for (const i of [1, 2, 3]) {
+  console.log(i)
+}
+// 1
+// 2
+// 3
+
+for (const [index, value] of ['Awesome', 'Program', '@git'].entries()) {
+  console.log(index, value)
+}
+// 0 &quot;Awesome&quot;
+// 1 &quot;Program&quot;
+// 2 &quot;@git&quot;
+
+const obj = {part1: 'Awesome', part2: 'Program', part3: '@git'};
+for (const key in obj) {
+  console.log(key, obj[key])
+}
+// or
+for (const [key, value] of Object.entries(obj)) {
+  console.log(key, value)
+}
+// part1 Awesome
+// part2 Program
+// part3 @git
+</code></pre>
+<h4 id="创建-promise"><a class="header" href="#创建-promise">创建 Promise</a></h4>
+<pre><code class="language-javascript editable">const funcName = params =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    // ....
+    // do something
+    // if success
+    resolve(result)
+    // if fail
+    reject(error)
+  })
+}
+funcName('test')
+  .then(result =&gt; {
+    // ...
+  })
+  .catch(error =&gt; {
+    // ...
+  })
+  .finally(() =&gt; {
+    // ...
+  })
+</code></pre>
+<h4 id="收集所有-promise-返回"><a class="header" href="#收集所有-promise-返回">收集所有 Promise 返回</a></h4>
+<pre><code class="language-javascript editable">let promises = []
+// func1 and func2 returns a promise
+promises.push(func1())
+promises.push(func2())
+
+Promise.all(promises).then(allResult =&gt; {
+  let [result1, resul2] = allResult
+  // ...
+})
+</code></pre>
+<h4 id="async-await"><a class="header" href="#async-await">Async-await</a></h4>
+<pre><code class="language-javascript editable">const funcName = async () =&gt; {
+  const data = await fetchData()
+  return data
+}
+
+await funcName()
+</code></pre>
+<h4 id="生成器"><a class="header" href="#生成器">生成器</a></h4>
+<pre><code class="language-javascript editable">function * countdown(n) {
+  for (let i = n; i &gt; 0; --i) {
+    yield i
+  }
+}
+[...countdown(3)] // [ 3, 2, 1 ]
+
+let gen = countdown(3)
+gen.next() // 3
+gen.next() // 2
+</code></pre>
+<h4 id="浏览器"><a class="header" href="#浏览器">浏览器</a></h4>
+<pre><code class="language-javascript editable">encodeURIComponent() // Encodes a URI into UTF-8
+decodeURIComponent() // Decodes
+</code></pre>
+<h4 id="window"><a class="header" href="#window">window</a></h4>
+<pre><code class="language-javascript editable">const formData = new window.FormData()
+formData.append('file', data)
+
+window.localStorage.getItem(key)
+window.localStorage.setItem(key, data)
+
+window.location.origin // &quot;https://awesomeprogram.github.io/&quot;
+window.location.hostname // &quot;awesomeprogram.github.io&quot;
+window.location.href // &quot;https://awesomeprogram.github.io/js-ts/chapter_1_1.html&quot;
+
+window.open(&quot;https://awesomeprogram.github.io/&quot;)
+
+window.addEventListener('resize', resizeHandler)
+window.removeEventListener('resize', resizeHandler)
+</code></pre>
+<h4 id="xmlhttprequest"><a class="header" href="#xmlhttprequest">XMLHttpRequest</a></h4>
+<pre><code class="language-javascript editable">// Download excel file
+const xhr = new window.XMLHttpRequest()
+const applicationType = 'application/vnd.ms-excel; charset=UTF-8'
+xhr.open('GET', url, true)
+xhr.responseType = 'blob'
+xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8')
+xhr.onload = function(e) {
+  if (this.status === 200) {
+    let blob = new window.Blob([this.response], { type: applicationType })
+    let downloadUrl = window.URL.createObjectURL(blob)
+    let a = document.createElement('a')
+    a.href = downloadUrl
+    a.download = fileName
+    a.click()
+  }
+}
+xhr.onreadystatechange = e =&gt; {
+  if (xhr.readyState === 4) {
+    // 
+  } else if (xhr.readyState === 3) {
+    //
+  })
+}
+xhr.send()
+</code></pre>
+<h4 id="email-validation"><a class="header" href="#email-validation">Email Validation</a></h4>
+<pre><code class="language-javascript editable">// From https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+function validateEmail(email) {
+  if (email === '') {
+    return true
+  }
+  const re = /^(([^&lt;&gt;()[]\.,;:s@&quot;]+(.[^&lt;&gt;()[]\.,;:s@&quot;]+)*)|(&quot;.+&quot;))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+</code></pre>
+<h2 id="typescript-基本常用语法"><a class="header" href="#typescript-基本常用语法">TypeScript 基本常用语法</a></h2>
+<h4 id="编译到-javascript"><a class="header" href="#编译到-javascript">编译到 JavaScript</a></h4>
+<p><code>tsc --outFile sample.js Test.ts</code></p>
+<h4 id="基本"><a class="header" href="#基本">基本</a></h4>
+<pre><code class="language-ts editable">let name: string = 'name';
+let isDone: boolean = false;
+let count: number = 10;
+let sentence: string = `Hello, ${ name }.`
+let notSure: any = 1;
+
+let list1: number[] = [1, 2, 3];
+let list2: Array&lt;number&gt; = [1, 2, 3];
+
+let tupleX: [string, number];
+x = ['hello', 10]
+
+enum Color {Red, Green, Blue};
+let c: Color = Color.Green;
+
+let [first, ...rest] = [1, 2, 3, 4];
+// first: 1, rest: [2, 3, 4 ]
+
+// type assert
+let strLength: number = (&lt;string&gt;someValue).length;
+let strLength: number = (someValue as string).length;
+</code></pre>
+<h4 id="函数"><a class="header" href="#函数">函数</a></h4>
+<pre><code class="language-ts editable">const params = (value: string) =&gt; {
+  console.log(value);
+}
+
+const paramOr = (value: string | null) =&gt; {
+  console.log(value);
+}
+paramOr('1'); // OK
+paramOr(null); // OK
+paramOr(1); // Error
+
+const paramArray = ([first, second]: [string, number]) =&gt; {
+  console.log(first);
+  console.log(second);
+}
+
+const returnValue = (): String =&gt;  {
+  return 'return a stirng';
+}
+</code></pre>
+<h4 id="接口"><a class="header" href="#接口">接口</a></h4>
+<pre><code class="language-typescript editable">interface Config {
+  color?: string;
+  width?: number;
+  readonly y?: number;
+  [propName: string]: any;
+}
+const funcName = (config: Config) =&gt; {
+  console.log(config.test);
+}
+funcName({test: 'test prop'}); // test prop
+</code></pre>
+<h4 id="类"><a class="header" href="#类">类</a></h4>
+<pre><code class="language-typescript editable">class Example {
+  name: string; // default public
+  private priaveName: string;
+  protected protectedName: string;
+  readonly readonlyName: string;
+  private _fullName: string;
+  static baseRoute = '/basePath';
+  constructor(name: string) {
+    this.name = name;
+    this.priaveName = name;
+    this.protectedName = name;
+    this.readonlyName = name;
+    this._fullName = name;
+  }
+  hello() {
+    return `Hello, ${this.name}`;
+  }
+  get fullName(): string {
+    return this._fullName;
+  }
+  set fullName(newName: string) {
+    // do some check
+    // ...
+    this._fullName = newName;
+  }
+}
+let test = new Example(&quot;world&quot;);
+console.log(test.hello()); // Hello, world
+test.priaveName; // Error
+
+class NewExample extends Example {
+  hi() {
+    return `Hi, ${super.hello()}`;
+  }
+  getProtectedName() {
+    return this.protectedName
+  }
+}
+
+let newTest = new NewExample(&quot;new world&quot;);
+console.log(newTest.hi()); // Hi, Hello, new world
+
+newTest.protectedName; // Error
+newTest.getProtectedName(); // OK
+
+
+// Abstract Class
+abstract class AbstractExample {
+  abstract hi(): void;
+  say(): void {
+    console.log('say something');
+  }
+}
+class ActualExample extends AbstractExample {
+  hi() {
+    return 'hi'
+  }
+}
+</code></pre>
+<h4 id="命名空间"><a class="header" href="#命名空间">命名空间</a></h4>
+<pre><code class="language-typescript editable">namespace Validation {
+    export interface StringValidator {
+        isAcceptable(s: string): boolean;
+    }
+}
+Validation.StringValidator;
+</code></pre>
+<h4 id="泛型"><a class="header" href="#泛型">泛型</a></h4>
+<pre><code class="language-typescript editable">class GenericNumber&lt;T&gt; {
+    zeroValue: T;
+    add: (x: T, y: T) =&gt; T;
+}
+
+let myGenericNumber = new GenericNumber&lt;number&gt;();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+</code></pre>
+<h4 id="声明"><a class="header" href="#声明">声明</a></h4>
+<pre><code class="language-typescript editable"># File ends with `.d.ts`
+declare var testNumber: number;
+declare function hi(greeting: string): void;
+declare namespace myNamespace {
+  function hello(s: string): string;
+  let count: number;
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../js-ts/chapter_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../js-ts/chapter_1_2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../js-ts/chapter_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../js-ts/chapter_1_2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+        <!-- Google Analytics Tag -->
+        <script>
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'G-ZHWPPT6ESV', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

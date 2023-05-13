@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -31,17 +30,18 @@
         <!-- Custom theme stylesheets -->
 
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -69,12 +69,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -82,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html" class="active"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">4.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">7.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">7.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">7.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">7.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1.html"><strong aria-hidden="true">3.</strong> JavaScript-TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../js-ts/chapter_1_1.html"><strong aria-hidden="true">3.1.</strong> JS与TS 语法结构</a></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1_2.html"><strong aria-hidden="true">3.2.</strong> JS与TS 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1.html"><strong aria-hidden="true">4.</strong> C-C++</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> C与C++ 语法结构</a></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> C与C++ 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">5.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">6.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">6.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">6.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">6.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">6.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">6.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html"><strong aria-hidden="true">6.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">6.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">6.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html" class="active"><strong aria-hidden="true">6.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">6.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">6.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">6.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">6.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">6.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">6.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">6.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">6.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">6.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">6.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">7.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">7.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">7.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">7.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">7.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">7.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">7.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">7.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">7.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">7.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">7.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">7.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">8.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">8.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">8.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">8.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">8.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">8.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">8.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">8.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">8.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">9.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">9.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">9.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">9.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">9.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">9.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">9.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">9.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">9.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">9.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">10.</strong> 软考记录</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -103,7 +105,7 @@
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -133,7 +135,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -168,14 +170,12 @@
 impl frame_system::Config for Test {
  // -- snip --
  type AccountId = u64;
-}
-</code></pre>
+}</code></pre>
 <p>如果 <code>Test</code> 实现了 <code>pallet_balances::Config</code>，则可能使用 <code>u64</code> 作为 <code>Balance</code> 类型。例如:</p>
 <pre><code class="language-rust editable noplayground">impl pallet_balances::Config for Test {
  // -- snip --
  type Balance = u64;
-}
-</code></pre>
+}</code></pre>
 <p>通过分配 <code>pallet_balances::Balance</code> 和 <code>frame_system::AccountId</code> 为 <code>u64</code>，测试帐户和余额仅需要在模拟运行时跟踪一个（<code>AccountId: u64, Balance: u64</code>）映射。</p>
 <h3 id="在一个mock运行时中测试存储"><a class="header" href="#在一个mock运行时中测试存储">在一个mock运行时中测试存储</a></h3>
 <p><a href="https://paritytech.github.io/substrate/master/sp_io/index.html"><code>sp-io</code></a> crate 公开了一个 <a href="https://paritytech.github.io/substrate/master/sp_io/type.TestExternalities.html"><code>TestExternalities</code></a> 实现，你可以使用它在一个模拟环境中测试存储。它是内存中的类型别名，它是substrate_state_machine <a href="https://paritytech.github.io/substrate/master/sp_state_machine/index.html"><code>substrate_state_machine</code></a> 中基于 hashmap 的外部性实现，称为 <a href="https://paritytech.github.io/substrate/master/sp_state_machine/struct.TestExternalities.html"><code>TestExternalities</code></a>。</p>
@@ -189,16 +189,14 @@ impl ExtBuilder {
   ext.execute_with(|| System::set_block_number(1));
   ext
  }
-}
-</code></pre>
+}</code></pre>
 <p>要在单元测试中创建测试环境，调用构建方法来使用默认的创世配置生成 <code>TestExternalities</code>。</p>
 <pre><code class="language-rust editable noplayground">#[test]
 fn fake_test_example() {
  ExtBuilder::default().build_and_execute(|| {
   // ...test logics...
  });
-}
-</code></pre>
+}</code></pre>
 <p><a href="https://paritytech.github.io/substrate/master/sp_externalities/index.html">Externalities</a> 的自定义实现允许你构建提供对外部节点特性访问的运行时环境。另一个例子可以在 <a href="https://paritytech.github.io/substrate/master/sp_core/offchain/index.html"><code>offchain</code></a> 模块中找到。<code>offchain</code> 模块维护自己的 <a href="https://paritytech.github.io/substrate/master/sp_core/offchain/trait.Externalities.html">Externalities</a> 实现。</p>
 <h3 id="创世配置"><a class="header" href="#创世配置">创世配置</a></h3>
 <p>在前面的示例中，<code>ExtBuilder::build()</code> 方法使用默认的起源配置来构建模拟运行时环境。在许多情况下，在测试之前设置存储是很方便的。例如你可能希望在测试之前预设置帐户的余额。</p>
@@ -223,14 +221,12 @@ fn fake_test_example() {
   ext.execute_with(|| System::set_block_number(1));
   ext
  }
-}
-</code></pre>
+}</code></pre>
 <p>在本例中，账户 1 有余额 10，账户 2 有余额 20，以此类推。</p>
 <p>用于定义 pallet 的创世配置的确切结构取决于 pallet 的 <code>GenesisConfig</code> 结构定义。例如在 Balances pallet 中，它被定义为：</p>
 <pre><code class="language-rust editable noplayground">pub struct GenesisConfig&lt;T: Config&lt;I&gt;, I: 'static = ()&gt; {
  pub balances: Vec&lt;(T::AccountId, T::Balance)&gt;,
-}
-</code></pre>
+}</code></pre>
 <h3 id="区块生产"><a class="header" href="#区块生产">区块生产</a></h3>
 <p>模拟区块生产以验证预期行为在区块生产中是否存在是有用的。</p>
 <p>一种简单的方法是，使用 <code>System::block_number()</code> 作为唯一输入，在来自所有模块的 <code>on_initialize</code> 和 <code>on_finalize</code> 调用之间递增 System 模块的区块号。尽管对运行时代码来说缓存对存储或系统模块的调用是很重要的，但是测试环境脚手架应该优先考虑可读性，以促进未来可继续容易的维护。</p>
@@ -244,8 +240,7 @@ fn fake_test_example() {
   System::on_initialize(System::block_number());
   ExamplePallet::on_initialize(System::block_number());
  }
-}
-</code></pre>
+}</code></pre>
 <p><code>on_finalize</code> 和 <code>on_initialize</code> 方法只能从 <code>ExamplePallet</code> 调用，如果 pallet trait 实现了 <code>frame_support::traits::{OnInitialize, OnFinalize}</code> traits，分别在每个块之前和之后执行运行时方法中编码的逻辑。</p>
 <p>然后按以下方式调用此函数。</p>
 <pre><code class="language-rust editable noplayground">#[test]
@@ -255,8 +250,7 @@ fn my_runtime_test() {
   run_to_block(10);
   assert_ok!(ExamplePallet::end_auction());
  });
-}
-</code></pre>
+}</code></pre>
 <h2 id="调试"><a class="header" href="#调试">调试</a></h2>
 <p>在软件开发的各个阶段，调试都是必要的，区块链也不例外。大多数常见的 Rust 调试工具同样也适用于 Substrate。</p>
 <h3 id="日志工具"><a class="header" href="#日志工具">日志工具</a></h3>
@@ -273,13 +267,11 @@ fn my_runtime_test() {
 
 	Self::deposit_event(RawEvent::SomethingStored(my_val, who));
 	Ok(())
-}
-</code></pre>
+}</code></pre>
 <h3 id="可打印trait"><a class="header" href="#可打印trait">可打印trait</a></h3>
 <p>可打印trait 是一种在 <code>no_std</code> 和在 <code>std</code> 情况下从运行时打印的方法。<code>print</code> 函数适用于实现了 <a href="https://paritytech.github.io/substrate/master/sp_runtime/traits/trait.Printable.html"><code>Printable</code> trait</a> 的任何类型。Substrate 默认为某些类型（<code>u8</code>, <code>u32</code>, <code>u64</code>, <code>usize</code>, <code>&amp;[u8]</code>, <code>&amp;str</code>）实现此特性。你也可以为你的自定义类型实现它，下面是一个使用 node-template 作为示例代码库为 pallet 的 <code>Error</code> 类型实现它的示例。</p>
 <pre><code class="language-rust editable noplayground">use sp_runtime::traits::Printable;
-use sp_runtime::print;
-</code></pre>
+use sp_runtime::print;</code></pre>
 <pre><code class="language-rust editable noplayground">#[frame_support::pallet]
 pub mod pallet {
 	// The pallet's errors
@@ -300,8 +292,7 @@ pub mod pallet {
 			}
 		}
 	}
-}
-</code></pre>
+}</code></pre>
 <pre><code class="language-rust editable noplayground">/// takes no parameters, attempts to increment storage value, and possibly throws an error
 pub fn cause_error(origin) -&gt; dispatch::DispatchResult {
 	// Check it was signed and get the signer. See also: ensure_root and ensure_none
@@ -324,11 +315,9 @@ pub fn cause_error(origin) -&gt; dispatch::DispatchResult {
 			Ok(())
 		},
 	}
-}
-</code></pre>
+}</code></pre>
 <p>运行带有 RUST_LOG 环境变量的节点二进制文件以打印值。</p>
-<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev
-</code></pre>
+<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev</code></pre>
 <p>每次调用运行时函数时，这些值都打印在终端或标准输出中。</p>
 <pre><code class="language-bash editable noplayground">2020-01-01 tokio-blocking-driver DEBUG runtime  My Test Message  &lt;-- str implements Printable by default
 2020-01-01 tokio-blocking-driver DEBUG runtime  Invalid Value    &lt;-- the custom string from NoneValue
@@ -356,11 +345,9 @@ pub fn do_something(origin) -&gt; DispatchResult {
 	Self::deposit_event(RawEvent::SomethingStored(my_val, who));
 	Ok(())
 }
-// --snip--
-</code></pre>
+// --snip--</code></pre>
 <p>使用 <code>RUST_LOG</code> 环境变量启动链，以查看打印日志。</p>
-<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev
-</code></pre>
+<pre><code class="language-rust editable noplayground">RUST_LOG=runtime=debug ./target/release/node-template --dev</code></pre>
 <p>如果 Error 被触发，这些值将打印在终端或标准输出中。</p>
 <pre><code class="language-bash editable noplayground">2020-01-01 00:00:00 tokio-blocking-driver DEBUG runtime  Execute do_something
 2020-01-01 00:00:00 tokio-blocking-driver DEBUG runtime  After storing my_val
@@ -368,8 +355,7 @@ pub fn do_something(origin) -&gt; DispatchResult {
 <h3 id="if-std"><a class="header" href="#if-std">If std</a></h3>
 <p>传统的 <code>print</code> 函数允许你打印并获得 <code>Printable</code> trait 的实现。然而有一些传统的用例，可能想要做更多的事情，而不仅仅是打印，或者仅仅为了调试目的，而不必考虑 Substrate-specific traits。 <a href="https://paritytech.github.io/substrate/master/sp_std/macro.if_std.html"><code>if_std!</code> macro</a> 在这种情况下是有用的。</p>
 <p>使用此宏的一个警告是，只有当你实际运行 runtime 的 native 版本时，内部的代码才会执行。</p>
-<pre><code class="language-rust editable noplayground">use sp_std::if_std; // Import into scope the if_std! macro.
-</code></pre>
+<pre><code class="language-rust editable noplayground">use sp_std::if_std; // Import into scope the if_std! macro.</code></pre>
 <p><code>println!</code> 语句应该在 <code>if_std</code> 宏中。</p>
 <pre><code class="language-rust editable noplayground">#[pallet::call]
 impl&lt;T: Config&lt;I&gt;, I: 'static&gt; Pallet&lt;T, I&gt; {
@@ -392,8 +378,7 @@ impl&lt;T: Config&lt;I&gt;, I: 'static&gt; Pallet&lt;T, I&gt; {
 			Ok(())
 		}
 		// --snip--
-}
-</code></pre>
+}</code></pre>
 <p>每次调用运行时函数时，这些值都打印在终端或标准输出中。</p>
 <pre><code class="language-bash editable noplayground">$		2020-01-01 00:00:00 Substrate Node
 		2020-01-01 00:00:00   version x.y.z-x86_64-linux-gnu
@@ -458,8 +443,7 @@ impl&lt;T: Config&lt;I&gt;, I: 'static&gt; Pallet&lt;T, I&gt; {
 <p>你可以在所有预构建的 <a href="https://github.com/paritytech/substrate/tree/master/frame">FRAME pallets</a> 中找到端到端基准的的示例。</p>
 <h3 id="测试基准测试"><a class="header" href="#测试基准测试">测试基准测试</a></h3>
 <p>你可以使用为单元测试 pallet 创建类似的模拟运行时执行基准测试。使用的基准测试宏在你的 <code>benchmarking.rs</code> 模块中可以自动的生成测试函数。例如：</p>
-<pre><code class="language-rust editable noplayground">fn test_benchmark_[benchmark_name]&lt;T&gt;::() -&gt; Result&lt;(), &amp;'static str&gt;
-</code></pre>
+<pre><code class="language-rust editable noplayground">fn test_benchmark_[benchmark_name]&lt;T&gt;::() -&gt; Result&lt;(), &amp;'static str&gt;</code></pre>
 <p>你可以将基准测试函数添加到单元测试中，并确保函数的结果是 <code>Ok(())</code>。</p>
 <h4 id="验证块"><a class="header" href="#验证块">验证块</a></h4>
 <p>通常你只需要检查基准测试是否返回 <code>Ok(())</code>，因为该结果表明函数已成功执行。但是如果你想要验证任何最终条件，比如运行时的最终状态，你可以选择在基准测试中包含一个 <code>verify</code> 块。额外的 <code>verify</code> 块不会影响你的最终基准测试过程的结果。</p>
@@ -478,8 +462,7 @@ mod benches {
 		[pallet_babe, Babe]
     ...
     [pallet_mycustom, MyCustom]
-    ...
-</code></pre>
+    ...</code></pre>
 <p>在添加了 pallet 之后，使用 <code>runtime-benchmarks</code> 特性标志编译节点二进制文件。例如：</p>
 <pre><code class="language-bash editable noplayground">cd bin/node/cli
 cargo build --profile=production --features runtime-benchmarks
@@ -560,7 +543,7 @@ cargo build --profile=production --features runtime-benchmarks
 
 
         <!-- Google Analytics Tag -->
-        <script type="text/javascript">
+        <script>
             var localAddrs = ["localhost", "127.0.0.1", ""];
 
             // make sure we don't activate google analytics if the developer is
@@ -577,26 +560,27 @@ cargo build --profile=production --features runtime-benchmarks
         </script>
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

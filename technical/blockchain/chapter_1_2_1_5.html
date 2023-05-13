@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="所思即所见，所见即所得，所得皆所想，技术从未停歇，也未曾缺乏">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -31,17 +30,18 @@
         <!-- Custom theme stylesheets -->
 
         <!-- MathJax -->
-        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -69,12 +69,14 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -82,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">3.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">4.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">4.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">4.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">4.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">4.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">4.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html" class="active"><strong aria-hidden="true">4.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">4.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">4.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">4.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">4.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">4.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">4.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">4.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">4.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">4.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">4.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">4.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">4.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">4.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">5.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">5.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">5.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">5.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">5.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">5.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">5.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">5.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">5.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">5.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">5.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">5.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">5.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">5.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">5.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">5.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">5.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">6.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">6.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">6.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">6.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">6.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">6.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">6.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">7.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">7.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">7.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">7.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">7.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">8.</strong> 软考记录</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../PrefixChapter.html">前言</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1.html"><strong aria-hidden="true">1.</strong> Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust/chapter_1_1.html"><strong aria-hidden="true">1.1.</strong> Rust 语法结构</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_4.html"><strong aria-hidden="true">1.2.</strong> Rust 标准库</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_5.html"><strong aria-hidden="true">1.3.</strong> Rust 工具链</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_6.html"><strong aria-hidden="true">1.4.</strong> Rust 类型操作</a></li><li class="chapter-item expanded "><a href="../rust/chapter_1_7.html"><strong aria-hidden="true">1.5.</strong> Rust 编码范式</a></li></ol></li><li class="chapter-item expanded "><a href="../go/chapter_1.html"><strong aria-hidden="true">2.</strong> Go</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../go/chapter_1_1.html"><strong aria-hidden="true">2.1.</strong> Go 语法结构</a></li><li class="chapter-item expanded "><a href="../go/chapter_1_2.html"><strong aria-hidden="true">2.2.</strong> Go 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1.html"><strong aria-hidden="true">3.</strong> JavaScript-TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../js-ts/chapter_1_1.html"><strong aria-hidden="true">3.1.</strong> JS与TS 语法结构</a></li><li class="chapter-item expanded "><a href="../js-ts/chapter_1_2.html"><strong aria-hidden="true">3.2.</strong> JS与TS 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1.html"><strong aria-hidden="true">4.</strong> C-C++</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_1.html"><strong aria-hidden="true">4.1.</strong> C与C++ 语法结构</a></li><li class="chapter-item expanded "><a href="../c-cpp/chapter_1_2.html"><strong aria-hidden="true">4.2.</strong> C与C++ 标准库</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_3.html"><strong aria-hidden="true">5.</strong> 各语言对比</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1.html"><strong aria-hidden="true">6.</strong> 区块链</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_1.html"><strong aria-hidden="true">6.1.</strong> 区块链简史</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2.html"><strong aria-hidden="true">6.2.</strong> 区块链框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1.html"><strong aria-hidden="true">6.2.1.</strong> substrate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_1.html"><strong aria-hidden="true">6.2.1.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_2.html"><strong aria-hidden="true">6.2.1.2.</strong> 构建与编码</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_3.html"><strong aria-hidden="true">6.2.1.3.</strong> 启动区块链网络</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_4.html"><strong aria-hidden="true">6.2.1.4.</strong> 自定义pallet</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_5.html" class="active"><strong aria-hidden="true">6.2.1.5.</strong> 开发智能合约</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_6.html"><strong aria-hidden="true">6.2.1.6.</strong> 桥接其它链</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_7.html"><strong aria-hidden="true">6.2.1.7.</strong> 工具集成</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_1_8.html"><strong aria-hidden="true">6.2.1.8.</strong> 测试</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2.html"><strong aria-hidden="true">6.2.2.</strong> fabric</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_1.html"><strong aria-hidden="true">6.2.2.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_2_2.html"><strong aria-hidden="true">6.2.2.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3.html"><strong aria-hidden="true">6.2.3.</strong> EOSIO</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_1.html"><strong aria-hidden="true">6.2.3.1.</strong> 基本原理</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_2_3_2.html"><strong aria-hidden="true">6.2.3.2.</strong> 构建与开发</a></li></ol></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3.html"><strong aria-hidden="true">6.2.4.</strong> 智能合约与DApp</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_1.html"><strong aria-hidden="true">6.2.4.1.</strong> Move</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_2.html"><strong aria-hidden="true">6.2.4.2.</strong> Solidity</a></li><li class="chapter-item expanded "><a href="../blockchain/chapter_1_3_3.html"><strong aria-hidden="true">6.2.4.3.</strong> Hardhat</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1.html"><strong aria-hidden="true">7.</strong> 云计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_1.html"><strong aria-hidden="true">7.1.</strong> 云计算简史</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2.html"><strong aria-hidden="true">7.2.</strong> 资源编排框架</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_1.html"><strong aria-hidden="true">7.2.1.</strong> kubernetes</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_2_2.html"><strong aria-hidden="true">7.2.2.</strong> openstack</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3.html"><strong aria-hidden="true">7.3.</strong> 虚拟化</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_1.html"><strong aria-hidden="true">7.3.1.</strong> 计算</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_2.html"><strong aria-hidden="true">7.3.2.</strong> 网络</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_3_3.html"><strong aria-hidden="true">7.3.3.</strong> 存储</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4.html"><strong aria-hidden="true">7.4.</strong> 容器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_1.html"><strong aria-hidden="true">7.4.1.</strong> docker</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_2.html"><strong aria-hidden="true">7.4.2.</strong> containerd</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_4_3.html"><strong aria-hidden="true">7.4.3.</strong> podman</a></li></ol></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5.html"><strong aria-hidden="true">7.5.</strong> 高级语言虚拟机</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_1.html"><strong aria-hidden="true">7.5.1.</strong> wasm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_2.html"><strong aria-hidden="true">7.5.2.</strong> jvm</a></li><li class="chapter-item expanded "><a href="../cloud/chapter_1_5_3.html"><strong aria-hidden="true">7.5.3.</strong> evm</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1.html"><strong aria-hidden="true">8.</strong> 隐私计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1.html"><strong aria-hidden="true">8.1.</strong> 密码学相关</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_1.html"><strong aria-hidden="true">8.1.1.</strong> 零知识证明</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_2.html"><strong aria-hidden="true">8.1.2.</strong> MPC</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_3.html"><strong aria-hidden="true">8.1.3.</strong> 差分隐私</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_4.html"><strong aria-hidden="true">8.1.4.</strong> 秘密共享</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_1_5.html"><strong aria-hidden="true">8.1.5.</strong> 同态加密</a></li></ol></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_2.html"><strong aria-hidden="true">8.2.</strong> 可信执行环境</a></li><li class="chapter-item expanded "><a href="../privacy/chapter_1_3.html"><strong aria-hidden="true">8.3.</strong> 联邦学习</a></li></ol></li><li class="chapter-item expanded "><a href="../quantum/chapter_1.html"><strong aria-hidden="true">9.</strong> 量子计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../quantum/chapter_1_1.html"><strong aria-hidden="true">9.1.</strong> 量子状态与量子比特</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_2.html"><strong aria-hidden="true">9.2.</strong> 多量子比特与量子纠缠</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_3.html"><strong aria-hidden="true">9.3.</strong> 量子协议和量子算法</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_4.html"><strong aria-hidden="true">9.4.</strong> 量子算法的应用</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_5.html"><strong aria-hidden="true">9.5.</strong> 使用量子电路研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_6.html"><strong aria-hidden="true">9.6.</strong> 使用微波脉冲研究量子硬件</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_7.html"><strong aria-hidden="true">9.7.</strong> 量子计算实验室</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_8.html"><strong aria-hidden="true">9.8.</strong> 量子计算游戏和演示</a></li><li class="chapter-item expanded "><a href="../quantum/chapter_1_9.html"><strong aria-hidden="true">9.9.</strong> 量子计算应用开发</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter_8.html"><strong aria-hidden="true">10.</strong> 软考记录</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -103,7 +105,7 @@
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -133,7 +135,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -336,8 +338,7 @@ pub struct MyContract {
 	my_bool: bool,
 	// Store a number
 	my_number: u32,
-}
-</code></pre>
+}</code></pre>
 <h4 id="支持的类型"><a class="header" href="#支持的类型">支持的类型</a></h4>
 <p>Substrate 智能合约支持最常见的 Rust 数据类型，包括布尔类型，未签名和已签名的整数型，字符串，元组，以及数组。这些数据类型使用 <a href="https://github.com/paritytech/parity-scale-codec"><strong>Parity scale codec</strong></a> 进行编码和解码，以便可以在网络上高效的传输。</p>
 <p>除了常见的 Rust 类型使用 scale codec 进行编码解码外，ink! 语言支持 Substrate 特性类型，像 <code>AccountId</code>，<code>Balance</code>，和 <code>Hash</code>，就好像它们是原始类型。下面的代码说明了如何为该合约存储一个 <code>AccountId</code> 和 <code>Balance</code>。</p>
@@ -356,8 +357,7 @@ mod MyContract {
 		my_balance: Balance,
 	}
 	/* --snip-- */
-}
-</code></pre>
+}</code></pre>
 <h4 id="构造函数"><a class="header" href="#构造函数">构造函数</a></h4>
 <p>每一个 ink! 智能合约必须至少有一个在创建合约时运行的构造函数。然而，如果你需要，一个智能合约也可以有多个多个构造函数。下面的代码说明了如何使用多个构造函数：</p>
 <pre><code class="language-rust editable noplayground">use ink_lang as ink;
@@ -390,8 +390,7 @@ mod mycontract {
 		}
 	/* --snip-- */
 	}
-}
-</code></pre>
+}</code></pre>
 <h3 id="更新你的智能合约"><a class="header" href="#更新你的智能合约">更新你的智能合约</a></h3>
 <p>现在你已经了解到如何存储简单的值，声明数据类型，以及使用构造函数，你可以更新你的智能合约源代码以实现下面的功能：</p>
 <ul>
@@ -403,8 +402,7 @@ mod mycontract {
 <pre><code class="language-rust editable noplayground">#[ink(storage)]
 pub struct Incrementer {
    value: i32,
-}
-</code></pre>
+}</code></pre>
 <p>修改 <code>Incrementer</code> 构造函数，将其 <code>value</code> 设置为 <code>init_value</code>。</p>
 <pre><code class="language-rust editable noplayground">impl Incrementer {
  #[ink(constructor)]
@@ -413,20 +411,17 @@ pub struct Incrementer {
          value: init_value,
        }
  }
-}
-</code></pre>
+}</code></pre>
 <p>添加第二个名为 <code>default</code> 的构造函数，该函数创建一个新的 <code>Incrementer</code>，将其 <code>value</code> 设置为 <code>0</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(constructor)]
 pub fn default() -&gt; Self {
    Self {
        value: 0,
    }
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
-<pre><code class="language-rust editable noplayground">cargo +nightly test
-</code></pre>
+<pre><code class="language-rust editable noplayground">cargo +nightly test</code></pre>
 <p>该命令应该显示类似如下的输出，以表明测试成功完成：</p>
 <pre><code class="language-bash editable noplayground">running 1 test
 test incrementer::tests::default_works ... ok
@@ -439,15 +434,13 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn get(&amp;self) -&gt; i32 {
    self.value
-}
-</code></pre>
+}</code></pre>
 <p>因为这个函数只从合约存储中读取数据，所以它使用 <code>&amp;self</code> 参数来访问合约函数和存储项，此函数不允许更改存储项 <code>value</code> 的状态。如果函数中的最后一个表达式没有分号（;），Rust 将则将其视为返回值。</p>
 <p>将私有 <code>default_works</code> 函数中的 <code>Test Your Contract</code> 注释替换为测试 <code>get</code> 函数的代码。</p>
 <pre><code class="language-rust editable noplayground">fn default_works() {
    let contract = Incrementer::default();
    assert_eq!(contract.get(), 0);
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
@@ -458,8 +451,7 @@ pub fn get(&amp;self) -&gt; i32 {
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn inc(&amp;mut self, by: i32) {
    self.value += by;
-}
-</code></pre>
+}</code></pre>
 <p>向源代码中添加一个新测试，以验证此函数。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
    fn it_works() {
@@ -469,8 +461,7 @@ pub fn inc(&amp;mut self, by: i32) {
        assert_eq!(contract.get(), 47);
        contract.inc(-50);
        assert_eq!(contract.get(), -3);
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
@@ -567,8 +558,7 @@ mod incrementer {
             assert_eq!(contract.get(), -3);
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h2 id="使用maps存储值"><a class="header" href="#使用maps存储值">使用maps存储值</a></h2>
 <p>本节教程说明了如何可以扩展智能合约的功能，以管理每个用户的一个号码。要添加这个功能，你将会使用 <a href="https://paritytech.github.io/ink/ink_storage/struct.Mapping.html"><code>Mapping</code></a> 类型。</p>
 <p>ink! 语言提供 <a href="https://paritytech.github.io/ink/ink_storage/struct.Mapping.html"><code>Mapping</code></a> 类型，使你能够将数据存储为键值对。例如，下面的代码说明了映射一个用户到一个号码。</p>
@@ -576,8 +566,7 @@ mod incrementer {
 pub struct MyContract {
 	// Store a mapping from AccountIds to a u32
 	my_number_map: ink_storage::Mapping&lt;AccountId, u32&gt;,
-}
-</code></pre>
+}</code></pre>
 <p>使用 <code>Mapping</code> 数据类型，可以为每个键存储值的唯一实例。本节教程中，每一个 <code>AccountId</code> 代表一个键，该键映射到一个且仅一个存储的数字 <code>my_value</code>。每个用户只能存储、增加和检索与其自己的 <code>AccountId</code> 关联的值。</p>
 <h3 id="初始化一个mapping"><a class="header" href="#初始化一个mapping">初始化一个mapping</a></h3>
 <p>第一步是初始化 <code>AccountId</code> 和存储值之间的映射。在你的合约中使用映射之前，你必须始终初始化映射，以避免映射错误和不一致。要初始化映射，需要执行以下操作：</p>
@@ -625,8 +614,7 @@ mod mycontract {
             self.map.get(&amp;caller).unwrap_or_default()
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h4 id="识别合约的调用者"><a class="header" href="#识别合约的调用者">识别合约的调用者</a></h4>
 <p>在前面的例子中，你可能注意到了 <code>self.env().caller()</code> 函数调用。这个函数在整个合约逻辑中都是可用的，并且总是返回 <strong>contract caller</strong>。重要的是要注意，<strong>contract caller</strong> 与 <strong>origin caller</strong> 是不同的。如果用户访问一个合约，然后再调用后来的合约，那么第二个合约中的 <code>self.env().caller()</code> 是第一个合约的地址，而不是 original user 的地址。</p>
 <h4 id="使用合约的调用者"><a class="header" href="#使用合约的调用者">使用合约的调用者</a></h4>
@@ -653,8 +641,7 @@ mod mycontract {
 		}
 		/* --snip-- */
 	}
-}
-</code></pre>
+}</code></pre>
 <p>因为你已经使用 <code>owner</code> 标识符保存了合约调用者，所以你可以再后面编写函数来检查当前合约调用者是否是合同的所有者。</p>
 <h3 id="添加mapping到智能合约中"><a class="header" href="#添加mapping到智能合约中">添加mapping到智能合约中</a></h3>
 <p>为 <code>incrementer</code> 合约添加 storage map，在 <code>incrementer</code> 项目文件夹中，打开 <code>lib.rs</code>，为你的合约导入 <code>SpreadAllocate</code> 特征并追加派生宏。</p>
@@ -663,14 +650,12 @@ mod incrementer {
    use ink_storage::traits::SpreadAllocate;
 
    #[ink(storage)]
-   #[derive(SpreadAllocate)]
-</code></pre>
+   #[derive(SpreadAllocate)]</code></pre>
 <p>将映射键从 <code>AccountId</code> 添加到存储为 <code>my_value</code> 的 <code>i32</code> 数据类型。</p>
 <pre><code class="language-rust editable noplayground">pub struct Incrementer {
    value: i32,
    my_value: ink_storage::Mapping&lt;AccountId, i32&gt;,
-}
-</code></pre>
+}</code></pre>
 <p>使用 <code>initialize_contract</code> 函数为合约中的 <code>new</code> 函数设置一个初始 <code>value</code> 和 <code>my_value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(constructor)]
 pub fn new(init_value: i32) -&gt; Self {
@@ -679,30 +664,26 @@ pub fn new(init_value: i32) -&gt; Self {
        let caller = Self::env().caller();
        contract.my_value.insert(&amp;caller, &amp;0);
    })
-}
-</code></pre>
+}</code></pre>
 <p>使用 <code>initialize_contract</code> 函数为合约中的 <code>default</code> 函数设置一个初始 <code>value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(constructor)]
 pub fn default() -&gt; Self {
    ink_lang::utils::initialize_contract(|contract: &amp;mut Self| {
        contract.value = Default::default();
    })
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>get_mine</code> 函数，使用 Mapping API <code>get</code> 函数读取 <code>my_value</code>，并为合约调用者返回 <code>my_value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn get_mine(&amp;self) -&gt; i32 {
    self.my_value.get(&amp;self.env().caller()).unwrap_or_default()
-}
-</code></pre>
+}</code></pre>
 <p>向初始化帐户添加一个新测试。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
 fn my_value_works() {
    let contract = Incrementer::new(11);
    assert_eq!(contract.get(), 11);
    assert_eq!(contract.get_mine(), 0);
-}
-</code></pre>
+}</code></pre>
 <p>保存代码并关闭文件。</p>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
@@ -723,14 +704,12 @@ pub fn inc_mine(&amp;mut self, by: i32) {
    let caller = self.env().caller();
    let my_value = self.get_mine();
    self.my_value.insert(caller, &amp;(my_value + by));
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>remove_mine()</code> 函数，该函数允许合约调用者从存储中获取可删除的 <code>my_value</code> 存储项。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn remove_mine(&amp;mut self) {
    self.my_value.remove(&amp;self.env().caller())
-}
-</code></pre>
+}</code></pre>
 <p>添加一个新测试，以验证 <code>inc_mine()</code> 函数是否按预期工作。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
 fn inc_mine_works() {
@@ -740,8 +719,7 @@ fn inc_mine_works() {
    assert_eq!(contract.get_mine(), 5);
    contract.inc_mine(5);
    assert_eq!(contract.get_mine(), 10);
-}
-</code></pre>
+}</code></pre>
 <p>通过运行下面的命令使用 <code>test</code> 子命令和 <code>nightly</code> 工具链来测试你的工作。</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
 </code></pre>
@@ -873,8 +851,7 @@ mod incrementer {
             assert_eq!(contract.get_mine(), 0);
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h2 id="构建一个token合约"><a class="header" href="#构建一个token合约">构建一个token合约</a></h2>
 <p>本节教程演示了如何使用 ink! 语言构建 ERC-20 代币合约，ERC-20 规范定义了可替换代币的通用标准。拥有定义代币属性的标准，使遵循规范的开发人员，能够构建与其他产品和服务互操作的应用程序。ERC-20 代币标准不是唯一的代币标准，但它是最常用的标准之一。</p>
 <h3 id="erc-20标准的基础知识"><a class="header" href="#erc-20标准的基础知识">ERC-20标准的基础知识</a></h3>
@@ -957,13 +934,11 @@ test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <pre><code class="language-rust editable noplayground">let from_balance = self.balance_of(from);
 if from_balance &lt; value {
 return Err(Error::InsufficientBalance)
-}
-</code></pre>
+}</code></pre>
 <p>从转移账户中减去该值，并将该值添加到接收账户。</p>
 <pre><code class="language-rust editable noplayground">self.balances.insert(from, &amp;(from_balance - value));
 let to_balance = self.balance_of(to);
-self.balances.insert(to, &amp;(to_balance + value));
-</code></pre>
+self.balances.insert(to, &amp;(to_balance + value));</code></pre>
 <p>要添加转移函数到智能合约，在 <code>erc20</code> 项目目录中，打开 <code>lib.rs</code> 文件，添加一个 <code>Error</code> 声明，以在帐户中没有足够的代币来完成转账时返回一个错误。</p>
 <pre><code class="language-rust editable noplayground">/// Specify ERC-20 error type.
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
@@ -971,19 +946,16 @@ self.balances.insert(to, &amp;(to_balance + value));
 pub enum Error {
 /// Return if the balance cannot fulfill a request.
    InsufficientBalance,
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>Result</code> 返回类型，以返回 <code>InsufficientBalance</code> 错误。</p>
 <pre><code class="language-rust editable noplayground">/// Specify the ERC-20 result type.
-pub type Result&lt;T&gt; = core::result::Result&lt;T, Error&gt;;
-</code></pre>
+pub type Result&lt;T&gt; = core::result::Result&lt;T, Error&gt;;</code></pre>
 <p>添加 <code>transfer()</code> 公共函数，使合约调用者能够将代币转移到另一个帐户。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn transfer(&amp;mut self, to: AccountId, value: Balance) -&gt; Result&lt;()&gt; {
    let from = self.env().caller();
    self.transfer_from_to(&amp;from, &amp;to, value)
-}
-</code></pre>
+}</code></pre>
 <p>添加 <code>transfer_from_to()</code> 私有函数，将代币从与合约调用者关联的帐户转移到接收帐户。</p>
 <pre><code class="language-rust editable noplayground">fn transfer_from_to(
    &amp;mut self,
@@ -1000,14 +972,12 @@ pub fn transfer(&amp;mut self, to: AccountId, value: Balance) -&gt; Result&lt;()
     let to_balance = self.balance_of_impl(to);
     self.balances.insert(to, &amp;(to_balance + value));
     Ok(())
-}
-</code></pre>
+}</code></pre>
 <p>这段代码片段使用了 <code>balance_of_impl()</code> 函数，<code>balance_of_impl()</code> 函数与 <code>balance_of</code> 函数相同，不同的是它使用引用在 WebAssembly 中以更有效的方式查找帐户余额。在智能合约中添加如下函数即可使用该功能：</p>
 <pre><code class="language-rust editable noplayground">#[inline]
 fn balance_of_impl(&amp;self, owner: &amp;AccountId) -&gt; Balance {
    self.balances.get(owner).unwrap_or_default()
-}
-</code></pre>
+}</code></pre>
 <p>通过运行下面的命令，验证程序是否编译并通过了测试用例：</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
 </code></pre>
@@ -1037,8 +1007,7 @@ pub struct Transfer {
    #[ink(topic)]
    to: Option&lt;AccountId&gt;,
    value: Balance,
- }
-</code></pre>
+ }</code></pre>
 <p>你可以使用 <code>.unwrap_or()</code> 函数为 <code>Option&lt;T&gt;</code> 变量检索数据。</p>
 <h4 id="发出事件"><a class="header" href="#发出事件">发出事件</a></h4>
 <p>现在你已经声明了事件并定义了事件包含的信息，接下来需要添加发出事件的代码。你可以通过调用 <code>self.env().emit_event()</code> 来实现这一点，将事件名称作为调用的唯一参数。</p>
@@ -1058,8 +1027,7 @@ pub struct Transfer {
        to: Some(caller),
        value: initial_supply,
      });
-   }
-</code></pre>
+   }</code></pre>
 <p>将 <code>Transfer</code> 事件添加到 <code>transfer_from_to()</code> 函数中。</p>
 <pre><code class="language-rust editable noplayground">self.balances.insert(from, &amp;(from_balance - value));
 let to_balance = self.balance_of_impl(to);
@@ -1068,8 +1036,7 @@ self.env().emit_event(Transfer {
    from: Some(*from),
    to: Some(*to),
    value,
-});
-</code></pre>
+});</code></pre>
 <p>注意 <code>value </code> 不需要 <code>Some()</code>，因为值没有存储在 <code>Option</code> 中。</p>
 <p>添加一个将代币从一个帐户转移到另一个帐户的测试用例。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
@@ -1078,11 +1045,9 @@ fn transfer_works() {
    assert_eq!(erc20.balance_of(AccountId::from([0x0; 32])), 0);
    assert_eq!(erc20.transfer((AccountId::from([0x0; 32])), 10), Ok(()));
    assert_eq!(erc20.balance_of(AccountId::from([0x0; 32])), 10);
-}
-</code></pre>
+}</code></pre>
 <p>通过运行以下命令验证程序的编译并且通过所有测试用例：</p>
-<pre><code class="language-rust editable noplayground">cargo +nightly test
-</code></pre>
+<pre><code class="language-rust editable noplayground">cargo +nightly test</code></pre>
 <p>该命令应该显示类似以下的输出，以表示成功完成测试：</p>
 <pre><code class="language-bash editable noplayground">running 3 tests
 test erc20::tests::new_works ... ok
@@ -1102,8 +1067,7 @@ test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <pre><code class="language-rust editable noplayground">pub struct Erc20 {
  /// Balances that can be transferred by non-owners: (owner, spender) -&gt; allowed
  allowances: ink_storage::Mapping&lt;(AccountId, AccountId), Balance&gt;,
-}
-</code></pre>
+}</code></pre>
 <p>元组使用 <code>(owner, spender)</code> 来标识 <code>spender</code> 帐户，该帐户被允许在指定 <code>allowance</code> 代表 <code>owner</code> 访问代币。</p>
 <p>要为智能合约添加批准逻辑，打开 <code>lib.rs</code> 文件，使用 <code>#[ink(event)]</code> 属性宏声明 <code>Approval</code> 事件。</p>
 <pre><code class="language-rust editable noplayground">#[ink(event)]
@@ -1113,19 +1077,16 @@ pub struct Approval {
    #[ink(topic)]
    spender: AccountId,
    value: Balance,
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>Error</code> 声明，以便在转账请求超过帐户限额时返回一个错误。</p>
 <pre><code class="language-rust editable noplayground">#[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
 #[cfg_attr(feature = &quot;std&quot;, derive(scale_info::TypeInfo))]
 pub enum Error {
    InsufficientBalance,
    InsufficientAllowance,
-}
-</code></pre>
+}</code></pre>
 <p>将所有者和非所有者组合的存储映射添加到帐户余额。</p>
-<pre><code class="language-rust editable noplayground">allowances: Mapping&lt;(AccountId, AccountId), Balance&gt;,
-</code></pre>
+<pre><code class="language-rust editable noplayground">allowances: Mapping&lt;(AccountId, AccountId), Balance&gt;,</code></pre>
 <p>添加 <code>approve()</code> 函数来授权 <code>spender</code> 帐户从调用者的帐户中提取代币，直到取到最大 <code>value</code>。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn approve(&amp;mut self, spender: AccountId, value: Balance) -&gt; Result&lt;()&gt; {
@@ -1137,20 +1098,17 @@ pub fn approve(&amp;mut self, spender: AccountId, value: Balance) -&gt; Result&l
      value,
    });
    Ok(())
-}
-</code></pre>
+}</code></pre>
 <p>添加一个 <code>allowance()</code> 函数来返回允许 <code>spender</code> 从 <code>owner</code> 帐户中提取的代币数量。</p>
 <pre><code class="language-rust editable noplayground">#[ink(message)]
 pub fn allowance(&amp;self, owner: AccountId, spender: AccountId) -&gt; Balance {
    self.allowance_impl(&amp;owner, &amp;spender)
-}
-</code></pre>
+}</code></pre>
 <p>这段代码片段使用了 <code>allowance_impl()</code> 函数。<code>allowance_impl()</code> 函数与 <code>allowance</code> 函数相同，不同之处是它使用引用来在 WebAssembly 中以更有效的方式查找代币限额。在智能合约中添加如下函数即可使用该功能：</p>
 <pre><code class="language-rust editable noplayground">#[inline]
 fn allowance_impl(&amp;self, owner: &amp;AccountId, spender: &amp;AccountId) -&gt; Balance {
    self.allowances.get((owner, spender)).unwrap_or_default()
-}
-</code></pre>
+}</code></pre>
 <h4 id="从逻辑中添加转账"><a class="header" href="#从逻辑中添加转账">从逻辑中添加转账</a></h4>
 <p>现在你已经为一个帐户设置了代表另一个帐户转移代币的批准，你需要创建一个 <code>transfer_from</code> 函数，以允许已批准的用户转移代币。<code>transfer_from</code> 函数调用私有 <code>transfer_from_to</code> 函数来执行大部分转移逻辑。授权非所有者转让代币有几个要求：</p>
 <ul>
@@ -1178,8 +1136,7 @@ pub fn transfer_from(
    self.allowances
        .insert((&amp;from, &amp;caller), &amp;(allowance - value));
    Ok(())
-  }
-</code></pre>
+  }</code></pre>
 <p>为 <code>transfer_from()</code> 函数添加一个测试用例。</p>
 <pre><code class="language-rust editable noplayground">#[ink::test]
 fn transfer_from_works() {
@@ -1188,8 +1145,7 @@ fn transfer_from_works() {
    contract.approve(AccountId::from([0x1; 32]), 20);
    contract.transfer_from(AccountId::from([0x1; 32]), AccountId::from([0x0; 32]), 10);
    assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 10);
-}
-</code></pre>
+}</code></pre>
 <p>通过运行以下命令验证程序的编译并且通过所有测试用例：</p>
 <pre><code class="language-bash editable noplayground">cargo +nightly test
 </code></pre>
@@ -1453,8 +1409,7 @@ mod erc20 {
             );
         }
     }
-}
-</code></pre>
+}</code></pre>
 <h2 id="智能合约的问题排查"><a class="header" href="#智能合约的问题排查">智能合约的问题排查</a></h2>
 <p>本节介绍了在基于 Substrate 的区块链上编写和部署智能合约时可能遇到的一些常见问题，以及如何解决这些问题。</p>
 <h3 id="意外的运行错误"><a class="header" href="#意外的运行错误">意外的运行错误</a></h3>
@@ -1499,7 +1454,7 @@ mod erc20 {
 
 
         <!-- Google Analytics Tag -->
-        <script type="text/javascript">
+        <script>
             var localAddrs = ["localhost", "127.0.0.1", ""];
 
             // make sure we don't activate google analytics if the developer is
@@ -1516,26 +1471,27 @@ mod erc20 {
         </script>
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
-        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
