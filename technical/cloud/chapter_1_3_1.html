@@ -145,7 +145,403 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img src="https://awesomeprogram.gitee.io/imgdata/techs/202207061914193.png" alt="" /></p>
+                        <h1 id="虚拟化技术入门"><a class="header" href="#虚拟化技术入门">虚拟化技术入门</a></h1>
+<h2 id="qemu-kvm-基础"><a class="header" href="#qemu-kvm-基础">QEMU-KVM 基础</a></h2>
+<h3 id="安装在centos"><a class="header" href="#安装在centos">安装在CentOS</a></h3>
+<pre><code class="language-bash">rpm -qa |grep qemu
+yum install qemu-kvm
+yum install libvirt -y
+yum install virt-install virt-manager
+</code></pre>
+<h3 id="创建第一台虚拟机"><a class="header" href="#创建第一台虚拟机">创建第一台虚拟机</a></h3>
+<pre><code class="language-bash">// 创建系统盘镜像存储文件
+dd if=/dev/zero of=kvm1.img bs=1M count=4096 
+
+ln -s /usr/libexec/qemu-kvm/sbin /sbin
+yum install tigervnc -y
+
+// 启动虚拟机并开始安装GuestOS
+qemu-kvm -hda kvm1.img -cdrom /xxxx.iso -boot order=cd,once=d -vnc 0.0.0.0:0 
+
+// 放行防火墙的访问端口
+netstat -tupln
+firewall-cmd --list-all
+firewall-cmd --add-service=vnc-server
+
+// 在CentOS图形界面中，用vncviewer工具进入虚机操作界面
+vncviewer :0
+</code></pre>
+<h3 id="虚拟机的配置"><a class="header" href="#虚拟机的配置">虚拟机的配置</a></h3>
+<h4 id="cpu配置"><a class="header" href="#cpu配置">cpu配置</a></h4>
+<pre><code class="language-bash">// SMP多对称处理器：多个CPU通过一个总线访问内存，SMP支持的CPU个数有限
+// NUMA独立内存多处理器：每个处理器有自己的内存，每个处理器也可以访问别的处理器内存
+// GuestOS lscpu
+// n：VCPU数量，默认为1
+// maxcpus：最大使用的cpu数量，配合cpu热插拔机制
+// threads per core：每个core线程数量
+// cores per socket：每个cpu的core数量
+// sockets：cpu插槽数量
+// VCPU=sockets*cores*threads
+
+qemu-kvm -smp 2,maxcpus=3,cores=1,sockets=1 -cpu SandyBridge test.qcow2 -monitor stdio -vnc 0.0.0.0:0 //不加任何CPU参数
+lscpu
+
+// 内存配置，如果不加内存配置则默认为128M
+qemu-kvm -m 2048 test.qcow2 -monitor stdio -vnc 0.0.0.0:0
+dmesg | grep Memory
+</code></pre>
+<h4 id="存储配置"><a class="header" href="#存储配置">存储配置</a></h4>
+<pre><code class="language-bash">qemu-kvm -hda file -fda file -cdrom file
+// hda：指定虚拟机第一块硬盘，表现为/dev/hda或/dev/sda，对应可以为磁盘镜像文件，也可以为宿主机的存储设备文件
+// hdb、hdc：指定虚拟机中的第二、第三块硬盘
+// fda：指定虚拟机中的第一个软驱
+// cdrom：指定虚拟机的光驱，是GuestOS中的第三个IDE设备，不能和hdc同时使用
+// mtdblock：虚拟机中的flash存储器
+// sd：虚拟机中的sd卡
+
+qemu-kvm -drive option,[option],[option].......
+qemu-kvm -m 2048 -drive file=kvm1.img snapshot=on -vnc 0.0.0.0:0 -monitor stdio
+// file= 指定磁盘镜像文件名,或存储设备文件名
+// if= 指定存储驱动器的接口类型(如ide、scsi (目录qemu版本不支持)、virtio) 
+// bus= 指定存储驱动器的总线编号
+// unit= 指定存储驱动器的单元编号
+// index= 同-一种接口驱动器的索引编号
+// media= 设置存储驱动器中媒介的类型(disk、cdrom)
+// snapshot= 可选值为( on,ff),当值为on时,不会将更改、新增的数据回写到磁盘镜像文件中,而是写到一个临时文件中。默认为off. 可以在monitor中,使用commit命令强制回写
+// format= 指定磁盘的格式,默认情况下由qemu自动识别。如: qcow2,vmdk,raw
+// serial= 分配给设备的序列号
+// addr=存储控制器的PCI地址
+// id=设置驱动器id
+// readonly= on|off 是否只读
+// cache= cache访问方式,可先值为(none, write back, writethrough)
+// 默认值: writethrough, (直写模式)数据直接写入磁盘里,不使用缓存,在数据更新时,同时写入Guest os Pagecache和后端块设备。
+// writeback: (回写模式)在数据更新时只写入Guest os和宿主机os的PageCache。只在数据被替换出缓存时,被修改的缓存数据才会被写到后端存储。此模式的优点是数据写入速度快,因为不需要写存,缺点是一旦更新后的数据未被写入存储时出现系统掉电的情况,数据将无法找回。
+// none:这种模式作用在Guest OS Pagecache和物理磁盘Cache中,相当于虚拟机能直接访问宿主机的磁盘,性能不错!
+// 性能上：writeback &gt; none &gt; writethrough; 安全上：writeback &lt; none &lt; writethrough
+
+qemu-kvm -boot [order=drives],[once=drives],[menu=on|off]
+qemu-kvm -m 2048 -hdb kvml. ing -hda kvm2. img -hdd data.img -cdrom /root/kvmlab/iso/Cent0S-7-x86_64-DVD-2009.iso -vnc 0.0.0.0:0 -monitor stdio
+// drives：a:第一个软驱, b:第二个软驱, c:第一块硬盘, d:光驱,n:网络启动
+// order：设定启动顺序，如设成order=dc,即先从光驱启动,再从第-块硬盘启动。
+// once：设定第一次的启动顺序 , 重启后失效。
+// menu：启用交互式启动菜单
+</code></pre>
+<h4 id="磁盘镜像文件配置"><a class="header" href="#磁盘镜像文件配置">磁盘镜像文件配置</a></h4>
+<pre><code class="language-bash">// raw：原始磁盘镜像格式，qemu-img的默认格式
+// qcow2：支持稀疏文件、AES加密与快照
+// vdi：virtualbox的镜像文件格式
+// vmdk：vmware的镜像文件格式
+// vpc：微软的virtual pc镜像文件格式
+
+qemu-img [command] [-o options]
+qemu-img create -f qcow2 test1.qcow2
+qemu-img info test1.qcow2
+qemu-img create -f qcow2 -b test1.qcow2 test2.qcow2
+qemu-img commit test2.qcow2
+qemu-img convert -O qcow2 kvmlab.vmdk kvmlab1.qcow2
+qemu-img snapshot -c snap1 test1.qcow2
+qemu-img snapshot -l test1.qcow2
+qemu-img snapshot -a sanp1 test1.qcow2
+qemu-img resize test1.qcow2 +1G
+
+// check 对镜像文件进行检查,查找镜像文件中的错误,目前只支持qcow2、qed、vdi格式
+// create [-f fmt][-o option] filename [size] 创建镜像文件，-f镜像文件格式(如raw、qcow2)，-b指定backing_file(这个镜像文件只记录与backing_file差异的部分)，-o选项(如backing_file)，Size指定文件大小(如M、G、T)
+// commit [-f fmt] filename 提交filename中的内容到backing_file中
+// convert [-c] [-f fmt] [-O output_fmt] [-o option] filename outputfilename镜像文件格式转换，-c:压缩，-f:源文件格式，-0:输出文件格式，Filename:源文件名，Ouputfilename:输出文件名
+// info filename 显示镜像文件信息
+// snapshot [-l|-a snapshot |-c snapshot |-d snapshot] filename，-l列出所有快照，-a使用一个快照，-c创建一个快照，-d删除一个快照
+// resize filename [+|-]size，增加、减小镜像文件的大小(qcow2格式不支持减小空间)
+</code></pre>
+<h4 id="网络配置"><a class="header" href="#网络配置">网络配置</a></h4>
+<p>1.桥接(bridge)
+将虚拟机的网卡桥接到宿主机的物理网卡。虚拟机和宿主机处于同一个网络内，使用同一个网段。相当于将虚拟机的网卡和宿主机的网卡接在同一台二层交换机上</p>
+<pre><code class="language-bash">yum install bridge-utils tunctl
+lsmod |grep tun
+modprobe tun
+brctl show
+</code></pre>
+<p>新建一个bridge(br0)</p>
+<pre><code class="language-bash">// vim /etc/sysconfig/network-scripts/ifcfg-br0
+// Ifcfg-br0文件配置内容
+DEVICE=brO
+TYPE=Bridge
+BOOTPROTO=static
+IPADDR=192.168.0.198
+PREFIX=24
+GATEWAY=192.168.0.1
+DNS=114.114.114.114
+ONBOOT=yes
+</code></pre>
+<p>修改宿主机物理网卡配置</p>
+<pre><code class="language-bash">// vim /etc/sysconfig/network-scripts/ifcfg-ens33
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+UUlD=ac25a1e2-258c-42c9-aa11-f5565b3474d9
+DEVICE=ens33
+ONBOOT=yes
+#IPADDR=192.168.0.197 #将此行注释掉
+#PREFIX=24 #将此行注释掉
+#GATEWAY=192.168.0.1 #将此行注释掉
+#DNS1=114.114.114.114 #将此行注释掉
+BRIDGE=brO #新增此行
+
+systemctl restart network
+</code></pre>
+<p>虚拟机配置命令</p>
+<pre><code class="language-bash">qemu-kvm -net nic -net tap,script=filename test1.qcow2
+// -net tap: 添加一块tap虚拟网络设备(用于连接虚拟机的网卡)
+// -net tap[,vlan=n][,name=str][,fd=h][,ifname=name][,script=file][,downscript=dfile][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off][,vhostfd=h][,vhostforce=on|off]
+// vlan: 配置加入的vlan号
+// ifname: 指定tap设备的名称
+// script: 指定启动虚机时宿主机执行的脚本(默认为/etc/qemu-ifup)
+</code></pre>
+<p>创建/etc/qemu-ifup脚本</p>
+<pre><code class="language-bash">#!/bin/bash
+brctl addif br0 $1
+// downscript: 虚拟机关闭时执行的脚本(非以要)
+</code></pre>
+<p>2.NAT
+宿主机需要两块网卡，一块网卡连接物理网络，另一块网卡(通常是虚拟网卡)和虚拟机网卡做桥接。虚拟机需通过宿主机的NAT功能，转发数据包。这时宿主机相当一台NAT路由器</p>
+<p>新建一个桥br1,用于连接虚拟机的网卡(跟桥接模式一样)</p>
+<pre><code class="language-bash">// vim /etc/sysconfig/network-script/ifcfg-br1
+DEVICE=br1
+TYPE=Bridge
+BOOTPROTO=static
+IPADDR=192.168.100.254
+PREFIX=24
+ONBOOT=yes
+// 修改br1的IP地址为192.168.100.254(根据环境不同自己配置) 
+
+systemctl restart network
+ifconfig
+</code></pre>
+<p>宿主机安装DHCP软件（建议使用dnsmasq）</p>
+<pre><code class="language-bash">yum install dnsmasq
+
+// 配置/etc/dnsmasq.conf文件内容
+Interface=br1
+dhcp-range=192.168.100.100,192.168.100.200,255.255.255.0,12h
+dhcp-option=option:router,192.168.100.254
+dhcp-option=option:dns-server,114.114.114.114
+// 放通宿主机防火墙DHCP服务
+firewall-cmd --add-service=dhcp
+</code></pre>
+<p>创建/etc/qemu-ifup-NAT脚本(参考桥接配置)</p>
+<pre><code class="language-bash">#!/bin/bash
+ip link set $1 up
+brctl addif br1 $1
+</code></pre>
+<p>启动虚拟机</p>
+<pre><code class="language-bash">qemu-kvm -m 2048 -net nic -net tap,script=/etc/qemu-ifup-NAT test1.qcow2 -vnc 0.0.0.0:0
+// 此时虚拟机应该已成功获取到IP地址、网关、DNS，已经可以和宿主机br1连通。但是还无法访问外网。
+</code></pre>
+<p>开启宿主机的数据包转发功能</p>
+<pre><code class="language-bash">// vim /etc/sysctl.conf
+net inv4 in forward = 1
+// 立即应用配置
+sysctl -p
+</code></pre>
+<p>NAT配置</p>
+<pre><code>iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -j MASQUERADE
+// 将宿主机当成一个NAT网关,虚拟机只有通过宿主机地址转换后才能访问外网。
+</code></pre>
+<p>3.qemu内部的用户模式，完全由qemu模拟出来的一种网络模式,性能相对较差。</p>
+<h2 id="libvirt-基础"><a class="header" href="#libvirt-基础">Libvirt 基础</a></h2>
+<pre><code class="language-bash">// libvirt安装
+yum install libvirt -y
+
+// 给node添加别名，vim /etc/libvirt/libvirt.conf 
+uri_aliases = [&quot;lib198=qemu+ssh://192.168.0.198/system&quot;,&quot;lib197=qemu+ssh://192.168.0.197/system&quot;]
+
+// domain配置文件存储目录: /etc/libvirt/qemu/XX.xml
+// 安装图形化管理工具: virt-manager
+yum install virt-manager -y
+
+// 在图形界面里启动: virt-manager
+</code></pre>
+<h3 id="virsh-常用命令"><a class="header" href="#virsh-常用命令">virsh 常用命令</a></h3>
+<pre><code class="language-bash">list -all :列出所有虚拟机
+start xxx: 启动虚拟机
+reboot xxx: 重启虚拟机
+reset xxx: 强制重启虚拟机
+shutdown xxx: 关闭虚拟机
+destory &lt;id&gt;: 销毁一个虚拟机,相当于拨掉虚拟机的电源线
+domstate --domain xxx: 列出指定域的运行状态
+domstats --domain xxx: 列出指定域的详细信息
+dominfo --domain xxx: 列出指定域的基本信息
+dommemstat --domain xxx: 列出指定域的内存使用情况
+setmem --domain xxx &lt;size&gt;: 设置指定域的内存大小
+vcpuinfo --domain xxx: 列出指定域的VCPU信息
+vcpupin --domain xxx &lt;vcpu&gt; &lt;pcpu&gt;: 将虚机的CPU绑定到物理CPU上
+setvcpus --domain xxx &lt;num&gt;: 设定域的VCPU数量
+vncdisplay --domain xxx: 获取VNc监听地址和端口
+create &lt;xml&gt;: 根据xml创建一个新的域
+save -domain xxx &lt;xx.img&gt;: 保存一个运行中的域的状态到一 个文件中
+snapshot-create: 创建一个快照
+snapshot-revert: 恢复到一个快照
+restore &lt;xx.img&gt;: 从一个文件中恢复一个域的运行状态
+migrate &lt;id&gt; &lt;des-url&gt;: 迁移一个域到其它节点
+dumpxml &lt;id&gt;: 将一个域的配置文件输出到屏幕上
+edit &lt;id&gt;: 编辑一个域的配置文件
+sysinfo: 宿主机系统信息
+nodeinfo: 节点基本信息
+</code></pre>
+<h3 id="virt-install-应用"><a class="header" href="#virt-install-应用">virt-install 应用</a></h3>
+<p>// 利用libvirt API接口创建虚拟机。</p>
+<pre><code class="language-bash">virt-install --connect URI &lt;option&gt; &lt;option&gt; ...
+virt-install \ 
+--name test3 \
+--memory 1024,maxmemory=2048 \
+--vcpus 1,maxvcpus=2 \
+--cdrom /root/kvmlab/ iso/Cent0S-7-x86_64-DVD-2009.iso \
+--disk /root/kvmlab/img/test3.qcow2,size=10 \ 
+--network bridge=br0 \
+--graphics vnc,password=123,port=5900,listen=0.0.0.0
+
+// --connect URI: 连接到指定虚拟化系统( qemu+ ssh://dest-ip/system)
+// --name xx: 虚拟机(域)的名称
+// --memory xx,maxmemory=xxx: 配置内存和最大内存
+// --vcpus xx,maxvcpus=x,cpuset=x,x,x,sockets=x,cores=x,threads=x，配置VCPU数量、最大数量、绑定的物理，sockets、cores、threads
+// --cdrom: 配置光驱
+// --import: 使用一个已存在的磁盘镜像文件创建虚拟机
+// --boot hd,cdrom: 配置虚拟机的启动顺序
+// --disk(配置存储设备) size=xx(默认单位: G)，&lt;imgfile path&gt;(镜像文件路径)，device=disk|cdrom|floppy(指定设备类型,默认为disk)
+// --network(配置网络) bridge=(配置桥接到指定的桥)，network=(指定虚拟网络)，mode=e1000|rtl8139|virtio(指定网卡类型)
+// --graphics (配置图形接口) vnc,password=xxx,port=xxx,listen=xxx，使用vnc并配置登入密码，监听端口中，监听IP；spice,password=xxx,port=xxx,listen=xxx，使用vnc，并配置登入密码，监听端口中，监听IP
+
+// virt-top: 在宿主机上查看虚拟机的运行情况，资源利用率
+</code></pre>
+<h3 id="virtio-应用"><a class="header" href="#virtio-应用">virtio 应用</a></h3>
+<h4 id="virtio基本概念"><a class="header" href="#virtio基本概念">virtio基本概念</a></h4>
+<p>基于希望解决软件虚拟化性能上的损失，提出了一项解决方案，改动GuestOS的代码，使它以为自己是运行在虚拟化环境中，可于虚拟系统协同工作。这种方法称为准虚拟化(半虚拟化)。KVM系统是基于硬件虚拟化(如intel-VT AMD-V)的系统，CPU的运行效率是相当高的。如果硬件支持Intel EPT特性(扩展页表，intel第二代硬件虚拟化技术)的，内存的运行效率也会非常高。但其它I/O设备(如硬盘、网卡等)，KVM系统是使用qemu纯软件模拟的方式，效率较为低下。KVM系统为解决I/0设备效率低下的问题，采用了virtio技术。virtio是一个半虚拟化技术，需要修改GuestOS代码。一般较新的linux系统都内置了virtio模块，但windows系统需另外安装virtio驱动。</p>
+<h4 id="linux-guestos-virtio"><a class="header" href="#linux-guestos-virtio">Linux GuestOS virtio</a></h4>
+<p>查看宿主机是否已加载了virtio模块: <code>find /lib/modules/3.10.0-1160.el7.x86_64/ -name &quot;virtio*&quot;</code></p>
+<p>将网卡和磁盘类型设置成virtio</p>
+<pre><code class="language-bash">virsh edit xxx
+修改 disk.target.bus=ide为virtio，disk.address.type=drive为pci，并删除后面的controller等(系统会自动生成)
+修改 interface.model.type=rtl8139为virtio
+</code></pre>
+<p>进入虚拟机查看pci设备信息：<code>lspci</code></p>
+<h4 id="windows-guestos-virtio"><a class="header" href="#windows-guestos-virtio">Windows GuestOS virtio</a></h4>
+<p>在宿主机中安装windows virtio驱动：<code>yum install virtio-win</code></p>
+<p>在以下目录里会生成windows virtio驱动的iso包：<code>/usr/share/virtio-win/virtio-win-0.1.171.iso</code></p>
+<p>将windows virtio驱动iso包挂载到虚拟机的cdrom中</p>
+<pre><code class="language-bash">virsh edit xxx
+&lt;source file='/usr/share/virtio-win/virtio-win-0.1.171.iso'/&gt;
+
+修改 disk.target.bus=ide为virtio，disk.address.type=drive为pci，并删除后面的controller等(系统会自动生成)
+修改 interface.model.type=rtl8139为virtio
+</code></pre>
+<p>解决无法启动windows guestos问题的小技巧:</p>
+<p>1.先将windows虚拟机的引导磁盘hda模式改回ide</p>
+<p>2.另外添加一抉磁盘，把磁盘模式设为virtio</p>
+<p>qemu-img create -f qcow2 <filepath> <size></p>
+<p>edit xxx，在配置文件中添加这块新磁盘hdb，并将模式设为virtio</p>
+<p>3.将virtio-win iso包挂载到虚拟机hdc中</p>
+<p>attach-disk win7 /root/kvmlab/iso/virtio-win-0.1.171.iso hdc --type cdrom</p>
+<p>4.启动系统，在guestos windows计算机管理的设备管理器中，其他设备(PCI设备、SCSI设备、以太网控制器设备)安装virtio驱动，更新驱动然后浏览cdrom</p>
+<p>5.关机，再将引导磁盘改为virtio，即可正常启动系统</p>
+<h5 id="virt-install-安装一台新-guestos-windows-自带-virtio-驱动"><a class="header" href="#virt-install-安装一台新-guestos-windows-自带-virtio-驱动">virt-install 安装一台新 guestos windows 自带 virtio 驱动</a></h5>
+<pre><code class="language-bash">virt install \
+name win7 \
+--vcpus 3 \
+--memory 4096 \
+--disk /root/kvmlab/img/win7.qcow2,size=20,bus=virtio \
+--cdrom /root/kvmlab/iso/windows7.iso \
+--network bridge=br0,model=virtio \
+--graphics vnc,port=5901,listen=0.0.0.0
+</code></pre>
+<p>替换windows iso安装包为 virtio iso安装包：<code>attach-disk win7 /root/kvmlab/iso/virtio-win-0.1.171.iso hda --type cdrom</code></p>
+<p>在windows安装界面加载驱动程序，在安装包的viostor文件夹中，w7/amd64/</p>
+<p>安装完virtio驱动后，再替换为 windows iso包：<code>attach-disk win7 /root/kvmlab/iso/windows.iso hda --type cdrom</code></p>
+<p>继续剩下安装，分区等...</p>
+<p>进入guest windows系统中，查看计算机管理-设备管理器，磁盘驱动器已经安装virtio，在其他设备中手动安装PCI设备和以太网控制器设备(再一次切换hda cdrom)</p>
+<h3 id="内存气球技术应用balloon内存热插拔"><a class="header" href="#内存气球技术应用balloon内存热插拔">内存气球技术应用(balloon内存热插拔)</a></h3>
+<p>通常我们要修改虚拟机的内存大小，需要将虚拟机关机。balloon提供了一种在线调整虚拟机内存大小的机制。balloon需要在qemu-monitor中进行配置和监控。</p>
+<p>查看balloon大小: <code>virsh qemu-monitor-command &lt;domain&gt; --hmp info balloon</code></p>
+<p>设置balloon大小: <code>virsh qemu-monitor-command &lt;domain&gt; --hmp balloon &lt;size&gt;</code></p>
+<p>设置balloon的最大内存无法超过maxmemory大小</p>
+<h3 id="虚拟机迁移"><a class="header" href="#虚拟机迁移">虚拟机迁移</a></h3>
+<h4 id="nfs作为共享存储的用例节点规划"><a class="header" href="#nfs作为共享存储的用例节点规划">NFS作为共享存储的用例，节点规划</a></h4>
+<p>Node1: 192.168.0.197 安装KVM组件，挂载NFS共享存储</p>
+<p>Node2: 192.168.0.198 安装KVM组件，挂载NFS共享存储</p>
+<p>共享存储: 192.168.0.129 安装NFS，配置共享资源</p>
+<pre><code class="language-bash">// 安装NFS 
+yum install nfs-utils
+
+// 创建共享目录 
+mkdir kvmpool
+
+// 配置并启动NFS
+vim /etc/exports
+/root/kvmpool *(rw,sync,no_root_squash)
+
+// 重启rpcbind服务，并将rpcbind服务设置为开机自启动
+systemctl restart rpcbind
+systemctl enable rpcbind
+
+// 启动NFS服务，并将NFS服务设置为开机自启动
+systemctl start nfs-server
+systemctl enable nfs-server
+
+// 放通防火墙相关服务
+firewall-cmd --add-service=rpc-bind
+firewall-cmd --add-service=rpc-bind --permanent
+firewall-cmd --add-service=nfs
+firewall-cmd --add-service=nfs --permanent
+firewall-cmd --add-service=mountd
+firewall-cmd --add-service=mountd --permanent
+
+// 到node1和node2上查看NFS共享信息
+showmount -e 192.168.0.129
+#Export list for 192.168.0.129:
+#/root/kvmpool *
+
+// 在node1和node2_上创建用来挂载NFS的目录
+mkdir nfs
+
+// 在node1和node2_上挂载NFS共享目
+mount -t nfs 192.168.0.129:/root/kvmpool ./nfs
+
+// 让内核重新生成挂载信息
+partprobe
+
+// 查看挂载情况
+df -h
+
+// 将NFS共享挂载写入分区配置文件
+vim /etc/fstab
+192.168.0.129:/root/kvmpool   /root/kvmlab/img/nfs   nfs  defaults  0 0
+
+// 配置/etc/hosts 文件
+192.168.0.198  kvm198 kvm198.localdomain
+192.168.0.197  kvm197 kvm197.localdomain
+
+// 配置/etc/libvirt/libvirt.conf
+uri_aliases=[&quot;lib198=qemu+ssh://192.168.0.198/system&quot;,&quot;lib197=qemu+ssh://192.168.0.197/system&quot;]
+
+// 在node1的nfs目录下创建一个虚拟机
+virt-install ...
+修改虚拟机的磁盘cache选项为none，writeback和writethrough模式不支持动态迁移
+
+// 虚拟机迁移
+virsh migrate &lt;domain&gt; --desturi &lt;desturi&gt; --persistent --undefinesource --offline 
+// --desturi：迁移目的URI，如(qemu+ssh://192.168.0.198/system)
+// --persistent：永久迁移(会将虚拟机的配置文件复制到迁移目的节点)
+// --undefinesource：在源节点中反定义虚拟机(删除源节点中的虚拟机配置文件)
+// --live：虚拟机在线迁移(动态迁移)
+// --offlie：虚拟机离线迁移(静态迁移)，必须跟上--persistent
+</code></pre>
 
                     </main>
 
